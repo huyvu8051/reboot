@@ -57,43 +57,7 @@ export default function StickyHeadTable() {
     const [dataList, setDataList] = React.useState([]);
 
 
-    useEffect(() => {
 
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8080/api/flux');
-        xhr.seenBytes = 0;
-
-        xhr.onreadystatechange = function () {
-            // console.log("state change.. state: "+ xhr.readyState);
-
-            if (xhr.readyState === 3) {
-                var newData = xhr.response.substr(xhr.seenBytes);
-                // console.log("newData: <<" +newData+ ">>");
-                //document.body.innerHTML += "New data: <<" +newData+ ">><br />";
-
-                try {
-                    const parse = JSON.parse(newData);
-                    dataList.push(parse)
-                    setDataList(current => [...current, parse])
-
-                } catch (e) {
-
-                }
-
-                xhr.seenBytes = xhr.responseText.length;
-                //console.log("seenBytes: " +xhr.seenBytes);
-            }
-        };
-
-        xhr.addEventListener("error", function (e) {
-            console.log("error: " + e);
-        });
-
-        console.log(xhr);
-        xhr.send();
-
-    }, [])
 
 
     const handleChangePage = (event, newPage) => {

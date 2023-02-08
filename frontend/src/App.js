@@ -6,7 +6,7 @@ import PrivateRoute from "./component/PrivateRoute";
 import SignIn from "./view/SignIn";
 import {Dashboard} from "./component/Dashboard";
 import {SnackbarProvider} from "notistack";
-import {SnackbarUtilsConfiguration} from "./component/snackbar/SnackbarUtils";
+import {SnackbarUtilsConfiguration} from "./service/SnackbarUtils";
 import {Home} from "./view/Home";
 
 
@@ -20,13 +20,14 @@ export default function StickyHeadTable() {
                            element={<SignIn/>}
 
                     />
-                    <PrivateRoute path="/home" element={<Home/>}></PrivateRoute>
+                    <Route path="/home" element={<PrivateRoute><Home/></PrivateRoute>}></Route>
 
                 </Routes>
-                <SnackbarProvider maxSnack={7} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
-                    <SnackbarUtilsConfiguration/>
-                </SnackbarProvider>
+
             </BrowserRouter>
+            <SnackbarProvider maxSnack={7} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
+                <SnackbarUtilsConfiguration/>
+            </SnackbarProvider>
         </Provider>
     );
 }

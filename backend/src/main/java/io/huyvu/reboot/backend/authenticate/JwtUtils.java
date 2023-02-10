@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.auth;
+package io.huyvu.reboot.backend.authenticate;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

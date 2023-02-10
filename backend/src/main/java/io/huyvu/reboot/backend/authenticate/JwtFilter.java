@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.auth;
+package io.huyvu.reboot.backend.authenticate;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class JwtRequestFilter extends OncePerRequestFilter {
+public class JwtFilter extends OncePerRequestFilter {
 
     private final MyUserDetailsService myUserDetailsService;
 
@@ -63,13 +63,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
         return this.isNotFilter(path);
     }
 
     private boolean isNotFilter(String path) {
-        List<String> uri = new ArrayList<>(Arrays.asList("/csrf", "/assets", "/api/authentication", "/swagger-resources", "/swagger-ui.html",
+        List<String> uri = new ArrayList<>(Arrays.asList("/csrf", "/assets", "/api/authenticate", "/swagger-resources", "/swagger-ui.html",
                 "/v2/api-docs", "/webjars", "/resources", "/index.html", "/test", "/socket.io"));
 
         for (String e : uri) {

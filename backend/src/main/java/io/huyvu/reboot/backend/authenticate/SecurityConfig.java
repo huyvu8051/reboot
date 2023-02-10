@@ -1,7 +1,6 @@
-package io.huyvu.reboot.backend.auth;
+package io.huyvu.reboot.backend.authenticate;
 
 import io.huyvu.reboot.backend.config.SpaRedirectFilter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,14 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
-@RequiredArgsConstructor
-public class SecurityConfiguration {
-
-    private final JwtRequestFilter jwtRequestFilter;
-
-    private final SpaRedirectFilter spaRedirectFilter;
-    private final RestAccessDeniedHandler accessDeniedHandler;
-    private final RestAuthenticationEntryPoint authenticationEntryPoint;
+public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder, MyUserDetailsService userDetailService)
@@ -34,27 +26,25 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtFilter jwtFilter, SpaRedirectFilter spaRedirectFilter) throws Exception {
 
-
-        http.cors().and().csrf().disable()
+        http
+                .cors()
+                .and()
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/csrf", "/api/authentication", "/api/test/**", "/api/data","/h2-console/**",
+                .antMatchers("/", "/csrf", "/api/authenticate", "/api/test/**", "/api/data", "/h2-console/**",
                         "/v2/api-docs", "/webjars/**", "/resources/**", "/socket.io/**", "/static/**", "/assets/**", "/client.html**", "/client2.html**", "/uploads/**")
                 .permitAll()
-                .antMatchers("/api/**").hasAnyAuthority()
+                .antMatchers("/api/private").authenticated()
+                .antMatchers("/api/public").permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
-                .authenticationEntryPoint(authenticationEntryPoint)
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(spaRedirectFilter, JwtRequestFilter.class);
-
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(spaRedirectFilter, JwtFilter.class);
 
         return http.build();
 

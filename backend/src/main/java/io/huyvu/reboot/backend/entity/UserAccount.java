@@ -14,10 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class MyUserDetails extends GenericEntity implements CustomUserDetails {
+public class UserAccount extends GenericEntity implements CustomUserDetails {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @Column(unique = true)
     private String username;
@@ -32,13 +32,23 @@ public class MyUserDetails extends GenericEntity implements CustomUserDetails {
     @OneToMany(mappedBy = "assign")
     private List<ChecklistItem> assigns = new ArrayList<>();
 
+    public UserAccount(String username, String fullName, String password) {
+        this.username = username;
+        this.fullName = fullName;
+        this.password = password;
+    }
 
+    @Override
+    public Long getId() {
+        return id;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+        return new ArrayList<>() {{
+            add((GrantedAuthority) () -> "USER");
+        }};
     }
-
 
 
     @Override

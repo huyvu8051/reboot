@@ -17,7 +17,7 @@ public class Activity extends GenericEntity{
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private MyUserDetails user;
+    private UserAccount user;
 
 
     @ManyToOne

@@ -1,9 +1,9 @@
 import {Button} from "@mui/material";
-import SnackbarUtils from "../service/SnackbarUtils";
+import {success} from "../util/snackbarUtils";
 
 export const Home = () => {
     return <>
         <h1>Home</h1>
-        <Button onClick={()=>SnackbarUtils.success('Gud job boy')}>Toast</Button>
+        <Button onClick={()=>success('Gud job boy')}>Toast</Button>
     </>
 }

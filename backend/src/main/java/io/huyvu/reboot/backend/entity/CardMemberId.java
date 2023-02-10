@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class CardMemberId implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private MyUserDetails user;
+    private UserAccount user;
 
     @ManyToOne
     @JoinColumn(name = "card_id")

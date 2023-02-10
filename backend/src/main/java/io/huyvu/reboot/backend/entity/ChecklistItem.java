@@ -22,7 +22,7 @@ public class ChecklistItem extends GenericEntity{
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private MyUserDetails assign;
+    private UserAccount assign;
 
     private LocalDateTime dueDate;
 

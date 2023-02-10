@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {setEmail} from "../store/authenticationSlice";
 
 
 function Copyright(props) {
@@ -42,6 +44,11 @@ export default function SignIn() {
         });
     };
 
+
+    const email = useSelector(state=>state.authentication.email);
+    console.log(email)
+    const dispatch = useDispatch();
+
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -70,6 +77,7 @@ export default function SignIn() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            onChange={e=>dispatch(setEmail(e.target.value))}
                         />
                         <TextField
                             margin="normal"
@@ -79,6 +87,7 @@ export default function SignIn() {
                             label="Password"
                             type="password"
                             id="password"
+                            value={email}
                             autoComplete="current-password"
                         />
                         <FormControlLabel

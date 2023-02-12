@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 
 import {persistor, store} from "./store";
@@ -9,32 +9,29 @@ import {SnackbarProvider} from "notistack";
 import {SnackbarUtilsConfiguration} from "./util/snackbarUtils";
 import {Provider} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
-import {GoogleOAuthProvider} from '@react-oauth/google';
+import MyRoute from "./route/MyRoute";
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import MyRoute from "./route/MyRoute";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.render(
     <React.StrictMode>
-        <GoogleOAuthProvider clientId="653266560923-h4op46mflhjpa28879oanln3382qlkt5.apps.googleusercontent.com">
-            <Provider store={store}>
-                <PersistGate loading={<CircularProgress/>} persistor={persistor}>
+        <Provider store={store}>
+            <PersistGate loading={<CircularProgress/>} persistor={persistor}>
 
-                    <BrowserRouter>
-                        <MyRoute/>
+                <BrowserRouter>
+                    <MyRoute/>
 
-                    </BrowserRouter>
-                    <SnackbarProvider maxSnack={7} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
-                        <SnackbarUtilsConfiguration/>
-                    </SnackbarProvider>
-                </PersistGate>
-            </Provider>
-        </GoogleOAuthProvider>
-    </React.StrictMode>
+                </BrowserRouter>
+                <SnackbarProvider maxSnack={7} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
+                    <SnackbarUtilsConfiguration/>
+                </SnackbarProvider>
+            </PersistGate>
+        </Provider>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

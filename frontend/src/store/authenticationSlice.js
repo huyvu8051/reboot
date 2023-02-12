@@ -1,28 +1,34 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    totalCount: 0,
-    data: [],
     loading: false,
-    email: ''
+    username: '',
+    fullName: '',
+    avatar: ''
+
 };
 
 export const authenticationSlice = createSlice({
-    name: "authenticationSlice",
-    initialState,
-    reducers: {
-        setLoadingState: (state, action) => {
-            state.loading = true;
+        name: "authenticationSlice",
+        initialState,
+        reducers: {
+            setEmail: (state, action) => {
+                state.email = action.payload
+            }
+            ,
+            setAuthenticateSuccess: (state, action) => {
+                console.log(action)
+                state.username = action.payload.username
+                state.fullName = action.payload.fullName
+                state.avatar = action.payload.avatar
+
+            }
+
         },
-        setEmail: (state, action) => {
-            state.email = action.payload
-            console.log(action)
-        }
+    })
+;
 
-    },
-});
-
-export const {setLoadingState, setEmail} = authenticationSlice.actions;
+export const {setAuthenticateSuccess, setEmail} = authenticationSlice.actions;
 
 
 export default authenticationSlice.reducer;

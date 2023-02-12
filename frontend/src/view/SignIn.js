@@ -11,10 +11,12 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {setEmail} from "../store/authenticationSlice";
+import {setAuthenticateSuccess, setEmail} from "../store/authenticationSlice";
+import {GoogleLogin, googleLogout} from "@react-oauth/google";
+import Api from "../service/api";
 
 
 function Copyright(props) {
@@ -44,15 +46,26 @@ export default function SignIn() {
         });
     };
 
+    const googleLoginSuccess = (response) => {
+        console.log(response);
 
-    const email = useSelector(state=>state.authentication.email);
+        Api.post('v1/google-auth', {
+            idToken: response.credential
+        }).then(r => dispatch(setAuthenticateSuccess(r.data)))
+    };
+    const errorMessage = (error) => {
+        error("Google login false: " + error)
+    };
+
+
+    const email = useSelector(state => state.authentication.email);
     console.log(email)
     const dispatch = useDispatch();
 
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
-                <CssBaseline />
+                <CssBaseline/>
                 <Box
                     sx={{
                         marginTop: 8,
@@ -61,13 +74,13 @@ export default function SignIn() {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
+                    <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+                        <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
                         <TextField
                             margin="normal"
                             required
@@ -77,7 +90,7 @@ export default function SignIn() {
                             name="email"
                             autoComplete="email"
                             autoFocus
-                            onChange={e=>dispatch(setEmail(e.target.value))}
+                            onChange={e => dispatch(setEmail(e.target.value))}
                         />
                         <TextField
                             margin="normal"
@@ -91,18 +104,28 @@ export default function SignIn() {
                             autoComplete="current-password"
                         />
                         <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
+                            control={<Checkbox value="remember" color="primary"/>}
                             label="Remember me"
                         />
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                            onClick={()=>navigate('/home')}
+                            sx={{mt: 3, mb: 2}}
+                            onClick={() => navigate('/home')}
                         >
                             Sign In
-                        </Button>
+                        </Button><Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{mt: 3, mb: 2}}
+                        onClick={() => googleLogout()}
+                    >
+                        Sign Out
+                    </Button>
+                        <GoogleLogin width={"100%"} onSuccess={googleLoginSuccess} onError={errorMessage}/>
+
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
@@ -117,7 +140,7 @@ export default function SignIn() {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
+                <Copyright sx={{mt: 8, mb: 4}}/>
             </Container>
         </ThemeProvider>
     );

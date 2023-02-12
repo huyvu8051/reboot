@@ -1,10 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    loading: false,
     username: '',
     fullName: '',
-    avatar: ''
+    pictureUrl: '',
+    roles: []
 
 };
 
@@ -17,10 +17,10 @@ export const authenticationSlice = createSlice({
             }
             ,
             setAuthenticateSuccess: (state, action) => {
-                console.log(action)
+                //console.log(action)
                 state.username = action.payload.username
                 state.fullName = action.payload.fullName
-                state.avatar = action.payload.avatar
+                state.pictureUrl = action.payload.pictureUrl
 
             }
 

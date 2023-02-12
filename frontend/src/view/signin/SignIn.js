@@ -14,10 +14,10 @@ import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {setAuthenticateSuccess, setEmail} from "../store/authenticationSlice";
-import {GoogleLogin, googleLogout} from "@react-oauth/google";
-import Api from "../service/api";
-
+import {setAuthenticateSuccess, setEmail} from "../../store/authenticationSlice";
+import {GoogleLogin} from "@react-oauth/google";
+import Api from "../../service/api";
+import {error} from "../../util/snackbarUtils";
 
 function Copyright(props) {
     return (
@@ -46,20 +46,25 @@ export default function SignIn() {
         });
     };
 
+
     const googleLoginSuccess = (response) => {
-        console.log(response);
+        //console.log(response);
 
         Api.post('v1/google-auth', {
             idToken: response.credential
-        }).then(r => dispatch(setAuthenticateSuccess(r.data)))
+        }).then(resp => {
+            dispatch(setAuthenticateSuccess(resp.data))
+            navigate('/board')
+        }).catch(err=>{
+            error("Google login false: " + err.message)
+        })
     };
-    const errorMessage = (error) => {
-        error("Google login false: " + error)
+    const errorMessage = (err) => {
+        error("Google login false: " + err)
     };
-
 
     const email = useSelector(state => state.authentication.email);
-    console.log(email)
+    // console.log(email)
     const dispatch = useDispatch();
 
     return (
@@ -115,25 +120,17 @@ export default function SignIn() {
                             onClick={() => navigate('/home')}
                         >
                             Sign In
-                        </Button><Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{mt: 3, mb: 2}}
-                        onClick={() => googleLogout()}
-                    >
-                        Sign Out
-                    </Button>
+                        </Button>
                         <GoogleLogin width={"100%"} onSuccess={googleLoginSuccess} onError={errorMessage}/>
 
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
+                                <Link href="src/view#" variant="body2">
                                     Forgot password?
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="src/view#" variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>

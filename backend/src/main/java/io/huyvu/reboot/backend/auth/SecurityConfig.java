@@ -37,6 +37,7 @@ public class SecurityConfig {
                         "/v2/api-docs", "/webjars/**", "/resources/**", "/socket.io/**", "/static/**", "/assets/**", "/client.html**", "/client2.html**", "/uploads/**")
                 .permitAll()
                 .antMatchers("/api/private").authenticated()
+                .antMatchers("/api/v1/workspace").hasAuthority("ADMIN")
                 .antMatchers("/api/v1/google-auth").permitAll()
                 .anyRequest().authenticated()
                 .and()

@@ -41,6 +41,11 @@ public class DataLoader implements ApplicationRunner {
         // start time
         long t0 = System.nanoTime();
 
+        List<UserAccount> l = registerRepo.findAll();
+        if(l.size() > 0){
+            return;
+        }
+
 
         List<UserAccount> users = IntStream.range(0, 10).mapToObj(e->{
 

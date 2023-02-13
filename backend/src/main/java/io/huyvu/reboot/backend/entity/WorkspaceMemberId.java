@@ -1,5 +1,6 @@
 package io.huyvu.reboot.backend.entity;
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -8,15 +9,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
+@Data
 @EqualsAndHashCode
 @Embeddable
-@Getter
-public class CardMemberId implements Serializable {
+public class WorkspaceMemberId implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserAccount user;
 
     @ManyToOne
-    @JoinColumn(name = "card_id")
-    private Card card;
+    @JoinColumn(name = "wp_id")
+    private Workspace wp;
 }

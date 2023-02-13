@@ -4,7 +4,8 @@ const initialState = {
     username: '',
     fullName: '',
     pictureUrl: '',
-    roles: []
+    roles: [],
+    jwtToken: ''
 
 };
 
@@ -21,6 +22,7 @@ export const authenticationSlice = createSlice({
                 state.username = action.payload.username
                 state.fullName = action.payload.fullName
                 state.pictureUrl = action.payload.pictureUrl
+                state.jwtToken = action.payload.token
 
             }
 

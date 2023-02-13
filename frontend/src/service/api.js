@@ -1,11 +1,14 @@
 import axios from "axios";
 import {error} from "../util/snackbarUtils";
+import {store} from "../store";
+
 
 const instance = axios.create({
     baseURL: '/api/',
 });
-instance.interceptors.request.use((request) => {
-    return request;
+instance.interceptors.request.use((config) => {
+    config.headers.Authorization = `Bearer ${store.getState().authentication.jwtToken}`
+    return config;
 }, (error) => {
     return Promise.reject(error);
 });
@@ -21,4 +24,5 @@ instance.interceptors.response.use(response => {
     error(err.message)
     return Promise.reject(err);
 })
+
 export default instance

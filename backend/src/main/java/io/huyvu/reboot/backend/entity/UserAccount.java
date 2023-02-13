@@ -15,7 +15,7 @@ import java.util.List;
 public class UserAccount extends GenericEntity implements CustomUserDetails {
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
 
     /**
      * Email

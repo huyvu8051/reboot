@@ -1,33 +1,42 @@
-import {createBrowserRouter, useRoutes} from "react-router-dom";
+import {createBrowserRouter} from "react-router-dom";
 import SignIn from "../view/signin/SignIn";
 import {Home} from "../view/Home";
 import PrivateRoute from "../component/PrivateRoute";
-import Dashboard from "../view/board/BoardContainer";
-import Boards from "../view/board/Boards";
+import Dashboard from "../view/workspace/Container";
+import Boards from "../view/workspace/Boards";
 import PageNotFound from "../view/error/PageNotFound";
 import Unauthorized from "../view/error/Unauthorized";
 import Members from "../view/members/Members";
+import {BoardContents} from "../view/board-contents/BoardContents";
 
 const RouteConfig = createBrowserRouter([
     {
-        path: "/",
+        path: "",
         element: <SignIn/>
     },
     {
-        path: "/home",
+        path: "home",
         element: <PrivateRoute><Home/></PrivateRoute>
     },
     {
-        path: 'board/:wpCd',
         element: <><PrivateRoute/><Dashboard/></>,
         children: [
+
             {
-                path: "",
+                path: "w/",
                 element: <Boards/>
             },
             {
-                path: "members",
+                path: "w/:wpCd",
+                element: <Boards/>
+            },
+            {
+                path: "w/:wpCd/members",
                 element: <Members/>
+            },
+            {
+                path: "b/:bdCd",
+                element: <BoardContents/>
             },
         ]
     },

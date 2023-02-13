@@ -54,7 +54,7 @@ export default function SignIn() {
             idToken: response.credential
         }).then(resp => {
             dispatch(setAuthenticateSuccess(resp.data))
-            navigate('/board')
+            navigate('/w/')
         }).catch(err=>{
             error("Google login false: " + err.message)
         })

@@ -1,7 +1,6 @@
 package io.huyvu.reboot.backend.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -9,11 +8,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Entity
-public class Card extends GenericEntity{
+@NoArgsConstructor
+public class Card extends GenericEntity {
     @Id
     @GeneratedValue
     private Long id;

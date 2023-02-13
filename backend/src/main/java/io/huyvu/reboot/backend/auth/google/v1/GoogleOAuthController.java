@@ -1,12 +1,14 @@
 package io.huyvu.reboot.backend.auth.google.v1;
 
-import io.huyvu.reboot.backend.auth.JwtUtils;
+import io.huyvu.reboot.backend.util.JwtUtils;
 import io.huyvu.reboot.backend.entity.UserAccount;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -33,12 +35,15 @@ public class GoogleOAuthController {
             userAccount = authRepo.save(entity);
         }
 
-        String jwtToken = jwtUtils.generateToken(String.valueOf(userAccount.getId()));
+        List<String> roles = List.of("USER", "ADMIN");
+
+        String jwtToken = jwtUtils.generateJwtToken(String.valueOf(userAccount.getId()), userAccount.getUsername(),roles);
         return AuthResp.builder()
                 .token(jwtToken)
                 .username(userAccount.getUsername())
                 .fullName(userAccount.getFullName())
                 .pictureUrl(userAccount.getPictureUrl())
+                .roles(roles)
                 .build();
     }
 }

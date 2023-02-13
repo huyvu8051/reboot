@@ -1,10 +1,12 @@
 package io.huyvu.reboot.backend.auth;
 
+import io.huyvu.reboot.backend.util.AuthorityUtils;
+import io.huyvu.reboot.backend.util.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -23,8 +25,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
-    private final MyUserDetailsService myUserDetailsService;
-
     private final JwtUtils jwtUtil;
 
     @Override
@@ -33,34 +33,38 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // log.warn(req.getRequestURI());
 
-        final String authorizationHeader = req.getHeader("Authorization");
+        String authorizationHeader = req.getHeader("Authorization");
 
-        String username = null;
-        String jwt = null;
+        String jwtToken = null;
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7);
-            username = jwtUtil.extractUsername(jwt);
+            jwtToken = authorizationHeader.substring(7);
         }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.myUserDetailsService.loadUserByUsername(username);
-            if (jwtUtil.validateToken(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
+        if (jwtToken != null && !jwtToken.isBlank() && !jwtToken.isEmpty() && jwtUtil.validateToken(jwtToken) && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                usernamePasswordAuthenticationToken
-                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
+            long userId = jwtUtil.extractUserId(jwtToken);
+            String username = jwtUtil.extractUsername(jwtToken);
+            List<String> roles = jwtUtil.extractRoles(jwtToken);
+            List<GrantedAuthority> authorities = AuthorityUtils.toAuthorities(roles);
 
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            UserContext userCtx = new UserContext(userId, username);
+
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                    userCtx, null, authorities);
+
+            usernamePasswordAuthenticationToken
+                    .setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
+
+            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
 
-            }
         }
         filterChain.doFilter(req, resp);
 
 
     }
+
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
@@ -70,7 +74,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private boolean isNotFilter(String path) {
         List<String> uri = new ArrayList<>(Arrays.asList("/csrf", "/assets", "/api/authenticate", "/swagger-resources", "/swagger-ui.html",
-                "/v2/api-docs", "/webjars", "/resources", "/index.html", "/test", "/socket.io"));
+                "/v2/api-docs", "/webjars", "/resources", "/index.html", "/test", "/socket.io", "/api/v1/google-auth"));
 
         for (String e : uri) {
             if (path.startsWith(e)) {

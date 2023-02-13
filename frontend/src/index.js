@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import {persistor, store} from "./store";
 import {CircularProgress} from "@mui/material";
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, RouterProvider} from "react-router-dom";
 import {SnackbarProvider} from "notistack";
 import {SnackbarUtilsConfiguration} from "./util/snackbarUtils";
 import {Provider} from "react-redux";
@@ -21,9 +21,9 @@ ReactDOM.render(
         <React.StrictMode>
             <Provider store={store}>
                 <PersistGate loading={<CircularProgress/>} persistor={persistor}>
-                    <BrowserRouter>
-                        <RouteConfig/>
-                    </BrowserRouter>
+                    <RouterProvider
+                        router={RouteConfig}
+                    />
                 </PersistGate>
             </Provider>
             <SnackbarProvider maxSnack={7} anchorOrigin={{horizontal: 'right', vertical: 'top'}}>

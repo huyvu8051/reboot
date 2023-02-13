@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.authenticate;
+package io.huyvu.reboot.backend.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -50,10 +50,10 @@ public class JwtUtils {
     }
 
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(String subject) {
         Map<String, Object> claims = new HashMap<>();
 
-        return createToken(claims, userDetails.getUsername());
+        return createToken(claims, subject);
     }
 
 

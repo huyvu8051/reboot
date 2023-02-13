@@ -1,7 +1,6 @@
 package io.huyvu.reboot.backend.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -10,15 +9,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Getter
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class UserAccount extends GenericEntity implements CustomUserDetails {
     @Id
     @GeneratedValue
     private Long id;
 
+    /**
+     * Email
+     */
     @Column(unique = true)
     private String username;
 
@@ -26,12 +27,22 @@ public class UserAccount extends GenericEntity implements CustomUserDetails {
 
     private String password;
 
+    private String pictureUrl;
+
     @OneToMany(mappedBy = "key.user")
     private List<BoardMember> boards = new ArrayList<>();
 
     @OneToMany(mappedBy = "assign")
     private List<ChecklistItem> assigns = new ArrayList<>();
 
+
+    /**
+     * Normal account create
+     *
+     * @param username
+     * @param fullName
+     * @param password
+     */
     public UserAccount(String username, String fullName, String password) {
         this.username = username;
         this.fullName = fullName;

@@ -5,9 +5,10 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class GoogleAuthResp {
+public class AuthResp {
     private String token;
     private String username;
     private String fullName;
+    private String pictureUrl;
 
 }

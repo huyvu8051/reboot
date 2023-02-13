@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.authenticate;
+package io.huyvu.reboot.backend.auth;
 
 import io.huyvu.reboot.backend.config.SpaRedirectFilter;
 import org.springframework.context.annotation.Bean;
@@ -37,7 +37,7 @@ public class SecurityConfig {
                         "/v2/api-docs", "/webjars/**", "/resources/**", "/socket.io/**", "/static/**", "/assets/**", "/client.html**", "/client2.html**", "/uploads/**")
                 .permitAll()
                 .antMatchers("/api/private").authenticated()
-                .antMatchers("/api/public").permitAll()
+                .antMatchers("/api/v1/google-auth").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

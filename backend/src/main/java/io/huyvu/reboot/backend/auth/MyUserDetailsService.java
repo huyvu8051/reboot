@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.authenticate;
+package io.huyvu.reboot.backend.auth;
 
 import io.huyvu.reboot.backend.entity.UserAccount;
 import lombok.AllArgsConstructor;
@@ -13,12 +13,12 @@ import java.util.Optional;
 @AllArgsConstructor
 public class MyUserDetailsService implements UserDetailsService {
 
-    private final AuthenticateRepository authRepo;
+    private final MyUserDetailRepository myUserDetailRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<UserAccount> userAccOpt = authRepo.findOneByUsername(username);
+        Optional<UserAccount> userAccOpt = myUserDetailRepo.findOneByUsername(username);
         return userAccOpt.orElseThrow(()->new UsernameNotFoundException("Not found username: " + username));
     }
 

@@ -1,7 +1,7 @@
 import {Button} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
-const MainContent = () => {
+const Boards = () => {
 
     const navigate = useNavigate();
     return <>
@@ -10,4 +10,4 @@ const MainContent = () => {
         <Button onClick={()=>navigate('/error/404')}>ERR</Button>
     </>
 }
-export default MainContent
+export default Boards

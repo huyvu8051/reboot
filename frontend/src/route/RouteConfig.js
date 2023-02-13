@@ -1,12 +1,14 @@
-import {useRoutes} from "react-router-dom";
+import {createBrowserRouter, useRoutes} from "react-router-dom";
 import SignIn from "../view/signin/SignIn";
 import {Home} from "../view/Home";
 import PrivateRoute from "../component/PrivateRoute";
-import {BoardContainer} from "../view/board/BoardContainer";
-import MainContent from "../view/board/MainContent";
-import Page404 from "../view/error/Page404";
+import Dashboard from "../view/board/BoardContainer";
+import Boards from "../view/board/Boards";
+import PageNotFound from "../view/error/PageNotFound";
+import Unauthorized from "../view/error/Unauthorized";
+import Members from "../view/members/Members";
 
-const RouteConfig = () => useRoutes([
+const RouteConfig = createBrowserRouter([
     {
         path: "/",
         element: <SignIn/>
@@ -16,18 +18,31 @@ const RouteConfig = () => useRoutes([
         element: <PrivateRoute><Home/></PrivateRoute>
     },
     {
-        path:'board',
-        element: <><PrivateRoute/><BoardContainer/></>,
+        path: 'board/:wpCd',
+        element: <><PrivateRoute/><Dashboard/></>,
         children: [
             {
                 path: "",
-                element: <MainContent/>
+                element: <Boards/>
+            },
+            {
+                path: "members",
+                element: <Members/>
             },
         ]
     },
     {
-        path:'/error/404',
-        element:<Page404/>
+        path: 'error',
+        children: [
+            {
+                path: '404',
+                element: <PageNotFound/>
+            },
+            {
+                path: '401',
+                element: <Unauthorized/>
+            }
+        ]
 
     }
 

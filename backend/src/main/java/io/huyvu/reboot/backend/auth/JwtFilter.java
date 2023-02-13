@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.authenticate;
+package io.huyvu.reboot.backend.auth;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

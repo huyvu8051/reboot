@@ -13,17 +13,19 @@ import java.util.function.Function;
 @Slf4j
 @Component
 public class JwtUtils {
-    private final int SEVENT_DAYS = 1000 * 60 * 60 * 24 * 7; // 7 days
+    private final int SIX_HOUR = 1000 * 60 * 60 * 6;
+    private final int ONE_HOUR = 1000 * 60 * 60 * 1;
+//    private final int ONE_DAY = 1000 * 60;
 
     @Value("${reboot.jwt-key}")
     private String SECRET_KEY = null;
 
 
-    public String generateJwtToken(String userId, String username, List<String> roles) {
+    public String generateJwtToken(long userId, String username, List<String> roles) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("username", username);
         claims.put("roles", roles);
-        return createToken(claims, userId);
+        return createToken(claims, String.valueOf(userId));
     }
 
     public long extractUserId(String jwt) {
@@ -39,9 +41,25 @@ public class JwtUtils {
         return claims.get("roles", List.class);
     }
 
+    /** Is token none expired
+     * @param token
+     * @return
+     */
     public boolean validateToken(String token) {
         return !isTokenExpired(token);
     }
+
+    /** If token expired over 1 hour, is need to refresh
+     * @param token
+     * @return
+     */
+    public boolean tokenMustRefresh(String token) {
+        Date now = new Date(System.currentTimeMillis() + ONE_HOUR);
+        Date expiration = extractExpiration(token);
+        return expiration.before(now);
+    }
+
+
 
     private Claims extractAllClaims(String token) {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
@@ -65,17 +83,15 @@ public class JwtUtils {
         return claims.get(claimName, String.class);
     }
 
-
-
-
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + SEVENT_DAYS))
+                .setExpiration(new Date(System.currentTimeMillis() + SIX_HOUR))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
+
 
 
 }

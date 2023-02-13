@@ -24,13 +24,16 @@ export const authenticationSlice = createSlice({
                 state.pictureUrl = action.payload.pictureUrl
                 state.jwtToken = action.payload.token
 
+            },
+            refreshToken: (state, action)=>{
+                state.jwtToken = action.payload
             }
 
         },
     })
 ;
 
-export const {setAuthenticateSuccess, setEmail} = authenticationSlice.actions;
+export const {setAuthenticateSuccess, setEmail, refreshToken} = authenticationSlice.actions;
 
 
 export default authenticationSlice.reducer;

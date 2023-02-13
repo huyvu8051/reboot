@@ -25,13 +25,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
+    private static final String REFRESH_TOKEN_KEY = "refreshToken";
     private final JwtUtils jwtUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain)
             throws ServletException, IOException {
-
-        // log.warn(req.getRequestURI());
 
         String authorizationHeader = req.getHeader("Authorization");
 
@@ -49,16 +48,15 @@ public class JwtFilter extends OncePerRequestFilter {
             List<GrantedAuthority> authorities = AuthorityUtils.toAuthorities(roles);
 
             UserContext userCtx = new UserContext(userId, username);
-
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                    userCtx, null, authorities);
-
-            usernamePasswordAuthenticationToken
-                    .setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
-
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userCtx, null, authorities);
+            usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
-
+            // refresh token
+            if (jwtUtil.tokenMustRefresh(jwtToken)) {
+                String refreshToken = jwtUtil.generateJwtToken(userId, username, roles);
+                resp.addHeader(REFRESH_TOKEN_KEY, refreshToken);
+            }
         }
         filterChain.doFilter(req, resp);
 

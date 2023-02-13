@@ -1,5 +1,6 @@
 package io.huyvu.reboot.backend.config;
 
+import io.huyvu.reboot.backend.auth.UserContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -18,7 +19,9 @@ public class AuditingConfig {
         return () -> Optional.ofNullable(SecurityContextHolder.getContext())
                 .map(SecurityContext::getAuthentication)
                 .filter(Authentication::isAuthenticated)
-                .map(Authentication::getName);
+                .map(Authentication::getPrincipal)
+                .map(o -> (UserContext) o)
+                .map(o -> String.valueOf(o.id()));
 
 //        return () -> Optional.of("system");
     }

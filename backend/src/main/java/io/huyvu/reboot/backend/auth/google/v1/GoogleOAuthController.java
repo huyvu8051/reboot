@@ -37,7 +37,7 @@ public class GoogleOAuthController {
 
         List<String> roles = List.of("USER", "ADMIN");
 
-        String jwtToken = jwtUtils.generateJwtToken(String.valueOf(userAccount.getId()), userAccount.getUsername(),roles);
+        String jwtToken = jwtUtils.generateJwtToken(userAccount.getId(), userAccount.getUsername(),roles);
         return AuthResp.builder()
                 .token(jwtToken)
                 .username(userAccount.getUsername())

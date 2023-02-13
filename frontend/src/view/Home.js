@@ -1,5 +1,5 @@
-import {Button} from "@mui/material";
-import {success} from "../util/snackbarUtils";
+import {Button} from '@mui/material'
+import {success} from '../util/snackbarUtils'
 
 export const Home = () => {
     return <>

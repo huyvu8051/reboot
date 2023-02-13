@@ -8,14 +8,13 @@ import io.huyvu.reboot.backend.auth.UserContext;
 import io.huyvu.reboot.backend.entity.Workspace;
 import io.huyvu.reboot.backend.util.SecurityUtils;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/v1/workspace")
+@RequestMapping("api/v1/user/workspace")
 public class WpController {
     private final WpService mngWpService;
 
@@ -28,5 +27,12 @@ public class WpController {
                 .title(workspace.getTitle())
                 .build();
 
+    }
+
+    @PostMapping
+    List<ListWpItem> getList(){
+        UserContext userCtx = SecurityUtils.currentContext();
+        List<ListWpItem> ls = mngWpService.getList(userCtx.id());
+        return ls;
     }
 }

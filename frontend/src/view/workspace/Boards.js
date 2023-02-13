@@ -1,9 +1,9 @@
-import {Button} from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import {Button} from '@mui/material'
+import {useNavigate} from 'react-router-dom'
 
 const Boards = () => {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     return <>
         main content
 

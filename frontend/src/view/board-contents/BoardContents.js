@@ -1,7 +1,7 @@
-import {useParams} from "react-router-dom";
+import {useParams} from 'react-router-dom'
 
 export const BoardContents = () => {
-    const {bdCd} = useParams();
+    const {bdCd} = useParams()
     
     return <>
         BoardContents

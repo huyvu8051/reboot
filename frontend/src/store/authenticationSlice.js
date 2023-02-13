@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice} from '@reduxjs/toolkit'
 
 const initialState = {
     username: '',
@@ -7,10 +7,10 @@ const initialState = {
     roles: [],
     jwtToken: ''
 
-};
+}
 
 export const authenticationSlice = createSlice({
-        name: "authenticationSlice",
+        name: 'authenticationSlice',
         initialState,
         reducers: {
             setEmail: (state, action) => {
@@ -31,9 +31,9 @@ export const authenticationSlice = createSlice({
 
         },
     })
-;
-
-export const {setAuthenticateSuccess, setEmail, refreshToken} = authenticationSlice.actions;
 
 
-export default authenticationSlice.reducer;
+export const {setAuthenticateSuccess, setEmail, refreshToken} = authenticationSlice.actions
+
+
+export default authenticationSlice.reducer

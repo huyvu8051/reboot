@@ -7,12 +7,12 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
-import {Outlet} from "@mui/icons-material";
-import LeftDrawer from "./LeftDrawer";
-import DrawerHeader from "./DrawerHeader";
-import AddIcon from "@mui/icons-material/Add";
-import {TextField} from "@mui/material";
-import NewWorkspace from "./NewWorkspace";
+import {Outlet} from '@mui/icons-material'
+import LeftDrawer from './leftDrawer/LeftDrawer'
+import DrawerHeader from './DrawerHeader'
+import AddIcon from '@mui/icons-material/Add'
+import {TextField} from '@mui/material'
+import NewWorkspace from './NewWorkspace'
 
 const drawerWidth = 240
 

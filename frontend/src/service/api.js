@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {error, success} from '../util/snackbarUtils'
 import {store} from '../store'
-import {refreshToken} from "../store/authenticationSlice";
+import {refreshToken} from '../store/authenticationSlice'
 
 
 const instance = axios.create({

@@ -20,8 +20,13 @@ public class AuditingConfig {
                 .map(SecurityContext::getAuthentication)
                 .filter(Authentication::isAuthenticated)
                 .map(Authentication::getPrincipal)
-                .map(o -> (UserContext) o)
-                .map(o -> String.valueOf(o.id()));
+                .map(o -> {
+                    if(o == null) return "anonymous";
+                    if(o instanceof UserContext userCtx){
+                        return String.valueOf(userCtx.id());
+                    }
+                    return (String) o;
+                });
 
 //        return () -> Optional.of("system");
     }

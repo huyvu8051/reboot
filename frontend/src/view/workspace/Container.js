@@ -54,7 +54,7 @@ const AppBar = styled(MuiAppBar, {
 }))
 
 export default function PersistentDrawerLeft(props) {
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = React.useState(true)
     const handleToggle = () => {
         setOpen(!open)
     }

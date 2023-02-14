@@ -12,4 +12,6 @@ public interface WpService {
     Workspace create(String wpNm, long adminId);
 
     List<ListWpItem> getList(long userId);
+
+    WpDetails getDetails(long wpId, long id);
 }

@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.persistence.SqlResultSetMapping;
+import javax.persistence.SqlResultSetMappings;
 import java.util.List;
 
 /**
@@ -16,8 +18,8 @@ public interface WpRepository extends JpaRepository<Workspace, Long> {
 
     @Query("""
            SELECT u 
-           FROM UserAccount u 
-           WHERE id = :userId
+             FROM UserAccount u 
+            WHERE u.id = :userId
            """)
     UserAccount findAdminById(@Param("userId") long userId);
 
@@ -28,4 +30,14 @@ public interface WpRepository extends JpaRepository<Workspace, Long> {
             ORDER BY `modified_date` DESC
             """, nativeQuery = true)
     List<ListWpItem> findAllWpItem(@Param("userId") long userId);
+
+    @Query(value = """
+            SELECT w.id AS id, w.title AS title, w.picture_url AS pictureUrl
+            FROM `workspace` w
+            WHERE w.id = (SELECT wp_id
+                         FROM workspace_member AS wm
+                        WHERE wm.user_id = :userId 
+                              AND wm.wp_id = :wpId)     
+            """, nativeQuery = true)
+    Workspace findWpDetails(long wpId, long userId);
 }

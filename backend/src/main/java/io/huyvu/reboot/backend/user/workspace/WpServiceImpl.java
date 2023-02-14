@@ -44,4 +44,10 @@ public class WpServiceImpl implements WpService {
     public List<ListWpItem> getList(long userId) {
         return wpRepo.findAllWpItem(userId);
     }
+
+    @Override
+    public WpDetails getDetails(long wpId, long id) {
+        Workspace wpDetails = wpRepo.findWpDetails(wpId, id);
+        return new WpDetails(wpDetails.getId(),wpDetails.getTitle(), wpDetails.getPictureUrl());
+    }
 }

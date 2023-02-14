@@ -30,9 +30,15 @@ public class WpController {
     }
 
     @PostMapping
-    List<ListWpItem> getList(){
+    List<ListWpItem> getLs(){
         UserContext userCtx = SecurityUtils.currentContext();
-        List<ListWpItem> ls = mngWpService.getList(userCtx.id());
-        return ls;
+        return mngWpService.getList(userCtx.id());
     }
+
+    @PostMapping("/{wpId}")
+    WpDetails getDetails(@PathVariable long wpId){
+        UserContext userCtx = SecurityUtils.currentContext();
+        return mngWpService.getDetails(wpId,userCtx.id());
+    }
+
 }

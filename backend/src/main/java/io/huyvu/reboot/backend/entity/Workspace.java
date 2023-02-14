@@ -29,5 +29,7 @@ public class Workspace extends GenericEntity {
     @OneToMany(mappedBy = "key.wp")
     private List<WorkspaceMember> members = new ArrayList<>();
 
+    @OneToMany(mappedBy = "workspace")
+    private List<Board> labels = new ArrayList<>();
 
 }

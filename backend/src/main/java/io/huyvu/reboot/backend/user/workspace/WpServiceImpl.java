@@ -7,7 +7,7 @@ package io.huyvu.reboot.backend.user.workspace;
 import io.huyvu.reboot.backend.entity.UserAccount;
 import io.huyvu.reboot.backend.entity.Workspace;
 import io.huyvu.reboot.backend.entity.WorkspaceMember;
-import io.huyvu.reboot.backend.entity.WorkspaceMemberId;
+import io.huyvu.reboot.backend.entity.WorkspaceMemberKey;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +28,7 @@ public class WpServiceImpl implements WpService {
         Workspace savedWp = wpRepo.save(wp);
 
         UserAccount userAccount = wpRepo.findAdminById(adminId);
-        WorkspaceMemberId wpMemKey = new WorkspaceMemberId();
+        WorkspaceMemberKey wpMemKey = new WorkspaceMemberKey();
         wpMemKey.setWp(savedWp);
         wpMemKey.setUser(userAccount);
 

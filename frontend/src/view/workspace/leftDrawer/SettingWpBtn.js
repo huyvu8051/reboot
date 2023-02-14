@@ -1,7 +1,7 @@
-import IconButton from "@mui/material/IconButton";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {Menu, MenuItem} from "@mui/material";
-import * as React from "react";
+import IconButton from '@mui/material/IconButton'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import {Menu, MenuItem} from '@mui/material'
+import * as React from 'react'
 
 export default () => {
     const [settingAnchorEl, setSettingAnchorEl] = React.useState(null)
@@ -16,7 +16,8 @@ export default () => {
     }
     return (
         <>
-            <IconButton size='small' sx={{color: 'black'}} aria-controls='menu-setting'
+            <IconButton size='small' sx={{color: 'black'}}
+                        aria-controls='menu-setting'
                         aria-haspopup='true'
                         onClick={handleSettingMenu}>
                 <ExpandMoreIcon fontSize='small'/>

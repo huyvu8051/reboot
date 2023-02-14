@@ -16,5 +16,5 @@ import javax.persistence.*;
 })
 public class Labeled extends GenericEntity {
     @EmbeddedId
-    private LabeledId key = new LabeledId();
+    private LabeledKey key = new LabeledKey();
 }

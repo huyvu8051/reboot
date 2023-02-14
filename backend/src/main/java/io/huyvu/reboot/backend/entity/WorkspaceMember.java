@@ -2,8 +2,6 @@ package io.huyvu.reboot.backend.entity;
 
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -15,6 +13,6 @@ import javax.persistence.*;
 })
 public class WorkspaceMember extends GenericEntity {
     @EmbeddedId
-    private WorkspaceMemberId key = new WorkspaceMemberId();
+    private WorkspaceMemberKey key = new WorkspaceMemberKey();
     private boolean isAdmin;
 }

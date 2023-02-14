@@ -7,7 +7,7 @@ import java.util.List;
  * @CreatedDate 2/13/2023 4:34 PM
  */
 public interface BdService {
-    List<BoardLsItem> getAll(long id);
+    List<BoardLsItem> getAll(long wpId, long userId);
 
-    long create(String name, long id);
+    long create(String name, long wpId, long userId);
 }

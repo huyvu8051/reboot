@@ -1,14 +1,14 @@
-import IconButton from '@mui/material/IconButton'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import {Avatar, Menu, MenuItem} from '@mui/material'
-
 import {useEffect, useState} from 'react'
-import api from "../../../service/api";
-import {useNavigate} from "react-router-dom";
+import api from '../../../service/api'
+import {useNavigate} from 'react-router-dom'
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import {Avatar, IconButton, Menu, MenuItem} from '@mui/material'
+
 
 export default () => {
     const [anchorEl, setAnchorEl] = useState(null)
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const handleWpSelectMenu = (event) => {
         setAnchorEl(event.currentTarget)
     }
@@ -21,10 +21,10 @@ export default () => {
         setAnchorEl(null)
     }
 
-    const [wps, setWps] = useState([]);
+    const [wps, setWps] = useState([])
 
     useEffect(() => {
-        api.post('v1/user/workspace')
+        api.post('/api/v1/user/workspace')
             .then(resp => setWps(resp.data))
     }, [])
     return (
@@ -58,8 +58,8 @@ export default () => {
                         </MenuItem>)
                 }
                 {
-                    wps.map(item=>(
-                        <MenuItem onClick={()=>handleWpSelect(item)} key={item.id}>
+                    wps.map(item => (
+                        <MenuItem onClick={() => handleWpSelect(item)} key={item.id}>
                             <Avatar sx={{width: 24, height: 24, mr: 1}}
                                     variant='rounded'
                                     alt={item.title}

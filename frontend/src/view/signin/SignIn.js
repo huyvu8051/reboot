@@ -17,7 +17,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {setAuthenticateSuccess, setEmail} from '../../store/authenticationSlice'
 import {GoogleLogin} from '@react-oauth/google'
 import Api from '../../service/api'
-import {error} from '../../util/snackbarUtils'
+import {$error} from '../../util/snackbar-utils'
 
 function Copyright(props) {
     return (
@@ -50,17 +50,17 @@ export default function SignIn() {
     const googleLoginSuccess = (response) => {
         //console.log(response)
 
-        Api.post('v1/google-auth', {
+        Api.post('/api/v1/google-auth', {
             idToken: response.credential
         }).then(resp => {
             dispatch(setAuthenticateSuccess(resp.data))
             navigate('/w/')
         }).catch(err=>{
-            error('Google login false: ' + err.message)
+            $error('Google login false: ' + err.message)
         })
     }
     const errorMessage = (err) => {
-        error('Google login false: ' + err)
+        $error('Google login false: ' + err)
     }
 
     const email = useSelector(state => state.authentication.email)

@@ -17,6 +17,6 @@ import javax.persistence.*;
 })
 public class CardMember extends GenericEntity{
     @EmbeddedId
-    private CardMemberId key = new CardMemberId();
+    private CardMemberKey key = new CardMemberKey();
     private boolean notification;
 }

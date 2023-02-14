@@ -1,12 +1,10 @@
 import axios from 'axios'
-import {error, success} from '../util/snackbarUtils'
+import {$error, $success} from '../util/snackbar-utils'
 import {store} from '../store'
 import {refreshToken} from '../store/authenticationSlice'
 
 
-const instance = axios.create({
-    baseURL: '/api/',
-})
+const instance = axios.create()
 instance.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${store.getState().authentication.jwtToken}`
     return config
@@ -19,18 +17,18 @@ instance.interceptors.response.use(response => {
     const token = response.headers.get('refreshToken')
     if (token) {
         store.dispatch(refreshToken(token))
-        success('Jwt token refreshed')
+        $success('Jwt token refreshed')
     }
 
     // check http status
     if (response.data.status > 400 && response.data.status < 600) {
-        error(response.data.status + ':' + response.data.message)
+        $error(response.data.status + ':' + response.data.message)
         return Promise.reject(response.data)
     }
     return response
 }, err => {
     // console.log(err)
-    error(err.message)
+    $error(err.message)
     return Promise.reject(err)
 })
 

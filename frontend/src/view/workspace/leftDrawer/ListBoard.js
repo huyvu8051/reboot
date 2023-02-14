@@ -1,37 +1,53 @@
-import ListItemButton from "@mui/material/ListItemButton";
-import {Avatar, ListItemAvatar} from "@mui/material";
-import ListItemText from "@mui/material/ListItemText";
-import ListItem from "@mui/material/ListItem";
-import * as React from "react";
-import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import api from "../../../service/api";
+import ListItemButton from '@mui/material/ListItemButton'
+import {Avatar, ListItemAvatar} from '@mui/material'
+import ListItemText from '@mui/material/ListItemText'
+import ListItem from '@mui/material/ListItem'
+import * as React from 'react'
+import {useEffect, useState} from 'react'
+import {useNavigate, useParams} from 'react-router-dom'
+import api from '../../../service/api'
+import {$off, $on} from "../../../util/eventbus-utils";
 
-export default () => {
 
-    const [boards, setBoards] = useState([]);
-    const navigate = useNavigate();
-    useEffect(()=>{
-        api.post('v1/user/board')
-            .then(resp=>setBoards(resp.data))
-    }, [])
+const ListBoard = () => {
 
+    const [boards, setBoards] = useState([])
+    const navigate = useNavigate()
+    const {wpId} = useParams();
+
+
+    useEffect(() => {
+        const fetchBoardLs = (datat) => {
+            console.log(datat)
+            api.post('/api/v1/user/board', null, {
+                params: {wpId}
+            })
+                .then(resp => setBoards(resp.data));
+        }
+        fetchBoardLs()
+        $on('boards.refresh', fetchBoardLs)
+        return () => $off('boards.refresh', fetchBoardLs)
+
+
+    }, [wpId])
 
     return (
         <>
             {
-                boards.map(item=>(
-                    <ListItem key='board' disablePadding onClick={() => navigate(`/b/${item.id}`)}>
+                boards.map(item => (
+                    <ListItem key={item.id} disablePadding onClick={() => navigate(`/b/${item.id}`)}>
                         <ListItemButton>
                             <ListItemAvatar>
                                 <Avatar variant='rounded' alt='Remy Sharp'
-                                        src='https://mui.com/static/images/avatar/1.jpg'/>
+                                        src='https://mui.com/static/images/avatar/1.jpg'
+                                        sx={{height: '30px', width: '30px'}}/>
                             </ListItemAvatar>
-                            <ListItemText primary='Board'/>
+                            <ListItemText primary={item.name}/>
                         </ListItemButton>
                     </ListItem>
                 ))
             }
         </>
     )
-}
+};
+export default ListBoard

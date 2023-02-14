@@ -24,17 +24,18 @@ const RouteConfig = createBrowserRouter([
 
             {
                 path: 'w',
+                element: null
             },
             {
-                path: 'w/:wpCd',
+                path: 'w/:wpId',
                 element: <Boards/>
             },
             {
-                path: 'w/:wpCd/members',
+                path: 'w/:wpId/members',
                 element: <Members/>
             },
             {
-                path: 'b/:bdCd',
+                path: 'b/:bdId',
                 element: <BoardContents/>
             },
         ]

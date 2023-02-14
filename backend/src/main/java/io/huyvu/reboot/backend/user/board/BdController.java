@@ -5,14 +5,9 @@
 package io.huyvu.reboot.backend.user.board;
 
 import io.huyvu.reboot.backend.auth.UserContext;
-import io.huyvu.reboot.backend.entity.Board;
-import io.huyvu.reboot.backend.user.workspace.CreateWpReq;
 import io.huyvu.reboot.backend.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,17 +18,15 @@ public class BdController {
     private final BdService bdService;
 
     @PostMapping
-    List<BoardLsItem> getAll(){
+    List<BoardLsItem> getAllFromWp(@RequestParam long wpId) {
         UserContext userContext = SecurityUtils.currentContext();
-        return bdService.getAll(userContext.id());
-
+        return bdService.getAll(wpId, userContext.id());
     }
 
 
     @PutMapping
-    long create(String name){
+    long create(@RequestBody CreateBoardReq req) {
         UserContext userContext = SecurityUtils.currentContext();
-        return bdService.create(name, userContext.id());
-
+        return bdService.create(req.title(),req.wp(), userContext.id());
     }
 }

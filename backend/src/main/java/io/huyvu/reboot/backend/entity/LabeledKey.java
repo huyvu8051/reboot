@@ -11,7 +11,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Embeddable
 @Getter
-public class LabeledId implements Serializable {
+public class LabeledKey implements Serializable {
     @ManyToOne
     @JoinColumn(name = "card_id")
     private Card card;

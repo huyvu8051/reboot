@@ -1,14 +1,12 @@
 package io.huyvu.reboot.backend.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
+@Accessors(chain = true)
+@Data
 @Entity
 @AssociationOverrides({
         @AssociationOverride(name = "key.user", joinColumns = @JoinColumn(name = "user_id")),
@@ -16,5 +14,5 @@ import javax.persistence.*;
 })
 public class BoardMember extends GenericEntity {
     @EmbeddedId
-    private BoardMemberId key = new BoardMemberId();
+    private BoardMemberKey key = new BoardMemberKey();
 }

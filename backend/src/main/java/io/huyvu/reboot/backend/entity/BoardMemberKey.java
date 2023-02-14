@@ -1,18 +1,19 @@
 package io.huyvu.reboot.backend.entity;
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
-import java.util.Objects;
 
 @EqualsAndHashCode
 @Embeddable
-@Getter
-public class BoardMemberId implements Serializable {
+@Accessors(chain = true)
+@Data
+public class BoardMemberKey implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserAccount user;

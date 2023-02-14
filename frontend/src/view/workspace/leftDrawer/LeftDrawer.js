@@ -16,16 +16,17 @@ import Drawer from '@mui/material/Drawer'
 import * as React from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 import DrawerHeader from '../DrawerHeader'
-import ChangeWpIcon from './ChangeWpIcon'
-import SettingWpIcon from "./SettingWpIcon";
-import ListBoard from "./ListBoard";
+import ChangeWpIcon from './ChangeWpBtn'
+import SettingWpIcon from './SettingWpBtn'
+import ListBoard from './ListBoard'
+import NewBoardBtn from './CreateBoardBtn'
 
 const drawerWidth = 240
 
 export default (props) => {
     const navigate = useNavigate()
-    const {wpCd} = useParams()
-    const bdCd = 'chung ta'
+    const {wpId} = useParams()
+    const bdId = 'chung ta'
 
     return (
         <Drawer
@@ -49,7 +50,7 @@ export default (props) => {
             <Divider/>
             <List dense>
                 <ListItem key='board' disablePadding>
-                    <ListItemButton onClick={() => navigate(`/w/${wpCd}`)}>
+                    <ListItemButton onClick={() => navigate(`/w/${wpId}`)}>
                         <ListItemIcon>
                             <DashboardIcon/>
                         </ListItemIcon>
@@ -57,7 +58,7 @@ export default (props) => {
                     </ListItemButton>
                 </ListItem>
                 <ListItem key='members' disablePadding>
-                    <ListItemButton onClick={() => navigate(`/w/${wpCd}/members`)}>
+                    <ListItemButton onClick={() => navigate(`/w/${wpId}/members`)}>
                         <ListItemIcon>
                             <PermIdentityIcon/>
                         </ListItemIcon>
@@ -114,9 +115,7 @@ export default (props) => {
                         <ListItemText primary='Your boards'/>
 
                     </ListItemButton>
-                    <IconButton size='small' sx={{color: 'black'}}>
-                        <AddIcon fontSize='small'/>
-                    </IconButton>
+                    <NewBoardBtn/>
                 </ListItem>
                 <ListBoard/>
             </List>

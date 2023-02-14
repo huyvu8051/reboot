@@ -1,18 +1,16 @@
 package io.huyvu.reboot.backend.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Accessors(chain = true)
+@Data
 @Entity
-public class Board extends GenericEntity{
+public class Board extends GenericEntity {
     @Id
     @GeneratedValue
     private Long id;
@@ -31,6 +29,9 @@ public class Board extends GenericEntity{
     @OneToMany(mappedBy = "board")
     private List<Label> labels = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "workspace_id")
+    private Workspace workspace;
 
 
 }

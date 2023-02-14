@@ -42,7 +42,7 @@ public class DataLoader implements ApplicationRunner {
         long t0 = System.nanoTime();
 
         List<UserAccount> l = registerRepo.findAll();
-        if(l.size() > 0){
+        if(l.size() + 1 > 0){
             return;
         }
 

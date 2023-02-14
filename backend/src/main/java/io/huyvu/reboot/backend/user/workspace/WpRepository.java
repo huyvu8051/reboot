@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.SqlResultSetMappings;
+import javax.persistence.Tuple;
 import java.util.List;
 
 /**
@@ -39,5 +40,5 @@ public interface WpRepository extends JpaRepository<Workspace, Long> {
                         WHERE wm.user_id = :userId 
                               AND wm.wp_id = :wpId)     
             """, nativeQuery = true)
-    Workspace findWpDetails(long wpId, long userId);
+    Tuple findWpDetails(long wpId, long userId);
 }

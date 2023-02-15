@@ -6,12 +6,15 @@ import org.apache.ibatis.builder.StaticSqlSource;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.plugin.*;
-import org.apache.ibatis.scripting.defaults.RawSqlSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 @Configuration
@@ -32,11 +35,22 @@ class BaseEntityInterceptor implements Interceptor {
         BoundSql boundSql = mappedStatement.getBoundSql(parameter);
         String sql = boundSql.getSql();
         // Modify the SQL statement
-        sql = "SET @USER_CTX = '" + SecurityUtils.currentContext().username() + "';\n" + sql;
+        sql = "SET @USER_CTX = ?;" + sql;
+        Map<String, Object> mapParams = (Map<String, Object>) parameter;
+        mapParams.put("USER_CTX", SecurityUtils.currentContext().username());
         // Update the BoundSql object
 
-        MappedStatement newMappedStatement = copyFromMappedStatement(mappedStatement, new StaticSqlSource(mappedStatement.getConfiguration(), sql, boundSql.getParameterMappings()));
+        ParameterMapping pm = new ParameterMapping.Builder(mappedStatement.getConfiguration(), "USER_CTX", Object.class).build();
+
+        List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
+
+        List<ParameterMapping> pm2 = new ArrayList<>();
+        pm2.add(pm);
+        pm2.addAll(parameterMappings);
+
+        MappedStatement newMappedStatement = copyFromMappedStatement(mappedStatement, new StaticSqlSource(mappedStatement.getConfiguration(), sql, pm2));
         invocation.getArgs()[0] = newMappedStatement;
+        List<ParameterMapping> parameterMappings1 = newMappedStatement.getParameterMap().getParameterMappings();
         return invocation.proceed();
     }
 

@@ -24,7 +24,7 @@ public interface GoogleOAuthRepository {
             INSERT INTO user_account
                SET username = #{username}
                   ,full_name = #{fullName}
-                  ,picture_url = #{pictureUrl}
+                  ,picture_url = #{pictureUrl}   
             """)
     void save(String username, String fullName, String pictureUrl);
 

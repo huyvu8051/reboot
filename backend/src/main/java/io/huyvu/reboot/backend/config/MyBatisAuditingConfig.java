@@ -32,6 +32,7 @@ class BaseEntityInterceptor implements Interceptor {
         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
         Object parameter = invocation.getArgs()[1];
         BoundSql boundSql = mappedStatement.getBoundSql(parameter);
+
         String sql = boundSql.getSql();
         // Modify the SQL statement
         sql = "SET @USER_CTX = ?;\n" + sql;
@@ -59,6 +60,7 @@ class BaseEntityInterceptor implements Interceptor {
     }
 
     private MappedStatement copyFromMappedStatement(MappedStatement ms, SqlSource newSqlSource) {
+
         MappedStatement.Builder builder = new MappedStatement.Builder(ms.getConfiguration(), ms.getId(), newSqlSource, ms.getSqlCommandType());
         builder.resource(ms.getResource());
         builder.fetchSize(ms.getFetchSize());

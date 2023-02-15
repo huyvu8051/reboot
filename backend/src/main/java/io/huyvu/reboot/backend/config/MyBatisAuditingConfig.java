@@ -12,13 +12,12 @@ import org.apache.ibatis.plugin.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 @Configuration
-public class MyBatisConfig {
+public class MyBatisAuditingConfig {
     @Bean
     public BaseEntityInterceptor baseEntityInterceptor() {
         return new BaseEntityInterceptor();
@@ -35,22 +34,17 @@ class BaseEntityInterceptor implements Interceptor {
         BoundSql boundSql = mappedStatement.getBoundSql(parameter);
         String sql = boundSql.getSql();
         // Modify the SQL statement
-        sql = "SET @USER_CTX = ?;" + sql;
+        sql = "SET @USER_CTX = ?;\n" + sql;
         Map<String, Object> mapParams = (Map<String, Object>) parameter;
         mapParams.put("USER_CTX", SecurityUtils.currentContext().username());
         // Update the BoundSql object
 
         ParameterMapping pm = new ParameterMapping.Builder(mappedStatement.getConfiguration(), "USER_CTX", Object.class).build();
-
         List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
+        parameterMappings.add(0, pm);
 
-        List<ParameterMapping> pm2 = new ArrayList<>();
-        pm2.add(pm);
-        pm2.addAll(parameterMappings);
-
-        MappedStatement newMappedStatement = copyFromMappedStatement(mappedStatement, new StaticSqlSource(mappedStatement.getConfiguration(), sql, pm2));
+        MappedStatement newMappedStatement = copyFromMappedStatement(mappedStatement, new StaticSqlSource(mappedStatement.getConfiguration(), sql, parameterMappings));
         invocation.getArgs()[0] = newMappedStatement;
-        List<ParameterMapping> parameterMappings1 = newMappedStatement.getParameterMap().getParameterMappings();
         return invocation.proceed();
     }
 

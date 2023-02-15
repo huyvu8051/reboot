@@ -259,21 +259,12 @@ CREATE TABLE IF NOT EXISTS `user_account` (
   `modified_by` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_castjbvpeeus0r8lbpehiu0e4` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table reboot.user_account: ~10 rows (approximately)
+-- Dumping data for table reboot.user_account: ~0 rows (approximately)
 DELETE FROM `user_account`;
 INSERT INTO `user_account` (`id`, `username`, `password`, `full_name`, `picture_url`, `is_deleted`, `created_date`, `created_by`, `modified_date`, `modified_by`) VALUES
-	(1, 'huyvu8051@gmail.com', NULL, 'Vu Van Huy', 'http://github.com', b'0', NULL, NULL, NULL, NULL),
-	(2, 'chung ta', 'cc', 'nguio theo huong hoa', 'github.io', b'0', '20230215122633', NULL, '2023-02-15 13:24:47', '21'),
-	(4, 'chung ta2', NULL, 'nguio theo huong hoa', 'github.io', b'0', '20230215122757', NULL, '20230215122757', NULL),
-	(5, 'chung ta3', NULL, 'nguio theo huong hoa', 'github.io', b'0', '2023-02-15', NULL, NULL, NULL),
-	(6, 'chung ta4', NULL, 'nguio theo huong hoa', 'github.io', b'0', '2023-02-15', NULL, '2023-02-15', NULL),
-	(7, 'chung ta5', NULL, 'nguio theo huong hoa', 'github.io', b'0', '2023-02-15 12:46:40', NULL, '2023-02-15 12:46:40', NULL),
-	(8, 'chung ta6', NULL, 'nguio theo huong hoa', 'github.io', b'0', '2023-02-15 13:02:52', NULL, NULL, NULL),
-	(9, 'chung ta7', NULL, 'nguio theo huong hoa', 'github.io', b'0', '2023-02-15 13:05:30', NULL, '2023-02-15 13:05:30', NULL),
-	(10, 'chung ta8', NULL, 'nguio theo huong hoa', 'github.io', b'0', '2023-02-15 13:06:32', '69', '2023-02-15 13:06:32', '69'),
-	(11, 'chung ta9', NULL, 'nguio theo huong hoa', 'github.io', b'0', '2023-02-15 13:23:07', '69', '2023-02-15 13:23:07', '69');
+	(33, 'huyvu8051@gmail.com', NULL, 'Huy Vũ Văn', 'https://lh3.googleusercontent.com/a/AEdFTp4sfV2EyLIGQeZx72R61YKBWu_TpeJSGtdAXRgwoA=s96-c', b'0', '2023-02-15 17:47:35', 'anonymousUser', '2023-02-15 17:47:35', 'anonymousUser');
 
 -- Dumping structure for table reboot.workspace
 CREATE TABLE IF NOT EXISTS `workspace` (
@@ -316,8 +307,8 @@ DELIMITER //
 CREATE TRIGGER `activity_before_insert` BEFORE INSERT ON `activity` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
-		 NEW.created_by = @USER_CTX_ID,
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.created_by = @USER_CTX,
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -327,7 +318,7 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGIN
 DELIMITER //
 CREATE TRIGGER `activity_before_update` BEFORE UPDATE ON `activity` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -338,8 +329,8 @@ DELIMITER //
 CREATE TRIGGER `attachment_before_insert` BEFORE INSERT ON `attachment` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
-		 NEW.created_by = @USER_CTX_ID,
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.created_by = @USER_CTX,
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -349,7 +340,7 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGIN
 DELIMITER //
 CREATE TRIGGER `attachment_before_update` BEFORE UPDATE ON `attachment` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -360,8 +351,8 @@ DELIMITER //
 CREATE TRIGGER `board_before_insert` BEFORE INSERT ON `board` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
-		 NEW.created_by = @USER_CTX_ID,
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.created_by = @USER_CTX,
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -371,7 +362,7 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGIN
 DELIMITER //
 CREATE TRIGGER `board_before_update` BEFORE UPDATE ON `board` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -382,8 +373,8 @@ DELIMITER //
 CREATE TRIGGER `board_member_before_insert` BEFORE INSERT ON `board_member` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
-		 NEW.created_by = @USER_CTX_ID,
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.created_by = @USER_CTX,
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -393,7 +384,7 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGIN
 DELIMITER //
 CREATE TRIGGER `board_member_before_update` BEFORE UPDATE ON `board_member` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -404,8 +395,8 @@ DELIMITER //
 CREATE TRIGGER `card_before_insert` BEFORE INSERT ON `card` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
-		 NEW.created_by = @USER_CTX_ID,
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.created_by = @USER_CTX,
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -415,7 +406,7 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGIN
 DELIMITER //
 CREATE TRIGGER `card_before_update` BEFORE UPDATE ON `card` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -426,8 +417,8 @@ DELIMITER //
 CREATE TRIGGER `card_member_before_insert` BEFORE INSERT ON `card_member` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
-		 NEW.created_by = @USER_CTX_ID,
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.created_by = @USER_CTX,
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -437,7 +428,7 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGIN
 DELIMITER //
 CREATE TRIGGER `card_member_before_update` BEFORE UPDATE ON `card_member` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -448,8 +439,8 @@ DELIMITER //
 CREATE TRIGGER `checklist_before_insert` BEFORE INSERT ON `checklist` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
-		 NEW.created_by = @USER_CTX_ID,
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.created_by = @USER_CTX,
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -459,7 +450,7 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGIN
 DELIMITER //
 CREATE TRIGGER `checklist_before_update` BEFORE UPDATE ON `checklist` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -470,8 +461,8 @@ DELIMITER //
 CREATE TRIGGER `checklist_item_before_insert` BEFORE INSERT ON `checklist_item` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
-		 NEW.created_by = @USER_CTX_ID,
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.created_by = @USER_CTX,
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -481,7 +472,7 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGIN
 DELIMITER //
 CREATE TRIGGER `checklist_item_before_update` BEFORE UPDATE ON `checklist_item` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -492,8 +483,8 @@ DELIMITER //
 CREATE TRIGGER `labeled_before_insert` BEFORE INSERT ON `labeled` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
-		 NEW.created_by = @USER_CTX_ID,
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.created_by = @USER_CTX,
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -503,7 +494,7 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGIN
 DELIMITER //
 CREATE TRIGGER `labeled_before_update` BEFORE UPDATE ON `labeled` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -514,8 +505,8 @@ DELIMITER //
 CREATE TRIGGER `label_before_insert` BEFORE INSERT ON `label` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
-		 NEW.created_by = @USER_CTX_ID,
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.created_by = @USER_CTX,
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -525,7 +516,7 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGIN
 DELIMITER //
 CREATE TRIGGER `label_before_update` BEFORE UPDATE ON `label` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -536,8 +527,8 @@ DELIMITER //
 CREATE TRIGGER `lizt_before_insert` BEFORE INSERT ON `lizt` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
-		 NEW.created_by = @USER_CTX_ID,
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.created_by = @USER_CTX,
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -547,7 +538,7 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGIN
 DELIMITER //
 CREATE TRIGGER `lizt_before_update` BEFORE UPDATE ON `lizt` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -558,8 +549,8 @@ DELIMITER //
 CREATE TRIGGER `user_account_before_insert` BEFORE INSERT ON `user_account` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
-		 NEW.created_by = @USER_CTX_ID,
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.created_by = @USER_CTX,
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -569,7 +560,7 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGIN
 DELIMITER //
 CREATE TRIGGER `user_account_before_update` BEFORE UPDATE ON `user_account` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -580,8 +571,8 @@ DELIMITER //
 CREATE TRIGGER `workspace_before_insert` BEFORE INSERT ON `workspace` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
-		 NEW.created_by = @USER_CTX_ID,
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.created_by = @USER_CTX,
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -591,7 +582,7 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGIN
 DELIMITER //
 CREATE TRIGGER `workspace_before_update` BEFORE UPDATE ON `workspace` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -602,8 +593,8 @@ DELIMITER //
 CREATE TRIGGER `workspace_member_before_insert` BEFORE INSERT ON `workspace_member` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
-		 NEW.created_by = @USER_CTX_ID,
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.created_by = @USER_CTX,
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -613,7 +604,7 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGIN
 DELIMITER //
 CREATE TRIGGER `workspace_member_before_update` BEFORE UPDATE ON `workspace_member` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX_ID;
+		 NEW.modified_by = @USER_CTX;
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;

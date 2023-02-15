@@ -323,4 +323,5 @@ frontend/package-lock.json
 
 
 backend/target
+backend/src/main/resources/public
 .idea

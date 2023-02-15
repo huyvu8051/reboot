@@ -1,9 +1,33 @@
 package io.huyvu.reboot.backend.auth.google.v1;
 
 import io.huyvu.reboot.backend.entity.UserAccount;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 
-public interface GoogleOAuthRepository extends JpaRepository<UserAccount, Long> {
+@Mapper
+public interface GoogleOAuthRepository {
+
+    @Select("""
+            SELECT id
+                  ,username
+                  ,full_name
+                  ,picture_url
+              FROM user_account
+             WHERE username = #{username}
+                   AND is_deleted = false
+            """)
     UserAccount findOneByUsername(String username);
 
+    @Insert("""
+            INSERT INTO user_account
+               SET username = #{username}
+                  ,full_name = #{fullName}
+                  ,picture_url = #{pictureUrl}   
+            """)
+    void save(String username, String fullName, String pictureUrl);
+
 }
+
+

@@ -1,7 +1,9 @@
 package io.huyvu.reboot.backend.register;
 
 import io.huyvu.reboot.backend.entity.UserAccount;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.apache.ibatis.annotations.Mapper;
 
-public interface RegisterRepository extends JpaRepository<UserAccount, Long> {
+@Mapper
+public interface RegisterRepository {
+    void save(UserAccount userAccount);
 }

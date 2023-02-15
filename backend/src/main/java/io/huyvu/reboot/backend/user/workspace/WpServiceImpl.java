@@ -12,8 +12,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Tuple;
-import java.math.BigInteger;
 import java.util.List;
 
 @AllArgsConstructor
@@ -50,8 +48,6 @@ public class WpServiceImpl implements WpService {
     @Override
     public WpDetails getDetails(long wpId, long id) {
 
-        Tuple rs = wpRepo.findWpDetails(wpId, id);
-        BigInteger rsId = rs.get("id", BigInteger.class);
-        return new WpDetails(rsId.longValue(),rs.get("title", String.class), rs.get("pictureUrl", String.class));
+        return wpRepo.findWpDetails(wpId, id);
     }
 }

@@ -27,12 +27,8 @@ public class GoogleOAuthController {
 
         if (userAccount == null) {
             // Create new Account
-            UserAccount entity = new UserAccount();
-            entity.setUsername(ggAccToken.email());
-            entity.setFullName(ggAccToken.name());
-            entity.setPictureUrl(ggAccToken.pictureUrl());
-
-            userAccount = authRepo.save(entity);
+            authRepo.save(ggAccToken.email(), ggAccToken.name(), ggAccToken.pictureUrl());
+            userAccount = authRepo.findOneByUsername(ggAccToken.email());
         }
 
         List<String> roles = List.of("USER", "ADMIN");

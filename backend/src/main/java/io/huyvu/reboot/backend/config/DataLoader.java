@@ -41,20 +41,6 @@ public class DataLoader implements ApplicationRunner {
         // start time
         long t0 = System.nanoTime();
 
-        List<UserAccount> l = registerRepo.findAll();
-        if(l.size() + 1 > 0){
-            return;
-        }
-
-
-        List<UserAccount> users = IntStream.range(0, 10).mapToObj(e->{
-
-            Name name = faker.name();
-            return new UserAccount(name.username()+faker.number().numberBetween(0, 999), name.fullName(), passwordEncoder.encode("123"));
-        }).toList();
-
-        registerRepo.saveAll(users);
-        registerRepo.save(new UserAccount("huy", "Vu Van Huy", passwordEncoder.encode("123")));
         // end time
         long t1 = System.nanoTime();
 

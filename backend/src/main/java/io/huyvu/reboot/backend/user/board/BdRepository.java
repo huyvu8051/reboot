@@ -3,9 +3,8 @@ package io.huyvu.reboot.backend.user.board;
 import io.huyvu.reboot.backend.entity.Board;
 import io.huyvu.reboot.backend.entity.UserAccount;
 import io.huyvu.reboot.backend.entity.Workspace;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,8 +13,9 @@ import java.util.Optional;
  * @Author HuyVu
  * @CreatedDate 2/13/2023 4:35 PM
  */
-public interface BdRepository extends JpaRepository<Board, Long> {
-    @Query(value = """
+@Mapper
+public interface BdRepository {
+    @Select(value = """
             SELECT id
                   ,name
                   ,background_image AS backgroundImage
@@ -23,25 +23,27 @@ public interface BdRepository extends JpaRepository<Board, Long> {
               FROM board
              WHERE id IN (SELECT board_id
                             FROM board_member
-                           WHERE user_id = :userId)
-                   AND workspace_id = :wpId
+                           WHERE user_id = #{userId})
+                   AND workspace_id = #{wpId}}
                    AND is_deleted = 0
-            """, nativeQuery = true)
-    List<BoardLsItem> findAllOwnBoard(long wpId,long userId);
+            """)
+    List<BoardLsItem> findAllOwnBoard(long wpId, long userId);
 
-    @Query("""
+    @Select("""
             SELECT u
               FROM UserAccount u
-             WHERE id = :id
+             WHERE id = #{id}
                    AND isDeleted = false
             """)
-    Optional<UserAccount> findUser(@Param("id") long id);
+    Optional<UserAccount> findUser(long id);
 
-    @Query("""
+    @Select("""
             SELECT w 
               FROM Workspace w
-             WHERE id = :id
+             WHERE id = #{id}
                    AND isDeleted = false
             """)
-    Optional<Workspace> findWpById(@Param("id") long wpId);
+    Optional<Workspace> findWpById(long wpId);
+
+    Board save(Board b);
 }

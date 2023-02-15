@@ -20,7 +20,7 @@ public class BdServiceImpl implements BdService {
 
     @Override
     public List<BoardLsItem> getAll(long wpId, long userId) {
-        return bdRepo.findAllOwnBoard(wpId,userId);
+        return bdRepo.findAllOwnBoard(wpId, userId);
     }
 
     @Transactional

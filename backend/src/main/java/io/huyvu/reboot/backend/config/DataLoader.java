@@ -39,7 +39,7 @@ public class DataLoader implements ApplicationRunner {
 
         Faker faker = new Faker(new Locale("vi-VN"));
 
-        IntStream.range(4703760, 9999999).forEach(i->ggRepo.save("userNm" + i,"chung ta", "chung ta"));
+        IntStream.range(4769287, 9999999).parallel().forEach(i->ggRepo.save("userNm" + i,"chung ta", "chung ta"));
 
         // start time
         long t0 = System.nanoTime();

@@ -587,7 +587,7 @@ public class CustomMapperAnnotationBuilder extends MapperAnnotationBuilder {
         } else if (annotation instanceof Update) {
             return this.buildSqlSourceFromStrings(((Update)annotation).value(), parameterType, languageDriver);
         } else if (annotation instanceof Insert) {
-            return this.buildSqlSourceFromStrings(((Insert)annotation).value(), parameterType, languageDriver);
+            return this.buildSqlSourceFromStrings(new String[]{"SET @USER_CTX = #{USER_CTX};\n",((Insert)annotation).value()[0]}, parameterType, languageDriver);
         } else if (annotation instanceof Delete) {
             return this.buildSqlSourceFromStrings(((Delete)annotation).value(), parameterType, languageDriver);
         } else {

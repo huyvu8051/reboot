@@ -40,16 +40,4 @@ public class MyBatisConfigCustomizer extends Configuration {
     public boolean hasMapper(Class<?> type) {
         return customMapperRegistry.hasMapper(type);
     }
-
-    public boolean hasStatement(String statementName) {
-        return this.hasStatement(statementName, true);
-    }
-
-    public boolean hasStatement(String statementName, boolean validateIncompleteStatements) {
-        if (validateIncompleteStatements) {
-            this.buildAllStatements();
-        }
-
-        return this.mappedStatements.containsKey(statementName);
-    }
 }

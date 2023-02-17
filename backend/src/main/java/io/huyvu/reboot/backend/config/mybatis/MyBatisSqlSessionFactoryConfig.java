@@ -12,7 +12,6 @@ import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.mybatis.spring.boot.autoconfigure.SqlSessionFactoryBeanCustomizer;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -30,8 +29,7 @@ import java.util.stream.Stream;
 
 @org.springframework.context.annotation.Configuration
 public class MyBatisSqlSessionFactoryConfig {
-    @Autowired
-    private DataSource dataSource;
+
 
     private final MybatisProperties properties;
     private final Interceptor[] interceptors;
@@ -44,17 +42,17 @@ public class MyBatisSqlSessionFactoryConfig {
 
     MyBatisSqlSessionFactoryConfig(MybatisProperties properties, ObjectProvider<Interceptor[]> interceptorsProvider, ObjectProvider<TypeHandler[]> typeHandlersProvider, ObjectProvider<LanguageDriver[]> languageDriversProvider, ResourceLoader resourceLoader, ObjectProvider<DatabaseIdProvider> databaseIdProvider, ObjectProvider<List<ConfigurationCustomizer>> configurationCustomizersProvider, ObjectProvider<List<SqlSessionFactoryBeanCustomizer>> sqlSessionFactoryBeanCustomizers) {
         this.properties = properties;
-        this.interceptors = (Interceptor[])interceptorsProvider.getIfAvailable();
-        this.typeHandlers = (TypeHandler[])typeHandlersProvider.getIfAvailable();
-        this.languageDrivers = (LanguageDriver[])languageDriversProvider.getIfAvailable();
+        this.interceptors = (Interceptor[]) interceptorsProvider.getIfAvailable();
+        this.typeHandlers = (TypeHandler[]) typeHandlersProvider.getIfAvailable();
+        this.languageDrivers = (LanguageDriver[]) languageDriversProvider.getIfAvailable();
         this.resourceLoader = resourceLoader;
-        this.databaseIdProvider = (DatabaseIdProvider)databaseIdProvider.getIfAvailable();
-        this.configurationCustomizers = (List)configurationCustomizersProvider.getIfAvailable();
-        this.sqlSessionFactoryBeanCustomizers = (List)sqlSessionFactoryBeanCustomizers.getIfAvailable();
+        this.databaseIdProvider = (DatabaseIdProvider) databaseIdProvider.getIfAvailable();
+        this.configurationCustomizers = (List) configurationCustomizersProvider.getIfAvailable();
+        this.sqlSessionFactoryBeanCustomizers = (List) sqlSessionFactoryBeanCustomizers.getIfAvailable();
     }
 
     @Bean
-    public SqlSessionFactory sqlSessionFactory() throws Exception {
+    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
 
         SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
 
@@ -123,8 +121,8 @@ public class MyBatisSqlSessionFactoryConfig {
         if (!CollectionUtils.isEmpty(this.sqlSessionFactoryBeanCustomizers)) {
             Iterator var2 = this.sqlSessionFactoryBeanCustomizers.iterator();
 
-            while(var2.hasNext()) {
-                SqlSessionFactoryBeanCustomizer customizer = (SqlSessionFactoryBeanCustomizer)var2.next();
+            while (var2.hasNext()) {
+                SqlSessionFactoryBeanCustomizer customizer = (SqlSessionFactoryBeanCustomizer) var2.next();
                 customizer.customize(factory);
             }
         }
@@ -139,14 +137,17 @@ public class MyBatisSqlSessionFactoryConfig {
         }
 
         if (configuration != null && coreConfiguration != null) {
-            //coreConfiguration.applyTo(configuration);
+            /**
+             * todo unknown coreConfiguration
+             coreConfiguration.applyTo(configuration);
+            */
         }
 
         if (configuration != null && !CollectionUtils.isEmpty(this.configurationCustomizers)) {
             Iterator var4 = this.configurationCustomizers.iterator();
 
-            while(var4.hasNext()) {
-                ConfigurationCustomizer customizer = (ConfigurationCustomizer)var4.next();
+            while (var4.hasNext()) {
+                ConfigurationCustomizer customizer = (ConfigurationCustomizer) var4.next();
                 customizer.customize(configuration);
             }
         }

@@ -31,12 +31,16 @@ public interface GoogleOAuthRepository {
             """)
     UserAccount findOneById(long id);
 
-    @Insert("""
+    @Insert({"""
+            SET @BAC = '';
+            ""","""
             INSERT INTO user_account
                SET username = #{username}
                   ,full_name = #{fullName}
                   ,picture_url = #{pictureUrl}   
-            """)
+            """, """
+            ;SET @DF = '';
+            """})
     void save(String username, String fullName, String pictureUrl);
 
 }

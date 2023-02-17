@@ -8,16 +8,7 @@ import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.ibatis.annotations.Arg;
@@ -581,13 +572,22 @@ public class CustomMapperAnnotationBuilder extends MapperAnnotationBuilder {
         return answer;
     }
 
+    private String[] injectCtx(String[] src){
+        // inject set context value
+        String[] des = new String[src.length + 1];
+        des[0] = "SET @USER_CTX = #{USER_CTX};\n";
+        System.arraycopy(src, 0, des, 1, src.length);
+
+        return des;
+    }
+
     private SqlSource buildSqlSource(Annotation annotation, Class<?> parameterType, LanguageDriver languageDriver, Method method) {
         if (annotation instanceof Select) {
             return this.buildSqlSourceFromStrings(((Select)annotation).value(), parameterType, languageDriver);
         } else if (annotation instanceof Update) {
-            return this.buildSqlSourceFromStrings(((Update)annotation).value(), parameterType, languageDriver);
+            return this.buildSqlSourceFromStrings(injectCtx(((Update)annotation).value()), parameterType, languageDriver);
         } else if (annotation instanceof Insert) {
-            return this.buildSqlSourceFromStrings(new String[]{"SET @USER_CTX = #{USER_CTX};\n",((Insert)annotation).value()[0]}, parameterType, languageDriver);
+            return this.buildSqlSourceFromStrings(injectCtx(((Insert) annotation).value()), parameterType, languageDriver);
         } else if (annotation instanceof Delete) {
             return this.buildSqlSourceFromStrings(((Delete)annotation).value(), parameterType, languageDriver);
         } else {

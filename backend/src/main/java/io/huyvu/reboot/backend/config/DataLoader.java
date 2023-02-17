@@ -2,10 +2,13 @@ package io.huyvu.reboot.backend.config;
 
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
+import io.huyvu.reboot.backend.auth.google.v1.GoogleOAuthRepository;
 import io.huyvu.reboot.backend.entity.UserAccount;
 import io.huyvu.reboot.backend.register.RegisterRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +28,7 @@ public class DataLoader implements ApplicationRunner {
 
     private final PasswordEncoder passwordEncoder;
     private final RegisterRepository registerRepo;
+    private final GoogleOAuthRepository ggRepo;
 
 
     public void run(ApplicationArguments args) {
@@ -35,8 +39,7 @@ public class DataLoader implements ApplicationRunner {
 
         Faker faker = new Faker(new Locale("vi-VN"));
 
-
-        long date = System.currentTimeMillis();
+        IntStream.range(4659416, 9999999).forEach(i->ggRepo.save("userNm" + i,"chung ta", "chung ta"));
 
         // start time
         long t0 = System.nanoTime();

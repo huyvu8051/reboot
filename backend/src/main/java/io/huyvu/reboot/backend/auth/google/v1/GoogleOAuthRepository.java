@@ -20,6 +20,17 @@ public interface GoogleOAuthRepository {
             """)
     UserAccount findOneByUsername(String username);
 
+    @Select("""
+            SELECT id
+                  ,username
+                  ,full_name
+                  ,picture_url
+              FROM user_account
+             WHERE id = #{id}
+                   AND is_deleted = false
+            """)
+    UserAccount findOneById(long id);
+
     @Insert("""
             INSERT INTO user_account
                SET username = #{username}

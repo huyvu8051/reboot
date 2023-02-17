@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.config;
+package io.huyvu.reboot.backend.config.mybatis;
 
 import io.huyvu.reboot.backend.util.SecurityUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -33,19 +33,11 @@ class BaseEntityInterceptor implements Interceptor {
         Object parameter = invocation.getArgs()[1];
         BoundSql boundSql = mappedStatement.getBoundSql(parameter);
 
-        String sql = boundSql.getSql();
-        // Modify the SQL statement
-        sql = "SET @USER_CTX = ?;\n" + sql;
         Map<String, Object> mapParams = (Map<String, Object>) parameter;
         mapParams.put("USER_CTX", SecurityUtils.currentContext().username());
         // Update the BoundSql object
 
-        ParameterMapping pm = new ParameterMapping.Builder(mappedStatement.getConfiguration(), "USER_CTX", Object.class).build();
-        List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
-        parameterMappings.add(0, pm);
 
-        MappedStatement newMappedStatement = copyFromMappedStatement(mappedStatement, new StaticSqlSource(mappedStatement.getConfiguration(), sql, parameterMappings));
-        invocation.getArgs()[0] = newMappedStatement;
         return invocation.proceed();
     }
 
@@ -77,6 +69,3 @@ class BaseEntityInterceptor implements Interceptor {
         return builder.build();
     }
 }
-
-
-

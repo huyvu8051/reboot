@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import {persistor, store} from './store'
 import {CircularProgress} from '@mui/material'
-import {BrowserRouter, RouterProvider} from 'react-router-dom'
+import {RouterProvider} from 'react-router-dom'
 import {SnackbarProvider} from 'notistack'
 import {SnackbarUtilsConfiguration} from './util/snackbar-utils'
 import {Provider} from 'react-redux'

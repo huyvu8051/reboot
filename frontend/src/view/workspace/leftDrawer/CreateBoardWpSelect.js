@@ -2,18 +2,21 @@ import {FormControl, InputLabel, MenuItem, Select} from '@mui/material'
 import * as React from 'react'
 import {useEffect, useState} from 'react'
 import api from '../../../service/api'
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 
 const CreateBoardWpSelect = (props) => {
     const [value, setValue] = useState('')
     const [wps, setWps] = useState([])
     const {wpId} = useParams();
     useEffect(() => {
-        api.post('/api/v1/user/workspace')
-            .then(resp => {
-                setWps(resp.data)
-                setValue(wpId)
-            })
+
+        // api.post('/api/v1/user/workspace')
+        //     .then(resp => {
+        //         setWps(resp.data)
+        //         setValue(wpId)
+        //     })
+
+
     }, [wpId])
 
     const handleChange = (event) => {

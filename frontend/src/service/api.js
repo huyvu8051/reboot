@@ -3,6 +3,26 @@ import {$error, $success} from '../util/snackbar-utils'
 import {store} from '../store'
 import {refreshToken} from '../store/authenticationSlice'
 
+class MyPromise extends Promise {
+    constructor(executor) {
+        super(executor);
+        this.catched = false
+    }
+
+    catch(onRejected) {
+        this.catched = true
+        return super.catch(onRejected);
+    }
+
+    finally(onfinally) {
+
+        return super.finally(()=>{
+            console.log('finally check', this.catched)
+            onfinally()
+        })
+    }
+}
+
 
 const instance = axios.create()
 instance.interceptors.request.use((config) => {
@@ -27,9 +47,17 @@ instance.interceptors.response.use(response => {
     }
     return response
 }, err => {
-    // console.log(err)
-    $error(err.message)
-    return Promise.reject(err)
+
+    const promise =  MyPromise.reject('test')
+
+    console.log('promise', promise)
+    promise.finally(()=>console.log('finally'))
+
+    // promise.finally(()=>console.log('finally'))
+    // promise.catch(()=>console.log('promise catch exe'))
+
+    return promise
+
 })
 
 export default instance

@@ -6,7 +6,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {Avatar, IconButton, Menu, MenuItem} from '@mui/material'
 
 
-export default () => {
+const ChangeWpBtn = () => {
     const [anchorEl, setAnchorEl] = useState(null)
     const navigate = useNavigate()
     const handleWpSelectMenu = (event) => {
@@ -24,8 +24,10 @@ export default () => {
     const [wps, setWps] = useState([])
 
     useEffect(() => {
-        api.post('/api/v1/user/workspace')
-            .then(resp => setWps(resp.data))
+
+        // api.post('/api/v1/user/workspace')
+        //     .then(resp => setWps(resp.data))
+
     }, [])
     return (
         <>
@@ -72,4 +74,5 @@ export default () => {
             </Menu>
         </>
     )
-}
+};
+export default ChangeWpBtn

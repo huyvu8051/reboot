@@ -1,14 +1,10 @@
 package io.huyvu.reboot.backend.config;
 
 import com.github.javafaker.Faker;
-import com.github.javafaker.Name;
 import io.huyvu.reboot.backend.auth.google.v1.GoogleOAuthRepository;
-import io.huyvu.reboot.backend.entity.UserAccount;
 import io.huyvu.reboot.backend.register.RegisterRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import java.util.stream.IntStream;
 
 
 @Component
@@ -39,7 +34,7 @@ public class DataLoader implements ApplicationRunner {
 
         Faker faker = new Faker(new Locale("vi-VN"));
 
-        IntStream.range(6457885, 9999999).parallel().forEach(i->ggRepo.save("userNm" + i,"chung ta", "chung ta"));
+//        IntStream.range(6457885, 9999999).parallel().forEach(i->ggRepo.save("userNm" + i,"chung ta", "chung ta"));
 
         // start time
         long t0 = System.nanoTime();

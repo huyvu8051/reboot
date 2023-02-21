@@ -2,7 +2,7 @@ import {FormControl, InputLabel, MenuItem, Select} from '@mui/material'
 import * as React from 'react'
 import {useState} from 'react'
 
-export default (props) => {
+let CreateBoardVisibilitySelect = (props) => {
     const [value, setValue] = useState('')
 
     const handleChange = (event) => {
@@ -41,4 +41,5 @@ export default (props) => {
             </FormControl>
         </>
     )
-}
+};
+export default CreateBoardVisibilitySelect

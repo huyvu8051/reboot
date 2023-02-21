@@ -1,5 +1,4 @@
-export default function (){
-    return <>
-        Members
-    </>
-}
+let Members = () => <>
+    Members
+</>;
+export default Members

@@ -3,7 +3,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {Menu, MenuItem} from '@mui/material'
 import * as React from 'react'
 
-export default () => {
+let SettingWpBtn = () => {
     const [settingAnchorEl, setSettingAnchorEl] = React.useState(null)
 
 
@@ -44,4 +44,5 @@ export default () => {
             </Menu>
         </>
     )
-}
+};
+export default SettingWpBtn

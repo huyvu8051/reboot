@@ -1,4 +1,4 @@
-import {Avatar, Link, ListItemAvatar} from '@mui/material'
+import {Avatar, Link} from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import Divider from '@mui/material/Divider'
 import List from '@mui/material/List'
@@ -23,10 +23,9 @@ import NewBoardBtn from './CreateBoardBtn'
 
 const drawerWidth = 240
 
-export default (props) => {
+let LeftDrawer = (props) => {
     const navigate = useNavigate()
     const {wpId} = useParams()
-    const bdId = 'chung ta'
 
     return (
         <Drawer
@@ -121,4 +120,5 @@ export default (props) => {
             </List>
 
         </Drawer>)
-}
+};
+export default LeftDrawer

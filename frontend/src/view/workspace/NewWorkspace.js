@@ -7,7 +7,7 @@ import api from '../../service/api'
 import {$success} from '../../util/snackbar-utils'
 import {useNavigate} from 'react-router-dom'
 
-export default () => {
+const NewWorkspace = () => {
     const wpNmTxtField = useRef()
     const navigate = useNavigate()
     const handleCreateNewWp = () => {
@@ -36,4 +36,5 @@ export default () => {
                    }}
         />
     )
-}
+};
+export default NewWorkspace

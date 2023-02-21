@@ -11,18 +11,18 @@ class MyPromise extends Promise {
 
     catch(onRejected) {
         this.catched = true
+        console.log('regist catch')
         return super.catch(onRejected);
     }
 
     finally(onfinally) {
-
-        return super.finally(()=>{
+        console.log('regist finally')
+        return super.finally(() => {
             console.log('finally check', this.catched)
-            onfinally()
+            return onfinally()
         })
     }
 }
-
 
 const instance = axios.create()
 instance.interceptors.request.use((config) => {
@@ -47,17 +47,25 @@ instance.interceptors.response.use(response => {
     }
     return response
 }, err => {
-
-    const promise =  MyPromise.reject('test')
-
-    console.log('promise', promise)
-    promise.finally(()=>console.log('finally'))
-
-    // promise.finally(()=>console.log('finally'))
-    // promise.catch(()=>console.log('promise catch exe'))
-
-    return promise
+    return Promise.reject(err)
 
 })
+const methods = ['request', 'get', 'delete', 'head', 'options', 'post', 'put', 'patch', 'postForm', 'putForm', 'patchForm']
+
+methods.forEach((method) => {
+    instance[method] = (url, data, config) => {
+        let promise = new MyPromise((resolve, reject) => {
+            axios[method](url, data, config)
+                .then((response) => {
+                    resolve(response.data);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        })
+        promise.finally(() => null)
+        return promise;
+    };
+});
 
 export default instance

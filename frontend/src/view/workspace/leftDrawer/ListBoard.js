@@ -18,11 +18,10 @@ const ListBoard = () => {
 
     useEffect(() => {
         const fetchBoardLs = () => {
-            const resp = api.post('/api/v1/user/board', null, {
+            api.post('/api/v1/user/board', null, {
                 params: {wpId}
-            })
+            }).catch(()=>null)
 
-            console.log('re', resp)
 
 
             // .then(resp => {

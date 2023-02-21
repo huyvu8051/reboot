@@ -41,5 +41,5 @@ let CreateBoardVisibilitySelect = (props) => {
             </FormControl>
         </>
     )
-};
+}
 export default CreateBoardVisibilitySelect

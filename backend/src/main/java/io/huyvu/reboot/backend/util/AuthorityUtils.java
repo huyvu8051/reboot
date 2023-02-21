@@ -2,27 +2,27 @@
  * @Author HuyVu
  * @CreatedDate 2/13/2023 1:59 PM
  */
-package io.huyvu.reboot.backend.util;
+package io.huyvu.reboot.backend.util
 
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.GrantedAuthority
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList
+import java.util.List
 
 public class AuthorityUtils {
     public static List<GrantedAuthority> toAuthorities(List<String> roles) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
+        List<GrantedAuthority> authorities = new ArrayList<>()
         for (String role : roles) {
-            authorities.add((GrantedAuthority) () -> role);
+            authorities.add((GrantedAuthority) () -> role)
         }
-        return authorities;
+        return authorities
     }
 
     public static List<String> toRoles(List<GrantedAuthority> authorities) {
-        List<String> roles = new ArrayList<>();
+        List<String> roles = new ArrayList<>()
         for (GrantedAuthority auth : authorities) {
-            roles.add(auth.getAuthority());
+            roles.add(auth.getAuthority())
         }
-        return roles;
+        return roles
     }
 }

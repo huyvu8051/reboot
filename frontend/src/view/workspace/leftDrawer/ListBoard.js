@@ -6,22 +6,25 @@ import * as React from 'react'
 import {useEffect, useState} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 import api from '../../../service/api'
-import {$off, $on} from "../../../util/eventbus-utils";
+import {$off, $on} from "../../../util/eventbus-utils"
 
 
 const ListBoard = () => {
 
     const [boards, setBoards] = useState([])
     const navigate = useNavigate()
-    const {wpId} = useParams();
+    const {wpId} = useParams()
 
 
     useEffect(() => {
         const fetchBoardLs = () => {
             api.post('/api/v1/user/board', null, {
                 params: {wpId}
-            }).catch(()=>null)
+            }).then(resp => console.log('use then', resp))
 
+                .then(()=>null)
+                .catch((err) => console.log('use catch: ', err))
+                .finally(()=>console.log('use finally'))
 
 
             // .then(resp => {
@@ -56,5 +59,5 @@ const ListBoard = () => {
             }
         </>
     )
-};
+}
 export default ListBoard

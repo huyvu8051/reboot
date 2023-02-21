@@ -11,17 +11,17 @@ import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
 import NewBoardWpSelect from './CreateBoardWpSelect'
 import NewBoardVisibilitySelect from './CreateBoardVisibilitySelect'
-import {useNavigate} from "react-router-dom";
-import api from "../../../service/api";
-import {$success} from "../../../util/snackbar-utils";
-import {$dispatch} from "../../../util/eventbus-utils";
+import {useNavigate} from "react-router-dom"
+import api from "../../../service/api"
+import {$success} from "../../../util/snackbar-utils"
+import {$dispatch} from "../../../util/eventbus-utils"
 
 const CreateBoardBtn = () => {
     const [anchorEl, setAnchorEl] = React.useState(null)
 
-    const titleRef = useRef();
-    const wpRef = useRef();
-    const visibilityRef = useRef();
+    const titleRef = useRef()
+    const wpRef = useRef()
+    const visibilityRef = useRef()
 
     const handlePopoverClose = () => {
         setAnchorEl(null)
@@ -33,14 +33,14 @@ const CreateBoardBtn = () => {
         setAnchorEl(event.currentTarget)
     }
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
 
     function handleCreateClick() {
         //console.log(title, wpRef.current.value, visibilityRef.current.value)
-        const title = titleRef.current.value;
-        const wp = wpRef.current.value;
-        const visibility = visibilityRef.current.value;
+        const title = titleRef.current.value
+        const wp = wpRef.current.value
+        const visibility = visibilityRef.current.value
         api.put('/api/v1/user/board', {
             title,
             wp,
@@ -122,5 +122,5 @@ const CreateBoardBtn = () => {
             </Popover>
         </>
     )
-};
+}
 export default CreateBoardBtn

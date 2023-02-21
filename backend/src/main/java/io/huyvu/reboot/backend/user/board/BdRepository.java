@@ -1,13 +1,13 @@
-package io.huyvu.reboot.backend.user.board;
+package io.huyvu.reboot.backend.user.board
 
-import io.huyvu.reboot.backend.entity.Board;
-import io.huyvu.reboot.backend.entity.UserAccount;
-import io.huyvu.reboot.backend.entity.Workspace;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import io.huyvu.reboot.backend.entity.Board
+import io.huyvu.reboot.backend.entity.UserAccount
+import io.huyvu.reboot.backend.entity.Workspace
+import org.apache.ibatis.annotations.Mapper
+import org.apache.ibatis.annotations.Select
 
-import java.util.List;
-import java.util.Optional;
+import java.util.List
+import java.util.Optional
 
 /**
  * @Author HuyVu
@@ -27,7 +27,7 @@ public interface BdRepository {
                    AND workspace_id = #{wpId}}
                    AND is_deleted = 0
             """)
-    List<BoardLsItem> findAllOwnBoard(long wpId, long userId);
+    List<BoardLsItem> findAllOwnBoard(long wpId, long userId)
 
     @Select("""
             SELECT u
@@ -35,7 +35,7 @@ public interface BdRepository {
              WHERE id = #{id}
                    AND isDeleted = false
             """)
-    Optional<UserAccount> findUser(long id);
+    Optional<UserAccount> findUser(long id)
 
     @Select("""
             SELECT w 
@@ -43,7 +43,7 @@ public interface BdRepository {
              WHERE id = #{id}
                    AND isDeleted = false
             """)
-    Optional<Workspace> findWpById(long wpId);
+    Optional<Workspace> findWpById(long wpId)
 
-    Board save(Board b);
+    Board save(Board b)
 }

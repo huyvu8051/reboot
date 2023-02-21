@@ -1,8 +1,8 @@
-package io.huyvu.reboot.backend.entity;
+package io.huyvu.reboot.backend.entity
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor
+import lombok.Getter
+import lombok.NoArgsConstructor
 
 
 
@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Getter
 
 public class Labeled extends GenericEntity {
-    private LabeledKey key = new LabeledKey();
+    private LabeledKey key = new LabeledKey()
 }

@@ -74,5 +74,5 @@ const ChangeWpBtn = () => {
             </Menu>
         </>
     )
-};
+}
 export default ChangeWpBtn

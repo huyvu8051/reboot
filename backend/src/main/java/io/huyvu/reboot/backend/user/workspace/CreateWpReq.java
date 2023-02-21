@@ -2,11 +2,11 @@
  * @Author HuyVu
  * @CreatedDate 2/13/2023 11:19 AM
  */
-package io.huyvu.reboot.backend.user.workspace;
+package io.huyvu.reboot.backend.user.workspace
 
-import lombok.Data;
+import lombok.Data
 
 @Data
 public class CreateWpReq {
-    private String wpNm;
+    private String wpNm
 }

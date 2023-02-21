@@ -1,9 +1,9 @@
-package io.huyvu.reboot.backend.entity;
+package io.huyvu.reboot.backend.entity
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor
+import lombok.Getter
+import lombok.NoArgsConstructor
 
 
 @NoArgsConstructor
@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Getter
 
 public class CardMember extends GenericEntity {
-    private CardMemberKey key = new CardMemberKey();
-    private boolean notification;
+    private CardMemberKey key = new CardMemberKey()
+    private boolean notification
 }

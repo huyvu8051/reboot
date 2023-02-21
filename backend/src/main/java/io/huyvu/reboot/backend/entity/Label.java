@@ -1,8 +1,8 @@
-package io.huyvu.reboot.backend.entity;
+package io.huyvu.reboot.backend.entity
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor
+import lombok.Getter
+import lombok.NoArgsConstructor
 
 
 
@@ -14,11 +14,11 @@ public class Label extends GenericEntity {
 
     
     
-    private Long id;
+    private Long id
 
-    private String title;
-    private String color;
+    private String title
+    private String color
 
     
-    private Board board;
+    private Board board
 }

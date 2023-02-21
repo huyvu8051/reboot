@@ -120,5 +120,5 @@ let LeftDrawer = (props) => {
             </List>
 
         </Drawer>)
-};
+}
 export default LeftDrawer

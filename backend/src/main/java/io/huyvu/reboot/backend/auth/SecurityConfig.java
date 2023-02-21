@@ -1,16 +1,16 @@
-package io.huyvu.reboot.backend.auth;
+package io.huyvu.reboot.backend.auth
 
-import io.huyvu.reboot.backend.config.SpaRedirectFilter;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import io.huyvu.reboot.backend.config.SpaRedirectFilter
+import org.springframework.context.annotation.Bean
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @EnableWebSecurity
 public class SecurityConfig {
@@ -22,7 +22,7 @@ public class SecurityConfig {
                 .userDetailsService(userDetailService)
                 .passwordEncoder(passwordEncoder)
                 .and()
-                .build();
+                .build()
     }
 
     @Bean
@@ -42,17 +42,17 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(spaRedirectFilter, JwtFilter.class);
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+        http.addFilterBefore(spaRedirectFilter, JwtFilter.class)
 
-        return http.build();
+        return http.build()
 
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder()
     }
 }

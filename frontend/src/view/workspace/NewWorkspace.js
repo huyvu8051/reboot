@@ -36,5 +36,5 @@ const NewWorkspace = () => {
                    }}
         />
     )
-};
+}
 export default NewWorkspace

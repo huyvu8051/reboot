@@ -1,8 +1,8 @@
-package io.huyvu.reboot.backend.entity;
+package io.huyvu.reboot.backend.entity
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor
+import lombok.Getter
+import lombok.NoArgsConstructor
 
 
 
@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 public class Activity extends GenericEntity{
     
     
-    private Long id;
+    private Long id
 
 
-    private UserAccount user;
+    private UserAccount user
 
 
 
-    private Card card;
+    private Card card
 
-    private String content;
+    private String content
 }

@@ -44,5 +44,5 @@ let SettingWpBtn = () => {
             </Menu>
         </>
     )
-};
+}
 export default SettingWpBtn

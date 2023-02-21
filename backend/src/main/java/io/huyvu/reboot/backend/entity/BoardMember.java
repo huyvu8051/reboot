@@ -1,7 +1,7 @@
-package io.huyvu.reboot.backend.entity;
+package io.huyvu.reboot.backend.entity
 
-import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.Data
+import lombok.experimental.Accessors
 
 
 
@@ -9,5 +9,5 @@ import lombok.experimental.Accessors;
 @Data
 
 public class BoardMember extends GenericEntity {
-    private BoardMemberKey key = new BoardMemberKey();
+    private BoardMemberKey key = new BoardMemberKey()
 }

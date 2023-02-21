@@ -5,19 +5,19 @@
 -- HeidiSQL Version:             12.3.0.6589
 -- --------------------------------------------------------
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */
+/*!40101 SET NAMES utf8 */
+/*!50503 SET NAMES utf8mb4 */
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */
+/*!40103 SET TIME_ZONE='+00:00' */
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */
 
 
 -- Dumping database structure for reboot
-CREATE DATABASE IF NOT EXISTS `reboot` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
-USE `reboot`;
+CREATE DATABASE IF NOT EXISTS `reboot` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */
+USE `reboot`
 
 -- Dumping structure for table reboot.activity
 CREATE TABLE IF NOT EXISTS `activity` (
@@ -35,10 +35,10 @@ CREATE TABLE IF NOT EXISTS `activity` (
   KEY `FKb0e1g6c44ampoe1ondy9t6v8w` (`user_id`),
   CONSTRAINT `FK4l3j89hkh9f2p987piyh4pgb0` FOREIGN KEY (`card_id`) REFERENCES `card` (`id`),
   CONSTRAINT `FKb0e1g6c44ampoe1ondy9t6v8w` FOREIGN KEY (`user_id`) REFERENCES `user_account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 -- Dumping data for table reboot.activity: ~0 rows (approximately)
-DELETE FROM `activity`;
+DELETE FROM `activity`
 
 -- Dumping structure for table reboot.attachment
 CREATE TABLE IF NOT EXISTS `attachment` (
@@ -54,10 +54,10 @@ CREATE TABLE IF NOT EXISTS `attachment` (
   PRIMARY KEY (`id`),
   KEY `FKpyjq6uiperx43dbsny1gjvxne` (`card_id`),
   CONSTRAINT `FKpyjq6uiperx43dbsny1gjvxne` FOREIGN KEY (`card_id`) REFERENCES `card` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 -- Dumping data for table reboot.attachment: ~0 rows (approximately)
-DELETE FROM `attachment`;
+DELETE FROM `attachment`
 
 -- Dumping structure for table reboot.board
 CREATE TABLE IF NOT EXISTS `board` (
@@ -75,10 +75,10 @@ CREATE TABLE IF NOT EXISTS `board` (
   PRIMARY KEY (`id`),
   KEY `FKh8r4ryxrng25r7ko3yh5eaudu` (`workspace_id`),
   CONSTRAINT `FKh8r4ryxrng25r7ko3yh5eaudu` FOREIGN KEY (`workspace_id`) REFERENCES `workspace` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 -- Dumping data for table reboot.board: ~0 rows (approximately)
-DELETE FROM `board`;
+DELETE FROM `board`
 
 -- Dumping structure for table reboot.board_member
 CREATE TABLE IF NOT EXISTS `board_member` (
@@ -93,10 +93,10 @@ CREATE TABLE IF NOT EXISTS `board_member` (
   KEY `FK5ho5ohld9jnbbq33dl4xuuq9w` (`user_id`),
   CONSTRAINT `FK5ho5ohld9jnbbq33dl4xuuq9w` FOREIGN KEY (`user_id`) REFERENCES `user_account` (`id`),
   CONSTRAINT `FK5nku3bcf54r5yvv5qn3dubgsi` FOREIGN KEY (`board_id`) REFERENCES `board` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 -- Dumping data for table reboot.board_member: ~0 rows (approximately)
-DELETE FROM `board_member`;
+DELETE FROM `board_member`
 
 -- Dumping structure for table reboot.card
 CREATE TABLE IF NOT EXISTS `card` (
@@ -122,10 +122,10 @@ CREATE TABLE IF NOT EXISTS `card` (
   PRIMARY KEY (`id`),
   KEY `FK2pmnauf5d5cg76rtydn0dofox` (`lizt_id`),
   CONSTRAINT `FK2pmnauf5d5cg76rtydn0dofox` FOREIGN KEY (`lizt_id`) REFERENCES `lizt` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 -- Dumping data for table reboot.card: ~0 rows (approximately)
-DELETE FROM `card`;
+DELETE FROM `card`
 
 -- Dumping structure for table reboot.card_member
 CREATE TABLE IF NOT EXISTS `card_member` (
@@ -141,10 +141,10 @@ CREATE TABLE IF NOT EXISTS `card_member` (
   KEY `FKq5low2n4jxef19lg35k6syqru` (`user_id`),
   CONSTRAINT `FKgp6lai9ewkcfodigcua5taanf` FOREIGN KEY (`card_id`) REFERENCES `card` (`id`),
   CONSTRAINT `FKq5low2n4jxef19lg35k6syqru` FOREIGN KEY (`user_id`) REFERENCES `user_account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 -- Dumping data for table reboot.card_member: ~0 rows (approximately)
-DELETE FROM `card_member`;
+DELETE FROM `card_member`
 
 -- Dumping structure for table reboot.checklist
 CREATE TABLE IF NOT EXISTS `checklist` (
@@ -160,10 +160,10 @@ CREATE TABLE IF NOT EXISTS `checklist` (
   PRIMARY KEY (`id`),
   KEY `FKmq05kujpd06x59cm9u46s9eui` (`card_id`),
   CONSTRAINT `FKmq05kujpd06x59cm9u46s9eui` FOREIGN KEY (`card_id`) REFERENCES `card` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 -- Dumping data for table reboot.checklist: ~0 rows (approximately)
-DELETE FROM `checklist`;
+DELETE FROM `checklist`
 
 -- Dumping structure for table reboot.checklist_item
 CREATE TABLE IF NOT EXISTS `checklist_item` (
@@ -184,10 +184,10 @@ CREATE TABLE IF NOT EXISTS `checklist_item` (
   KEY `FKn8v1y7el5kl0xefukq4nu3gfm` (`checklist_id`),
   CONSTRAINT `FKn8v1y7el5kl0xefukq4nu3gfm` FOREIGN KEY (`checklist_id`) REFERENCES `checklist` (`id`),
   CONSTRAINT `FKo1pmhdej4mt1uhfrpq9hn68hu` FOREIGN KEY (`user_id`) REFERENCES `user_account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 -- Dumping data for table reboot.checklist_item: ~0 rows (approximately)
-DELETE FROM `checklist_item`;
+DELETE FROM `checklist_item`
 
 -- Dumping structure for table reboot.label
 CREATE TABLE IF NOT EXISTS `label` (
@@ -203,10 +203,10 @@ CREATE TABLE IF NOT EXISTS `label` (
   PRIMARY KEY (`id`),
   KEY `FKnl4pv15ws9o049sxm6c6dl8oy` (`board_id`),
   CONSTRAINT `FKnl4pv15ws9o049sxm6c6dl8oy` FOREIGN KEY (`board_id`) REFERENCES `board` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 -- Dumping data for table reboot.label: ~0 rows (approximately)
-DELETE FROM `label`;
+DELETE FROM `label`
 
 -- Dumping structure for table reboot.labeled
 CREATE TABLE IF NOT EXISTS `labeled` (
@@ -221,10 +221,10 @@ CREATE TABLE IF NOT EXISTS `labeled` (
   KEY `FKt0fjqpq3kfepviqionu0qu866` (`label_id`),
   CONSTRAINT `FKf248152pjipi76om7ie74wde9` FOREIGN KEY (`card_id`) REFERENCES `card` (`id`),
   CONSTRAINT `FKt0fjqpq3kfepviqionu0qu866` FOREIGN KEY (`label_id`) REFERENCES `label` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 -- Dumping data for table reboot.labeled: ~0 rows (approximately)
-DELETE FROM `labeled`;
+DELETE FROM `labeled`
 
 -- Dumping structure for table reboot.lizt
 CREATE TABLE IF NOT EXISTS `lizt` (
@@ -240,10 +240,10 @@ CREATE TABLE IF NOT EXISTS `lizt` (
   PRIMARY KEY (`id`),
   KEY `FKosv002clbdihfs44dffmu2egt` (`board_id`),
   CONSTRAINT `FKosv002clbdihfs44dffmu2egt` FOREIGN KEY (`board_id`) REFERENCES `board` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 -- Dumping data for table reboot.lizt: ~0 rows (approximately)
-DELETE FROM `lizt`;
+DELETE FROM `lizt`
 
 -- Dumping structure for table reboot.user_account
 CREATE TABLE IF NOT EXISTS `user_account` (
@@ -259,12 +259,12 @@ CREATE TABLE IF NOT EXISTS `user_account` (
   `modified_by` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_castjbvpeeus0r8lbpehiu0e4` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 -- Dumping data for table reboot.user_account: ~0 rows (approximately)
-DELETE FROM `user_account`;
+DELETE FROM `user_account`
 INSERT INTO `user_account` (`id`, `username`, `password`, `full_name`, `picture_url`, `is_deleted`, `created_date`, `created_by`, `modified_date`, `modified_by`) VALUES
-	(33, 'huyvu8051@gmail.com', NULL, 'Huy Vũ Văn', 'https://lh3.googleusercontent.com/a/AEdFTp4sfV2EyLIGQeZx72R61YKBWu_TpeJSGtdAXRgwoA=s96-c', b'0', '2023-02-15 17:47:35', 'anonymousUser', '2023-02-15 17:47:35', 'anonymousUser');
+	(33, 'huyvu8051@gmail.com', NULL, 'Huy Vũ Văn', 'https://lh3.googleusercontent.com/a/AEdFTp4sfV2EyLIGQeZx72R61YKBWu_TpeJSGtdAXRgwoA=s96-c', b'0', '2023-02-15 17:47:35', 'anonymousUser', '2023-02-15 17:47:35', 'anonymousUser')
 
 -- Dumping structure for table reboot.workspace
 CREATE TABLE IF NOT EXISTS `workspace` (
@@ -277,10 +277,10 @@ CREATE TABLE IF NOT EXISTS `workspace` (
   `picture_url` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 -- Dumping data for table reboot.workspace: ~0 rows (approximately)
-DELETE FROM `workspace`;
+DELETE FROM `workspace`
 
 -- Dumping structure for table reboot.workspace_member
 CREATE TABLE IF NOT EXISTS `workspace_member` (
@@ -296,75 +296,75 @@ CREATE TABLE IF NOT EXISTS `workspace_member` (
   KEY `FK63j92rshcw8dephxvjh9iha1p` (`wp_id`),
   CONSTRAINT `FK63j92rshcw8dephxvjh9iha1p` FOREIGN KEY (`wp_id`) REFERENCES `workspace` (`id`),
   CONSTRAINT `FKmqpu62lr3vvysaqeuj9a6e62u` FOREIGN KEY (`user_id`) REFERENCES `user_account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 -- Dumping data for table reboot.workspace_member: ~0 rows (approximately)
-DELETE FROM `workspace_member`;
+DELETE FROM `workspace_member`
 
 -- Dumping structure for trigger reboot.activity_before_insert
-SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION'
 DELIMITER //
 CREATE TRIGGER `activity_before_insert` BEFORE INSERT ON `activity` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
-		 NEW.modified_by = @USER_CTX;
+		 NEW.modified_by = @USER_CTX
 END//
-DELIMITER ;
-SET SQL_MODE=@OLDTMP_SQL_MODE;
+DELIMITER
+SET SQL_MODE=@OLDTMP_SQL_MODE
 
 -- Dumping structure for trigger reboot.activity_before_update
-SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION'
 DELIMITER //
 CREATE TRIGGER `activity_before_update` BEFORE UPDATE ON `activity` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX;
+		 NEW.modified_by = @USER_CTX
 END//
-DELIMITER ;
-SET SQL_MODE=@OLDTMP_SQL_MODE;
+DELIMITER
+SET SQL_MODE=@OLDTMP_SQL_MODE
 
 -- Dumping structure for trigger reboot.attachment_before_insert
-SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION'
 DELIMITER //
 CREATE TRIGGER `attachment_before_insert` BEFORE INSERT ON `attachment` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
-		 NEW.modified_by = @USER_CTX;
+		 NEW.modified_by = @USER_CTX
 END//
-DELIMITER ;
-SET SQL_MODE=@OLDTMP_SQL_MODE;
+DELIMITER
+SET SQL_MODE=@OLDTMP_SQL_MODE
 
 -- Dumping structure for trigger reboot.attachment_before_update
-SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION'
 DELIMITER //
 CREATE TRIGGER `attachment_before_update` BEFORE UPDATE ON `attachment` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX;
+		 NEW.modified_by = @USER_CTX
 END//
-DELIMITER ;
-SET SQL_MODE=@OLDTMP_SQL_MODE;
+DELIMITER
+SET SQL_MODE=@OLDTMP_SQL_MODE
 
 -- Dumping structure for trigger reboot.board_before_insert
-SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION'
 DELIMITER //
 CREATE TRIGGER `board_before_insert` BEFORE INSERT ON `board` FOR EACH ROW BEGIN
 	SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
-		 NEW.modified_by = @USER_CTX;
+		 NEW.modified_by = @USER_CTX
 END//
-DELIMITER ;
-SET SQL_MODE=@OLDTMP_SQL_MODE;
+DELIMITER
+SET SQL_MODE=@OLDTMP_SQL_MODE
 
 -- Dumping structure for trigger reboot.board_before_update
-SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION'
 DELIMITER //
 CREATE TRIGGER `board_before_update` BEFORE UPDATE ON `board` FOR EACH ROW BEGIN
 	SET NEW.modified_date = SYSDATE(),
-		 NEW.modified_by = @USER_CTX;
+		 NEW.modified_by = @USER_CTX
 END//
-DELIMITER ;
+DELIMITER
 SET SQL_MODE=@OLDTMP_SQL_MODE;
 
 -- Dumping structure for trigger reboot.board_member_before_insert

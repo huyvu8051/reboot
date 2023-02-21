@@ -1,10 +1,10 @@
-package io.huyvu.reboot.backend.entity;
+package io.huyvu.reboot.backend.entity
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor
+import lombok.Getter
+import lombok.NoArgsConstructor
 
-import java.time.LocalDateTime;
+import java.time.LocalDateTime
 
 @Getter
 @NoArgsConstructor
@@ -13,20 +13,20 @@ import java.time.LocalDateTime;
 public class ChecklistItem extends GenericEntity {
 
 
-    private Long id;
+    private Long id
 
-    private String title;
+    private String title
 
-    private boolean isCheck;
-
-
-    private UserAccount assign;
-
-    private LocalDateTime dueDate;
-
-    private String dueDateReminder;
+    private boolean isCheck
 
 
-    private Checklist checklist;
+    private UserAccount assign
+
+    private LocalDateTime dueDate
+
+    private String dueDateReminder
+
+
+    private Checklist checklist
 
 }

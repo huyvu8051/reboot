@@ -5,18 +5,16 @@ import {refreshToken} from '../store/authenticationSlice'
 
 class MyPromise extends Promise {
     constructor(executor) {
-        super(executor);
-        this.catched = false
+        super(executor)
     }
 
     catch(onRejected) {
         this.catched = true
-        console.log('regist catch')
-        return super.catch(onRejected);
+        return super.catch(onRejected)
     }
 
+
     finally(onfinally) {
-        console.log('regist finally')
         return super.finally(() => {
             console.log('finally check', this.catched)
             return onfinally()
@@ -53,19 +51,25 @@ instance.interceptors.response.use(response => {
 const methods = ['request', 'get', 'delete', 'head', 'options', 'post', 'put', 'patch', 'postForm', 'putForm', 'patchForm']
 
 methods.forEach((method) => {
+    const oldMethod = instance[method]
+
     instance[method] = (url, data, config) => {
         let promise = new MyPromise((resolve, reject) => {
-            axios[method](url, data, config)
+            oldMethod(url, data, config)
                 .then((response) => {
-                    resolve(response.data);
+                    resolve(response.data)
                 })
                 .catch((error) => {
-                    reject(error);
-                });
-        })
-        promise.finally(() => null)
-        return promise;
-    };
-});
+                    reject('error abccccc')
+                })
+        }).finally(()=>console.log('finally1')).finally(()=>console.log('finally2'))
+
+        promise.finally(()=>console.log('finally3'))
+
+
+        console.log('promise',promise)
+        return promise
+    }
+})
 
 export default instance

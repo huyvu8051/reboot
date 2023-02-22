@@ -20,17 +20,14 @@ const ListBoard = () => {
         const fetchBoardLs = () => {
             api.post('/api/v1/user/board', null, {
                 params: {wpId}
-            }).then(resp => console.log('use then', resp))
-
-                .then(()=>null)
-
-
-            // .then(resp => {
-            //     setBoards(resp.data)
-            // })
-            // .then(() => {
-            //     console.log('then2')
-            // }).catch((err)=>console.log('catch first'))
+            })
+            .then(resp => {
+                setBoards(resp.data)
+            })
+            .then(() => {
+                console.log('then2')
+            })
+                // .catch((err)=>console.log('catch first',err))
         }
         fetchBoardLs()
         $on('boards.refresh', fetchBoardLs)

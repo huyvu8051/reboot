@@ -32,7 +32,7 @@ class MyPromise extends Promise {
             if(!this.catched){
                 $error("Not catched error")
             }
-            return onfinally()
+            return onfinally ? onfinally() : null
         })
         promise.greatGrandparent = this.greatGrandparent ? this.greatGrandparent : this
         return promise
@@ -79,7 +79,7 @@ methods.forEach((method) => {
                 .catch((error) => {
                     reject(error)
                 })
-        }).finally((err) => console.log('use catch: ', err))
+        }).finally()
 
 
         return promise

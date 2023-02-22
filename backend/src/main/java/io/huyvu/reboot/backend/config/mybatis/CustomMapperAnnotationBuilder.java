@@ -1,130 +1,99 @@
-package io.huyvu.reboot.backend.config.mybatis
+package io.huyvu.reboot.backend.config.mybatis;
 
-import java.io.IOException
-import java.io.InputStream
-import java.lang.annotation.Annotation
-import java.lang.reflect.Array
-import java.lang.reflect.GenericArrayType
-import java.lang.reflect.Method
-import java.lang.reflect.ParameterizedType
-import java.lang.reflect.Type
-import java.util.*
-import java.util.stream.Collectors
-import java.util.stream.Stream
-import org.apache.ibatis.annotations.Arg
-import org.apache.ibatis.annotations.CacheNamespace
-import org.apache.ibatis.annotations.CacheNamespaceRef
-import org.apache.ibatis.annotations.Case
-import org.apache.ibatis.annotations.Delete
-import org.apache.ibatis.annotations.DeleteProvider
-import org.apache.ibatis.annotations.Insert
-import org.apache.ibatis.annotations.InsertProvider
-import org.apache.ibatis.annotations.Lang
-import org.apache.ibatis.annotations.MapKey
-import org.apache.ibatis.annotations.Options
-import org.apache.ibatis.annotations.Property
-import org.apache.ibatis.annotations.Result
-import org.apache.ibatis.annotations.ResultMap
-import org.apache.ibatis.annotations.ResultType
-import org.apache.ibatis.annotations.Results
-import org.apache.ibatis.annotations.Select
-import org.apache.ibatis.annotations.SelectKey
-import org.apache.ibatis.annotations.SelectProvider
-import org.apache.ibatis.annotations.TypeDiscriminator
-import org.apache.ibatis.annotations.Update
-import org.apache.ibatis.annotations.UpdateProvider
-import org.apache.ibatis.annotations.Options.FlushCachePolicy
-import org.apache.ibatis.binding.MapperMethod
-import org.apache.ibatis.builder.BuilderException
-import org.apache.ibatis.builder.CacheRefResolver
-import org.apache.ibatis.builder.IncompleteElementException
-import org.apache.ibatis.builder.MapperBuilderAssistant
-import org.apache.ibatis.builder.annotation.MapperAnnotationBuilder
-import org.apache.ibatis.builder.annotation.MethodResolver
-import org.apache.ibatis.builder.annotation.ProviderSqlSource
-import org.apache.ibatis.builder.xml.XMLMapperBuilder
-import org.apache.ibatis.cursor.Cursor
-import org.apache.ibatis.executor.keygen.Jdbc3KeyGenerator
-import org.apache.ibatis.executor.keygen.KeyGenerator
-import org.apache.ibatis.executor.keygen.NoKeyGenerator
-import org.apache.ibatis.executor.keygen.SelectKeyGenerator
-import org.apache.ibatis.io.Resources
-import org.apache.ibatis.mapping.Discriminator
-import org.apache.ibatis.mapping.FetchType
-import org.apache.ibatis.mapping.MappedStatement
-import org.apache.ibatis.mapping.ResultFlag
-import org.apache.ibatis.mapping.ResultMapping
-import org.apache.ibatis.mapping.ResultSetType
-import org.apache.ibatis.mapping.SqlCommandType
-import org.apache.ibatis.mapping.SqlSource
-import org.apache.ibatis.mapping.StatementType
-import org.apache.ibatis.parsing.PropertyParser
-import org.apache.ibatis.reflection.TypeParameterResolver
-import org.apache.ibatis.scripting.LanguageDriver
-import org.apache.ibatis.session.Configuration
-import org.apache.ibatis.session.ResultHandler
-import org.apache.ibatis.session.RowBounds
-import org.apache.ibatis.type.JdbcType
-import org.apache.ibatis.type.TypeHandler
-import org.apache.ibatis.type.UnknownTypeHandler
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.Options.FlushCachePolicy;
+import org.apache.ibatis.binding.MapperMethod;
+import org.apache.ibatis.builder.BuilderException;
+import org.apache.ibatis.builder.CacheRefResolver;
+import org.apache.ibatis.builder.IncompleteElementException;
+import org.apache.ibatis.builder.MapperBuilderAssistant;
+import org.apache.ibatis.builder.annotation.MapperAnnotationBuilder;
+import org.apache.ibatis.builder.annotation.MethodResolver;
+import org.apache.ibatis.builder.annotation.ProviderSqlSource;
+import org.apache.ibatis.builder.xml.XMLMapperBuilder;
+import org.apache.ibatis.cursor.Cursor;
+import org.apache.ibatis.executor.keygen.Jdbc3KeyGenerator;
+import org.apache.ibatis.executor.keygen.KeyGenerator;
+import org.apache.ibatis.executor.keygen.NoKeyGenerator;
+import org.apache.ibatis.executor.keygen.SelectKeyGenerator;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.mapping.*;
+import org.apache.ibatis.parsing.PropertyParser;
+import org.apache.ibatis.reflection.TypeParameterResolver;
+import org.apache.ibatis.scripting.LanguageDriver;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.ResultHandler;
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.TypeHandler;
+import org.apache.ibatis.type.UnknownTypeHandler;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CustomMapperAnnotationBuilder extends MapperAnnotationBuilder {
-    private static final Set<Class<? extends Annotation>> statementAnnotationTypes = (Set)Stream.of(Select.class, Update.class, Insert.class, Delete.class, SelectProvider.class, UpdateProvider.class, InsertProvider.class, DeleteProvider.class).collect(Collectors.toSet())
-    private final Configuration configuration
-    private final MapperBuilderAssistant assistant
-    private final Class<?> type
+    private static final Set<Class<? extends Annotation>> statementAnnotationTypes = (Set)Stream.of(Select.class, Update.class, Insert.class, Delete.class, SelectProvider.class, UpdateProvider.class, InsertProvider.class, DeleteProvider.class).collect(Collectors.toSet());
+    private final Configuration configuration;
+    private final MapperBuilderAssistant assistant;
+    private final Class<?> type;
 
     public CustomMapperAnnotationBuilder(Configuration configuration, Class<?> type) {
-        super(configuration,type)
-        String resource = type.getName().replace('.', '/') + ".java (best guess)"
-        this.assistant = new MapperBuilderAssistant(configuration, resource)
-        this.configuration = configuration
-        this.type = type
+        super(configuration,type);
+        String resource = type.getName().replace('.', '/') + ".java (best guess)";
+        this.assistant = new MapperBuilderAssistant(configuration, resource);
+        this.configuration = configuration;
+        this.type = type;
     }
 
     public void parse() {
-        String resource = this.type.toString()
+        String resource = this.type.toString();
         if (!this.configuration.isResourceLoaded(resource)) {
-            this.loadXmlResource()
-            this.configuration.addLoadedResource(resource)
-            this.assistant.setCurrentNamespace(this.type.getName())
-            this.parseCache()
-            this.parseCacheRef()
-            Method[] var2 = this.type.getMethods()
-            int var3 = var2.length
+            this.loadXmlResource();
+            this.configuration.addLoadedResource(resource);
+            this.assistant.setCurrentNamespace(this.type.getName());
+            this.parseCache();
+            this.parseCacheRef();
+            Method[] var2 = this.type.getMethods();
+            int var3 = var2.length;
 
-            for(int var4 = 0 var4 < var3 ++var4) {
-                Method method = var2[var4]
+            for(int var4 = 0 ;var4 < var3; ++var4) {
+                Method method = var2[var4];
                 if (this.canHaveStatement(method)) {
                     if (this.getAnnotationWrapper(method, false, Select.class, SelectProvider.class).isPresent() && method.getAnnotation(ResultMap.class) == null) {
-                        this.parseResultMap(method)
+                        this.parseResultMap(method);
                     }
 
                     try {
-                        this.parseStatement(method)
+                        this.parseStatement(method);
                     } catch (IncompleteElementException var7) {
-                        this.configuration.addIncompleteMethod(new MethodResolver(this, method))
+                        this.configuration.addIncompleteMethod(new MethodResolver(this, method));
                     }
                 }
             }
         }
 
-        this.parsePendingMethods()
+        this.parsePendingMethods();
     }
 
     private boolean canHaveStatement(Method method) {
-        return !method.isBridge() && !method.isDefault()
+        return !method.isBridge() && !method.isDefault();
     }
 
     private void parsePendingMethods() {
-        Collection<MethodResolver> incompleteMethods = this.configuration.getIncompleteMethods()
+        Collection<MethodResolver> incompleteMethods = this.configuration.getIncompleteMethods();
         synchronized(incompleteMethods) {
-            Iterator<MethodResolver> iter = incompleteMethods.iterator()
+            Iterator<MethodResolver> iter = incompleteMethods.iterator();
 
             while(iter.hasNext()) {
                 try {
-                    ((MethodResolver)iter.next()).resolve()
-                    iter.remove()
+                    ((MethodResolver)iter.next()).resolve();
+                    iter.remove();
                 } catch (IncompleteElementException var6) {
                 }
             }
@@ -134,129 +103,129 @@ public class CustomMapperAnnotationBuilder extends MapperAnnotationBuilder {
 
     private void loadXmlResource() {
         if (!this.configuration.isResourceLoaded("namespace:" + this.type.getName())) {
-            String xmlResource = this.type.getName().replace('.', '/') + ".xml"
-            InputStream inputStream = this.type.getResourceAsStream("/" + xmlResource)
+            String xmlResource = this.type.getName().replace('.', '/') + ".xml";
+            InputStream inputStream = this.type.getResourceAsStream("/" + xmlResource);
             if (inputStream == null) {
                 try {
-                    inputStream = Resources.getResourceAsStream(this.type.getClassLoader(), xmlResource)
+                    inputStream = Resources.getResourceAsStream(this.type.getClassLoader(), xmlResource);
                 } catch (IOException var4) {
                 }
             }
 
             if (inputStream != null) {
-                XMLMapperBuilder xmlParser = new XMLMapperBuilder(inputStream, this.assistant.getConfiguration(), xmlResource, this.configuration.getSqlFragments(), this.type.getName())
-                xmlParser.parse()
+                XMLMapperBuilder xmlParser = new XMLMapperBuilder(inputStream, this.assistant.getConfiguration(), xmlResource, this.configuration.getSqlFragments(), this.type.getName());
+                xmlParser.parse();
             }
         }
 
     }
 
     private void parseCache() {
-        CacheNamespace cacheDomain = (CacheNamespace)this.type.getAnnotation(CacheNamespace.class)
+        CacheNamespace cacheDomain = (CacheNamespace)this.type.getAnnotation(CacheNamespace.class);
         if (cacheDomain != null) {
-            Integer size = cacheDomain.size() == 0 ? null : cacheDomain.size()
-            Long flushInterval = cacheDomain.flushInterval() == 0L ? null : cacheDomain.flushInterval()
-            Properties props = this.convertToProperties(cacheDomain.properties())
-            this.assistant.useNewCache(cacheDomain.implementation(), cacheDomain.eviction(), flushInterval, size, cacheDomain.readWrite(), cacheDomain.blocking(), props)
+            Integer size = cacheDomain.size() == 0 ? null : cacheDomain.size();
+            Long flushInterval = cacheDomain.flushInterval() == 0L ? null : cacheDomain.flushInterval();
+            Properties props = this.convertToProperties(cacheDomain.properties());
+            this.assistant.useNewCache(cacheDomain.implementation(), cacheDomain.eviction(), flushInterval, size, cacheDomain.readWrite(), cacheDomain.blocking(), props);
         }
 
     }
 
     private Properties convertToProperties(Property[] properties) {
         if (properties.length == 0) {
-            return null
+            return null;
         } else {
-            Properties props = new Properties()
-            Property[] var3 = properties
-            int var4 = properties.length
+            Properties props = new Properties();
+            Property[] var3 = properties;
+            int var4 = properties.length;
 
-            for(int var5 = 0 var5 < var4 ++var5) {
-                Property property = var3[var5]
-                props.setProperty(property.name(), PropertyParser.parse(property.value(), this.configuration.getVariables()))
+            for(int var5 = 0; var5 < var4; ++var5) {
+                Property property = var3[var5];
+                props.setProperty(property.name(), PropertyParser.parse(property.value(), this.configuration.getVariables()));
             }
 
-            return props
+            return props;
         }
     }
 
     private void parseCacheRef() {
-        CacheNamespaceRef cacheDomainRef = (CacheNamespaceRef)this.type.getAnnotation(CacheNamespaceRef.class)
+        CacheNamespaceRef cacheDomainRef = (CacheNamespaceRef)this.type.getAnnotation(CacheNamespaceRef.class);
         if (cacheDomainRef != null) {
-            Class<?> refType = cacheDomainRef.value()
-            String refName = cacheDomainRef.name()
+            Class<?> refType = cacheDomainRef.value();
+            String refName = cacheDomainRef.name();
             if (refType == Void.TYPE && refName.isEmpty()) {
-                throw new BuilderException("Should be specified either value() or name() attribute in the @CacheNamespaceRef")
+                throw new BuilderException("Should be specified either value() or name() attribute in the @CacheNamespaceRef");
             }
 
             if (refType != Void.TYPE && !refName.isEmpty()) {
-                throw new BuilderException("Cannot use both value() and name() attribute in the @CacheNamespaceRef")
+                throw new BuilderException("Cannot use both value() and name() attribute in the @CacheNamespaceRef");
             }
 
-            String namespace = refType != Void.TYPE ? refType.getName() : refName
+            String namespace = refType != Void.TYPE ? refType.getName() : refName;
 
             try {
-                this.assistant.useCacheRef(namespace)
+                this.assistant.useCacheRef(namespace);
             } catch (IncompleteElementException var6) {
-                this.configuration.addIncompleteCacheRef(new CacheRefResolver(this.assistant, namespace))
+                this.configuration.addIncompleteCacheRef(new CacheRefResolver(this.assistant, namespace));
             }
         }
 
     }
 
     private String parseResultMap(Method method) {
-        Class<?> returnType = this.getReturnType(method)
-        Arg[] args = (Arg[])method.getAnnotationsByType(Arg.class)
-        Result[] results = (Result[])method.getAnnotationsByType(Result.class)
-        TypeDiscriminator typeDiscriminator = (TypeDiscriminator)method.getAnnotation(TypeDiscriminator.class)
-        String resultMapId = this.generateResultMapName(method)
-        this.applyResultMap(resultMapId, returnType, args, results, typeDiscriminator)
-        return resultMapId
+        Class<?> returnType = this.getReturnType(method);
+        Arg[] args = (Arg[])method.getAnnotationsByType(Arg.class);
+        Result[] results = (Result[])method.getAnnotationsByType(Result.class);
+        TypeDiscriminator typeDiscriminator = (TypeDiscriminator)method.getAnnotation(TypeDiscriminator.class);
+        String resultMapId = this.generateResultMapName(method);
+        this.applyResultMap(resultMapId, returnType, args, results, typeDiscriminator);
+        return resultMapId;
     }
 
     private String generateResultMapName(Method method) {
-        Results results = (Results)method.getAnnotation(Results.class)
+        Results results = (Results)method.getAnnotation(Results.class);
         if (results != null && !results.id().isEmpty()) {
-            return this.type.getName() + "." + results.id()
+            return this.type.getName() + "." + results.id();
         } else {
-            StringBuilder suffix = new StringBuilder()
-            Class[] var4 = method.getParameterTypes()
-            int var5 = var4.length
+            StringBuilder suffix = new StringBuilder();
+            Class[] var4 = method.getParameterTypes();
+            int var5 = var4.length;
 
-            for(int var6 = 0 var6 < var5 ++var6) {
-                Class<?> c = var4[var6]
-                suffix.append("-")
-                suffix.append(c.getSimpleName())
+            for(int var6 = 0 ;var6 < var5; ++var6) {
+                Class<?> c = var4[var6];
+                suffix.append("-");
+                suffix.append(c.getSimpleName());
             }
 
             if (suffix.length() < 1) {
-                suffix.append("-void")
+                suffix.append("-void");
             }
 
-            return this.type.getName() + "." + method.getName() + suffix
+            return this.type.getName() + "." + method.getName() + suffix;
         }
     }
 
     private void applyResultMap(String resultMapId, Class<?> returnType, Arg[] args, Result[] results, TypeDiscriminator discriminator) {
-        List<ResultMapping> resultMappings = new ArrayList()
-        this.applyConstructorArgs(args, returnType, resultMappings)
-        this.applyResults(results, returnType, resultMappings)
-        Discriminator disc = this.applyDiscriminator(resultMapId, returnType, discriminator)
-        this.assistant.addResultMap(resultMapId, returnType, (String)null, disc, resultMappings, (Boolean)null)
-        this.createDiscriminatorResultMaps(resultMapId, returnType, discriminator)
+        List<ResultMapping> resultMappings = new ArrayList();
+        this.applyConstructorArgs(args, returnType, resultMappings);
+        this.applyResults(results, returnType, resultMappings);
+        Discriminator disc = this.applyDiscriminator(resultMapId, returnType, discriminator);
+        this.assistant.addResultMap(resultMapId, returnType, (String)null, disc, resultMappings, (Boolean)null);
+        this.createDiscriminatorResultMaps(resultMapId, returnType, discriminator);
     }
 
     private void createDiscriminatorResultMaps(String resultMapId, Class<?> resultType, TypeDiscriminator discriminator) {
         if (discriminator != null) {
-            Case[] var4 = discriminator.cases()
-            int var5 = var4.length
+            Case[] var4 = discriminator.cases();
+            int var5 = var4.length;
 
-            for(int var6 = 0 var6 < var5 ++var6) {
-                Case c = var4[var6]
-                String caseResultMapId = resultMapId + "-" + c.value()
-                List<ResultMapping> resultMappings = new ArrayList()
-                this.applyConstructorArgs(c.constructArgs(), resultType, resultMappings)
-                this.applyResults(c.results(), resultType, resultMappings)
-                this.assistant.addResultMap(caseResultMapId, c.type(), resultMapId, (Discriminator)null, resultMappings, (Boolean)null)
+            for(int var6 = 0; var6 < var5; ++var6) {
+                Case c = var4[var6];
+                String caseResultMapId = resultMapId + "-" + c.value();
+                List<ResultMapping> resultMappings = new ArrayList();
+                this.applyConstructorArgs(c.constructArgs(), resultType, resultMappings);
+                this.applyResults(c.results(), resultType, resultMappings);
+                this.assistant.addResultMap(caseResultMapId, c.type(), resultMapId, (Discriminator)null, resultMappings, (Boolean)null);
             }
         }
 
@@ -264,14 +233,14 @@ public class CustomMapperAnnotationBuilder extends MapperAnnotationBuilder {
 
     private Discriminator applyDiscriminator(String resultMapId, Class<?> resultType, TypeDiscriminator discriminator) {
         if (discriminator == null) {
-            return null
+            return null;
         } else {
-            String column = discriminator.column()
-            Class<?> javaType = discriminator.javaType() == Void.TYPE ? String.class : discriminator.javaType()
-            JdbcType jdbcType = discriminator.jdbcType() == JdbcType.UNDEFINED ? null : discriminator.jdbcType()
-            Class<? extends TypeHandler<?>> typeHandler = discriminator.typeHandler() == UnknownTypeHandler.class ? null : (Class<? extends TypeHandler<?>>) discriminator.typeHandler()
-            Case[] cases = discriminator.cases()
-            Map<String, String> discriminatorMap = new HashMap();
+            String column = discriminator.column();
+            Class<?> javaType = discriminator.javaType() == Void.TYPE ? String.class : discriminator.javaType();
+            JdbcType jdbcType = discriminator.jdbcType() == JdbcType.UNDEFINED ? null : discriminator.jdbcType();
+            Class<? extends TypeHandler<?>> typeHandler = discriminator.typeHandler() == UnknownTypeHandler.class ? null : (Class<? extends TypeHandler<?>>) discriminator.typeHandler();
+            Case[] cases = discriminator.cases();
+            Map<String, String> discriminatorMap = new HashMap();;
             Case[] var10 = cases;
             int var11 = cases.length;
 

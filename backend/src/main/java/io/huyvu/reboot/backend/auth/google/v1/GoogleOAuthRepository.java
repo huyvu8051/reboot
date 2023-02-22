@@ -1,10 +1,9 @@
-package io.huyvu.reboot.backend.auth.google.v1
+package io.huyvu.reboot.backend.auth.google.v1;
 
-import io.huyvu.reboot.backend.entity.UserAccount
-import org.apache.ibatis.annotations.Insert
-import org.apache.ibatis.annotations.Mapper
-import org.apache.ibatis.annotations.Select
-import org.apache.ibatis.annotations.SelectProvider
+import io.huyvu.reboot.backend.entity.UserAccount;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface GoogleOAuthRepository {
@@ -18,7 +17,7 @@ public interface GoogleOAuthRepository {
              WHERE username = #{username}
                    AND is_deleted = false
             """)
-    UserAccount findOneByUsername(String username)
+    UserAccount findOneByUsername(String username);
 
     @Select("""
             SELECT id
@@ -29,7 +28,7 @@ public interface GoogleOAuthRepository {
              WHERE id = #{id}
                    AND is_deleted = false
             """)
-    UserAccount findOneById(long id)
+    UserAccount findOneById(long id);
 
     @Insert({"""
             SET @BAC = ''
@@ -41,7 +40,7 @@ public interface GoogleOAuthRepository {
             """, """
             SET @DF = ''
             """})
-    void save(String username, String fullName, String pictureUrl)
+    void save(String username, String fullName, String pictureUrl);
 
 }
 

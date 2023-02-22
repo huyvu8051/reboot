@@ -23,8 +23,6 @@ const ListBoard = () => {
             }).then(resp => console.log('use then', resp))
 
                 .then(()=>null)
-                .catch((err) => console.log('use catch: ', err))
-                .finally(()=>console.log('use finally'))
 
 
             // .then(resp => {

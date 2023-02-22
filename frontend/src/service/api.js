@@ -6,19 +6,36 @@ import {refreshToken} from '../store/authenticationSlice'
 class MyPromise extends Promise {
     constructor(executor) {
         super(executor)
+        this.greatGrandparent = null
+        this.catched = false
     }
 
     catch(onRejected) {
-        this.catched = true
-        return super.catch(onRejected)
+        const promise = super.catch(onRejected);
+
+        promise.greatGrandparent = this.greatGrandparent ? this.greatGrandparent : this
+        promise.greatGrandparent.catched = true
+
+        return promise
+    }
+
+    then(onfulfilled, onrejected) {
+        const promise = super.then(onfulfilled, onrejected);
+        promise.greatGrandparent = this.greatGrandparent ? this.greatGrandparent : this
+
+        return promise
     }
 
 
     finally(onfinally) {
-        return super.finally(() => {
-            console.log('finally check', this.catched)
+        const promise = super.finally(() => {
+            if(!this.catched){
+                $error("Not catched error")
+            }
             return onfinally()
         })
+        promise.greatGrandparent = this.greatGrandparent ? this.greatGrandparent : this
+        return promise
     }
 }
 
@@ -60,14 +77,11 @@ methods.forEach((method) => {
                     resolve(response.data)
                 })
                 .catch((error) => {
-                    reject('error abccccc')
+                    reject(error)
                 })
-        }).finally(()=>console.log('finally1')).finally(()=>console.log('finally2'))
-
-        promise.finally(()=>console.log('finally3'))
+        }).finally((err) => console.log('use catch: ', err))
 
 
-        console.log('promise',promise)
         return promise
     }
 })

@@ -1,7 +1,7 @@
-package io.huyvu.reboot.backend.user.board
+package io.huyvu.reboot.backend.user.board;
 
-import io.huyvu.reboot.backend.entity.BoardMember
-import org.apache.ibatis.annotations.Mapper
+import io.huyvu.reboot.backend.entity.BoardMember;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @Author HuyVu
@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Mapper
  */
 @Mapper
 public interface BdMemRepository {
-    void save(BoardMember bMem)
+    void save(BoardMember bMem);
 }

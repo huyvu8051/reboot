@@ -1,15 +1,15 @@
-package io.huyvu.reboot.backend.entity
+package io.huyvu.reboot.backend.entity;
 
-import lombok.EqualsAndHashCode
-import lombok.Getter
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-import java.io.Serializable
+import java.io.Serializable;
 
 @EqualsAndHashCode
 @Getter
 public class LabeledKey implements Serializable {
 
-    private Card card
+    private Card card;
 
-    private Label label
+    private Label label;
 }

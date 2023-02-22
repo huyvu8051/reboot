@@ -1,11 +1,11 @@
-package io.huyvu.reboot.backend.user.workspace
+package io.huyvu.reboot.backend.user.workspace;
 
-import io.huyvu.reboot.backend.entity.UserAccount
-import io.huyvu.reboot.backend.entity.Workspace
-import org.apache.ibatis.annotations.Mapper
-import org.apache.ibatis.annotations.Select
+import io.huyvu.reboot.backend.entity.UserAccount;
+import io.huyvu.reboot.backend.entity.Workspace;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
-import java.util.List
+import java.util.List;
 
 /**
  * @Author HuyVu
@@ -19,7 +19,7 @@ public interface WpRepository {
               FROM UserAccount u 
              WHERE u.id = #{userId}
             """)
-    UserAccount findAdminById(long userId)
+    UserAccount findAdminById(long userId);
 
     @Select(value = """
             SELECT id, title, picture_url AS pictureUrl
@@ -27,7 +27,7 @@ public interface WpRepository {
              WHERE id IN (SELECT wp_id FROM `workspace_member` WHERE user_id = #{userId})
              ORDER BY `modified_date` DESC
             """)
-    List<ListWpItem> findAllWpItem(long userId)
+    List<ListWpItem> findAllWpItem(long userId);
 
     @Select(value = """
             SELECT w.id AS id, w.title AS title, w.picture_url AS pictureUrl
@@ -37,7 +37,7 @@ public interface WpRepository {
                         WHERE wm.user_id = :userId 
                               AND wm.wp_id = :wpId)     
             """)
-    WpDetails findWpDetails(long wpId, long userId)
+    WpDetails findWpDetails(long wpId, long userId);
 
-    Workspace save(Workspace wp)
+    Workspace save(Workspace wp);
 }

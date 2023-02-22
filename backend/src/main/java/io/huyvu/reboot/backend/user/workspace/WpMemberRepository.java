@@ -1,7 +1,7 @@
-package io.huyvu.reboot.backend.user.workspace
+package io.huyvu.reboot.backend.user.workspace;
 
-import io.huyvu.reboot.backend.entity.WorkspaceMember
-import org.apache.ibatis.annotations.Mapper
+import io.huyvu.reboot.backend.entity.WorkspaceMember;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @Author HuyVu
@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper
 @Mapper
 public interface WpMemberRepository {
 
-    void save(WorkspaceMember wpMem)
+    void save(WorkspaceMember wpMem);
 }

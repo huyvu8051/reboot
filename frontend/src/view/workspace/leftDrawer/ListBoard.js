@@ -18,16 +18,18 @@ const ListBoard = () => {
 
     useEffect(() => {
         const fetchBoardLs = () => {
-            api.post('/api/v1/user/board', null, {
+            const r = api.post('/api/v1/user/board', null, {
                 params: {wpId}
             })
-            .then(resp => {
-                setBoards(resp.data)
-            })
-            .then(() => {
-                console.log('then2')
-            })
-                // .catch((err)=>console.log('catch first',err))
+                .then(resp => {
+                    setBoards(resp.data)
+                })
+                .then(() => {
+                    console.log('then2')
+                })
+                // .catch((err) => null)
+
+            //r.catch(()=>null)
         }
         fetchBoardLs()
         $on('boards.refresh', fetchBoardLs)

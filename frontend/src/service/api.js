@@ -13,8 +13,12 @@ class MyPromise extends Promise {
     catch(onRejected) {
         const promise = super.catch(onRejected);
 
-        promise.greatGrandparent = this.greatGrandparent ? this.greatGrandparent : this
-        promise.greatGrandparent.catched = true
+        if (this.greatGrandparent) {
+            promise.greatGrandparent = this.greatGrandparent
+            this.greatGrandparent.catched = true
+        } else {
+            promise.greatGrandparent = this
+        }
 
         return promise
     }
@@ -22,18 +26,12 @@ class MyPromise extends Promise {
     then(onfulfilled, onrejected) {
         const promise = super.then(onfulfilled, onrejected);
         promise.greatGrandparent = this.greatGrandparent ? this.greatGrandparent : this
-
         return promise
     }
 
 
     finally(onfinally) {
-        const promise = super.finally(() => {
-            if(!this.catched){
-                $error("Not catched error")
-            }
-            return onfinally ? onfinally() : null
-        })
+        const promise = super.finally(onfinally)
         promise.greatGrandparent = this.greatGrandparent ? this.greatGrandparent : this
         return promise
     }
@@ -57,13 +55,12 @@ instance.interceptors.response.use(response => {
 
     // check http status
     if (response.data.status > 400 && response.data.status < 600) {
-        $error(response.data.status + ':' + response.data.message)
-        return Promise.reject(response.data)
+        //$error(response.data.status + ':' + response.data.message)
+        return Promise.reject(response)
     }
     return response
 }, err => {
     return Promise.reject(err)
-
 })
 const methods = ['request', 'get', 'delete', 'head', 'options', 'post', 'put', 'patch', 'postForm', 'putForm', 'patchForm']
 
@@ -71,7 +68,7 @@ methods.forEach((method) => {
     const oldMethod = instance[method]
 
     instance[method] = (url, data, config) => {
-        let promise = new MyPromise((resolve, reject) => {
+        const promise = new MyPromise((resolve, reject) => {
             oldMethod(url, data, config)
                 .then((response) => {
                     resolve(response.data)
@@ -79,8 +76,13 @@ methods.forEach((method) => {
                 .catch((error) => {
                     reject(error)
                 })
-        }).finally()
+        })
 
+        promise.catch(err => {
+            if (!promise.catched) {
+                $error('unhandled: ' + err.message)
+            }
+        })
 
         return promise
     }

@@ -11,8 +11,10 @@ const NewWorkspace = () => {
     const wpNmTxtField = useRef()
     const navigate = useNavigate()
     const handleCreateNewWp = () => {
-        api.put('/api/v1/user/workspace/', {wpNm: wpNmTxtField.current.value})
-            .then(resp=>{
+        api.put('/api/v1/user/workspace/', null, {
+            params: {wpNm: wpNmTxtField.current.value}
+        })
+            .then(resp => {
                 $success(`Workspace \`${resp.data.title}\` created!`)
                 navigate('/w/' + resp.data.id)
             })

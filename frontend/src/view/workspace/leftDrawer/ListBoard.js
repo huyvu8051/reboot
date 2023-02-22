@@ -7,6 +7,7 @@ import {useEffect, useState} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 import api from '../../../service/api'
 import {$off, $on} from "../../../util/eventbus-utils"
+import {$error} from "../../../util/snackbar-utils";
 
 
 const ListBoard = () => {
@@ -27,7 +28,6 @@ const ListBoard = () => {
                 .then(() => {
                     console.log('then2')
                 })
-                // .catch((err) => null)
 
             //r.catch(()=>null)
         }

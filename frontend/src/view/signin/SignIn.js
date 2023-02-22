@@ -53,7 +53,7 @@ export default function SignIn() {
         Api.post('/api/v1/google-auth', {
             idToken: response.credential
         }).then(resp => {
-            dispatch(setAuthenticateSuccess(resp.data))
+            dispatch(setAuthenticateSuccess(resp))
             navigate('/w/')
         }).catch(err=>{
             $error('Google login false: ' + err.message)

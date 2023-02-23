@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.biz.user.workspace.v1;
+package io.huyvu.reboot.backend.biz.user.wp.v1;
 
 import io.huyvu.reboot.backend.entity.UserAccount;
 import io.huyvu.reboot.backend.entity.Workspace;
@@ -14,7 +14,7 @@ import java.util.List;
  * @CreatedDate 2/13/2023 11:28 AM
  */
 @Mapper
-public interface WpRepository {
+public interface Repository {
 
     @Select("""
             SELECT u 
@@ -43,7 +43,6 @@ public interface WpRepository {
             """)
     WpDetails selectWpDetails(long wpId, long userId);
 
-    Workspace save(Workspace wp);
 
 
     @Insert({"""
@@ -60,7 +59,7 @@ public interface WpRepository {
     @Insert({"""
             INSERT INTO workspace
                SET title = #{wpNm}"""})
-    void insertWp(String wpNm);
+    long insertWp(String wpNm);
 
     @Select({"""
             SELECT LAST_INSERT_ID()"""})

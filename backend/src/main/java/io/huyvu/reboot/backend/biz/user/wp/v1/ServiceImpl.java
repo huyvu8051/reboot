@@ -2,23 +2,22 @@
  * @Author HuyVu
  * @CreatedDate 2/13/2023 11:26 AM
  */
-package io.huyvu.reboot.backend.biz.user.workspace.v1;
+package io.huyvu.reboot.backend.biz.user.wp.v1;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@org.springframework.stereotype.Service
 @RequiredArgsConstructor
-public class WpServiceImpl implements WpService {
-    private final WpRepository wpRepo;
+public class ServiceImpl implements Service {
+    private final Repository wpRepo;
 
     @Transactional
     @Override
     public WpDetails create(String wpNm, long adminId) {
-        wpRepo.insertWp(wpNm);
+        long l = wpRepo.insertWp(wpNm);
         long wpId = wpRepo.selectLastInsertId();
         wpRepo.insertWpMem(wpId, adminId, true);
         return wpRepo.selectWpDetails(wpId, adminId);
@@ -31,7 +30,6 @@ public class WpServiceImpl implements WpService {
 
     @Override
     public WpDetails getDetails(long wpId, long id) {
-
         return wpRepo.selectWpDetails(wpId, id);
     }
 }

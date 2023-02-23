@@ -8,9 +8,12 @@ import org.apache.ibatis.annotations.Select;
  * @CreatedDate 2/23/2023 8:58 AM
  */
 @Mapper
-public interface UserContextRepository {
+public interface Repository {
     String SET_USER_CTX_QUERY = "SET @USER_CTX = #{USER_CTX};";
 
     @Select(SET_USER_CTX_QUERY)
     void setUserCtx(String val);
+
+    @Select("SELECT LAST_INSERT_ID()")
+    long getLastInsertId();
 }

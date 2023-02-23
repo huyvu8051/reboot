@@ -18,7 +18,7 @@ const NewWorkspace = () => {
             .then(resp => {
                 $success(`Workspace \`${resp.title}\` created!`)
                 $dispatch('ChangeWpBtn.lswp.refresh')
-                wpNmTxtField.current.value = ''
+                //wpNmTxtField.current.value = ''
                 navigate('/w/' + resp.id)
             })
     }

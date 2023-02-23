@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/user/board")
-public class BdController {
+public class Controller {
     private final BdService bdService;
 
     @PostMapping

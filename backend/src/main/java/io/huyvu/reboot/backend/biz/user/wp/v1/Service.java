@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.biz.user.workspace.v1;
+package io.huyvu.reboot.backend.biz.user.wp.v1;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import java.util.List;
  * @Author HuyVu
  * @CreatedDate 2/13/2023 11:22 AM
  */
-public interface WpService {
+public interface Service {
     WpDetails create(String wpNm, long adminId);
 
     List<ListWpItem> getList(long userId);

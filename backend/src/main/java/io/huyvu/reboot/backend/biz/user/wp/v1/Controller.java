@@ -2,7 +2,7 @@
  * @Author HuyVu
  * @CreatedDate 2/13/2023 11:17 AM
  */
-package io.huyvu.reboot.backend.biz.user.workspace.v1;
+package io.huyvu.reboot.backend.biz.user.wp.v1;
 
 import io.huyvu.reboot.backend.config.auth.UserContext;
 import io.huyvu.reboot.backend.util.SecurityUtils;
@@ -19,8 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/user/workspace")
 @Validated
-public class WpController {
-    private final WpService mngWpService;
+public class Controller {
+    private final Service mngWpService;
 
     @PutMapping
     CreateWpResp createWp(@NotNull

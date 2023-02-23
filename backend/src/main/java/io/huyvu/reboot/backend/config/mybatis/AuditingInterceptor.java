@@ -13,20 +13,19 @@ import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.transaction.Transaction;
 
 @Intercepts(@Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class}))
-public class MybatisAuditingInterceptor implements Interceptor {
+public class AuditingInterceptor implements Interceptor {
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         Executor executor = (Executor) invocation.getTarget();
         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
-        Transaction transaction = executor.getTransaction();
         Configuration configuration = mappedStatement.getConfiguration();
 
-        Executor newExecutor = configuration.newExecutor(transaction);
-        newExecutor.query(configuration.getMappedStatement(UserContextRepository.class.getCanonicalName() + "." + UserContextRepository.class.getMethods()[0].getName()),
+
+
+        executor.query(configuration.getMappedStatement(Repository.class.getCanonicalName() + ".setUserCtx"),
                 SecurityUtils.currentContext().username(),
                 RowBounds.DEFAULT,
                 Executor.NO_RESULT_HANDLER);

@@ -41,6 +41,7 @@ const CreateBoardBtn = () => {
         const title = titleRef.current.value
         const wp = wpRef.current.value
         const visibility = visibilityRef.current.value
+
         api.put('/api/v1/user/board', {
             title,
             wp,

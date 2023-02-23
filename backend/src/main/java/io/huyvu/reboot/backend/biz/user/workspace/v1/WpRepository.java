@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.biz.user.workspace;
+package io.huyvu.reboot.backend.biz.user.workspace.v1;
 
 import io.huyvu.reboot.backend.entity.UserAccount;
 import io.huyvu.reboot.backend.entity.Workspace;
@@ -27,6 +27,7 @@ public interface WpRepository {
             SELECT id, title, picture_url AS pictureUrl
               FROM `workspace`
              WHERE id IN (SELECT wp_id FROM `workspace_member` WHERE user_id = #{userId})
+                   AND is_deleted = 0
              ORDER BY `modified_date` DESC
             """)
     List<ListWpItem> selectWpItem(long userId);
@@ -38,6 +39,7 @@ public interface WpRepository {
                          FROM workspace_member AS wm
                         WHERE wm.user_id = #{userId}
                               AND wm.wp_id = #{wpId})     
+                  AND is_deleted = 0
             """)
     WpDetails selectWpDetails(long wpId, long userId);
 

@@ -320,6 +320,6 @@ frontend/node/
 frontend/node_modules/
 frontend/target/
 frontend/package-lock.json
-
+logs/
 backend/target
 .idea

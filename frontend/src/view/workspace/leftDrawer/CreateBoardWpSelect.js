@@ -10,11 +10,11 @@ const CreateBoardWpSelect = (props) => {
     const {wpId} = useParams()
     useEffect(() => {
 
-        // api.post('/api/v1/user/workspace')
-        //     .then(resp => {
-        //         setWps(resp.data)
-        //         setValue(wpId)
-        //     })
+        api.post('/api/v1/user/workspace')
+            .then(resp => {
+                setWps(resp)
+                setValue(wpId)
+            })
 
 
     }, [wpId])

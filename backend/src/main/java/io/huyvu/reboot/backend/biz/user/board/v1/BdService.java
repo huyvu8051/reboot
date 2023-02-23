@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.biz.user.board;
+package io.huyvu.reboot.backend.biz.user.board.v1;
 
 import java.util.List;
 

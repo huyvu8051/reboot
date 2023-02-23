@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.biz.user.workspace;
+package io.huyvu.reboot.backend.biz.user.workspace.v1;
 
 import java.util.List;
 

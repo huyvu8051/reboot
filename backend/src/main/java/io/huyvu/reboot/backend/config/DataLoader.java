@@ -2,7 +2,7 @@ package io.huyvu.reboot.backend.config;
 
 import com.github.javafaker.Faker;
 import io.huyvu.reboot.backend.config.auth.google.v1.GoogleOAuthRepository;
-import io.huyvu.reboot.backend.biz.guest.register.RegisterRepository;
+import io.huyvu.reboot.backend.biz.guest.register.v1.RegisterRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;

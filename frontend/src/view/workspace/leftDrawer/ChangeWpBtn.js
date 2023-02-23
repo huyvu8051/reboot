@@ -4,14 +4,24 @@ import {useNavigate} from 'react-router-dom'
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {Avatar, IconButton, Menu, MenuItem} from '@mui/material'
+import {$off, $on} from "../../../util/eventbus-utils";
 
 
 const ChangeWpBtn = () => {
-    const [anchorEl, setAnchorEl] = useState(null)
     const navigate = useNavigate()
+
+    const [lazyFetch, setLazyFetch] = useState(true);
+    const [anchorEl, setAnchorEl] = useState(null)
+
     const handleWpSelectMenu = (event) => {
+        if (lazyFetch) {
+            api.post('/api/v1/user/workspace')
+                .then(setWps)
+                .then(() => setLazyFetch(false))
+        }
         setAnchorEl(event.currentTarget)
     }
+
     const handleWpSelect = (item) => {
         navigate(`/w/${item.id}`)
         setAnchorEl(null)
@@ -23,11 +33,11 @@ const ChangeWpBtn = () => {
 
     const [wps, setWps] = useState([])
 
+
     useEffect(() => {
-
-        // api.post('/api/v1/user/workspace')
-        //     .then(resp => setWps(resp.data))
-
+        const turnOnLF = () => setLazyFetch(true)
+        $on('ChangeWpBtn.lswp.refresh', turnOnLF)
+        return () => $off('ChangeWpBtn.lswp.refresh', turnOnLF)
     }, [])
     return (
         <>

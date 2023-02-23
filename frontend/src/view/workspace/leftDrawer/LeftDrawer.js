@@ -1,5 +1,4 @@
-import {Avatar, Link} from '@mui/material'
-import IconButton from '@mui/material/IconButton'
+import {Avatar, IconButton, Link} from '@mui/material'
 import Divider from '@mui/material/Divider'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'

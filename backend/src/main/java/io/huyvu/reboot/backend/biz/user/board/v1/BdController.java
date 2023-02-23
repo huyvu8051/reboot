@@ -2,7 +2,7 @@
  * @Author HuyVu
  * @CreatedDate 2/13/2023 4:31 PM
  */
-package io.huyvu.reboot.backend.biz.user.board;
+package io.huyvu.reboot.backend.biz.user.board.v1;
 
 import io.huyvu.reboot.backend.config.auth.UserContext;
 import io.huyvu.reboot.backend.util.SecurityUtils;

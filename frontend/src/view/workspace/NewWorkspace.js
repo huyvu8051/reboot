@@ -15,8 +15,8 @@ const NewWorkspace = () => {
             params: {wpNm: wpNmTxtField.current.value}
         })
             .then(resp => {
-                $success(`Workspace \`${resp.data.title}\` created!`)
-                navigate('/w/' + resp.data.id)
+                $success(`Workspace \`${resp.title}\` created!`)
+                navigate('/w/' + resp.id)
             })
     }
     //console.log('render')

@@ -5,14 +5,12 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import static io.huyvu.reboot.backend.config.mybatis.MybatisAuditingInterceptor.SET_USER_CTX_QUERY;
-
 
 @Mapper
 public interface GoogleOAuthRepository {
 
     @Select({
-            SET_USER_CTX_QUERY, """
+             """
             SELECT id
                   ,username
                   ,full_name
@@ -35,7 +33,7 @@ public interface GoogleOAuthRepository {
             """)
     UserAccount findOneById(long id);
 
-    @Insert({SET_USER_CTX_QUERY, """
+    @Insert({"""
             INSERT INTO user_account
                SET username = #{username}
                   ,full_name = #{fullName}

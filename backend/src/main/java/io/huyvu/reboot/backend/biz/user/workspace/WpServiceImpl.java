@@ -18,19 +18,20 @@ public class WpServiceImpl implements WpService {
     @Transactional
     @Override
     public WpDetails create(String wpNm, long adminId) {
-        long wpId = wpRepo.insertWp(wpNm);
-        WpMem wpMem = wpRepo.insertWpMem(wpId, adminId, true);
-        return wpRepo.findWpDetails(wpId, adminId);
+        wpRepo.insertWp(wpNm);
+        long wpId = wpRepo.selectLastInsertId();
+        wpRepo.insertWpMem(wpId, adminId, true);
+        return wpRepo.selectWpDetails(wpId, adminId);
     }
 
     @Override
     public List<ListWpItem> getList(long userId) {
-        return wpRepo.findAllWpItem(userId);
+        return wpRepo.selectWpItem(userId);
     }
 
     @Override
     public WpDetails getDetails(long wpId, long id) {
 
-        return wpRepo.findWpDetails(wpId, id);
+        return wpRepo.selectWpDetails(wpId, id);
     }
 }

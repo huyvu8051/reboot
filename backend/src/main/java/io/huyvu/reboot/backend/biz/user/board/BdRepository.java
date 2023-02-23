@@ -24,7 +24,7 @@ public interface BdRepository {
              WHERE id IN (SELECT board_id
                             FROM board_member
                            WHERE user_id = #{userId})
-                   AND workspace_id = #{wpId}}
+                   AND workspace_id = #{wpId}
                    AND is_deleted = 0
             """)
     List<BoardLsItem> findAllOwnBoard(long wpId, long userId);

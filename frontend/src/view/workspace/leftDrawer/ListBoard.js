@@ -23,7 +23,7 @@ const ListBoard = () => {
                 params: {wpId}
             })
                 .then(resp => {
-                    setBoards(resp.data)
+                    setBoards(resp)
                 })
                 .then(() => {
                     console.log('then2')

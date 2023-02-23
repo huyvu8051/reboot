@@ -2,11 +2,12 @@ package io.huyvu.reboot.backend.biz.user.workspace;
 
 import io.huyvu.reboot.backend.entity.UserAccount;
 import io.huyvu.reboot.backend.entity.Workspace;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
-import static io.huyvu.reboot.backend.config.mybatis.MybatisAuditingInterceptor.SET_USER_CTX_QUERY;
 
 /**
  * @Author HuyVu
@@ -28,22 +29,22 @@ public interface WpRepository {
              WHERE id IN (SELECT wp_id FROM `workspace_member` WHERE user_id = #{userId})
              ORDER BY `modified_date` DESC
             """)
-    List<ListWpItem> findAllWpItem(long userId);
+    List<ListWpItem> selectWpItem(long userId);
 
-    @Select(value = """
+    @Select("""
             SELECT w.id AS id, w.title AS title, w.picture_url AS pictureUrl
             FROM `workspace` w
             WHERE w.id = (SELECT wp_id
                          FROM workspace_member AS wm
-                        WHERE wm.user_id = :userId
-                              AND wm.wp_id = :wpId)     
+                        WHERE wm.user_id = #{userId}
+                              AND wm.wp_id = #{wpId})     
             """)
-    WpDetails findWpDetails(long wpId, long userId);
+    WpDetails selectWpDetails(long wpId, long userId);
 
     Workspace save(Workspace wp);
 
 
-    @Insert({SET_USER_CTX_QUERY, """
+    @Insert({"""
             INSERT INTO workspace
                SET username = #{username}
                   ,full_name = #{fullName}
@@ -54,23 +55,19 @@ public interface WpRepository {
      * @param wpNm workspace name
      * @return generated workspace id
      */
-    @Insert({SET_USER_CTX_QUERY, """
+    @Insert({"""
             INSERT INTO workspace
                SET title = #{wpNm}"""})
-    @Options(useGeneratedKeys = true, keyProperty = "id")
-    long insertWp(String wpNm);
+    void insertWp(String wpNm);
 
-    @Insert({SET_USER_CTX_QUERY, """
+    @Select({"""
+            SELECT LAST_INSERT_ID()"""})
+    long selectLastInsertId();
+
+    @Insert({"""
             INSERT INTO workspace_member
                SET wp_id = #{wpId}
                   ,user_id = #{adId}
                   ,is_admin = #{isAd}"""})
-    @SelectKey(statement = """
-            SELECT wp_id AS wpId
-                  ,user_id AS adId
-                  ,is_admin AS isAd
-              FROM workspace_member
-             WHERE user_id = #{adId}
-                   AND wp_id = #{wpId}""", keyProperty = "id", before = false, resultType = WpMem.class)
-    WpMem insertWpMem(long wpId, long adId, boolean isAd);
+    void insertWpMem(long wpId, long adId, boolean isAd);
 }

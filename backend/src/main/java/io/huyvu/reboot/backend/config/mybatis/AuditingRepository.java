@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
  * @CreatedDate 2/23/2023 8:58 AM
  */
 @Mapper
-public interface Repository {
+public interface AuditingRepository {
     String SET_USER_CTX_QUERY = "SET @USER_CTX = #{USER_CTX};";
 
     @Select(SET_USER_CTX_QUERY)

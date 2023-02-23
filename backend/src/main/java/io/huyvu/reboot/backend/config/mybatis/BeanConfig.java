@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class MybatisBeanConfig {
+public class BeanConfig {
     
     @Bean
     public AuditingInterceptor auditingInterceptor() {

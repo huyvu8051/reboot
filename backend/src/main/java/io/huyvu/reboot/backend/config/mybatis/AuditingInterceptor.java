@@ -19,16 +19,6 @@ public class AuditingInterceptor implements Interceptor {
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
-        Executor executor = (Executor) invocation.getTarget();
-        MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
-        Configuration configuration = mappedStatement.getConfiguration();
-
-
-
-        executor.query(configuration.getMappedStatement(Repository.class.getCanonicalName() + ".setUserCtx"),
-                SecurityUtils.currentContext().username(),
-                RowBounds.DEFAULT,
-                Executor.NO_RESULT_HANDLER);
 
 
         return invocation.proceed();

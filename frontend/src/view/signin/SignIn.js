@@ -36,9 +36,7 @@ function Copyright(props) {
 const theme = createTheme()
 
 
-const socket = io('http://localhost:' + 3000, {
-
-});
+const socket = io("/");
 socket.on('connect', function () {
     console.log("connect")
     socket.emit('message')

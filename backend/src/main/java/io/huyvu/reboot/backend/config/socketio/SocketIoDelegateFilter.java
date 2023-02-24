@@ -14,7 +14,7 @@ import java.io.IOException;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class SocketForward extends OncePerRequestFilter {
+public class SocketIoForward extends OncePerRequestFilter {
 
     private final EngineIoServer eioServer;
 

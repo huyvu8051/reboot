@@ -24,13 +24,5 @@ export const wpSlice = createSlice({
 
 export const {setLoadingState} = wpSlice.actions
 
-const {wpId} = useParams();
-
-api.get(`/api/v1/user/workspace`, {
-    params: {wpId}
-})
-    .then(setWp)
-    .catch(()=>$error(`Workspace not found id: ${wpId}`))
-
 
 export default wpSlice.reducer

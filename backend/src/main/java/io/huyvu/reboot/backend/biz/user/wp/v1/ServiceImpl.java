@@ -20,7 +20,7 @@ public class ServiceImpl implements Service {
         long l = wpRepo.insertWp(wpNm);
         long wpId = wpRepo.selectLastInsertId();
         wpRepo.insertWpMem(wpId, adminId, true);
-        return wpRepo.selectWpDetails(wpId, adminId);
+        return wpRepo.selectWpDetails(wpId, adminId).orElseThrow();
     }
 
     @Override
@@ -30,6 +30,6 @@ public class ServiceImpl implements Service {
 
     @Override
     public WpDetails getDetails(long wpId, long id) {
-        return wpRepo.selectWpDetails(wpId, id);
+        return wpRepo.selectWpDetails(wpId, id).orElseThrow();
     }
 }

@@ -21,14 +21,11 @@ const ListBoard = () => {
             api.post('/api/v1/user/board', null, {
                 params: {wpId}
             }).then(setBoards)
-
-            //r.catch(()=>null)
         }
-        fetchBoardLs()
+        if(wpId) fetchBoardLs()
+
         $on('boards.refresh', fetchBoardLs)
         return () => $off('boards.refresh', fetchBoardLs)
-
-
     }, [wpId])
 
     return (

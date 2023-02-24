@@ -9,8 +9,8 @@ import org.aspectj.lang.annotation.Before;
 import org.springframework.context.annotation.Configuration;
 
 
-@org.aspectj.lang.annotation.Aspect
 @Configuration
+@org.aspectj.lang.annotation.Aspect
 @RequiredArgsConstructor
 public class Aspect {
 

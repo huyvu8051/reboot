@@ -3,7 +3,7 @@ import * as React from 'react'
 import {useState} from 'react'
 
 let CreateBoardVisibilitySelect = (props) => {
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState('private')
 
     const handleChange = (event) => {
         setValue(event.target.value)

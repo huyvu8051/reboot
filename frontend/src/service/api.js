@@ -52,12 +52,6 @@ instance.interceptors.response.use(response => {
         store.dispatch(refreshToken(token))
         $success('Jwt token refreshed')
     }
-
-    // check http status
-    if (response.data.status > 400 && response.data.status < 600) {
-        //$error(response.data.status + ':' + response.data.message)
-        return Promise.reject(response)
-    }
     return response
 }, err => {
     return Promise.reject(err)

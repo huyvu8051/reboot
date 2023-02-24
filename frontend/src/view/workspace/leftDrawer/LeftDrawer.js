@@ -9,22 +9,40 @@ import ListItemText from '@mui/material/ListItemText'
 import PermIdentityIcon from '@mui/icons-material/PermIdentity'
 import AddIcon from '@mui/icons-material/Add'
 import SettingsIcon from '@mui/icons-material/Settings'
-import TableRowsIcon from '@mui/icons-material/TableRows'
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import Drawer from '@mui/material/Drawer'
 import * as React from 'react'
+import {useEffect, useState} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 import DrawerHeader from '../DrawerHeader'
 import ChangeWpIcon from './ChangeWpBtn'
 import SettingWpIcon from './SettingWpBtn'
-import ListBoard from './ListBoard'
-import NewBoardBtn from './CreateBoardBtn'
+import api from "../../../service/api";
+import ListBoard from "./ListBoard";
+import CreateBoardBtn from "./CreateBoardBtn";
+import {CalendarMonth, TableRows} from "@mui/icons-material";
+import {$error} from "../../../util/snackbar-utils";
 
 const drawerWidth = 240
 
 let LeftDrawer = (props) => {
     const navigate = useNavigate()
-    const {wpId} = useParams()
+    const {wpId, bdId} = useParams()
+    const [wp, setWp] = useState(null)
+
+
+
+    useEffect(() => {
+        if(bdId){
+
+        }
+        else if (wpId){
+            api.get(`/api/v1/user/workspace`, {
+                params: {wpId}
+            })
+                .then(setWp)
+                .catch(()=>$error(`Workspace not found id: ${wpId}`))
+        }
+    }, [wpId])
 
     return (
         <Drawer
@@ -41,83 +59,85 @@ let LeftDrawer = (props) => {
             open={props.open}
         >
             <DrawerHeader>
-                <Avatar variant='rounded' alt='Remy Sharp' src='https://mui.com/static/images/avatar/1.jpg'/>
-                <Link sx={{ml: 2, textDecoration: 'none', color: 'black'}}>viva_odc</Link>
+                {
+                    wp && <>
+                        <Avatar variant='rounded' alt='Remy Sharp' src={wp.pictureUrl}/>
+                        <Link sx={{ml: 2, textDecoration: 'none', color: 'black'}}>{wp.title}</Link>
+                    </>
+                }
                 <ChangeWpIcon/>
             </DrawerHeader>
             <Divider/>
-            <List dense>
-                <ListItem key='board' disablePadding>
-                    <ListItemButton onClick={() => navigate(`/w/${wpId}`)}>
-                        <ListItemIcon>
-                            <DashboardIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary='Board'/>
-                    </ListItemButton>
-                </ListItem>
-                <ListItem key='members' disablePadding>
-                    <ListItemButton onClick={() => navigate(`/w/${wpId}/members`)}>
-                        <ListItemIcon>
-                            <PermIdentityIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary='Members'/>
-                    </ListItemButton>
-                    <IconButton size='small' sx={{color: 'black'}}>
-                        <AddIcon fontSize='small'/>
-                    </IconButton>
-                </ListItem>
-                <ListItem key='settings' disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <SettingsIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary='Settings'/>
-
-                    </ListItemButton>
-                    <SettingWpIcon/>
-                </ListItem>
-
-            </List>
-
-            <Divider/>
-            <List dense>
-                <ListItem key='wp-views' disablePadding>
-                    <ListItemButton>
-                        <ListItemText primary='Workspace views'/>
-
-                    </ListItemButton>
-                    <IconButton size='small' sx={{color: 'black'}}>
-                        <AddIcon fontSize='small'/>
-                    </IconButton> </ListItem>
-                <ListItem key='table' disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <TableRowsIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary='Table'/>
-                    </ListItemButton>
-                </ListItem>
-                <ListItem key='calendar' disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <CalendarMonthIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary='Calendar'/>
-                    </ListItemButton>
-                </ListItem>
-            </List>
-            <Divider/>
-            <List dense>
-                <ListItem key='your-boards' disablePadding>
-                    <ListItemButton>
-                        <ListItemText primary='Your boards'/>
-
-                    </ListItemButton>
-                    <NewBoardBtn/>
-                </ListItem>
-                <ListBoard/>
-            </List>
-
+            {
+                wp && <>
+                    <List dense>
+                        <ListItem key='board' disablePadding>
+                            <ListItemButton onClick={() => navigate(`/w/${wp.id}`)}>
+                                <ListItemIcon>
+                                    <DashboardIcon/>
+                                </ListItemIcon>
+                                <ListItemText primary='Board'/>
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem key='members' disablePadding>
+                            <ListItemButton onClick={() => navigate(`/w/${wp.id}/members`)}>
+                                <ListItemIcon>
+                                    <PermIdentityIcon/>
+                                </ListItemIcon>
+                                <ListItemText primary='Members'/>
+                            </ListItemButton>
+                            <IconButton size='small' sx={{color: 'black'}}>
+                                <AddIcon fontSize='small'/>
+                            </IconButton>
+                        </ListItem>
+                        <ListItem key='settings' disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <SettingsIcon/>
+                                </ListItemIcon>
+                                <ListItemText primary='Settings'/>
+                            </ListItemButton>
+                            <SettingWpIcon/>
+                        </ListItem>
+                    </List>
+                    <Divider/>
+                    <List dense>
+                        <ListItem key='wp-views' disablePadding>
+                            <ListItemButton>
+                                <ListItemText primary='Workspace views'/>
+                            </ListItemButton>
+                            <IconButton size='small' sx={{color: 'black'}}>
+                                <AddIcon fontSize='small'/>
+                            </IconButton> </ListItem>
+                        <ListItem key='table' disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <TableRows/>
+                                </ListItemIcon>
+                                <ListItemText primary='Table'/>
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem key='calendar' disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <CalendarMonth/>
+                                </ListItemIcon>
+                                <ListItemText primary='Calendar'/>
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                    <Divider/>
+                    <List dense>
+                        <ListItem key='your-boards' disablePadding>
+                            <ListItemButton>
+                                <ListItemText primary='Your boards'/>
+                            </ListItemButton>
+                            <CreateBoardBtn/>
+                        </ListItem>
+                        <ListBoard/>
+                    </List>
+                </>
+            }
         </Drawer>)
 }
 export default LeftDrawer

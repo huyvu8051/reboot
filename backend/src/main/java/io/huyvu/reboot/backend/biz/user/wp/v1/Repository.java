@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -41,7 +42,7 @@ public interface Repository {
                               AND wm.wp_id = #{wpId})     
                   AND is_deleted = 0
             """)
-    WpDetails selectWpDetails(long wpId, long userId);
+    Optional<WpDetails> selectWpDetails(long wpId, long userId);
 
 
 

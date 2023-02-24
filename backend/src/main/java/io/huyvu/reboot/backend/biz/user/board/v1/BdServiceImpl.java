@@ -4,10 +4,8 @@
  */
 package io.huyvu.reboot.backend.biz.user.board.v1;
 
-import io.huyvu.reboot.backend.entity.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,25 +21,9 @@ public class BdServiceImpl implements BdService {
         return bdRepo.findAllOwnBoard(wpId, userId);
     }
 
-    @Transactional
     @Override
-    public long create(String name, long wpId, long userId) {
-        Workspace wp = bdRepo.findWpById(wpId).orElseThrow();
-
-        Board b = new Board()
-                .setName(name)
-                .setWorkspace(wp);
-        Board bSaved = bdRepo.save(b);
-        UserAccount user = bdRepo.findUser(userId).orElseThrow();
-
-        BoardMemberKey bMemId = new BoardMemberKey()
-                .setUser(user)
-                .setBoard(bSaved);
-
-        BoardMember bMem = new BoardMember()
-                .setKey(bMemId);
-        bdMemRepo.save(bMem);
-
-        return b.getId();
+    public long create(String name, long wpId, long uId) {
+        bdRepo.findWpById(wpId, uId).orElseThrow();
+        return bdRepo.insertBoard(name, wpId);
     }
 }

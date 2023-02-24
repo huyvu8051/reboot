@@ -22,6 +22,10 @@ const RouteConfig = createBrowserRouter([
         element: <><PrivateRoute/><Dashboard/></>,
         children: [
             {
+                path: 'w',
+                element: <Boards/>
+            },
+            {
                 path: 'w/:wpId',
                 element: <Boards/>
             },

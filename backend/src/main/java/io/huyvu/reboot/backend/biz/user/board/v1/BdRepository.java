@@ -2,7 +2,7 @@ package io.huyvu.reboot.backend.biz.user.board.v1;
 
 import io.huyvu.reboot.backend.entity.Board;
 import io.huyvu.reboot.backend.entity.UserAccount;
-import io.huyvu.reboot.backend.entity.Workspace;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -15,7 +15,7 @@ import java.util.Optional;
  */
 @Mapper
 public interface BdRepository {
-    @Select(value = """
+    @Select("""
             SELECT id
                   ,name
                   ,background_image AS backgroundImage
@@ -38,12 +38,25 @@ public interface BdRepository {
     Optional<UserAccount> findUser(long id);
 
     @Select("""
-            SELECT w 
-              FROM Workspace w
-             WHERE id = #{id}
-                   AND isDeleted = false
+            SELECT w.id AS id
+                  ,w.title AS title
+                  ,w.picture_url AS pictureUrl
+            FROM `workspace` w
+            WHERE w.id = (SELECT wp_id
+                            FROM workspace_member AS wm
+                           WHERE wm.user_id = #{uId}
+                                 AND wm.wp_id = #{wpId})     
+                  AND is_deleted = 0
             """)
-    Optional<Workspace> findWpById(long wpId);
+    Optional<WorkspaceDto> findWpById(long wpId, long uId);
 
     Board save(Board b);
+
+
+    @Insert("""
+            INSERT INTO	board
+               SET NAME = #{nm}
+                 ,workspace_id = #{wpId}
+            """)
+    long insertBoard(String nm, long wpId);
 }

@@ -41,8 +41,8 @@ public class Controller {
         return mngWpService.getList(userCtx.id());
     }
 
-    @PostMapping("/{wpId}")
-    WpDetails getDetails(@PathVariable long wpId) {
+    @GetMapping
+    WpDetails getDetails(long wpId) {
         UserContext userCtx = SecurityUtils.currentContext();
         return mngWpService.getDetails(wpId, userCtx.id());
     }

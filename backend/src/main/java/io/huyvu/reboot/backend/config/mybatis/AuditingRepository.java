@@ -14,6 +14,6 @@ public interface AuditingRepository {
     @Select(SET_USER_CTX_QUERY)
     void setUserCtx(String val);
 
-    @Select("SELECT LAST_INSERT_ID()")
+    @Select("SELECT LAST_INSERT_ID();")
     long getLastInsertId();
 }

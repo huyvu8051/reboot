@@ -10,7 +10,7 @@ export const testSlice = createSlice({
     name: 'testSlice',
     initialState,
     reducers: {
-        setLoadingState: (state, action) => {
+        fetchWpInitSte: (state, action) => {
             state.loading = true
         },
 

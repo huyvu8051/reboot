@@ -1,9 +1,12 @@
 /**
- * Global event dispatcher
- * @type {{$on(*, *): void, $dispatch(*, *): void, $off(*, *): void}}
+ *
+ * @param eventType
+ * @param callback
+ * @returns {function(): void}
  */
 export function $on(eventType, callback) {
     document.addEventListener(eventType, callback)
+    return () => $off(eventType, callback)
 }
 
 export function $dispatch(eventType, data) {

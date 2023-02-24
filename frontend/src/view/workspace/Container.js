@@ -11,6 +11,8 @@ import {Outlet} from '@mui/icons-material'
 import LeftDrawer from './leftDrawer/LeftDrawer'
 import DrawerHeader from './DrawerHeader'
 import NewWorkspace from './NewWorkspace'
+import {useEffect} from "react";
+import {io} from "socket.io-client";
 
 const drawerWidth = 240
 
@@ -56,6 +58,27 @@ export default function PersistentDrawerLeft(props) {
     const handleToggle = () => {
         setOpen(!open)
     }
+
+    useEffect(()=>{
+
+        const socket = io("/notification",{
+            transports:['websocket']
+        });
+        socket.on('connect', function () {
+            console.log("connect")
+            socket.emit('message')
+        });
+
+        socket.on('msg', (msg)=>{
+            console.log("msg:", msg)
+        })
+
+        socket.connect();
+        return ()=>{
+            socket.off('msg')
+            socket.disconnect()
+        }
+    },[])
 
     return (
         <Box sx={{display: 'flex'}}>

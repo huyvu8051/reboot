@@ -6,7 +6,7 @@ import * as React from 'react'
 import {useEffect, useState} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 import api from '../../../service/api'
-import {$off, $on} from "../../../util/eventbus-utils"
+import {$on} from "../../../util/eventbus-utils"
 
 
 const ListBoard = () => {
@@ -22,10 +22,10 @@ const ListBoard = () => {
                 params: {wpId}
             }).then(setBoards)
         }
-        if(wpId) fetchBoardLs()
+        if (wpId) fetchBoardLs()
 
-        $on('boards.refresh', fetchBoardLs)
-        return () => $off('boards.refresh', fetchBoardLs)
+        const off = $on('boards.refresh', fetchBoardLs);
+        return () => off()
     }, [wpId])
 
     return (

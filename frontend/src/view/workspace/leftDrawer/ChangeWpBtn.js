@@ -13,14 +13,7 @@ const ChangeWpBtn = () => {
     const [lazyFetch, setLazyFetch] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null)
 
-    const handleWpSelectMenu = (event) => {
-        if (lazyFetch) {
-            api.post('/api/v1/user/workspace')
-                .then(setWps)
-                .then(() => setLazyFetch(false))
-        }
-        setAnchorEl(event.currentTarget)
-    }
+
 
     const handleWpSelect = (item) => {
         navigate(`/w/${item.id}`)
@@ -33,12 +26,22 @@ const ChangeWpBtn = () => {
 
     const [wps, setWps] = useState([])
 
+    const handleWpSelectMenu = (event) => {
+        if (lazyFetch) {
+            api.post('/api/v1/user/workspace')
+                .then(setWps)
+                .then(() => setLazyFetch(false))
+        }
+        setAnchorEl(event.currentTarget)
+    }
 
     useEffect(() => {
         const turnOnLF = () => setLazyFetch(true)
-        $on('ChangeWpBtn.lswp.refresh', turnOnLF)
-        return () => $off('ChangeWpBtn.lswp.refresh', turnOnLF)
+        const off = $on('ChangeWpBtn.lswp.refresh', turnOnLF);
+        return () => off()
     }, [])
+
+
     return (
         <>
             <IconButton size='small'

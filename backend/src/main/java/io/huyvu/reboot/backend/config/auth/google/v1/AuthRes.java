@@ -7,7 +7,7 @@ import java.util.List;
 
 @Builder
 @Getter
-public class AuthResp {
+public class AuthRes {
     private String token;
     private String username;
     private String fullName;

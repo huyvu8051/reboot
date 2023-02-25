@@ -1,6 +1,6 @@
 package io.huyvu.reboot.backend;
 
-import io.huyvu.reboot.backend.config.CustomGenerator;
+import io.huyvu.reboot.backend.config.BeanNameGenerator;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -11,7 +11,7 @@ public class RebootApplication {
     public static void main(String[] args) {
         //SpringApplication.run(RebootApplication.class, args);
         new SpringApplicationBuilder(RebootApplication.class)
-                .beanNameGenerator(new CustomGenerator())
+                .beanNameGenerator(new BeanNameGenerator())
                 .run(args);
     }
 }

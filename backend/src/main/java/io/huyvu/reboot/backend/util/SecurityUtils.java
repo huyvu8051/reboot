@@ -4,27 +4,27 @@
  */
 package io.huyvu.reboot.backend.util;
 
-import io.huyvu.reboot.backend.config.auth.UserContext;
+import io.huyvu.reboot.backend.config.auth.UserContextVo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class SecurityUtils {
 
-    public static UserContext currentContext() {
+    public static UserContextVo currentContext() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null) {
-            return new UserContext(0, "anonymous");
+            return new UserContextVo(0, "anonymous");
         }
         Object principal = authentication.getPrincipal();
         if (principal instanceof String s) {
-            return new UserContext(0, s);
+            return new UserContextVo(0, s);
         }
 
-        if (principal instanceof UserContext uc) {
+        if (principal instanceof UserContextVo uc) {
             return uc;
         }
 
-        return (UserContext) principal;
+        return (UserContextVo) principal;
     }
 }

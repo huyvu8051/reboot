@@ -6,7 +6,7 @@ import org.springframework.context.annotation.AnnotationBeanNameGenerator;
 
 import java.util.function.UnaryOperator;
 
-public class CustomGenerator extends AnnotationBeanNameGenerator {
+public class BeanNameGenerator extends AnnotationBeanNameGenerator {
 
     @Override
     public String generateBeanName(BeanDefinition definition, BeanDefinitionRegistry registry) {

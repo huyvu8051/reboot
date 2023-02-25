@@ -36,9 +36,7 @@ function Copyright(props) {
 const theme = createTheme()
 
 
-const socket = io("/", {
-    transports: ['websocket']
-});
+const socket = io("/");
 
 socket.on('connect', function () {
     console.log("connect")

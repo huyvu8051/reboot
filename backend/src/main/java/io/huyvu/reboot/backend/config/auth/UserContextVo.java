@@ -8,5 +8,5 @@ package io.huyvu.reboot.backend.config.auth;
  * @param id user id
  * @param username username
  */
-public record UserContext(long id, String username) {
+public record UserContextVo(long id, String username) {
 }

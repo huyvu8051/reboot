@@ -19,7 +19,7 @@ public class GoogleOAuthController {
     private final GoogleOAuthService googleOauthService;
 
     @PostMapping("/google-auth")
-    AuthResp authenticate(@RequestBody AuthReq req) throws GoogleOAuthException {
+    AuthRes authenticate(@RequestBody AuthReq req) throws GoogleOAuthException {
 
         GoogleOAccountToken ggAccToken = googleOauthService.extractToken(req.getIdToken());
 
@@ -34,7 +34,7 @@ public class GoogleOAuthController {
         List<String> roles = List.of("USER", "ADMIN");
 
         String jwtToken = jwtUtils.generateJwtToken(userAccount.getId(), userAccount.getUsername(),roles);
-        return AuthResp.builder()
+        return AuthRes.builder()
                 .token(jwtToken)
                 .username(userAccount.getUsername())
                 .fullName(userAccount.getFullName())

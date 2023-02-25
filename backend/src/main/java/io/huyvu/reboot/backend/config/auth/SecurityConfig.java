@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(spaRedirectFilter, JwtFilter.class);
+        http.addFilterBefore(spaRedirectFilter, jwtFilter.getClass());
 
         return http.build();
 

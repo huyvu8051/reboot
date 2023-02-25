@@ -15,13 +15,11 @@ import org.springframework.context.annotation.Configuration;
 @org.aspectj.lang.annotation.Aspect
 @RequiredArgsConstructor
 public class Aspect {
-
     private final AuditingRepository ucRepo;
 
     @Around("@annotation(org.apache.ibatis.annotations.Insert) && execution(long *(..))")
     public Object returnLastGeneratedId(ProceedingJoinPoint joinPoint) throws Throwable {
         joinPoint.proceed();
-
         long lastInsertId = ucRepo.getLastInsertId();
         return lastInsertId;
     }
@@ -29,8 +27,4 @@ public class Aspect {
     public void setUserCtx(JoinPoint joinPoint) {
         ucRepo.setUserCtx(SecurityUtils.currentContext().username());
     }
-//    @Before("execution(* io.huyvu.reboot.backend.config.socketio.EngineIoHandler.*(..))")
-//    public void socket(JoinPoint joinPoint) {
-//        log.info(joinPoint.getSignature().getName());
-//    }
 }

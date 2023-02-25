@@ -4,7 +4,7 @@
  */
 package io.huyvu.reboot.backend.biz.user.wp.v1;
 
-import io.huyvu.reboot.backend.config.auth.UserContext;
+import io.huyvu.reboot.backend.config.auth.UserContextVo;
 import io.huyvu.reboot.backend.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -26,7 +26,7 @@ public class Controller {
     CreateWpResp createWp(@NotNull
                           @NotEmpty
                           @NotBlank String wpNm) {
-        UserContext userCtx = SecurityUtils.currentContext();
+        UserContextVo userCtx = SecurityUtils.currentContext();
         WpDetails workspace = mngWpService.create(wpNm, userCtx.id());
         CreateWpResp createWpResp = new CreateWpResp() {{
             setId(workspace.id());
@@ -37,13 +37,13 @@ public class Controller {
 
     @PostMapping
     List<ListWpItem> getLs() {
-        UserContext userCtx = SecurityUtils.currentContext();
+        UserContextVo userCtx = SecurityUtils.currentContext();
         return mngWpService.getList(userCtx.id());
     }
 
     @GetMapping
     WpDetails getDetails(long wpId) {
-        UserContext userCtx = SecurityUtils.currentContext();
+        UserContextVo userCtx = SecurityUtils.currentContext();
         return mngWpService.getDetails(wpId, userCtx.id());
     }
 

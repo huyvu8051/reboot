@@ -42,10 +42,10 @@ const socket = io("localhost:8080", {
 
 socket.on('connect', function () {
     console.log("connect")
-    socket.emit('message')
+    socket.emit('message', "tin chuan khong anh")
 });
 
-socket.on('client.msg', (msg)=>{
+socket.on('server.message', (msg)=>{
     console.log("msg:", msg)
 })
 socket.connect();

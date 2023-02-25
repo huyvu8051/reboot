@@ -21,7 +21,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/csrf", "/api/authenticate", "/api/test/**", "/api/data", "/h2-console/**",
-                        "/v2/api-docs", "/webjars/**", "/resources/**", "/socket.io/**", "/static/**", "/assets/**", "/client.html**", "/client2.html**", "/uploads/**")
+                        "/v2/api-docs", "/webjars/**", "/resources/**", "/socket.io/**","/ws**", "/static/**", "/assets/**", "/client.html**", "/client2.html**", "/uploads/**")
                 .permitAll()
                 .antMatchers("/api/private").authenticated()
                 .antMatchers("/api/v1/workspace").hasAuthority("ADMIN")

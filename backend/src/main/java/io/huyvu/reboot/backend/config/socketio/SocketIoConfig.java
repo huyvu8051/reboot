@@ -14,7 +14,8 @@ import org.springframework.context.annotation.Configuration;
 public class SocketIoConfig {
     @Bean
     EngineIoServer engineIoServer() {
-        EngineIoServerOptions opt = EngineIoServerOptions.DEFAULT;
+        EngineIoServerOptions opt = EngineIoServerOptions.newFromDefault();
+        opt.setCorsHandlingDisabled(true);
         EngineIoServer eioServer = new EngineIoServer(opt);
         return eioServer;
     }

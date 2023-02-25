@@ -16,8 +16,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -31,7 +29,6 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain)
             throws ServletException, IOException {
-
         String authorizationHeader = req.getHeader("Authorization");
 
         String jwtToken = null;
@@ -62,25 +59,4 @@ public class JwtFilter extends OncePerRequestFilter {
 
 
     }
-
-
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) {
-        String path = request.getRequestURI();
-        return this.isNotFilter(path);
-    }
-
-    private boolean isNotFilter(String path) {
-        List<String> uri = new ArrayList<>(Arrays.asList("/csrf", "/assets", "/api/authenticate", "/swagger-resources", "/swagger-ui.html",
-                "/v2/api-docs", "/webjars", "/resources", "/index.html", "/test", "/socket.io", "/api/v1/google-auth"));
-
-        for (String e : uri) {
-            if (path.startsWith(e)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
 }

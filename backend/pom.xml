@@ -18,6 +18,14 @@
     </properties>
 
     <dependencies>
+
+        <!-- socket.io -->
+        <dependency>
+            <groupId>io.socket</groupId>
+            <artifactId>socket.io-server</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
         <!-- aop -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

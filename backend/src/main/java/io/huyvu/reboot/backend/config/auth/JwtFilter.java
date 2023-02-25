@@ -29,6 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain)
             throws ServletException, IOException {
+
         String authorizationHeader = req.getHeader("Authorization");
 
         String jwtToken = null;
@@ -56,7 +57,5 @@ public class JwtFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(req, resp);
-
-
     }
 }

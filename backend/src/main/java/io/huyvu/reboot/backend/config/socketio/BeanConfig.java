@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 @Configuration
-public class SocketIoConfig {
+public class BeanConfig {
     @Bean
     EngineIoServer engineIoServer() {
         EngineIoServerOptions opt = EngineIoServerOptions.newFromDefault();

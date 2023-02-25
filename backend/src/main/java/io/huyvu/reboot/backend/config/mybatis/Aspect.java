@@ -29,8 +29,8 @@ public class Aspect {
     public void setUserCtx(JoinPoint joinPoint) {
         ucRepo.setUserCtx(SecurityUtils.currentContext().username());
     }
-    @Before("execution(* io.huyvu.reboot.backend.config.socketio.EngineIoHandler.*(..))")
-    public void socket(JoinPoint joinPoint) {
-        log.info(joinPoint.getSignature().getName());
-    }
+//    @Before("execution(* io.huyvu.reboot.backend.config.socketio.EngineIoHandler.*(..))")
+//    public void socket(JoinPoint joinPoint) {
+//        log.info(joinPoint.getSignature().getName());
+//    }
 }

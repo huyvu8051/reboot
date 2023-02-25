@@ -21,9 +21,9 @@ import java.util.Map;
 @Controller
 public class EngineIoHandler implements HandshakeInterceptor, WebSocketHandler {
 
-    private static final String ATTRIBUTE_ENGINEIO_BRIDGE = "engineIo.bridge";
-    private static final String ATTRIBUTE_ENGINEIO_QUERY = "engineIo.query";
-    private static final String ATTRIBUTE_ENGINEIO_HEADERS = "engineIo.headers";
+    private static final String ATTRIBUTE_ENGINE_IO_BRIDGE = "engine.io.bridge";
+    private static final String ATTRIBUTE_ENGINE_IO_QUERY = "engine.io.query";
+    private static final String ATTRIBUTE_ENGINE_IO_HEADERS = "engine.io.headers";
 
     private final EngineIoServer mEngineIoServer;
 
@@ -43,8 +43,8 @@ public class EngineIoHandler implements HandshakeInterceptor, WebSocketHandler {
 
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) {
-        attributes.put(ATTRIBUTE_ENGINEIO_QUERY, request.getURI().getQuery());
-        attributes.put(ATTRIBUTE_ENGINEIO_HEADERS, request.getHeaders());
+        attributes.put(ATTRIBUTE_ENGINE_IO_QUERY, request.getURI().getQuery());
+        attributes.put(ATTRIBUTE_ENGINE_IO_HEADERS, request.getHeaders());
         return true;
     }
 
@@ -62,25 +62,25 @@ public class EngineIoHandler implements HandshakeInterceptor, WebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession webSocketSession) {
         final EngineIoSpringWebSocket webSocket = new EngineIoSpringWebSocket(webSocketSession);
-        webSocketSession.getAttributes().put(ATTRIBUTE_ENGINEIO_BRIDGE, webSocket);
+        webSocketSession.getAttributes().put(ATTRIBUTE_ENGINE_IO_BRIDGE, webSocket);
         mEngineIoServer.handleWebSocket(webSocket);
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession webSocketSession, CloseStatus closeStatus) {
-        ((EngineIoSpringWebSocket)webSocketSession.getAttributes().get(ATTRIBUTE_ENGINEIO_BRIDGE))
+        ((EngineIoSpringWebSocket)webSocketSession.getAttributes().get(ATTRIBUTE_ENGINE_IO_BRIDGE))
                 .afterConnectionClosed(closeStatus);
     }
 
     @Override
     public void handleMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage) {
-        ((EngineIoSpringWebSocket)webSocketSession.getAttributes().get(ATTRIBUTE_ENGINEIO_BRIDGE))
+        ((EngineIoSpringWebSocket)webSocketSession.getAttributes().get(ATTRIBUTE_ENGINE_IO_BRIDGE))
                 .handleMessage(webSocketMessage);
     }
 
     @Override
     public void handleTransportError(WebSocketSession webSocketSession, Throwable throwable) {
-        ((EngineIoSpringWebSocket)webSocketSession.getAttributes().get(ATTRIBUTE_ENGINEIO_BRIDGE))
+        ((EngineIoSpringWebSocket)webSocketSession.getAttributes().get(ATTRIBUTE_ENGINE_IO_BRIDGE))
                 .handleTransportError(throwable);
     }
 
@@ -93,13 +93,13 @@ public class EngineIoHandler implements HandshakeInterceptor, WebSocketHandler {
         EngineIoSpringWebSocket(WebSocketSession session) {
             mSession = session;
 
-            final String queryString = (String)mSession.getAttributes().get(ATTRIBUTE_ENGINEIO_QUERY);
+            final String queryString = (String)mSession.getAttributes().get(ATTRIBUTE_ENGINE_IO_QUERY);
             if (queryString != null) {
                 mQuery = ParseQS.decode(queryString);
             } else {
                 mQuery = new HashMap<>();
             }
-            this.mHeaders = (Map<String, List<String>>) mSession.getAttributes().get(ATTRIBUTE_ENGINEIO_HEADERS);
+            this.mHeaders = (Map<String, List<String>>) mSession.getAttributes().get(ATTRIBUTE_ENGINE_IO_HEADERS);
         }
 
         /* EngineIoWebSocket */

@@ -1,7 +1,4 @@
 import {createSlice} from '@reduxjs/toolkit'
-import api from "../../service/api";
-import {$error} from "../../util/snackbar-utils";
-import {useParams} from "react-router-dom";
 
 const initialState = {
     wp: null,
@@ -15,14 +12,17 @@ export const wpSlice = createSlice({
     name: 'wpSlice',
     initialState,
     reducers: {
-        wpInitState: (state, action) => {
-            state.loading = true
+        save: (state, action) => {
+            state.wp = action.wp
+            state.wps = action.wps
+            state.board = action.board
+            state.boards = action.boards
+            state.wpMems = action.wpMems
         },
-
     },
 })
 
-export const {setLoadingState} = wpSlice.actions
+export const {save} = wpSlice.actions
 
 
 export default wpSlice.reducer

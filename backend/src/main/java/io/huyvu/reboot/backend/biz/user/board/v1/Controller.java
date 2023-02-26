@@ -4,7 +4,7 @@
  */
 package io.huyvu.reboot.backend.biz.user.board.v1;
 
-import io.huyvu.reboot.backend.config.auth.UserContextVo;
+import io.huyvu.reboot.backend.config.security.UserContextVo;
 import io.huyvu.reboot.backend.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,18 +15,18 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/user/board")
 public class Controller {
-    private final BdService bdService;
+    private final IService service;
 
     @PostMapping
-    List<BoardLsItem> getAllFromWp(@RequestParam long wpId) {
+    List<BoardVo> getAllFromWp(@RequestParam long wpId) {
         UserContextVo userContextVo = SecurityUtils.currentContext();
-        return bdService.getAll(wpId, userContextVo.id());
+        return service.getAll(wpId, userContextVo.id());
     }
 
 
     @PutMapping
     long create(@RequestBody CreateBoardReq req) {
         UserContextVo userContextVo = SecurityUtils.currentContext();
-        return bdService.create(req.title(), req.wp(), userContextVo.id());
+        return service.create(req.title(), req.wp(), userContextVo.id());
     }
 }

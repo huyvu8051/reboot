@@ -4,7 +4,7 @@
  */
 package io.huyvu.reboot.backend.util;
 
-import io.huyvu.reboot.backend.config.auth.UserContextVo;
+import io.huyvu.reboot.backend.config.security.UserContextVo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

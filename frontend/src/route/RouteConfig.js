@@ -8,6 +8,7 @@ import PageNotFound from '../view/error/PageNotFound'
 import Unauthorized from '../view/error/Unauthorized'
 import Members from '../view/members/Members'
 import {BoardContents} from '../view/board-contents/BoardContents'
+import WorkspacesLs from "../view/workspace/WorkspacesLs";
 
 const RouteConfig = createBrowserRouter([
     {
@@ -16,7 +17,7 @@ const RouteConfig = createBrowserRouter([
     },
     {
         path: 'home',
-        element: <PrivateRoute><Home/></PrivateRoute>
+        element: <><PrivateRoute/><Home/></>
     },
     {
         element: <><PrivateRoute/><Dashboard/></>,
@@ -27,7 +28,7 @@ const RouteConfig = createBrowserRouter([
             },
             {
                 path: 'w/:wpId',
-                element: <Boards/>
+                element: <WorkspacesLs/>
             },
             {
                 path: 'w/:wpId/members',

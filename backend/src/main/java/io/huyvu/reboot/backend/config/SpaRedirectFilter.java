@@ -16,21 +16,17 @@ import java.util.regex.Pattern;
 @Configuration
 public class SpaRedirectFilter extends OncePerRequestFilter {
 
-    // Forwards all routes except '/index.html', '/200.html', '/favicon.ico', '/sw.js' '/api/', '/api/**'
-    private final String REGEX = "(?!/actuator|/api|/socket\\.io|/h2-console|/_nuxt|/static|/assets|/index\\.html|/200\\.html|/favicon\\.ico|/sw\\.js).*$";
+    private final String REGEX = "(?!/actuator|/api|/socket\\.io|/h2-console|/_nuxt|/static|/assets|/index\\.html|/200\\.html|/manifest\\.json|/favicon\\.ico|/sw\\.js).*$";
     private Pattern pattern = Pattern.compile(REGEX);
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {
-        // log.warn(req.getRequestURI());
-        if (pattern.matcher(req.getRequestURI()).matches() && !req.getRequestURI().equals("/")) {
-            // Delegate/Forward to `/` if `pattern` matches and it is not `/`
-            // Required because of 'mode: history'usage in frontend routing, see README for further details
-            log.info("URL {} entered directly into the Browser, redirecting...", req.getRequestURI());
-            RequestDispatcher rd = req.getRequestDispatcher("/");
-            rd.forward(req, res);
-        } else {
-            chain.doFilter(req, res);
-        }
+        log.info("URL {} entered directly into the Browser, redirecting...", req.getRequestURI());
+        RequestDispatcher rd = req.getRequestDispatcher("/");
+        rd.forward(req, res);
+    }
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest req) {
+        return !pattern.matcher(req.getRequestURI()).matches() || req.getRequestURI().equals("/");
     }
 }

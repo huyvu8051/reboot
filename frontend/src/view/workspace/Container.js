@@ -7,10 +7,10 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
-import {Outlet} from '@mui/icons-material'
 import LeftDrawer from './leftDrawer/LeftDrawer'
 import DrawerHeader from './DrawerHeader'
 import NewWorkspace from './NewWorkspace'
+import {Outlet} from "react-router-dom";
 
 const drawerWidth = 240
 
@@ -80,7 +80,9 @@ export default function PersistentDrawerLeft(props) {
             <LeftDrawer open={open}/>
             <Main open={open}>
                 <DrawerHeader/>
-                <Outlet/>
+                {props.children}
+                <Outlet />
+
             </Main>
         </Box>
     )

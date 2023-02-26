@@ -7,10 +7,6 @@ const PrivateRoute = () => {
     if(username === ''){
         navigate('/error/401')
     }
-
     return null
-
 }
-
-
 export default PrivateRoute

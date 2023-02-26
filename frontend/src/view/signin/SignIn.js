@@ -18,7 +18,7 @@ import {setAuthenticateSuccess, setEmail} from '../../store/authenticationSlice'
 import {GoogleLogin} from '@react-oauth/google'
 import Api from '../../service/api'
 import {$error} from '../../util/snackbar-utils'
-import {io} from "socket.io-client";
+import {io} from 'socket.io-client'
 
 function Copyright(props) {
     return (
@@ -34,25 +34,7 @@ function Copyright(props) {
 }
 
 const theme = createTheme()
-
-
-const socket = io("/");
-
-socket.on('connect', function () {
-    console.log("connect")
-    socket.emit('message', "tin chuan khong anh")
-});
-
-socket.on('server.message', (msg)=>{
-    console.log("msg:", msg)
-})
-socket.connect();
-
-
 export default function SignIn() {
-
-
-
     const navigate = useNavigate()
     const handleSubmit = (event) => {
         event.preventDefault()

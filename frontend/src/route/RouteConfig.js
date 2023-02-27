@@ -9,6 +9,7 @@ import Unauthorized from '../view/error/Unauthorized'
 import Members from '../view/members/Members'
 import {Board} from '../view/board/Board'
 import Workspace from "../view/workspace/Workspace";
+import TestDrag from "../view/board/TestDrag";
 
 const RouteConfig = createBrowserRouter([
     {
@@ -36,7 +37,7 @@ const RouteConfig = createBrowserRouter([
             },
             {
                 path: 'b/:bId',
-                element: <Workspace><Board/></Workspace>
+                element: <Workspace><TestDrag/></Workspace>
             },
         ]
     },

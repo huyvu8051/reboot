@@ -9,9 +9,7 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface AuditingRepository {
-    String SET_USER_CTX_QUERY = "SET @USER_CTX = #{USER_CTX};";
-
-    @Select(SET_USER_CTX_QUERY)
+    @Select("SET @USER_CTX = #{USER_CTX};")
     void setUserCtx(String val);
 
     @Select("SELECT LAST_INSERT_ID();")

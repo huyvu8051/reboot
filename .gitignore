@@ -234,7 +234,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-.env
+#.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -322,4 +322,6 @@ frontend/target/
 frontend/package-lock.json
 logs/
 backend/target
+backend/src/main/resources/public/
 .idea
+

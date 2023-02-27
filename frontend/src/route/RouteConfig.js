@@ -7,7 +7,8 @@ import Boards from '../view/workspace/Boards'
 import PageNotFound from '../view/error/PageNotFound'
 import Unauthorized from '../view/error/Unauthorized'
 import Members from '../view/members/Members'
-import {BoardContents} from '../view/board-contents/BoardContents'
+import {Board} from '../view/board/Board'
+import Workspace from "../view/workspace/Workspace";
 
 const RouteConfig = createBrowserRouter([
     {
@@ -16,26 +17,26 @@ const RouteConfig = createBrowserRouter([
     },
     {
         path: 'home',
-        element: <PrivateRoute><Home/></PrivateRoute>
+        element: <><PrivateRoute/><Home/></>
     },
     {
         element: <><PrivateRoute/><Dashboard/></>,
         children: [
             {
                 path: 'w',
-                element: <Boards/>
+                element: null
             },
             {
-                path: 'w/:wpId',
-                element: <Boards/>
+                path: 'w/:wId',
+                element: <Workspace/>
             },
             {
-                path: 'w/:wpId/members',
+                path: 'w/:wId/members',
                 element: <Members/>
             },
             {
-                path: 'b/:bdId',
-                element: <BoardContents/>
+                path: 'b/:bId',
+                element: <Workspace><Board/></Workspace>
             },
         ]
     },

@@ -13,7 +13,6 @@ const CreateBoardWpSelect = (props) => {
         api.post('/api/v1/user/workspace')
             .then(resp => {
                 setWps(resp)
-                setValue(wpId)
             })
 
 

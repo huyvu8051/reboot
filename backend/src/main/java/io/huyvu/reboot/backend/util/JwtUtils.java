@@ -1,6 +1,7 @@
 package io.huyvu.reboot.backend.util;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +52,12 @@ public class JwtUtils {
      * @return
      */
     public boolean validateToken(String token) {
-        return !isTokenExpired(token);
+        try {
+            return !isTokenExpired(token);
+        } catch (ExpiredJwtException e) {
+            log.error("Jwt expired");
+            return false;
+        }
     }
 
     /**

@@ -3,8 +3,9 @@ import api from '../../../service/api'
 import {useNavigate} from 'react-router-dom'
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import {Avatar, IconButton, Menu, MenuItem} from '@mui/material'
-import {$off, $on} from "../../../util/eventbus-utils";
+import {Avatar, Menu, MenuItem} from '@mui/material'
+import {$on} from "../../../util/eventbus-utils";
+import Button from "@mui/material/Button";
 
 
 const ChangeWpBtn = () => {
@@ -12,7 +13,6 @@ const ChangeWpBtn = () => {
 
     const [lazyFetch, setLazyFetch] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null)
-
 
 
     const handleWpSelect = (item) => {
@@ -44,13 +44,15 @@ const ChangeWpBtn = () => {
 
     return (
         <>
-            <IconButton size='small'
-                        sx={{color: 'black', right: 0, position: 'absolute'}}
-                        aria-controls='menu-appbar'
-                        aria-haspopup='true'
-                        onClick={handleWpSelectMenu}>
-                <ExpandMoreIcon fontSize='small'/>
-            </IconButton>
+            <Button size='small'
+                    sx={{color: 'black', right: 0, position: 'absolute'}}
+                    aria-controls='menu-appbar'
+                    aria-haspopup='true'
+                    onClick={handleWpSelectMenu}
+                    endIcon={<ExpandMoreIcon fontSize='small'/>}>
+                {'Change wp'}
+
+            </Button>
             <Menu
                 id='menu-appbar'
                 anchorEl={anchorEl}

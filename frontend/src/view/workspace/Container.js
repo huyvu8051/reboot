@@ -1,110 +1,58 @@
 import * as React from 'react'
-import {styled} from '@mui/material/styles'
+import {useEffect} from 'react'
 import Box from '@mui/material/Box'
 import CssBaseline from '@mui/material/CssBaseline'
 import MuiAppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
-import {Outlet} from '@mui/icons-material'
-import LeftDrawer from './leftDrawer/LeftDrawer'
-import DrawerHeader from './DrawerHeader'
 import NewWorkspace from './NewWorkspace'
-import {useEffect} from "react";
-import {io} from "socket.io-client";
-
-const drawerWidth = 240
-
-const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})(
-    ({theme, open}) => ({
-        flexGrow: 1,
-        padding: theme.spacing(3),
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        marginLeft: `-${drawerWidth}px`,
-        ...(open && {
-            transition: theme.transitions.create('margin', {
-                easing: theme.transitions.easing.easeOut,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-            marginLeft: 0,
-        }),
-    }),
-)
-
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-})(({theme, open}) => ({
-    transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: `${drawerWidth}px`,
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    }),
-    backgroundColor: 'white'
-}))
+import {Outlet, useParams} from "react-router-dom";
+import api from "../../service/api";
+import {useDispatch} from "react-redux";
+import {save} from "./dashboard-slice";
+import {useMediaQuery} from "@mui/material";
+import ChangeWpBtn from "./leftDrawer/ChangeWpBtn";
 
 export default function PersistentDrawerLeft(props) {
-    const [open, setOpen] = React.useState(true)
-    const handleToggle = () => {
-        setOpen(!open)
-    }
+    const {bId, wId, cId} = useParams();
+    const dispatch = useDispatch();
 
-    useEffect(()=>{
+    useEffect(() => {
+        api.get('/api/v1/user/dashboard', {
+            params: {bId, wId, cId}
+        }).then(r => dispatch(save(r)))
+    }, [bId, wId, cId])
 
-        const socket = io("/notification",{
-            transports:['websocket']
-        });
-        socket.on('connect', function () {
-            console.log("connect")
-            socket.emit('message')
-        });
-
-        socket.on('msg', (msg)=>{
-            console.log("msg:", msg)
-        })
-
-        socket.connect();
-        return ()=>{
-            socket.off('msg')
-            socket.disconnect()
-        }
-    },[])
-
+    const isScreen600pxOrAbove = useMediaQuery('(min-width:600px)');
+    const marginTop = isScreen600pxOrAbove ? '64px' : '56px';
     return (
-        <Box sx={{display: 'flex'}}>
+        <Box>
             <CssBaseline/>
-            <AppBar position='fixed' open={open}>
+            <MuiAppBar elevation={0}
+                       position='fixed'
+                       sx={{
+                           backgroundColor: 'white',
+                           zIndex: (theme) => theme.zIndex.drawer + 1
+                       }}>
                 <Toolbar>
-                    <IconButton
-                        aria-label='open drawer'
-                        onClick={handleToggle}
-                        edge='start'
-                        sx={{mr: 2}}
-                    >
-                        <MenuIcon/>
-                    </IconButton>
-                    <Typography variant='h6' noWrap component='div' color='black'>
-                        Persistent drawer
+                    <Typography
+                        variant='h6'
+                        component='div'
+                        color='black'>
+                        Reboot
                     </Typography>
                     <NewWorkspace/>
-
+                    <ChangeWpBtn/>
                 </Toolbar>
-            </AppBar>
-            <LeftDrawer open={open}/>
-            <Main open={open}>
-                <DrawerHeader/>
+            </MuiAppBar>
+            <Box component='main' sx={{
+                bgcolor: 'blue',
+                marginTop: marginTop,
+                width: '100%',
+                height: `calc(100vh - ${marginTop})`
+            }}>
                 <Outlet/>
-            </Main>
+            </Box>
         </Box>
     )
 }

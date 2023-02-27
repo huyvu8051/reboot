@@ -1,4 +1,4 @@
-import {Avatar, IconButton, Link} from '@mui/material'
+import {Avatar, Box, IconButton, Link} from '@mui/material'
 import Divider from '@mui/material/Divider'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
@@ -11,62 +11,45 @@ import AddIcon from '@mui/icons-material/Add'
 import SettingsIcon from '@mui/icons-material/Settings'
 import Drawer from '@mui/material/Drawer'
 import * as React from 'react'
-import {useEffect, useState} from 'react'
-import {useNavigate, useParams} from 'react-router-dom'
-import DrawerHeader from '../DrawerHeader'
-import ChangeWpIcon from './ChangeWpBtn'
+import {useNavigate} from 'react-router-dom'
 import SettingWpIcon from './SettingWpBtn'
-import api from "../../../service/api";
 import ListBoard from "./ListBoard";
 import CreateBoardBtn from "./CreateBoardBtn";
-import {CalendarMonth, TableRows} from "@mui/icons-material";
-import {$error} from "../../../util/snackbar-utils";
-
-const drawerWidth = 240
+import {
+    ArrowBack,
+    ArrowBackIos,
+    ArrowBackIosNew,
+    ArrowLeft,
+    CalendarMonth,
+    ChevronLeft,
+    TableRows
+} from "@mui/icons-material";
+import {useSelector} from "react-redux";
+import Toolbar from "@mui/material/Toolbar";
 
 let LeftDrawer = (props) => {
     const navigate = useNavigate()
-    const {wpId, bdId} = useParams()
-    const [wp, setWp] = useState(null)
 
-
-
-    useEffect(() => {
-        if(bdId){
-
-        }
-        else if (wpId){
-            api.get(`/api/v1/user/workspace`, {
-                params: {wpId}
-            })
-                .then(setWp)
-                .catch(()=>$error(`Workspace not found id: ${wpId}`))
-        }
-    }, [wpId])
+    const wp = useSelector(sts => sts.dashboard.wp)
 
     return (
         <Drawer
-            sx={{
-                width: drawerWidth,
-                flexShrink: 0,
-                '& .MuiDrawer-paper': {
-                    width: drawerWidth,
-                    boxSizing: 'border-box',
-                },
-            }}
             variant='persistent'
             anchor='left'
             open={props.open}
         >
-            <DrawerHeader>
+            <Toolbar/>
+            <Box sx={{display: 'flex', alignItems: 'center', m: 1}}>
                 {
                     wp && <>
                         <Avatar variant='rounded' alt='Remy Sharp' src={wp.pictureUrl}/>
                         <Link sx={{ml: 2, textDecoration: 'none', color: 'black'}}>{wp.title}</Link>
+                        <IconButton size='small' sx={{marginLeft: 'auto'}} onClick={() => props.setOpen(false)}>
+                            <ChevronLeft fontSize='small'/>
+                        </IconButton>
                     </>
                 }
-                <ChangeWpIcon/>
-            </DrawerHeader>
+            </Box>
             <Divider/>
             {
                 wp && <>

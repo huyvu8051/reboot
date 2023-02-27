@@ -31,12 +31,14 @@ export const Board = () => {
 
     return <>
         <Box
+
             sx={{
                 // backgroundColor: 'red',
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'row',
                 overflowX: 'auto',
+                pt: 1
             }}
         >
             {
@@ -44,11 +46,12 @@ export const Board = () => {
                     minWidth: 300,
                     borderRadius: 0,
                     height: '100%',
-                    mr: 2,
-                    pt: 1,
+                    ml: 2,
                     display: 'flex',
                     flexDirection: 'column'
-                }} key={l.id}>
+                }}
+                                     key={l.id}
+                                     elevation={3}>
                     <CardHeader titleTypographyProps={{
                         fontSize: 'medium',
                         fontWeight: 'bold'
@@ -72,7 +75,8 @@ export const Board = () => {
                                             '--btn-edit-icon-color': 'black',
                                             '--btn-edit-bg-color': 'rgba(255, 255, 255, 0.2)'
                                         },
-                                    }}>
+                                    }}
+                                          elevation={2}>
                                         <IconButton size='small' sx={{
                                             borderRadius: 1,
                                             position: 'absolute',

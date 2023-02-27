@@ -3,13 +3,11 @@ import SignIn from '../view/signin/SignIn'
 import {Home} from '../view/Home'
 import PrivateRoute from '../component/PrivateRoute'
 import Dashboard from '../view/workspace/Container'
-import Boards from '../view/workspace/Boards'
 import PageNotFound from '../view/error/PageNotFound'
 import Unauthorized from '../view/error/Unauthorized'
 import Members from '../view/members/Members'
 import {Board} from '../view/board/Board'
 import Workspace from "../view/workspace/Workspace";
-import TestDrag from "../view/board/TestDrag";
 
 const RouteConfig = createBrowserRouter([
     {
@@ -37,7 +35,7 @@ const RouteConfig = createBrowserRouter([
             },
             {
                 path: 'b/:bId',
-                element: <Workspace><TestDrag/></Workspace>
+                element: <Workspace><Board/></Workspace>
             },
         ]
     },

@@ -3,10 +3,10 @@ import {
     Button,
     Card,
     CardActions,
-    CardContent,
     CardHeader,
     CardMedia,
-    Chip, Divider,
+    Chip,
+    Divider,
     Grid,
     IconButton,
     List,
@@ -40,84 +40,89 @@ export const Board = () => {
             }}
         >
             {
-                list.map(l=>(<Card className='lizt' sx={{minWidth: 300, borderRadius: 0, height: '100%', mr: 2, pt:1}} key={l.id}>
+                list.map(l => (<Card id={'list-' + l.id} sx={{
+                    minWidth: 300,
+                    borderRadius: 0,
+                    height: '100%',
+                    mr: 2,
+                    pt: 1,
+                    display: 'flex',
+                    flexDirection: 'column'
+                }} key={l.id}>
                     <CardHeader titleTypographyProps={{
                         fontSize: 'medium',
                         fontWeight: 'bold'
                     }}
-                                sx={{p: 1.5}}
+                                sx={{p: 1.5, flex: 0}}
                                 title={l.title}
                                 action={<>
                                     <IconButton size='small'>
                                         <MoreHoriz fontSize='small'/>
                                     </IconButton>
                                 </>}/>
-                    <CardContent sx={{p: .5}}>
-                        <Paper
-                            style={{height: 750, overflow: 'auto', backgroundColor: 'transparent', boxShadow: 'none'}}>
-                            <List sx={{p: 0}}>
-                                {
-                                    cards.map(e => (<ListItem sx={{p: .5}} key={e.id}>
-                                        <Card sx={{
-                                            width: '100%',
-                                            '--btn-edit-icon-color': 'rgba(255, 255, 255, 0)',
+                    <Paper
+                        style={{flex: 1, overflow: 'auto', backgroundColor: 'transparent', boxShadow: 'none'}}>
+                        <List sx={{p: 0}}>
+                            {
+                                cards.map(e => (<ListItem sx={{p: .5}} key={e.id}>
+                                    <Card sx={{
+                                        width: '100%',
+                                        '--btn-edit-icon-color': 'rgba(255, 255, 255, 0)',
+                                        '&:hover': {
+                                            '--btn-edit-icon-color': 'black',
+                                            '--btn-edit-bg-color': 'rgba(255, 255, 255, 0.2)'
+                                        },
+                                    }}>
+                                        <IconButton size='small' sx={{
+                                            borderRadius: 1,
+                                            position: 'absolute',
+                                            top: 6,
+                                            right: 6,
+                                            color: 'var(--btn-edit-icon-color)',
+                                            backgroundColor: 'var(--btn-edit-bg-color)',
                                             '&:hover': {
-                                                '--btn-edit-icon-color': 'black',
-                                                '--btn-edit-bg-color': 'rgba(255, 255, 255, 0.2)'
+                                                backgroundColor: 'rgba(255, 255, 255, 0.5)',
                                             },
-                                        }}>
-                                            <IconButton size='small' sx={{
-                                                borderRadius: 1,
-                                                position: 'absolute',
-                                                top: 6,
-                                                right: 6,
-                                                color: 'var(--btn-edit-icon-color)',
-                                                backgroundColor: 'var(--btn-edit-bg-color)',
-                                                '&:hover': {
-                                                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-                                                },
-                                            }}
-                                                        onClick={(e) => $error('icon')}>
-                                                <EditOutlined fontSize='small'/>
-                                            </IconButton>
-                                            <CardMedia
-                                                onClick={() => $success('success')}
-                                                sx={{height: 140}}
-                                                image="https://mui.com/static/images/cards/contemplative-reptile.jpg"
-                                                title="green iguana"
-                                            />
-                                            <CardHeader
-                                                onClick={() => $success('success')}
-                                                titleTypographyProps={{fontSize: 'small', fontWeight: 'bold'}}
-                                                sx={{p: 1}}
-                                                title={e.title}>
-                                            </CardHeader>
-                                            <CardActions onClick={() => $success('success')} disableSpacing sx={{}}>
-                                                <Grid>
-                                                    <Chip
-                                                        avatar={<Menu/>}
-                                                        size='small'
-                                                        label={'rtest'}
-                                                    >
-                                                    </Chip>
-                                                    <Chip
-                                                        avatar={<Task/>}
-                                                        size='small'
-                                                        label={'rtest'}
-                                                    >
-                                                    </Chip>
+                                        }}
+                                                    onClick={(e) => $error('icon')}>
+                                            <EditOutlined fontSize='small'/>
+                                        </IconButton>
+                                        <CardMedia
+                                            onClick={() => $success('success')}
+                                            sx={{height: 140}}
+                                            image="https://mui.com/static/images/cards/contemplative-reptile.jpg"
+                                            title="green iguana"
+                                        />
+                                        <CardHeader
+                                            onClick={() => $success('success')}
+                                            titleTypographyProps={{fontSize: 'small', fontWeight: 'bold'}}
+                                            sx={{p: 1}}
+                                            title={e.title}>
+                                        </CardHeader>
+                                        <CardActions onClick={() => $success('success')} disableSpacing sx={{}}>
+                                            <Grid>
+                                                <Chip
+                                                    avatar={<Menu/>}
+                                                    size='small'
+                                                    label={'rtest'}
+                                                >
+                                                </Chip>
+                                                <Chip
+                                                    avatar={<Task/>}
+                                                    size='small'
+                                                    label={'rtest'}
+                                                >
+                                                </Chip>
 
 
-
-                                                </Grid>
-                                            </CardActions>
-                                        </Card>
-                                    </ListItem>))
-                                }
-                            </List>
-                        </Paper>
-                    </CardContent>
-                    <CardActions sx={{display: 'flex'}}>
+                                            </Grid>
+                                        </CardActions>
+                                    </Card>
+                                </ListItem>))
+                            }
+                        </List>
+                    </Paper>
+                    <CardActions sx={{display: 'flex', flex: 0}}>
                         <Button sx={{flex: 1, justifyContent: 'flex-start', color: 'rgba(0, 0, 0, 0.54)'}} size='small'
                                 startIcon={<Add/>}>
                             {'Add a card'}

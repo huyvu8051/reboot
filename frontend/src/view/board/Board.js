@@ -97,7 +97,7 @@ export const Board = () => {
                                                 cards.map((e, index2) => (
                                                     <Draggable key={e.id} draggableId={e.id + 'drag-id' + l.id}
                                                                index={index2}
-                                                               open={true}>
+                                                               >
                                                         {(provided, snapshot) => (
                                                             <ListItem ref={provided.innerRef}
                                                                       {...provided.draggableProps}

@@ -16,7 +16,7 @@ function Workspace(props) {
                     <IconButton size='small' sx={{
                         position: 'fixed',
                         left: 0,
-                        mt:2,
+                        mt: 2,
                         zIndex: (theme) => theme.zIndex.drawer + 1
                     }}
                                 onClick={() => setOpenLeft(true)}>
@@ -25,7 +25,12 @@ function Workspace(props) {
                 </>
             }
             <LeftDrawer open={openLeft} setOpen={setOpenLeft}/>
-            <Box sx={{ml: openLeft ? '226.078px' : 4,mr: openRight ? '500px' : 0, backgroundColor:'blue', height:'100%'}}>
+            <Box sx={{
+                ml: openLeft ? '226.078px' : 4,
+                mr: openRight ? '500px' : 0,
+                // backgroundColor: 'blue',
+                height: '100%'
+            }}>
                 {props.children}
             </Box>
 
@@ -35,8 +40,8 @@ function Workspace(props) {
                     <IconButton size='small' sx={{
                         position: 'fixed',
                         right: 0,
-                        top:50,
-                        mt:2,
+                        top: 50,
+                        mt: 2,
                         zIndex: (theme) => theme.zIndex.drawer + 1
                     }}
                                 onClick={() => setOpenRight(true)}>

@@ -10,7 +10,7 @@ import {Outlet, useParams} from "react-router-dom";
 import api from "../../service/api";
 import {useDispatch} from "react-redux";
 import {save} from "./dashboard-slice";
-import {useMediaQuery} from "@mui/material";
+import {Divider, useMediaQuery} from "@mui/material";
 import ChangeWpBtn from "./leftDrawer/ChangeWpBtn";
 
 export default function PersistentDrawerLeft(props) {
@@ -28,7 +28,8 @@ export default function PersistentDrawerLeft(props) {
     return (
         <Box>
             <CssBaseline/>
-            <MuiAppBar elevation={0}
+            <MuiAppBar
+                        elevation={0}
                        position='fixed'
                        sx={{
                            backgroundColor: 'white',
@@ -46,7 +47,6 @@ export default function PersistentDrawerLeft(props) {
                 </Toolbar>
             </MuiAppBar>
             <Box component='main' sx={{
-                bgcolor: 'blue',
                 marginTop: marginTop,
                 width: '100%',
                 height: `calc(100vh - ${marginTop})`

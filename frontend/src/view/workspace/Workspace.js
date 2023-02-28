@@ -7,7 +7,7 @@ import RightDrawer from "./leftDrawer/RightDrawer";
 function Workspace(props) {
 
     const [openLeft, setOpenLeft] = useState(true)
-    const [openRight, setOpenRight] = useState(true)
+    const [openRight, setOpenRight] = useState(false)
 
     return <>
         <Box height='100%'>

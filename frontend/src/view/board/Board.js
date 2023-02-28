@@ -1,206 +1,96 @@
-import Box from "@mui/material/Box";
-import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
-import {Button, Card, CardActions, CardContent, CardHeader, CardMedia, Divider} from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import {Add, AddCard, EditOutlined, MoreHoriz} from "@mui/icons-material";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import {$error, $success} from "../../util/snackbar-utils";
+import Box from '@mui/material/Box'
+import {DragDropContext, Droppable} from 'react-beautiful-dnd'
+import Lizt from './Lizt'
+import {useEffect, useState} from "react";
 
-const cards = Array.from(Array(20).keys()).map(e => ({
-    id: e,
-    title: 'Card title ' + e,
-    cover_url: '',
-}))
-const list = Array.from(Array(10).keys()).map(e => ({
-    id: e,
+function cgen(id) {
+    return Array.from(Array(Math.floor(Math.random() * 10)).keys()).map(e => ({
+        id: id + '-' + e,
+        title: 'Card title ' + e,
+        cover_url: '',
+    }))
+}
+
+const list2 = Array.from(Array(6).keys()).map(e => ({
+    id: 'ls' + e,
     title: 'List title ' + e,
     cover_url: '',
+    cards: cgen(e)
 }))
-const grid = 8;
 
-const getListStyle = isDraggingOver => ({
-    background: isDraggingOver ? "lightblue" : "white",
-    // padding: grid,
-    // width: 250
-});
-
-const getItemStyle = (isDragging, draggableStyle) => ({
-    // some basic styles to make the items look a bit nicer
-    //userSelect: "none",
-    // change background colour if dragging
-    background: isDragging ? "lightgreen" : "white",
-
-    // styles we need to apply on draggables
-    ...draggableStyle
-});
+const getList = ()=>{
+    return Promise.resolve(list2);
+}
 
 export const Board = () => {
+
+
+    const [lists, setLists] = useState([]);
+
     const onDragEnd = (result) => {
-        console.log(result)
+        if(!result.destination) return
+        // console.log(result)
+
+
+        // change col ordinal
+        if(result.destination.droppableId === 'board'){
+            const srcEle = lists[result.source.index]
+            lists.splice(result.source.index, 1)
+            lists.splice(result.destination.index, 0, srcEle)
+            setLists(lists)
+            return
+        }
+
+        const srcLs = lists.find(e=>e.id === result.source.droppableId);
+        const srcEle = srcLs.cards[result.source.index];
+        srcLs.cards.splice(result.source.index, 1)
+        const desLs = lists.find(e=>e.id === result.destination.droppableId);
+        // console.log('desLs', desLs)
+        desLs.cards.splice(result.destination.index, 0, srcEle)
+
+        setLists(lists)
+
     }
+
+    useEffect(()=>{
+        getList()
+            .then(setLists)
+        console.log('fetch')
+    }, [])
 
     return <>
         <DragDropContext onDragEnd={onDragEnd}>
-
-            <Box
-
-                sx={{
-                    // backgroundColor: 'red',
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    overflowX: 'auto',
-                    pt: 1
-                }}
-
+            <Droppable droppableId='board'
+                       type="COLUMN"
+                       direction='horizontal'
             >
-                {
-                    list.map((l, index) => (
-                        <Droppable droppableId={'droppable' + l.id} key={l.id + 'drop'}>
-                            {(provided, snapshot) => (
-                                <Card id={'list-' + l.id}
-                                      {...provided.droppableProps}
-                                      ref={provided.innerRef}
-                                      style={getListStyle(snapshot.isDraggingOver)}
-                                      sx={{
-                                          minWidth: 300,
-                                          borderRadius: 0,
-                                          height: '100%',
-                                          ml: 2,
-                                          display: 'flex',
-                                          flexDirection: 'column'
-                                      }}
-                                      key={l.id}
-                                      elevation={3}>
-                                    <CardHeader titleTypographyProps={{
-                                        fontSize: 'medium',
-                                        fontWeight: 'bold'
-                                    }}
-                                                sx={{p: 1.5, flex: 0}}
-                                                title={l.title}
-                                                action={<>
-                                                    <IconButton size='small'>
-                                                        <MoreHoriz fontSize='small'/>
-                                                    </IconButton>
-                                                </>}/>
-                                    <CardContent
-                                        style={{
-                                            overflow: 'auto',
-                                            backgroundColor: 'transparent',
-                                            boxShadow: 'none',
+                {(provided) => (
+                    <Box
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
 
-                                            p: 0
-                                        }}>
-                                        <List sx={{p: 0}}>
-                                            {
-                                                cards.map((e, index2) => (
-                                                    <Draggable key={e.id} draggableId={e.id + 'drag-id' + l.id}
-                                                               index={index2}
-                                                               >
-                                                        {(provided, snapshot) => (
-                                                            <ListItem ref={provided.innerRef}
-                                                                      {...provided.draggableProps}
-                                                                      {...provided.dragHandleProps}
-                                                                      style={getItemStyle(
-                                                                          snapshot.isDragging,
-                                                                          provided.draggableProps.style
-                                                                      )}
-                                                                      sx={{p: .5}}
-                                                                      key={e.id}>
-                                                                <Card sx={{
-                                                                    width: '100%',
-                                                                    '--btn-edit-icon-color': 'rgba(255, 255, 255, 0)',
-                                                                    '&:hover': {
-                                                                        '--btn-edit-icon-color': 'black',
-                                                                        '--btn-edit-bg-color': 'rgba(255, 255, 255, 0.2)'
-                                                                    }
-                                                                }}
-                                                                      elevation={2}>
-                                                                    <IconButton size='small' sx={{
-                                                                        borderRadius: 1,
-                                                                        position: 'absolute',
-                                                                        top: 6,
-                                                                        right: 6,
-                                                                        color: 'var(--btn-edit-icon-color)',
-                                                                        backgroundColor: 'var(--btn-edit-bg-color)',
-                                                                        '&:hover': {
-                                                                            backgroundColor: 'rgba(255, 255, 255, 0.5)',
-                                                                        },
-                                                                    }}
-                                                                                onClick={(e) => $error('icon')}>
-                                                                        <EditOutlined fontSize='small'/>
-                                                                    </IconButton>
-                                                                    <CardMedia
-                                                                        onClick={() => $success('success')}
-                                                                        sx={{height: 140}}
-                                                                        image="https://mui.com/static/images/cards/contemplative-reptile.jpg"
-                                                                        title="green iguana"
-                                                                    />
-                                                                    <CardHeader
-                                                                        onClick={() => $success('success')}
-                                                                        titleTypographyProps={{
-                                                                            fontSize: 'small',
-                                                                            fontWeight: 'bold'
-                                                                        }}
-                                                                        sx={{p: 1}}
-                                                                        title={e.title}>
-                                                                    </CardHeader>
-                                                                    <CardActions onClick={() => $success('success')}
-                                                                                 disableSpacing
-                                                                                 sx={{}}>
-                                                                        {/*<Grid>*/}
-                                                                        {/*    <Chip*/}
-                                                                        {/*        avatar={<Menu/>}*/}
-                                                                        {/*        size='small'*/}
-                                                                        {/*        label={'rtest'}*/}
-                                                                        {/*    >*/}
-                                                                        {/*    </Chip>*/}
-                                                                        {/*    <Chip*/}
-                                                                        {/*        avatar={<Task/>}*/}
-                                                                        {/*        size='small'*/}
-                                                                        {/*        label={'rtest'}*/}
-                                                                        {/*    >*/}
-                                                                        {/*    </Chip>*/}
+                        sx={{
+                            // backgroundColor: 'red',
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            // overflow: 'auto',
+                        }}
 
-
-                                                                        {/*</Grid>*/}
-                                                                    </CardActions>
-                                                                </Card>
-                                                            </ListItem>
-                                                        )}
-                                                    </Draggable>
-                                                ))
-                                            }
-                                        </List>
-                                    </CardContent>
-                                    <CardActions sx={{display: 'flex', flex: 0}}>
-                                        <Button
-                                            sx={{
-                                                flex: 1,
-                                                justifyContent: 'flex-start',
-                                                color: 'rgba(0, 0, 0, 0.54)'
-                                            }}
-                                            size='small'
-                                            startIcon={<Add/>}>
-                                            {'Add a card'}
-                                        </Button>
-                                        <IconButton size='small'>
-                                            <AddCard fontSize='small'/>
-                                        </IconButton>
-                                    </CardActions>
-                                    <Divider/>
-
-                                    {provided.placeholder}
-                                </Card>
-                            )}
-                        </Droppable>
-
-                    ))
-                }
-
-            </Box>
-
+                    >
+                        {
+                            lists.map((l, index) => (
+                                <Lizt
+                                    item={l}
+                                    index={index}
+                                    key={l.id}
+                                />
+                            ))
+                        }
+                        {provided.placeholder}
+                    </Box>
+                )}
+            </Droppable>
         </DragDropContext>
     </>
 }

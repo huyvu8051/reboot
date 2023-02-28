@@ -26,7 +26,7 @@ export default function PersistentDrawerLeft(props) {
     const isScreen600pxOrAbove = useMediaQuery('(min-width:600px)');
     const marginTop = isScreen600pxOrAbove ? '64px' : '56px';
     return (
-        <Box>
+        <Box >
             <CssBaseline/>
             <MuiAppBar
                         elevation={0}
@@ -49,7 +49,7 @@ export default function PersistentDrawerLeft(props) {
             <Box component='main' sx={{
                 marginTop: marginTop,
                 width: '100%',
-                height: `calc(100vh - ${marginTop})`
+                height: `calc(98vh - ${marginTop})`,
             }}>
                 <Outlet/>
             </Box>

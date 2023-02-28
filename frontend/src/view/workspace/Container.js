@@ -49,7 +49,7 @@ export default function PersistentDrawerLeft(props) {
             <Box component='main' sx={{
                 marginTop: marginTop,
                 width: '100%',
-                height: `calc(98vh - ${marginTop})`,
+                height: `calc(100vh - ${marginTop})`,
             }}>
                 <Outlet/>
             </Box>

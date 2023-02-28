@@ -2,6 +2,7 @@ import Box from '@mui/material/Box'
 import {DragDropContext, Droppable} from 'react-beautiful-dnd'
 import TaskList from './TaskList'
 import {useEffect, useState} from "react";
+import {Button} from "@mui/material";
 
 function cgen(id) {
     return Array.from(Array(Math.floor(Math.random() * 10)).keys()).map(e => ({
@@ -63,8 +64,9 @@ export const Board = () => {
                        type="COLUMN"
                        direction='horizontal'
             >
-                {(provided) => (
+                {(provided, snapshot) => (
                     <Box
+                        id={'test'}
                         ref={provided.innerRef}
                         {...provided.droppableProps}
 
@@ -74,6 +76,9 @@ export const Board = () => {
                             display: 'flex',
                             flexDirection: 'row',
                             height: '100%',
+                            // backgroundColor: 'green',
+                            overflowX: 'auto',
+                            overflowY: 'hidden'
                         }}
 
                     >
@@ -87,6 +92,8 @@ export const Board = () => {
                             ))
                         }
                         {provided.placeholder}
+
+                        <Button>New List</Button>
                     </Box>
                 )}
             </Droppable>

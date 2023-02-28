@@ -9,12 +9,12 @@ import {SnackbarUtilsConfiguration} from './util/snackbar-utils'
 import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
 import RouteConfig from './route/RouteConfig'
+import {GoogleOAuthProvider} from '@react-oauth/google'
 
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
-import {GoogleOAuthProvider} from '@react-oauth/google'
 
 ReactDOM.render(
     <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}>

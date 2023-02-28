@@ -6,10 +6,10 @@ import List from "@mui/material/List";
 import CardItem from "./CardItem";
 
 const getStyle = (prov, snap) => {
-
+    // console.log(prov, snap)
     return {
         ...prov.draggableProps.style,
-        ...snap.isDragging && {
+        ...snap.isDragging && !snap.isDropAnimating && {
             transform: ' rotate(5deg) ' + prov.draggableProps.style.transform
         }
     }
@@ -52,12 +52,14 @@ export default ({item, index}) => {
                                     flexDirection: 'column',
                                     maxHeight: '100%',
                                     minWidth: '270px',
-
                                 }}
 
                                 style={getStyle(provided, snapshot)}
                                 elevation={0}>
                                 <CardHeader
+                                    sx={{
+                                        p:1
+                                    }}
                                     titleTypographyProps={{
                                         fontSize: 'small',
                                         fontWeight: 'bold'
@@ -70,8 +72,9 @@ export default ({item, index}) => {
                                     </>}/>
                                 <List
                                     sx={{
-                                        p: 1,
-                                        backgroundColor: 'red',
+                                        py: 0,
+                                        px:1,
+                                        // backgroundColor: 'red',
                                         overflowX: 'hidden',
                                         overflowY: 'auto'
                                     }}

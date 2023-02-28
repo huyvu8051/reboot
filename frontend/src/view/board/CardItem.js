@@ -8,7 +8,7 @@ const getStyle = (prov, snap) => {
 
     return {
         ...prov.draggableProps.style,
-        ...snap.isDragging && {
+        ...snap.isDragging && !snap.isDropAnimating && {
             transform: ' rotate(5deg) ' + prov.draggableProps.style.transform
         }
     }

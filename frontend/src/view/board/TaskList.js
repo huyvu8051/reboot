@@ -45,7 +45,7 @@ export default ({item, index}) => {
 
                                 className='list-content'
                                 sx={{
-                                    backgroundColor: 'var(--ds-background-accent-gray-subtlest,#ebecf0)',
+                                    backgroundColor: 'rgb(235 236 240)',
                                     borderRadius: '3px',
                                     boxSizing: 'border-box',
                                     display: 'flex',
@@ -58,7 +58,7 @@ export default ({item, index}) => {
                                 elevation={0}>
                                 <CardHeader
                                     sx={{
-                                        p:1
+                                        p: 1
                                     }}
                                     titleTypographyProps={{
                                         fontSize: 'small',
@@ -73,7 +73,7 @@ export default ({item, index}) => {
                                 <List
                                     sx={{
                                         py: 0,
-                                        px:1,
+                                        px: 1,
                                         // backgroundColor: 'red',
                                         overflowX: 'hidden',
                                         overflowY: 'auto'
@@ -101,7 +101,8 @@ export default ({item, index}) => {
                                         sx={{
                                             flex: 1,
                                             justifyContent: 'flex-start',
-                                            color: 'rgba(0, 0, 0, 0.54)'
+                                            color: 'rgba(0, 0, 0, 0.54)',
+                                            textTransform: 'none'
                                         }}
                                         size='small'
                                         startIcon={<Add/>}>

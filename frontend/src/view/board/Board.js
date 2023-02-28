@@ -2,7 +2,9 @@ import Box from '@mui/material/Box'
 import {DragDropContext, Droppable} from 'react-beautiful-dnd'
 import TaskList from './TaskList'
 import {useEffect, useState} from "react";
-import {Button} from "@mui/material";
+import {Button, Card, CardActions, IconButton, TextField} from "@mui/material";
+import {Add, Clear} from "@mui/icons-material";
+import AddNewList from "./AddNewList";
 
 function cgen(id) {
     return Array.from(Array(Math.floor(Math.random() * 10)).keys()).map(e => ({
@@ -92,8 +94,7 @@ export const Board = () => {
                             ))
                         }
                         {provided.placeholder}
-
-                        <Button>New List</Button>
+                        <AddNewList/>
                     </Box>
                 )}
             </Droppable>

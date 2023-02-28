@@ -6,17 +6,13 @@ import {useState} from "react";
 export default () => {
     const [open, setOpen] = useState();
 
-
     return (
         <Box
-
             sx={{
                 boxSizing: 'border-box',
                 margin: '0 4px',
             }}
             elevation={0}>
-
-
             <Card
 
                 sx={{

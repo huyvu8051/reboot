@@ -75,7 +75,6 @@ export default ({item, index}) => {
                                         py: 0,
                                         px: 1,
                                         // backgroundColor: 'red',
-                                        overflowX: 'hidden',
                                         overflowY: 'auto'
                                     }}
                                 >

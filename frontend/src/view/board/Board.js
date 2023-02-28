@@ -11,7 +11,7 @@ function cgen(id) {
     }))
 }
 
-const list2 = Array.from(Array(6).keys()).map(e => ({
+const list2 = Array.from(Array(7).keys()).map(e => ({
     id: 'ls' + e,
     title: 'List title ' + e,
     cover_url: '',
@@ -70,11 +70,10 @@ export const Board = () => {
 
                         sx={{
                             marginBottom: '8px',
-                            overflow: 'auto',
                             paddingBottom: '8px',
                             display: 'flex',
                             flexDirection: 'row',
-                            height:'100%'
+                            height: '100%',
                         }}
 
                     >

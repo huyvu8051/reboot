@@ -3,15 +3,16 @@ import IconButton from "@mui/material/IconButton";
 import {$error, $success} from "../../util/snackbar-utils";
 import {EditOutlined} from "@mui/icons-material";
 
-const getItemStyle = (isDragging, draggableStyle) => ({
-    // some basic styles to make the items look a bit nicer
-    //userSelect: "none",
-    // change background colour if dragging
-    transform: 'rotate(20deg);',
-    ...draggableStyle,
 
-    // styles we need to apply on draggables
-});
+const getStyle = (prov, snap) => {
+
+    return {
+        ...prov.draggableProps.style,
+        ...snap.isDragging && {
+            transform: ' rotate(5deg) ' + prov.draggableProps.style.transform
+        }
+    }
+}
 
 export default ({provided, snapshot, item}) => {
 
@@ -19,7 +20,7 @@ export default ({provided, snapshot, item}) => {
     return (
         <Card sx={{
             width: '100%',
-            mb:1,
+            mb: 1,
             '--btn-edit-icon-color': 'rgba(255, 255, 255, 0)',
             '&:hover': {
                 '--btn-edit-icon-color': 'black',
@@ -29,9 +30,9 @@ export default ({provided, snapshot, item}) => {
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
-              style={getItemStyle(
-                  snapshot.isDragging,
-                  provided.draggableProps.style
+              style={getStyle(
+                  provided,
+                  snapshot
               )}
               elevation={0}>
             <IconButton size='small' sx={{

@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import {DragDropContext, Droppable} from 'react-beautiful-dnd'
-import Lizt from './Lizt'
+import TaskList from './TaskList'
 import {useEffect, useState} from "react";
 
 function cgen(id) {
@@ -18,7 +18,7 @@ const list2 = Array.from(Array(6).keys()).map(e => ({
     cards: cgen(e)
 }))
 
-const getList = ()=>{
+const getList = () => {
     return Promise.resolve(list2);
 }
 
@@ -28,12 +28,11 @@ export const Board = () => {
     const [lists, setLists] = useState([]);
 
     const onDragEnd = (result) => {
-        if(!result.destination) return
+        if (!result.destination) return
         // console.log(result)
 
-
         // change col ordinal
-        if(result.destination.droppableId === 'board'){
+        if (result.destination.droppableId === 'board') {
             const srcEle = lists[result.source.index]
             lists.splice(result.source.index, 1)
             lists.splice(result.destination.index, 0, srcEle)
@@ -41,10 +40,10 @@ export const Board = () => {
             return
         }
 
-        const srcLs = lists.find(e=>e.id === result.source.droppableId);
+        const srcLs = lists.find(e => e.id === result.source.droppableId);
         const srcEle = srcLs.cards[result.source.index];
         srcLs.cards.splice(result.source.index, 1)
-        const desLs = lists.find(e=>e.id === result.destination.droppableId);
+        const desLs = lists.find(e => e.id === result.destination.droppableId);
         // console.log('desLs', desLs)
         desLs.cards.splice(result.destination.index, 0, srcEle)
 
@@ -52,7 +51,7 @@ export const Board = () => {
 
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getList()
             .then(setLists)
         console.log('fetch')
@@ -70,17 +69,18 @@ export const Board = () => {
                         {...provided.droppableProps}
 
                         sx={{
-                            // backgroundColor: 'red',
-                            height: '100%',
+                            marginBottom: '8px',
+                            overflow: 'auto',
+                            paddingBottom: '8px',
                             display: 'flex',
                             flexDirection: 'row',
-                            // overflow: 'auto',
+                            height:'100%'
                         }}
 
                     >
                         {
                             lists.map((l, index) => (
-                                <Lizt
+                                <TaskList
                                     item={l}
                                     index={index}
                                     key={l.id}

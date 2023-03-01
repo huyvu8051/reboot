@@ -5,7 +5,9 @@ const initialState = {
     wps: [],
     board: null,
     boards: [],
-    wpMems: []
+    wpMems: [],
+    lists: [],
+
 }
 
 export const dashboardSlice = createSlice({
@@ -14,10 +16,11 @@ export const dashboardSlice = createSlice({
     reducers: {
         save: (state, action) => {
             state.wp = action.payload.wp
-            state.wps = action.payload.wps
+            state.wps = action.payload.wps || []
             state.board = action.payload.board
-            state.boards = action.payload.boards
-            state.wpMems = action.payload.wpMems
+            state.boards = action.payload.boards || []
+            state.wpMems = action.payload.wpMems || []
+            state.lists = action.payload.lists || []
         },
     },
 })

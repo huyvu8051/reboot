@@ -58,10 +58,43 @@ public interface Repository {
                   ,title
                   ,picture_url
               FROM workspace
-             WHERE id IN (SELECT user_id
+             WHERE id IN (SELECT wp_id
                             FROM workspace_member
                            WHERE user_id = #{uId}
                                  AND is_deleted = 0)
                    AND is_deleted = 0""")
-    List<WpVo> selectWps(Long uId);
+    List<WpVo> selectWps(long uId);
+
+
+    @Select("""
+            SELECT id
+                  ,board_id
+                  ,ordinal
+                  ,title
+                  ,0 AS wp_id
+              FROM lizt
+             WHERE board_id = #{bId}
+               AND is_deleted = 0""")
+    List<LiztVo> selectLizts(long bId);
+
+    @Select("""
+            SELECT id
+            	  ,lizt_id
+            	  ,b_id
+            	  ,title
+            	  ,automation
+            	  ,cover_color
+            	  ,cover_size
+            	  ,cover_url
+            	  ,description
+            	  ,due_date
+            	  ,due_date_complete
+            	  ,due_date_reminder
+            	  ,is_template
+            	  ,location
+            	  ,start_date
+              FROM card
+             WHERE b_id = #{bId}
+                   AND is_deleted = 0""")
+    List<CardVo> selectCardsByBId(long bId);
 }

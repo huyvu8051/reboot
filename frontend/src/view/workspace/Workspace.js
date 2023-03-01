@@ -1,13 +1,34 @@
 import LeftDrawer from "./leftDrawer/LeftDrawer";
 import {Box, IconButton} from "@mui/material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {ArrowLeft, ArrowRight} from "@mui/icons-material";
 import RightDrawer from "./leftDrawer/RightDrawer";
+import {io} from "socket.io-client";
+import {useDispatch, useSelector} from "react-redux";
 
 function Workspace(props) {
 
     const [openLeft, setOpenLeft] = useState(true)
     const [openRight, setOpenRight] = useState(false)
+
+    const wId = useSelector(sts => sts.dashboard.wp?.id || null);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (wId) {
+            const socket = io('/dashboard', {
+                query: {
+                    wId: wId
+                }
+            })
+            socket.on('update.lz', d => {
+                dispatch((s, a) => {
+                    s.lists = a.playload.lists
+                })
+            })
+        }
+
+    }, [wId])
 
     return <>
         <Box height='100%'>

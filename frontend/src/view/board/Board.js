@@ -2,8 +2,6 @@ import Box from '@mui/material/Box'
 import {DragDropContext, Droppable} from 'react-beautiful-dnd'
 import TaskList from './TaskList'
 import {useEffect, useState} from "react";
-import {Button, Card, CardActions, IconButton, TextField} from "@mui/material";
-import {Add, Clear} from "@mui/icons-material";
 import AddNewList from "./AddNewList";
 
 function cgen(id) {

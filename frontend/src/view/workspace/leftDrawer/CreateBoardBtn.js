@@ -51,7 +51,7 @@ const CreateBoardBtn = () => {
                 $success(`Create board \`${title}\` success`)
                 $dispatch('boards.refresh', wp)
                 handlePopoverClose()
-                navigate(`/b/${resp.data}`)
+                navigate(`/b/${resp}`)
             })
     }
 

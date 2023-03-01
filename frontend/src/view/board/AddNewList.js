@@ -1,10 +1,32 @@
 import {Button, Card, CardActions, IconButton, TextField} from "@mui/material";
 import {Add, Clear} from "@mui/icons-material";
 import Box from "@mui/material/Box";
-import {useState} from "react";
+import {useRef, useState} from "react";
+import api from "../../service/api";
+import {$success} from "../../util/snackbar-utils";
+import {useSelector} from "react-redux";
 
 export default () => {
     const [open, setOpen] = useState();
+
+    const inputRef = useRef();
+
+    const bId = useSelector(sts => sts.dashboard.board?.id || null);
+
+    const handleSubmit = () => {
+        if (bId) {
+            api.put('/api/v1/user/list', null, {
+                params: {
+                    bId,
+                    title: inputRef.current.value
+                }
+            }).then(() => {
+                setOpen(false)
+                // inputRef.current.value = ''
+                $success('create success ✔')
+            })
+        }
+    }
 
     return (
         <Box
@@ -30,6 +52,7 @@ export default () => {
                 {
                     open && (
                         <TextField
+                            inputRef={inputRef}
                             sx={{
                                 m: 1
                             }}
@@ -43,7 +66,7 @@ export default () => {
                 <CardActions>
                     {
                         open && <>
-                            <Button size='small'>
+                            <Button size='small' onClick={handleSubmit}>
                                 Add
                             </Button>
                             <IconButton size='small' onClick={() => setOpen(false)}>

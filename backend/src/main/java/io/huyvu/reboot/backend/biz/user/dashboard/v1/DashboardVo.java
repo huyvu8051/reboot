@@ -8,6 +8,7 @@ public record DashboardVo(
         List<WpVo> wps,
         BoardVo board,
         List<BoardVo> boards,
-        List<WpMemberVo> wpMems
+        List<WpMemberVo> wpMems,
+        List<LiztVo> lizts
 ) {
 }

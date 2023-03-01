@@ -36,9 +36,9 @@ export default ({item, index}) => {
 
                             classes='list-wrapper'
                             sx={{
-                                // bgcolor: 'blue',
+                                 // bgcolor: 'blue',
                                 boxSizing: 'border-box',
-                                margin: '0 4px',
+                                margin: 0,
                             }}
                             elevation={0}>
 
@@ -57,6 +57,7 @@ export default ({item, index}) => {
                                     flexDirection: 'column',
                                     maxHeight: '100%',
                                     minWidth: '270px',
+                                    m:'4px'
 
                                 }}
 

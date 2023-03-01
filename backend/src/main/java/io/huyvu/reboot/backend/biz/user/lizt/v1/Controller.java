@@ -4,6 +4,7 @@ import io.huyvu.reboot.backend.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,15 @@ public class Controller {
         long id = SecurityUtils.currentContext().id();
         service.createLz(title, bId, id);
     }
+
+
+    @PutMapping
+    void updateLz(long lId, String title, Double ordinal, Long desId){
+        long id = SecurityUtils.currentContext().id();
+        service.updateLz(lId, title, ordinal, desId);
+    }
+
+
 
 
 }

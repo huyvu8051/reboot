@@ -22,7 +22,7 @@ export default ({item, index}) => {
                    index={index}
         >
             {(provided, snapshot) => (
-                <Droppable droppableId={item.id}
+                <Droppable droppableId={item.id + ''}
                            type={'QUOTE'}>
                     {(provided2, snapshot2) => (
                         <Box
@@ -80,7 +80,7 @@ export default ({item, index}) => {
                                 >
 
                                     {
-                                        item.cards.map((e, index2) => (
+                                        item.cards && item.cards.map((e, index2) => (
                                             <Draggable
                                                 key={e.id}
                                                 draggableId={'item' + e.id}

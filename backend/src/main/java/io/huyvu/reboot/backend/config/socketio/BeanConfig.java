@@ -4,6 +4,7 @@
  */
 package io.huyvu.reboot.backend.config.socketio;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.socket.engineio.server.EngineIoServer;
 import io.socket.engineio.server.EngineIoServerOptions;
 import io.socket.socketio.server.SocketIoNamespace;
@@ -17,6 +18,7 @@ import java.util.stream.IntStream;
 
 @Configuration
 public class BeanConfig {
+
     @Bean
     EngineIoServer engineIoServer() {
         EngineIoServerOptions opt = EngineIoServerOptions.newFromDefault();

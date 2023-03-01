@@ -18,6 +18,7 @@ public class IServiceImpl implements IService {
         List<BoardVo> boards = null;
         List<WpMemberVo> wpMems = null;
         List<LiztVo> lizts = null;
+        List<CardVo> cards = null;
 
         if (cId != null) {
 
@@ -28,7 +29,7 @@ public class IServiceImpl implements IService {
             wpMems = repo.selectWpMem(board.wpId());
             lizts = repo.selectLizts(bId);
 
-            List<CardVo> cards = repo.selectCardsByBId(board
+            cards = repo.selectCardsByBId(board
                     .id());
 
         } else if (wpId != null) {
@@ -40,6 +41,6 @@ public class IServiceImpl implements IService {
         wps = repo.selectWps(uId);
 
 
-        return new DashboardVo(wp, wps, board, boards, wpMems, lizts);
+        return new DashboardVo(wp, wps, board, boards, wpMems, lizts, cards);
     }
 }

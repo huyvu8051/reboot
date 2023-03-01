@@ -49,7 +49,8 @@ public interface Repository {
                   ,workspace_id AS wp_id
               FROM board
              WHERE workspace_id = #{wpId}
-                   AND is_deleted = 0""")
+                   AND is_deleted = 0
+             ORDER BY id DESC""")
     List<BoardVo> selectBoards(long wpId);
 
 
@@ -69,12 +70,13 @@ public interface Repository {
     @Select("""
             SELECT id
                   ,board_id
+                  ,w_id
                   ,ordinal
                   ,title
-                  ,0 AS wp_id
               FROM lizt
              WHERE board_id = #{bId}
-               AND is_deleted = 0""")
+               AND is_deleted = 0
+             ORDER BY ordinal""")
     List<LiztVo> selectLizts(long bId);
 
     @Select("""

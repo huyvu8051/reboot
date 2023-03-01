@@ -6,7 +6,7 @@ const initialState = {
     board: null,
     boards: [],
     wpMems: [],
-    lists: [],
+    lizts: [],
 
 }
 
@@ -20,12 +20,19 @@ export const dashboardSlice = createSlice({
             state.board = action.payload.board
             state.boards = action.payload.boards || []
             state.wpMems = action.payload.wpMems || []
-            state.lists = action.payload.lists || []
+            state.lizts = action.payload.lizts || []
         },
+        updateOrdinal: (s, a) => {
+            const result = a.payload
+            const srcEle = s.lizts[result.source.index]
+            const desEle = s.lizts[result.destination.index]
+            s.lizts.splice(result.source.index, 1)
+            s.lizts.splice(result.destination.index, 0, srcEle)
+        }
     },
 })
 
-export const {save} = dashboardSlice.actions
+export const {save, updateOrdinal} = dashboardSlice.actions
 
 
 export default dashboardSlice.reducer

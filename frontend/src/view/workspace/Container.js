@@ -10,7 +10,7 @@ import {Outlet, useParams} from "react-router-dom";
 import api from "../../service/api";
 import {useDispatch} from "react-redux";
 import {save} from "./dashboard-slice";
-import {Divider, useMediaQuery} from "@mui/material";
+import {useMediaQuery} from "@mui/material";
 import ChangeWpBtn from "./leftDrawer/ChangeWpBtn";
 
 export default function PersistentDrawerLeft(props) {
@@ -21,20 +21,20 @@ export default function PersistentDrawerLeft(props) {
         api.get('/api/v1/user/dashboard', {
             params: {bId, wId, cId}
         }).then(r => dispatch(save(r)))
-    }, [bId, wId, cId])
+    }, [bId, wId, cId, dispatch])
 
     const isScreen600pxOrAbove = useMediaQuery('(min-width:600px)');
     const marginTop = isScreen600pxOrAbove ? '64px' : '56px';
     return (
-        <Box >
+        <Box>
             <CssBaseline/>
             <MuiAppBar
-                        elevation={0}
-                       position='fixed'
-                       sx={{
-                           backgroundColor: 'white',
-                           zIndex: (theme) => theme.zIndex.drawer + 1
-                       }}>
+                elevation={0}
+                position='fixed'
+                sx={{
+                    backgroundColor: 'white',
+                    zIndex: (theme) => theme.zIndex.drawer + 1
+                }}>
                 <Toolbar>
                     <Typography
                         variant='h6'

@@ -1,8 +1,11 @@
 import Box from '@mui/material/Box'
 import {DragDropContext, Droppable} from 'react-beautiful-dnd'
 import TaskList from './TaskList'
-import {useEffect, useState} from "react";
 import AddNewList from "./AddNewList";
+import {useDispatch, useSelector} from "react-redux";
+import api from "../../service/api";
+import {useCallback} from "react";
+import {updateOrdinal} from "../workspace/dashboard-slice";
 
 function cgen(id) {
     return Array.from(Array(Math.floor(Math.random() * 10)).keys()).map(e => ({
@@ -23,21 +26,32 @@ const getList = () => {
     return Promise.resolve(list2);
 }
 
-export const Board = () => {
+getList()
 
+export const Board = (callback, deps) => {
+    // const [lists, setLists] = useState([]);
+    const lists = useSelector(sts => sts.dashboard.lizts);
 
-    const [lists, setLists] = useState([]);
+    const dispatch = useDispatch()
 
-    const onDragEnd = (result) => {
+    const onDragEnd = useCallback((result) => {
         if (!result.destination) return
         // console.log(result)
 
         // change col ordinal
         if (result.destination.droppableId === 'board') {
             const srcEle = lists[result.source.index]
-            lists.splice(result.source.index, 1)
-            lists.splice(result.destination.index, 0, srcEle)
-            setLists(lists)
+            const desEle = lists[result.destination.index]
+
+            dispatch(updateOrdinal(result))
+
+            api.put('/api/v1/user/list', null, {
+                params: {
+                    lId: srcEle.id,
+                    desId: desEle.id
+                }
+            }).then()
+
             return
         }
 
@@ -48,16 +62,9 @@ export const Board = () => {
         // console.log('desLs', desLs)
         desLs.cards.splice(result.destination.index, 0, srcEle)
 
-        setLists(lists)
+        // setLists(lists)
 
-    }
-
-    useEffect(() => {
-        getList()
-            .then(setLists)
-        console.log('fetch')
-    }, [])
-
+    })
     return <>
         <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId='board'

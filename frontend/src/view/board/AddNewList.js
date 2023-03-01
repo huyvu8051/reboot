@@ -6,7 +6,7 @@ import api from "../../service/api";
 import {$success} from "../../util/snackbar-utils";
 import {useSelector} from "react-redux";
 
-export default () => {
+const AddNewList = () => {
     const [open, setOpen] = useState();
 
     const inputRef = useRef();
@@ -15,7 +15,7 @@ export default () => {
 
     const handleSubmit = () => {
         if (bId) {
-            api.put('/api/v1/user/list', null, {
+            api.post('/api/v1/user/list', null, {
                 params: {
                     bId,
                     title: inputRef.current.value
@@ -97,4 +97,5 @@ export default () => {
 
         </Box>
     )
-}
+};
+export default AddNewList

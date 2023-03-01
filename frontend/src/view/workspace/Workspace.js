@@ -5,6 +5,9 @@ import {ArrowLeft, ArrowRight} from "@mui/icons-material";
 import RightDrawer from "./leftDrawer/RightDrawer";
 import {io} from "socket.io-client";
 import {useDispatch, useSelector} from "react-redux";
+import api from "../../service/api";
+import {save} from "./dashboard-slice";
+import {useParams} from "react-router-dom";
 
 function Workspace(props) {
 
@@ -13,7 +16,7 @@ function Workspace(props) {
 
     const wId = useSelector(sts => sts.dashboard.wp?.id || null);
     const dispatch = useDispatch();
-
+    const {bId, cId} = useParams();
     useEffect(() => {
         if (wId) {
             const socket = io('/dashboard', {
@@ -21,14 +24,19 @@ function Workspace(props) {
                     wId: wId
                 }
             })
-            socket.on('update.lz', d => {
-                dispatch((s, a) => {
-                    s.lists = a.playload.lists
-                })
+            socket.on('update.dashboard', d => {
+                api.get('/api/v1/user/dashboard', {
+                    params: {bId, wId, cId}
+                }).then(r => dispatch(save(r)))
+                console.log('update.dashboard', d)
             })
+
+            return ()=>{
+                socket.off()
+            }
         }
 
-    }, [wId])
+    }, [wId, bId, cId, dispatch])
 
     return <>
         <Box height='100%'>

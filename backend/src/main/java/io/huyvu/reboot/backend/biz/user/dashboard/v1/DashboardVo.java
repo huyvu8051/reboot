@@ -9,6 +9,7 @@ public record DashboardVo(
         BoardVo board,
         List<BoardVo> boards,
         List<WpMemberVo> wpMems,
-        List<LiztVo> lizts
+        List<LiztVo> lizts,
+        List<CardVo> cards
 ) {
 }

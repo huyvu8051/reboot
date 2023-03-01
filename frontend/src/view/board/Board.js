@@ -5,33 +5,10 @@ import AddNewList from "./AddNewList";
 import {useDispatch, useSelector} from "react-redux";
 import api from "../../service/api";
 import {useCallback} from "react";
-import {updateOrdinal} from "../workspace/dashboard-slice";
+import {updateLiztOrdinal} from "../workspace/dashboard-slice";
 
-function cgen(id) {
-    return Array.from(Array(Math.floor(Math.random() * 10)).keys()).map(e => ({
-        id: id + '-' + e,
-        title: 'Card title ' + e,
-        cover_url: '',
-    }))
-}
-
-const list2 = Array.from(Array(7).keys()).map(e => ({
-    id: 'ls' + e,
-    title: 'List title ' + e,
-    cover_url: '',
-    cards: cgen(e)
-}))
-
-const getList = () => {
-    return Promise.resolve(list2);
-}
-
-getList()
-
-export const Board = (callback, deps) => {
-    // const [lists, setLists] = useState([]);
+export const Board = () => {
     const lists = useSelector(sts => sts.dashboard.lizts);
-
     const dispatch = useDispatch()
 
     const onDragEnd = useCallback((result) => {
@@ -43,7 +20,7 @@ export const Board = (callback, deps) => {
             const srcEle = lists[result.source.index]
             const desEle = lists[result.destination.index]
 
-            dispatch(updateOrdinal(result))
+            dispatch(updateLiztOrdinal(result))
 
             api.put('/api/v1/user/list', null, {
                 params: {

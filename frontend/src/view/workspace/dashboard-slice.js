@@ -7,6 +7,7 @@ const initialState = {
     boards: [],
     wpMems: [],
     lizts: [],
+    cards: []
 
 }
 
@@ -21,8 +22,9 @@ export const dashboardSlice = createSlice({
             state.boards = action.payload.boards || []
             state.wpMems = action.payload.wpMems || []
             state.lizts = action.payload.lizts || []
+            state.cards = action.payload.cards || []
         },
-        updateOrdinal: (s, a) => {
+        updateLiztOrdinal: (s, a) => {
             const result = a.payload
             const srcEle = s.lizts[result.source.index]
             const desEle = s.lizts[result.destination.index]
@@ -32,7 +34,7 @@ export const dashboardSlice = createSlice({
     },
 })
 
-export const {save, updateOrdinal} = dashboardSlice.actions
+export const {save, updateLiztOrdinal} = dashboardSlice.actions
 
 
 export default dashboardSlice.reducer

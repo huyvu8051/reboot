@@ -7,7 +7,7 @@ import {$success} from '../../util/snackbar-utils'
 import {useSelector} from 'react-redux'
 
 const AddNewList = () => {
-    const [open, setOpen] = useState()
+    const [open, setOpen] = useState(true)
 
     const inputRef = useRef()
 
@@ -69,7 +69,6 @@ const AddNewList = () => {
                             }}
 
                             autoFocus
-                            label='Enter list title...'
                             size='small'/>
                     )
                 }

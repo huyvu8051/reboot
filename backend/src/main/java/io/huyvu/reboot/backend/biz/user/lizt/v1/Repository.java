@@ -73,4 +73,11 @@ public interface Repository {
                  LIMIT 1
             </script>""")
     LiztVo selectLzNext(long bId,double ordinal, boolean greater);
+
+    @Insert("""
+            INSERT INTO card
+               SET lizt_id = #{lId}
+                  ,b_id = #{bId}
+                  ,title = #{title}""")
+    void insertCard(long lId, long bId, String title);
 }

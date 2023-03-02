@@ -62,6 +62,7 @@ export const Board = () => {
                             height: '100%',
                             // backgroundColor: 'green',
                             overflow: 'auto',
+                            p:'4px'
                         }}
 
                     >

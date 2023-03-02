@@ -74,35 +74,7 @@ const AddNewList = () => {
                 }
 
 
-                <CardActions>
-                    {
-                        open && <>
-                            <Button size='small' onClick={handleSubmit} sx={{textTransform: 'none'}}>
-                                Add
-                            </Button>
-                            <IconButton size='small' onClick={() => setOpen(false)}>
-                                <Clear fontSize='small'/>
-                            </IconButton>
-                        </>
-                    }
-                    {
-                        !open && (
-                            <Button
-                                sx={{
-                                    flex: 1,
-                                    justifyContent: 'flex-start',
-                                    color: 'rgba(0, 0, 0, 0.54)',
-                                    textTransform: 'none'
-                                }}
-                                size='small'
-                                onClick={() => setOpen(true)}
 
-                                startIcon={<Add/>}>
-                                {'Add another list'}
-                            </Button>
-                        )
-                    }
-                </CardActions>
             </Card>
 
 

@@ -10,22 +10,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/user/list")
+@RequestMapping("/api/v1/user")
 @PreAuthorize("isAuthenticated()")
 public class Controller {
     private final IService service;
 
-    @PostMapping
+    @PostMapping("list")
     void createLz(String title, long bId){
         long id = SecurityUtils.currentContext().id();
         service.createLz(title, bId, id);
     }
 
 
-    @PutMapping
+    @PutMapping("list")
     void updateLz(long lId, String title, Double ordinal, Long desId){
         long id = SecurityUtils.currentContext().id();
         service.updateLz(lId, title, ordinal, desId);
+    }
+
+
+    @PostMapping("card")
+    void createCard(long lId, String title){
+        long uId = SecurityUtils.currentContext().id();
+        service.createCard(lId, title, uId);
     }
 
 

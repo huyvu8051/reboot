@@ -4,6 +4,7 @@ import java.util.Date;
 
 public record CardVo(long id,
                      long liztId,
+                     long bId,
                      String title,
                      String automation,
                      String coverColor,

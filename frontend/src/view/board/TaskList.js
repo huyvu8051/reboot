@@ -1,12 +1,13 @@
-import {Box, Button, Card, CardActions, CardHeader} from "@mui/material";
+import {Box, Button, Card, CardActions, CardHeader, TextField} from "@mui/material";
 import {Draggable, Droppable} from "react-beautiful-dnd";
 import IconButton from "@mui/material/IconButton";
-import {Add, AddCard, MoreHoriz} from "@mui/icons-material";
+import {Add, AddCard, Clear, MoreHoriz} from "@mui/icons-material";
 import List from "@mui/material/List";
 import CardItem from "./CardItem";
-import AddNewCard from "./AddNewCard";
-import {useState} from "react";
-import AddNewList from "./AddNewList";
+import {useRef, useState} from "react";
+import api from "../../service/api";
+import {$success} from "../../util/snackbar-utils";
+import {useSelector} from "react-redux";
 
 const getStyle = (prov, snap) => {
     // console.log(prov, snap)
@@ -20,7 +21,30 @@ const getStyle = (prov, snap) => {
 
 export default ({item, index}) => {
     const [addCardOpen, setAddCardOpen] = useState(false);
+    const inputRef = useRef()
 
+    const bId = useSelector(sts => sts.dashboard.board?.id || null)
+    const cards = useSelector(sts => sts.dashboard.cards || [])
+    const handleSubmit = () => {
+        if (bId) {
+            api.post('/api/v1/user/card', null, {
+                params: {
+                    lId: item.id,
+                    title: inputRef.current.value
+                }
+            }).then(() => {
+                inputRef.current.value = ''
+                $success('create success ✔')
+            })
+        }
+    }
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault()
+            handleSubmit()
+        }
+    }
     return (
         <Draggable key={item.id}
                    draggableId={'list' + item.id}
@@ -36,7 +60,7 @@ export default ({item, index}) => {
 
                             classes='list-wrapper'
                             sx={{
-                                 // bgcolor: 'blue',
+                                // bgcolor: 'blue',
                                 boxSizing: 'border-box',
                                 margin: 0,
                             }}
@@ -57,7 +81,7 @@ export default ({item, index}) => {
                                     flexDirection: 'column',
                                     maxHeight: '100%',
                                     minWidth: '270px',
-                                    m:'4px'
+                                    m: '4px'
 
                                 }}
 
@@ -87,17 +111,25 @@ export default ({item, index}) => {
                                 >
 
                                     {
-                                        item.cards && item.cards.map((e, index2) => (
-                                            <Draggable
-                                                key={e.id}
-                                                draggableId={'item' + e.id}
-                                                index={index2}
-                                            >
-                                                {(provided3, snapshot3) => (
-                                                    <CardItem item={e} provided={provided3} snapshot={snapshot3}/>
-                                                )}
-                                            </Draggable>
-                                        ))
+                                        cards.map((e, index2) => {
+                                            if (e.liztId === item.id) {
+                                                      return <>
+                                                          <Draggable
+                                                              key={e.id}
+                                                              draggableId={'item' + e.id}
+                                                              index={index2}
+                                                          >
+                                                              {(provided3, snapshot3) => (
+                                                                  <CardItem item={e} provided={provided3}
+                                                                            snapshot={snapshot3}/>
+                                                              )}
+                                                          </Draggable>
+                                                      </>
+
+                                            }
+
+                                            return null
+                                        })
                                     }
 
                                     {provided2.placeholder}
@@ -105,7 +137,28 @@ export default ({item, index}) => {
                                 </List>
                                 {
                                     addCardOpen ? (
-                                        <AddNewCard/>
+                                        <>
+                                            <TextField
+                                                inputRef={inputRef}
+                                                onKeyDown={handleKeyDown}
+                                                // onBlur={()=>setOpen(false)}
+                                                sx={{
+                                                    m: 1,
+                                                }}
+
+                                                autoFocus
+                                                size='small'/>
+                                            <CardActions>
+                                                <Button size='small' onClick={handleSubmit}
+                                                        sx={{textTransform: 'none'}}>
+                                                    Add
+                                                </Button>
+                                                <IconButton size='small' onClick={() => setAddCardOpen(false)}>
+                                                    <Clear fontSize='small'/>
+                                                </IconButton>
+
+                                            </CardActions>
+                                        </>
                                     ) : (
                                         <CardActions sx={{display: 'flex', flex: 0}}>
                                             <Button

@@ -37,7 +37,7 @@ public class ServiceImpl implements IService {
             if (src.ordinal() < des.ordinal()) {
                 mp = repo.selectLzNext(src.boardId(), des.ordinal(), true);
                 if (mp == null) {
-                    mp = new LiztVo(0, 0, 0, des.ordinal() + 50, "");
+                    mp = new LiztVo(0, 0, 0, des.ordinal() + 100, "");
                 }
 
                 double num = mp.ordinal() - des.ordinal();
@@ -51,7 +51,7 @@ public class ServiceImpl implements IService {
             } else {
                 mp = repo.selectLzNext(src.boardId(), des.ordinal(), false);
                 if (mp == null) {
-                    mp = new LiztVo(0, 0, 0, des.ordinal() - 50, "");
+                    mp = new LiztVo(0, 0, 0, des.ordinal() - 100, "");
                 }
 
                 double num = Math.abs(mp.ordinal() - des.ordinal());
@@ -74,13 +74,14 @@ public class ServiceImpl implements IService {
         nsp.broadcast(String.valueOf(lz.wId()), "update.dashboard", toJsonObj(lz));
     }
 
-    @Data
-    @AllArgsConstructor
-    class LVo {
-        long id;
-        long boardId;
-        long wId;
-        int ordinal;
-        String title;
+    @Override
+    public void createCard(long lId, String title, long uId) {
+        LiztVo liztVo = repo.selectLz(lId);
+        repo.insertCard(lId, liztVo.boardId(), title);
+
+        SocketIoNamespace nsp = sioServer.namespace(DASHBOARD);
+        nsp.broadcast(String.valueOf(liztVo.wId()), "update.dashboard");
     }
+
+
 }

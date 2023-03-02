@@ -81,7 +81,7 @@ export default ({item, index}) => {
                                     flexDirection: 'column',
                                     maxHeight: '100%',
                                     minWidth: '270px',
-                                    m: '4px'
+                                    mx: '4px'
 
                                 }}
 
@@ -111,25 +111,18 @@ export default ({item, index}) => {
                                 >
 
                                     {
-                                        cards.map((e, index2) => {
-                                            if (e.liztId === item.id) {
-                                                      return <>
-                                                          <Draggable
-                                                              key={e.id}
-                                                              draggableId={'item' + e.id}
-                                                              index={index2}
-                                                          >
-                                                              {(provided3, snapshot3) => (
-                                                                  <CardItem item={e} provided={provided3}
-                                                                            snapshot={snapshot3}/>
-                                                              )}
-                                                          </Draggable>
-                                                      </>
-
-                                            }
-
-                                            return null
-                                        })
+                                        item.cards.map((e, index2) => (
+                                            <Draggable
+                                                key={e.id}
+                                                draggableId={'item' + e.id}
+                                                index={index2}
+                                            >
+                                                {(provided3, snapshot3) => (
+                                                    <CardItem item={e} provided={provided3}
+                                                              snapshot={snapshot3}/>
+                                                )}
+                                            </Draggable>
+                                        ))
                                     }
 
                                     {provided2.placeholder}

@@ -97,6 +97,7 @@ public interface Repository {
             	  ,start_date
               FROM card
              WHERE b_id = #{bId}
-                   AND is_deleted = 0""")
+                   AND is_deleted = 0
+             ORDER BY ordinal""")
     List<CardVo> selectCardsByBId(long bId);
 }

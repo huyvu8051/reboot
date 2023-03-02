@@ -5,10 +5,11 @@ import AddNewList from "./AddNewList";
 import {useDispatch, useSelector} from "react-redux";
 import api from "../../service/api";
 import {useCallback} from "react";
-import {updateLiztOrdinal} from "../workspace/dashboard-slice";
+import {updateCardOrdinal, updateLiztOrdinal} from "../workspace/dashboard-slice";
 
 export const Board = () => {
     const lists = useSelector(sts => sts.dashboard.lizts);
+    const cards = useSelector(sts => sts.dashboard.cards);
     const dispatch = useDispatch()
 
     const onDragEnd = useCallback((result) => {
@@ -17,6 +18,8 @@ export const Board = () => {
 
         // change col ordinal
         if (result.destination.droppableId === 'board') {
+            if (result.source.index === result.destination.index) return
+
             const srcEle = lists[result.source.index]
             const desEle = lists[result.destination.index]
 
@@ -32,14 +35,22 @@ export const Board = () => {
             return
         }
 
-        const srcLs = lists.find(e => e.id === result.source.droppableId);
-        const srcEle = srcLs.cards[result.source.index];
-        srcLs.cards.splice(result.source.index, 1)
-        const desLs = lists.find(e => e.id === result.destination.droppableId);
-        // console.log('desLs', desLs)
-        desLs.cards.splice(result.destination.index, 0, srcEle)
+        dispatch(updateCardOrdinal(result))
 
-        // setLists(lists)
+
+        const cId = cards[result.source.index].id
+        const desId = cards[result.destination.index].id
+        const lId = result.destination.droppableId
+
+        console.log(cId, desId)
+
+        api.put('/api/v1/user/card', null, {
+            params: {
+                cId,
+                lId,
+                desId
+            }
+        }).then()
 
     })
     return <>
@@ -62,7 +73,7 @@ export const Board = () => {
                             height: '100%',
                             // backgroundColor: 'green',
                             overflow: 'auto',
-                            p:'4px'
+                            p: '4px'
                         }}
 
                     >

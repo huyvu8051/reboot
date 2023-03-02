@@ -9,7 +9,7 @@ const getStyle = (prov, snap) => {
     return {
         ...prov.draggableProps.style,
         ...snap.isDragging && !snap.isDropAnimating && {
-            transform: ' rotate(5deg) ' + prov.draggableProps.style.transform
+            // transform: ' rotate(5deg) ' + prov.draggableProps.style.transform
         }
     }
 }
@@ -63,25 +63,25 @@ export default ({provided, snapshot, item}) => {
                 sx={{p: 1}}
                 title={item.title}>
             </CardHeader>
-            <CardActions onClick={() => $success('success')}
+          {/*  <CardActions onClick={() => $success('success')}
                          disableSpacing>
-                {/*<Grid>*/}
-                {/*    <Chip*/}
-                {/*        avatar={<Menu/>}*/}
-                {/*        size='small'*/}
-                {/*        label={'rtest'}*/}
-                {/*    >*/}
-                {/*    </Chip>*/}
-                {/*    <Chip*/}
-                {/*        avatar={<Task/>}*/}
-                {/*        size='small'*/}
-                {/*        label={'rtest'}*/}
-                {/*    >*/}
-                {/*    </Chip>*/}
+                <Grid>
+                    <Chip
+                        avatar={<Menu/>}
+                        size='small'
+                        label={'rtest'}
+                    >
+                    </Chip>
+                    <Chip
+                        avatar={<Task/>}
+                        size='small'
+                        label={'rtest'}
+                    >
+                    </Chip>
 
 
-                {/*</Grid>*/}
-            </CardActions>
+                </Grid>
+            </CardActions>*/}
         </Card>
     )
 }

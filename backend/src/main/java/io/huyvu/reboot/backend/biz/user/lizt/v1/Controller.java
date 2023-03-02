@@ -35,6 +35,11 @@ public class Controller {
         service.createCard(lId, title, uId);
     }
 
+    @PutMapping("card")
+    void updateCard(long cId, Long lId, Long desId){
+        service.updateCard(cId, lId, desId);
+    }
+
 
 
 

@@ -16,31 +16,29 @@ public class Controller {
     private final IService service;
 
     @PostMapping("list")
-    void createLz(String title, long bId){
+    void createLz(String title, long bId) {
         long id = SecurityUtils.currentContext().id();
         service.createLz(title, bId, id);
     }
 
 
     @PutMapping("list")
-    void updateLz(long lId, String title, Double ordinal, Long desId){
+    void updateLz(long lId, String title, Double ordinal, Long desId) {
         long id = SecurityUtils.currentContext().id();
         service.updateLz(lId, title, ordinal, desId);
     }
 
 
     @PostMapping("card")
-    void createCard(long lId, String title){
+    void createCard(long lId, String title) {
         long uId = SecurityUtils.currentContext().id();
         service.createCard(lId, title, uId);
     }
 
     @PutMapping("card")
-    void updateCard(long cId, Long lId, Long desId){
-        service.updateCard(cId, lId, desId);
+    void updateCard(long cId, double ordinal, Long lId) {
+        service.updateCard(cId, ordinal, lId);
     }
-
-
 
 
 }

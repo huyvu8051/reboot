@@ -52,7 +52,7 @@ export default ({item, index}) => {
         >
             {(provided, snapshot) => (
                 <Droppable droppableId={item.id + ''}
-                           type={'QUOTE'}>
+                           type='QUOTE'>
                     {(provided2, snapshot2) => (
                         <Box
                             ref={provided2.innerRef}

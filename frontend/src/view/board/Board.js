@@ -38,19 +38,7 @@ export const Board = () => {
         dispatch(updateCardOrdinal(result))
 
 
-        const cId = cards[result.source.index].id
-        const desId = cards[result.destination.index].id
-        const lId = result.destination.droppableId
 
-        console.log(cId, desId)
-
-        api.put('/api/v1/user/card', null, {
-            params: {
-                cId,
-                lId,
-                desId
-            }
-        }).then()
 
     })
     return <>

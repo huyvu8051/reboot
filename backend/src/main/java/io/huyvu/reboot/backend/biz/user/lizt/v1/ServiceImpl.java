@@ -30,39 +30,12 @@ public class ServiceImpl implements IService {
             LiztVo src = repo.selectLz(lId);
             LiztVo des = repo.selectLz(desId);
 
-            LiztVo mp;
-
-
-            if (src.ordinal() < des.ordinal()) {
-                mp = repo.selectLzNext(src.boardId(), des.ordinal(), true);
-                if (mp == null) {
-                    mp = new LiztVo(0, 0, 0, des.ordinal() + 100, "");
-                }
-
-                double num = mp.ordinal() - des.ordinal();
-                double pow = Math.pow(10, Math.floor(Math.log10(num)));
-
-                double firstDigit = num / pow;
-                double rounded = Math.round(firstDigit) * pow;
-
-                ordinal = des.ordinal() + (rounded / 2);
-
-            } else {
-                mp = repo.selectLzNext(src.boardId(), des.ordinal(), false);
-                if (mp == null) {
-                    mp = new LiztVo(0, 0, 0, des.ordinal() - 100, "");
-                }
-
-                double num = Math.abs(mp.ordinal() - des.ordinal());
-                double pow = Math.pow(10, Math.floor(Math.log10(num)));
-
-                double firstDigit = num / pow;
-                double rounded = Math.round(firstDigit) * pow;
-
-                ordinal = des.ordinal() - (rounded / 2);
-            }
-
-
+            double d;
+            if (src.ordinal() < des.ordinal())
+                d = repo.selectLzNextOrdinal(desId);
+            else
+                d = repo.selectLzPrevOrdinal(desId);
+            ordinal = getMiddleVal(d, des.ordinal());
         }
 
         repo.updateLz(lId, title, ordinal, null);
@@ -83,53 +56,29 @@ public class ServiceImpl implements IService {
     }
 
     @Override
-    public void updateCard(long cId, Long lId, Long desId) {
-        if (desId != null) {
-            CardVo src = repo.selectCard(cId);
-            CardVo des = repo.selectCard(desId);
+    public void updateCard(long cId, double ordinal, Long lId) {
+        repo.updateCardOrdinal(cId, ordinal, lId);
+        long wpId = repo.selectWpId(cId);
 
-            CardVo mp;
-
-            double ordinal;
+        SocketIoNamespace nsp = sioServer.namespace(DASHBOARD);
+        nsp.broadcast(String.valueOf(wpId), "update.dashboard");
 
 
-            if (src.ordinal() < des.ordinal()) {
-                mp = repo.selectCardNext(src.liztId(), des.ordinal());
-                if (mp == null) {
-                    mp = new CardVo(0, 0, 0, null, des.ordinal() + 100, null, null, null, null, null, null, false, null, false, null, null);
-                }
+    }
 
-                double num = mp.ordinal() - des.ordinal();
-                double pow = Math.pow(10, Math.floor(Math.log10(num)));
+    double getMiddleVal(double v1, double v2) {
+        double diff = Math.abs(v1 - v2);
+        double pow = Math.pow(10, Math.floor(Math.log10(diff)));
 
-                double firstDigit = num / pow;
-                double rounded = Math.round(firstDigit) * pow;
+        double firstDigit = diff / pow;
+        double rounded = Math.round(firstDigit) * pow;
 
-                ordinal = des.ordinal() + (rounded / 2);
-
-            } else {
-                mp = repo.selectCardPrevious(src.liztId(), des.ordinal());
-                if (mp == null) {
-                    mp = new CardVo(0, 0, 0, null, des.ordinal() - 100, null, null, null, null, null, null, false, null, false, null, null);
-                }
-
-                double num = Math.abs(mp.ordinal() - des.ordinal());
-                double pow = Math.pow(10, Math.floor(Math.log10(num)));
-
-                double firstDigit = num / pow;
-                double rounded = Math.round(firstDigit) * pow;
-
-                ordinal = des.ordinal() - (rounded / 2);
-            }
-
-            if (lId == null) {
-                repo.updateCardOrdinal2(cId, ordinal);
-            } else {
-                repo.updateCardOrdinal(cId, ordinal, lId);
-
-            }
-
+        if (v2 > v1) {
+            return v2 - (rounded / 2);
         }
+
+        return v1 - (rounded / 2);
+
     }
 
 

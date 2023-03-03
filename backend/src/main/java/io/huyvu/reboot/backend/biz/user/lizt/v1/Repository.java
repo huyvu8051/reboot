@@ -50,29 +50,6 @@ public interface Repository {
             </script>""")
     void updateLz(long lId, String title, Double ordinal, Boolean isDel);
 
-    @Select("""
-            <script>
-                SELECT id
-                      ,board_id
-                      ,w_id
-                      ,ordinal
-                      ,title
-                  FROM lizt
-                 WHERE board_id = #{bId}
-                 <if test="greater">
-                       AND ordinal &gt; #{ordinal}
-                 </if>       
-                 <if test="!greater">
-                       AND ordinal &lt; #{ordinal}
-                 </if> 
-                       AND is_deleted = 0
-                 ORDER BY ordinal 
-                 <if test="!greater">
-                      DESC
-                 </if> 
-                 LIMIT 1
-            </script>""")
-    LiztVo selectLzNext(long bId, double ordinal, boolean greater);
 
     @Insert("""
             SET @ordinal = (SELECT IFNULL(MAX(ordinal), 0) + 50
@@ -173,4 +150,117 @@ public interface Repository {
                SET ordinal = #{ordinal}
              WHERE id = #{id}""")
     void updateCardOrdinal2(long id, double ordinal);
+
+
+    @Select("""
+           
+            SET @bId = (SELECT board_id 
+                          FROM lizt
+                         WHERE id = #{lId});
+                         
+            SET @ordinal = (SELECT ordinal
+                              FROM lizt 
+                             WHERE id = #{lId});
+            
+            SET @new_ordinal = (SELECT ordinal 
+                                  FROM lizt
+                                 WHERE board_id = @bId
+                                       AND ordinal >= @ordinal
+                                       AND id != #{lId}
+                                       AND is_deleted = 0
+                                 ORDER BY ordinal, id
+                                 LIMIT 1);
+                                 
+            SELECT IFNULL(@new_ordinal, (SELECT MAX(ordinal) + 50
+                                           FROM lizt
+                                          WHERE board_id = @bId
+                                                AND is_deleted = 0))""")
+    double selectLzNextOrdinal(long lId);
+
+    @Select("""
+                 
+            SET @bId = (SELECT board_id 
+                          FROM lizt
+                         WHERE id = #{lId});
+                         
+            SET @ordinal = (SELECT ordinal
+                              FROM lizt 
+                             WHERE id = #{lId});
+            
+            SET @new_ordinal = (SELECT ordinal 
+                                  FROM lizt
+                                 WHERE board_id = @bId
+                                       AND ordinal <= @ordinal
+                                       AND id != #{lId}
+                                       AND is_deleted = 0
+                                 ORDER BY ordinal, id
+                                 LIMIT 1);
+                                 
+            SELECT IFNULL(@new_ordinal, (SELECT MIN(ordinal) - 50
+                                           FROM lizt
+                                          WHERE board_id = @bId
+                                                AND is_deleted = 0))""")
+    double selectLzPrevOrdinal(long boardId);
+
+
+
+    @Select("""
+                 
+            SET @lId = (SELECT lizt_id 
+                          FROM card
+                         WHERE id = #{id});
+                         
+            SET @ordinal = (SELECT ordinal 
+                              FROM card
+                             WHERE id = #{id});
+            
+            SET @new_ordinal = (SELECT ordinal 
+                                  FROM card
+                                 WHERE lizt_id = @lId
+                                       AND ordinal >= @ordinal
+                                       AND id != #{id}
+                                       AND is_deleted = 0
+                                 ORDER BY ordinal, id
+                                 LIMIT 1);
+                                 
+            SELECT IFNULL(@new_ordinal, (SELECT MAX(ordinal) + 50
+                                           FROM card
+                                          WHERE lizt_id = @lId
+                                                AND is_deleted = 0))""")
+    double selectCardNextOrdinal(long id);
+
+    @Select("""
+                 
+            SET @lId = (SELECT lizt_id 
+                          FROM card
+                         WHERE id = #{id});
+                         
+            SET @ordinal = (SELECT ordinal 
+                              FROM card
+                             WHERE id = #{id});
+            
+            SET @new_ordinal = (SELECT ordinal 
+                                  FROM card
+                                 WHERE lizt_id = @lId
+                                       AND ordinal <= @ordinal
+                                       AND id != #{id}
+                                       AND is_deleted = 0
+                                 ORDER BY ordinal, id
+                                 LIMIT 1);
+                                 
+            SELECT IFNULL(@new_ordinal, (SELECT MIN(ordinal) - 50
+                                           FROM card
+                                          WHERE lizt_id = @lId
+                                                AND is_deleted = 0))""")
+    double selectCardPreviousOrdinal(Long id);
+
+    @Select("""
+            SET @b_id = (SELECT b_id
+            				   FROM card
+            				  WHERE id = #{cId});
+            				 
+            SELECT workspace_id
+              FROM board
+             WHERE id = @b_id""")
+    long selectWpId(long cId);
 }

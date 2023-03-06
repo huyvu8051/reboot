@@ -4,9 +4,22 @@
  */
 package io.huyvu.reboot.backend.config.security;
 
-/** Context only when user logged
- * @param id user id
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
+import java.util.Date;
+
+/**
+ * Context only when user logged
+ *
+ * @param uId      user uId
  * @param username username
  */
-public record UserContextVo(long id, String username) {
+public record UserContextVo(Long uId,
+                            String username,
+                            Collection<? extends GrantedAuthority> roles,
+                            Date issAt,
+                            Date expAt,
+                            boolean mustRefresh) {
+
 }

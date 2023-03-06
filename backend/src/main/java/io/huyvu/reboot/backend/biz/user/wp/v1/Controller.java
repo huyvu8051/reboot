@@ -4,10 +4,7 @@
  */
 package io.huyvu.reboot.backend.biz.user.wp.v1;
 
-import io.huyvu.reboot.backend.config.security.UserContextVo;
-import io.huyvu.reboot.backend.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +13,11 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+import static io.huyvu.reboot.backend.util.SecurityUtils.uId;
+
 @Validated
 @RestController
 @RequestMapping("api/v1/user/workspace")
-@PreAuthorize("isAuthenticated()")
 @RequiredArgsConstructor
 public class Controller {
     private final Service mngWpService;
@@ -28,8 +26,7 @@ public class Controller {
     CreateWpResp createWp(@NotNull
                           @NotEmpty
                           @NotBlank String wpNm) {
-        UserContextVo userCtx = SecurityUtils.currentContext();
-        WpDetails workspace = mngWpService.create(wpNm, userCtx.id());
+        WpDetails workspace = mngWpService.create(wpNm, uId());
         CreateWpResp createWpResp = new CreateWpResp() {{
             setId(workspace.id());
             setTitle(workspace.title());
@@ -40,14 +37,12 @@ public class Controller {
 
     @PostMapping
     List<ListWpItem> getLs() {
-        UserContextVo userCtx = SecurityUtils.currentContext();
-        return mngWpService.getList(userCtx.id());
+        return mngWpService.getList(uId());
     }
 
     @GetMapping
     WpDetails getDetails(long wpId) {
-        UserContextVo userCtx = SecurityUtils.currentContext();
-        return mngWpService.getDetails(wpId, userCtx.id());
+        return mngWpService.getDetails(wpId, uId());
     }
 
 }

@@ -55,7 +55,7 @@ public interface Repository {
 
     /**
      * @param wpNm workspace name
-     * @return generated workspace id
+     * @return generated workspace uId
      */
     @Insert({"""
             INSERT INTO workspace

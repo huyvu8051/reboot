@@ -2,6 +2,8 @@ package io.huyvu.reboot.backend.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -14,6 +16,7 @@ import java.util.regex.Pattern;
 
 @Slf4j
 @Configuration
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class SpaRedirectFilter extends OncePerRequestFilter {
 
     private final String REGEX = "(?!/actuator|/api|/socket\\.io|/h2-console|/_nuxt|/static|/assets|/index\\.html|/200\\.html|/manifest\\.json|/favicon\\.ico|/sw\\.js).*$";

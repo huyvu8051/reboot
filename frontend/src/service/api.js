@@ -47,7 +47,7 @@ instance.interceptors.request.use((config) => {
 
 instance.interceptors.response.use(response => {
     // refresh token
-    const token = response.headers.get('refreshToken')
+    const token = response.headers.get('REFRESH_TOKEN')
     if (token) {
         store.dispatch(refreshToken(token))
         $success('Jwt token refreshed')

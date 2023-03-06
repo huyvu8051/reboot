@@ -9,7 +9,6 @@ import {updateCardOrdinal, updateLiztOrdinal} from "../workspace/dashboard-slice
 
 export const Board = () => {
     const lists = useSelector(sts => sts.dashboard.lizts);
-    const cards = useSelector(sts => sts.dashboard.cards);
     const dispatch = useDispatch()
 
     const onDragEnd = useCallback((result) => {

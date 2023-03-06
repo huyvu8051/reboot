@@ -84,6 +84,7 @@ public interface Repository {
             	  ,lizt_id
             	  ,b_id
             	  ,title
+            	  ,ordinal
             	  ,automation
             	  ,cover_color
             	  ,cover_size

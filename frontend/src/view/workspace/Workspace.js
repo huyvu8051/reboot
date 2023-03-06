@@ -5,8 +5,7 @@ import {ArrowLeft, ArrowRight} from "@mui/icons-material";
 import RightDrawer from "./leftDrawer/RightDrawer";
 import {io} from "socket.io-client";
 import {useDispatch, useSelector} from "react-redux";
-import api from "../../service/api";
-import {save} from "./dashboard-slice";
+import {updateLizt} from "./dashboard-slice";
 import {useParams} from "react-router-dom";
 
 function Workspace(props) {
@@ -22,17 +21,16 @@ function Workspace(props) {
             const socket = io('/dashboard', {
                 query: {
                     wId: wId
-                }
+                },
+                transports: ['websocket']
             })
-            socket.on('update.dashboard', d => {
-                api.get('/api/v1/user/dashboard', {
-                    params: {bId, wId, cId}
-                }).then(r => dispatch(save(r)))
-                console.log('update.dashboard', d)
+            socket.on('update.dashboard.list', r => {
+                dispatch(updateLizt(r))
             })
 
-            return ()=>{
+            return () => {
                 socket.off()
+                socket.disconnect()
             }
         }
 

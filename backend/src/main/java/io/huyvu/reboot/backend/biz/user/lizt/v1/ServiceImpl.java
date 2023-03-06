@@ -43,7 +43,7 @@ public class ServiceImpl implements IService {
         LiztVo lz = repo.selectLz(lId);
 
         SocketIoNamespace nsp = sioServer.namespace(DASHBOARD);
-        nsp.broadcast(String.valueOf(lz.wId()), "update.dashboard", toJsonObj(lz));
+        nsp.broadcast(String.valueOf(lz.wId()), "update.dashboard.list", toJsonObj(lz));
     }
 
     @Override

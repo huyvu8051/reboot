@@ -1,22 +1,11 @@
 import {FormControl, InputLabel, MenuItem, Select} from '@mui/material'
 import * as React from 'react'
-import {useEffect, useState} from 'react'
-import api from '../../../service/api'
-import {useParams} from "react-router-dom"
+import {useState} from 'react'
+import {useSelector} from "react-redux";
 
 const CreateBoardWpSelect = (props) => {
     const [value, setValue] = useState('')
-    const [wps, setWps] = useState([])
-    const {wpId} = useParams()
-    useEffect(() => {
-
-        api.post('/api/v1/user/workspace')
-            .then(resp => {
-                setWps(resp)
-            })
-
-
-    }, [wpId])
+    const wps = useSelector(sts => sts.dashboard.wps)
 
     const handleChange = (event) => {
         setValue(event.target.value)

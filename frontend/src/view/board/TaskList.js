@@ -28,15 +28,12 @@ export default ({item, index}) => {
                    draggableId={'list' + item.id}
                    index={index}
         >
-            {(provided, snapshot) => (
+            {(dragProv, dragSnap) => (
                 <Droppable droppableId={item.id + ''}
                            type='QUOTE'>
-                    {(provided2, snapshot2) => (
+                    {(dropProv, dropSnap) => (
                         <Box
-                            ref={provided2.innerRef}
-                            {...provided2.droppableProps}
-
-                            classes='list-wrapper'
+                            classes='box'
                             sx={{
                                 // bgcolor: 'blue',
                                 boxSizing: 'border-box',
@@ -46,10 +43,9 @@ export default ({item, index}) => {
 
 
                             <Card
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-
+                                ref={dragProv.innerRef}
+                                {...dragProv.draggableProps}
+                                {...dragProv.dragHandleProps}
                                 className='list-content'
                                 sx={{
                                     backgroundColor: 'rgb(235 236 240)',
@@ -59,11 +55,11 @@ export default ({item, index}) => {
                                     flexDirection: 'column',
                                     maxHeight: '100%',
                                     minWidth: '270px',
-                                    mx: '4px'
+                                    mx: '4px',
 
                                 }}
 
-                                style={getStyle(provided, snapshot)}
+                                style={getStyle(dragProv, dragSnap)}
                                 elevation={0}>
                                 <CardHeader
                                     sx={{
@@ -81,6 +77,8 @@ export default ({item, index}) => {
                                     )}
                                 />
                                 <List
+                                    ref={dropProv.innerRef}
+                                    {...dropProv.droppableProps}
                                     sx={{
                                         py: 0,
                                         px: 1,
@@ -104,12 +102,11 @@ export default ({item, index}) => {
                                         ))
                                     }
 
-                                    {provided2.placeholder}
-
+                                    {dropProv.placeholder}
+                                    <AddNewCard lId={item.id}/>
                                 </List>
-                                <AddNewCard lId={item.id}/>
-                            </Card>
 
+                            </Card>
 
                         </Box>
                     )}

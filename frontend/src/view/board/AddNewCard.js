@@ -59,7 +59,7 @@ const AddNewList = ({lId}) => {
                         </CardActions>
                     </>
                 ) : (
-                    <CardActions sx={{display: 'flex', flex: 0}}>
+                    <CardActions sx={{display: 'flex', flex: 0, px: 0}}>
                         <Button
                             onClick={() => setAddCardOpen(true)}
                             sx={{

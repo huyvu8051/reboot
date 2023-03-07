@@ -16,61 +16,31 @@ export const dashboardSlice = createSlice({
     name: 'dashboardSlice',
     initialState,
     reducers: {
-        save: (state, action) => {
-            state.wp = action.payload.wp
-            state.wps = action.payload.wps || []
-            state.board = action.payload.board
-            state.boards = action.payload.boards || []
-            state.wpMems = action.payload.wpMems || []
-            state.lizts = action.payload.lizts || []
-
-            state.cards = action.payload.cards || []
-            // state.lizts.forEach(e => {
-            //     e.cards = state.cards.filter(e2 => e2.liztId === e.id)
-            // })
+        save: (s, a) => {
+            Object.assign(s, a.payload)
         },
-        updateLiztOrdinal: (s, a) => {
-            const result = a.payload
-            const srcEle = s.lizts[result.source.index]
-            s.lizts.splice(result.source.index, 1)
-            s.lizts.splice(result.destination.index, 0, srcEle)
-        },
-        updateCardOrdinal: (s, a) => {
-            const srcLs = s.lizts.find(e => e.id === parseFloat(a.payload.source.droppableId));
-            const srcCard = srcLs.cards[a.payload.source.index];
-            srcLs.cards.splice(a.payload.source.index, 1)
-            const desLs = s.lizts.find(e => e.id === parseFloat(a.payload.destination.droppableId));
-            // console.log('desLs', desLs)
-            desLs.cards.splice(a.payload.destination.index, 0, srcCard)
 
-
-            const cId = s.cards[a.payload.source.index].id
-            const desId = s.cards[a.payload.destination.index].id
-            const lId = a.payload.destination.droppableId
-
-            api.put('/api/v1/user/card', null, {
-                params: {
-                    cId,
-                    lId,
-                    desId
-                }
-            }).then()
-
-        },
         updateLizt: (s, a) => {
-            for (let i = 0; i < s.lizts.length; i++) {
-                if (s.lizts[i].id === a.payload.id) {
-                    s.lizts[i] = a.payload
-                }
+            const find = s.lizts.find(e => e.id === a.payload.id);
+            if (find) {
+                Object.assign(find, a.payload)
+            }else {
+                s.lizts.push(a.payload)
             }
-
-            s.lizts.sort((e1, e2) => e1.ordinal - e2.ordinal)
+        },
+        updateCard: (s, a) => {
+            const find = s.cards.find(e => e.id === a.payload.id);
+            if (find) {
+                Object.assign(find, a.payload)
+            }else {
+                s.cards.push(a.payload)
+            }
         }
     },
 })
 
 
-export const {save, updateLiztOrdinal, updateCardOrdinal, updateLizt} = dashboardSlice.actions
+export const {save, updateLizt, updateCard} = dashboardSlice.actions
 
 
 export default dashboardSlice.reducer

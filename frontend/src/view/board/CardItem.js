@@ -3,6 +3,7 @@ import IconButton from "@mui/material/IconButton";
 import {$error, $success} from "../../util/snackbar-utils";
 import {EditOutlined} from "@mui/icons-material";
 
+import image from '../../asset/image/paella.jpg'
 
 const getStyle = (prov, snap) => {
 
@@ -52,7 +53,7 @@ export default ({provided, snapshot, item}) => {
             <CardMedia
                 onClick={() => $success('success')}
                 sx={{height: 140}}
-                image="https://picsum.photos/200/300"
+                image={image}
                 title="green iguana"
             />
             <CardHeader

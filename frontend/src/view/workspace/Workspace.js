@@ -1,21 +1,21 @@
-import LeftDrawer from "./leftDrawer/LeftDrawer";
-import {Box, IconButton} from "@mui/material";
-import {useEffect, useState} from "react";
-import {ArrowLeft, ArrowRight} from "@mui/icons-material";
-import RightDrawer from "./leftDrawer/RightDrawer";
-import {io} from "socket.io-client";
-import {useDispatch, useSelector} from "react-redux";
-import {updateLizt} from "./dashboard-slice";
-import {useParams} from "react-router-dom";
+import LeftDrawer from './leftDrawer/LeftDrawer'
+import {Box, IconButton} from '@mui/material'
+import {useEffect, useState} from 'react'
+import {ArrowLeft, ArrowRight} from '@mui/icons-material'
+import RightDrawer from './leftDrawer/RightDrawer'
+import {io} from 'socket.io-client'
+import {useDispatch, useSelector} from 'react-redux'
+import {updateCard, updateLizt} from './dashboard-slice'
+import {useParams} from 'react-router-dom'
 
 function Workspace(props) {
 
     const [openLeft, setOpenLeft] = useState(true)
     const [openRight, setOpenRight] = useState(false)
 
-    const wId = useSelector(sts => sts.dashboard.wp?.id || null);
-    const dispatch = useDispatch();
-    const {bId, cId} = useParams();
+    const wId = useSelector(sts => sts.dashboard.wp?.id || null)
+    const dispatch = useDispatch()
+    const {bId, cId} = useParams()
     useEffect(() => {
         if (wId) {
             const socket = io('/dashboard', {
@@ -26,6 +26,9 @@ function Workspace(props) {
             })
             socket.on('update.dashboard.list', r => {
                 dispatch(updateLizt(r))
+            })
+            socket.on('update.dashboard.card', r => {
+                dispatch(updateCard(r))
             })
 
             return () => {

@@ -11,9 +11,9 @@ import java.util.List;
 
 import static io.huyvu.reboot.backend.util.SecurityUtils.uId;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/user/board")
+@RequiredArgsConstructor
 public class Controller {
     private final IService service;
 
@@ -21,7 +21,6 @@ public class Controller {
     List<BoardVo> getAllFromWp(@RequestParam long wpId) {
         return service.getAll(wpId, uId());
     }
-
 
     @PutMapping
     long create(@RequestBody CreateBoardReq req) {

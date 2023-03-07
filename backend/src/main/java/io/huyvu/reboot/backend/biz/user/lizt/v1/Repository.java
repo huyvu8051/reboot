@@ -60,7 +60,7 @@ public interface Repository {
                   ,b_id = #{bId}
                   ,title = #{title}
                   ,ordinal = @ordinal""")
-    void insertCard(long lId, long bId, String title);
+    long insertCard(long lId, long bId, String title);
 
 
 

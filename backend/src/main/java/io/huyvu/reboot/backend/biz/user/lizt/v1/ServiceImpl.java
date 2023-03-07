@@ -20,23 +20,13 @@ public class ServiceImpl implements IService {
         LiztVo lz = repo.selectLz(id);
 
         SocketIoNamespace nsp = sioServer.namespace(DASHBOARD);
-        nsp.broadcast(String.valueOf(lz.wId()), "update.dashboard", toJsonObj(lz));
+        nsp.broadcast(String.valueOf(lz.wId()), "update.dashboard.list", toJsonObj(lz));
     }
 
     @Override
-    public void updateLz(long lId, String title, Double ordinal, Long desId) {
+    public void updateLz(long lId, String title, Double ordinal) {
 
-        if (desId != null) {
-            LiztVo src = repo.selectLz(lId);
-            LiztVo des = repo.selectLz(desId);
 
-            double d;
-            if (src.ordinal() < des.ordinal())
-                d = repo.selectLzNextOrdinal(desId);
-            else
-                d = repo.selectLzPrevOrdinal(desId);
-            ordinal = getMiddleVal(d, des.ordinal());
-        }
 
         repo.updateLz(lId, title, ordinal, null);
 
@@ -49,21 +39,24 @@ public class ServiceImpl implements IService {
     @Override
     public void createCard(long lId, String title, long uId) {
         LiztVo liztVo = repo.selectLz(lId);
-        repo.insertCard(lId, liztVo.boardId(), title);
+        var cId = repo.insertCard(lId, liztVo.boardId(), title);
+        var cardVo = repo.selectCard(cId);
 
         SocketIoNamespace nsp = sioServer.namespace(DASHBOARD);
-        nsp.broadcast(String.valueOf(liztVo.wId()), "update.dashboard");
+        nsp.broadcast(String.valueOf(liztVo.wId()), "update.dashboard.card", toJsonObj(cardVo));
     }
 
     @Override
     public void updateCard(long cId, double ordinal, Long lId) {
-        repo.updateCardOrdinal(cId, ordinal, lId);
+        if(lId != null){
+            repo.updateCardOrdinal(cId, ordinal, lId);
+        }else {
+            repo.updateCardOrdinal2(cId, ordinal);
+        }
         long wpId = repo.selectWpId(cId);
-
+        var cardVo = repo.selectCard(cId);
         SocketIoNamespace nsp = sioServer.namespace(DASHBOARD);
-        nsp.broadcast(String.valueOf(wpId), "update.dashboard");
-
-
+        nsp.broadcast(String.valueOf(wpId), "update.dashboard.card", toJsonObj(cardVo));
     }
 
     double getMiddleVal(double v1, double v2) {

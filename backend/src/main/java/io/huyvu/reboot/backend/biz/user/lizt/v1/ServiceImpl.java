@@ -24,19 +24,9 @@ public class ServiceImpl implements IService {
     }
 
     @Override
-    public void updateLz(long lId, String title, Double ordinal, Long desId) {
+    public void updateLz(long lId, String title, Double ordinal) {
 
-        if (desId != null) {
-            LiztVo src = repo.selectLz(lId);
-            LiztVo des = repo.selectLz(desId);
 
-            double d;
-            if (src.ordinal() < des.ordinal())
-                d = repo.selectLzNextOrdinal(desId);
-            else
-                d = repo.selectLzPrevOrdinal(desId);
-            ordinal = getMiddleVal(d, des.ordinal());
-        }
 
         repo.updateLz(lId, title, ordinal, null);
 

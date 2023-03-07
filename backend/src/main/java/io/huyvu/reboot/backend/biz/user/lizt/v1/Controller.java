@@ -21,8 +21,8 @@ public class Controller {
 
 
     @PutMapping("list")
-    void updateLz(long lId, String title, Double ordinal, Long desId) {
-        service.updateLz(lId, title, ordinal, desId);
+    void updateLz(long lId, String title, Double ordinal) {
+        service.updateLz(lId, title, ordinal);
     }
 
 

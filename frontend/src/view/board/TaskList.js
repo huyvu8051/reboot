@@ -103,9 +103,8 @@ export default ({item, index}) => {
                                     }
 
                                     {dropProv.placeholder}
-                                    <AddNewCard lId={item.id}/>
                                 </List>
-
+                                <AddNewCard lId={item.id}/>
                             </Card>
 
                         </Box>

@@ -5,7 +5,7 @@ import api from "../../service/api";
 import {$success} from "../../util/snackbar-utils";
 import {useSelector} from "react-redux";
 
-const AddNewList = ({lId}) => {
+const AddNewCard = ({lId}) => {
 
     const [addCardOpen, setAddCardOpen] = useState(false);
     const inputRef = useRef()
@@ -40,7 +40,13 @@ const AddNewList = ({lId}) => {
 
 
     return (
-        <>
+        <div
+            style={{
+                marginRight: 0.5,
+                marginLeft: 0.5
+            }}
+
+        >
             {
                 addCardOpen ? (
                     <div
@@ -90,6 +96,6 @@ const AddNewList = ({lId}) => {
                     </CardActions>
                 )
             }
-        </>)
+        </div>)
 }
-export default AddNewList
+export default AddNewCard

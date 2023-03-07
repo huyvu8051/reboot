@@ -153,7 +153,6 @@ export const Board = () => {
                             flexDirection: 'row',
                             height: '100%',
                             // backgroundColor: 'green',
-                            overflow: 'auto',
                             p: '4px'
                         }}
 

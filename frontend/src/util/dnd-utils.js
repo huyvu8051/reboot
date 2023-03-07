@@ -4,8 +4,8 @@ export const listSelector = sts => sts.dashboard.lizts
 
 
 export const getMiddleVal = (v1, v2) => {
-    if (v1 === v2) return v1 / 2
-    const diff = Math.abs(v1 - v2)
+    if (v1 === v2) return v1 * 1.0 / 2
+    const diff = Math.abs(v1 * 1.0 - v2)
     const pow = Math.pow(10, Math.floor(Math.log10(diff)))
 
     const firstDigit = diff / pow

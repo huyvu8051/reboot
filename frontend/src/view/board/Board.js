@@ -19,7 +19,7 @@ export const Board = () => {
     const onDragEnd = useCallback((result) => {
         if (!result.destination) return
 
-        console.log(result)
+        // console.log(lists, result)
 
         if (result.destination.droppableId === 'board') {
             if (result.source.index === result.destination.index) return
@@ -71,7 +71,7 @@ export const Board = () => {
             }))
 
             api.put('/api/v1/user/card', null, {
-                params:{
+                params: {
                     cId: src.id,
                     ordinal: middleVal
                 }
@@ -94,7 +94,7 @@ export const Board = () => {
             }))
 
             api.put('/api/v1/user/card', null, {
-                params:{
+                params: {
                     cId: src.id,
                     ordinal: 0,
                     lId: parseInt(result.destination.droppableId)
@@ -121,7 +121,7 @@ export const Board = () => {
         }))
 
         api.put('/api/v1/user/card', null, {
-            params:{
+            params: {
                 cId: src.id,
                 ordinal: middleVal,
                 lId: parseInt(result.destination.droppableId)

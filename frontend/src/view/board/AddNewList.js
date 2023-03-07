@@ -7,7 +7,7 @@ import {$success} from '../../util/snackbar-utils'
 import {useSelector} from 'react-redux'
 
 const AddNewList = () => {
-    const [open, setOpen] = useState()
+    const [open, setOpen] = useState(false)
 
     const inputRef = useRef()
 
@@ -34,6 +34,11 @@ const AddNewList = () => {
         }
     }
 
+    const handleBlur = ({currentTarget, relatedTarget}) => {
+        if (currentTarget.contains(relatedTarget)) return
+
+        setOpen(false)
+    }
 
     return (
         <Box
@@ -42,7 +47,7 @@ const AddNewList = () => {
                 margin: '0 4px',
             }}
             elevation={0}
-            // onBlur={()=>setOpen(false)}
+            onBlur={handleBlur}
         >
             <Card
 

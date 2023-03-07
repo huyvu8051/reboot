@@ -12,7 +12,7 @@ const AddNewList = ({lId}) => {
 
     const bId = useSelector(sts => sts.dashboard.board?.id || null)
     const handleSubmit = () => {
-        if (bId) {
+        if (bId && inputRef.current.value.trim()) {
             api.post('/api/v1/user/card', null, {
                 params: {
                     lId,
@@ -32,15 +32,24 @@ const AddNewList = ({lId}) => {
         }
     }
 
+    const handleBlur = ({currentTarget, relatedTarget}) => {
+        if (currentTarget.contains(relatedTarget)) return
+
+        setAddCardOpen(false)
+    }
+
+
     return (
         <>
             {
                 addCardOpen ? (
-                    <>
+                    <div
+                        onBlur={handleBlur}
+                    >
                         <TextField
                             inputRef={inputRef}
                             onKeyDown={handleKeyDown}
-                            // onBlur={()=>setOpen(false)}
+
                             sx={{
                                 m: 1,
                             }}
@@ -48,16 +57,19 @@ const AddNewList = ({lId}) => {
                             autoFocus
                             size='small'/>
                         <CardActions>
-                            <Button size='small' onClick={handleSubmit}
+                            <Button size='small'
+                                    onClick={handleSubmit}
                                     sx={{textTransform: 'none'}}>
                                 Add
                             </Button>
-                            <IconButton size='small' onClick={() => setAddCardOpen(false)}>
+                            <IconButton size='small'
+                                        onClick={() => setAddCardOpen(false)}
+                            >
                                 <Clear fontSize='small'/>
                             </IconButton>
 
                         </CardActions>
-                    </>
+                    </div>
                 ) : (
                     <CardActions sx={{display: 'flex', flex: 0, px: 0}}>
                         <Button

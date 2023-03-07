@@ -1,9 +1,10 @@
-import {Card, CardActions, CardHeader, CardMedia} from "@mui/material";
+import {Card, CardActions, CardHeader, CardMedia, Chip} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import {$error, $success} from "../../util/snackbar-utils";
-import {EditOutlined} from "@mui/icons-material";
+import {EditOutlined, Menu, Task} from "@mui/icons-material";
 
 import image from '../../asset/image/paella.jpg'
+import Grid from "@mui/material/Grid";
 
 const getStyle = (prov, snap) => {
 
@@ -20,6 +21,8 @@ export default ({provided, snapshot, item}) => {
 
     return (
         <Card sx={{
+            cursor: 'pointer!important;',
+            position: 'relative',
             width: '100%',
             mb: 1,
             '--btn-edit-icon-color': 'rgba(255, 255, 255, 0)',
@@ -64,7 +67,7 @@ export default ({provided, snapshot, item}) => {
                 sx={{p: 1}}
                 title={item.title}>
             </CardHeader>
-          {/*  <CardActions onClick={() => $success('success')}
+            <CardActions onClick={() => $success('success')}
                          disableSpacing>
                 <Grid>
                     <Chip
@@ -82,7 +85,7 @@ export default ({provided, snapshot, item}) => {
 
 
                 </Grid>
-            </CardActions>*/}
+            </CardActions>
         </Card>
     )
 }

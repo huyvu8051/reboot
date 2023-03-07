@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useCallback} from 'react'
 import {updateCard, updateLizt} from '../workspace/dashboard-slice'
 import {getMiddleVal, listSelector} from '../../util/dnd-utils'
+import api from "../../service/api";
 
 
 export const Board = () => {
@@ -40,6 +41,13 @@ export const Board = () => {
                 ordinal: middleVal
             }))
 
+            api.put('/api/v1/user/list', null, {
+                params: {
+                    lId: src.id,
+                    ordinal: middleVal
+                }
+            }).then()
+
             return
         }
 
@@ -62,6 +70,13 @@ export const Board = () => {
                 ordinal: middleVal
             }))
 
+            api.put('/api/v1/user/card', null, {
+                params:{
+                    cId: src.id,
+                    ordinal: middleVal
+                }
+            }).then()
+
             return
         }
 
@@ -71,12 +86,20 @@ export const Board = () => {
         const src = srcCardLs[result.source.index]
         let des = desCardLs[result.destination.index]
 
-        if(desCardLs.length === 0){
+        if (desCardLs.length === 0) {
             dispatch(updateCard({
                 ...src,
                 ordinal: 0,
                 liztId: parseInt(result.destination.droppableId)
             }))
+
+            api.put('/api/v1/user/card', null, {
+                params:{
+                    cId: src.id,
+                    ordinal: 0,
+                    lId: parseInt(result.destination.droppableId)
+                }
+            }).then()
 
             return
         }
@@ -97,7 +120,13 @@ export const Board = () => {
             liztId: parseInt(result.destination.droppableId)
         }))
 
-
+        api.put('/api/v1/user/card', null, {
+            params:{
+                cId: src.id,
+                ordinal: middleVal,
+                lId: parseInt(result.destination.droppableId)
+            }
+        }).then()
 
 
     }, [lists])

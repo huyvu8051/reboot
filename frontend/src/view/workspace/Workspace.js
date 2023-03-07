@@ -5,7 +5,7 @@ import {ArrowLeft, ArrowRight} from "@mui/icons-material";
 import RightDrawer from "./leftDrawer/RightDrawer";
 import {io} from "socket.io-client";
 import {useDispatch, useSelector} from "react-redux";
-import {updateLizt} from "./dashboard-slice";
+import {updateCard, updateLizt} from "./dashboard-slice";
 import {useParams} from "react-router-dom";
 
 function Workspace(props) {
@@ -26,6 +26,9 @@ function Workspace(props) {
             })
             socket.on('update.dashboard.list', r => {
                 dispatch(updateLizt(r))
+            })
+            socket.on('update.dashboard.card', r => {
+                dispatch(updateCard(r))
             })
 
             return () => {

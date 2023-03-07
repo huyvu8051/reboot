@@ -3,43 +3,63 @@ import {DragDropContext, Droppable} from 'react-beautiful-dnd'
 import TaskList from './TaskList'
 import AddNewList from "./AddNewList";
 import {useDispatch, useSelector} from "react-redux";
-import api from "../../service/api";
 import {useCallback} from "react";
-import {updateCardOrdinal, updateLiztOrdinal} from "../workspace/dashboard-slice";
+import {updateLizt} from "../workspace/dashboard-slice";
+
+const listSelector = sts => sts.dashboard.lizts
+    .filter(e => !e.isDeleted)
+    .sort((e1, e2) => e1.ordinal - e2.ordinal)
+
+const getMiddleVal = (v1, v2) => {
+    const diff = Math.abs(v1 - v2);
+    const pow = Math.pow(10, Math.floor(Math.log10(diff)));
+
+    const firstDigit = diff / pow;
+    const rounded = Math.round(firstDigit) * pow;
+
+    if (v2 > v1) {
+        return v2 - (rounded / 2);
+    }
+
+    return v1 - (rounded / 2);
+}
 
 export const Board = () => {
-    const lists = useSelector(sts => sts.dashboard.lizts);
+    const lists = useSelector(listSelector);
     const dispatch = useDispatch()
 
     const onDragEnd = useCallback((result) => {
         if (!result.destination) return
-        // console.log(result)
+        console.log(lists, result)
 
-        // change col ordinal
         if (result.destination.droppableId === 'board') {
             if (result.source.index === result.destination.index) return
 
-            const srcEle = lists[result.source.index]
-            const desEle = lists[result.destination.index]
+            const src = lists[result.source.index]
+            const des = lists[result.destination.index]
 
-            dispatch(updateLiztOrdinal(result))
+            console.log(src, des)
 
-            api.put('/api/v1/user/list', null, {
-                params: {
-                    lId: srcEle.id,
-                    desId: desEle.id
-                }
-            }).then()
+            let temp;
+            if (src.ordinal < des.ordinal) {
+                temp = lists[result.destination.index + 1] || {ordinal: lists[lists.length - 1].ordinal + 50}
+            } else {
+                temp = lists[result.destination.index - 1] || {ordinal: lists[0].ordinal - 50}
+            }
+
+            const middleVal = getMiddleVal(des.ordinal, temp.ordinal);
+
+            dispatch(updateLizt({
+                ...src,
+                ordinal: middleVal
+            }))
+
 
             return
         }
 
-        dispatch(updateCardOrdinal(result))
 
-
-
-
-    })
+    }, [lists])
     return <>
         <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId='board'

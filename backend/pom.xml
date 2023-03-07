@@ -20,11 +20,11 @@
 
     <dependencies>
         <!-- manifold -->
-        <dependency>
+        <!--<dependency>
             <groupId>systems.manifold</groupId>
             <artifactId>manifold-tuple-rt</artifactId>
             <version>${manifold.version}</version>
-        </dependency>
+        </dependency>-->
         <!-- socket -->
         <dependency>
             <groupId>io.socket</groupId>
@@ -139,7 +139,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
@@ -159,7 +159,7 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
-            </plugin>
+            </plugin>-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

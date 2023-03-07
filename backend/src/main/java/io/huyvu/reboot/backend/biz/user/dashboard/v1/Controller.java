@@ -14,9 +14,9 @@ public class Controller {
 
     private final IService service;
 
-
     @GetMapping
     DashboardVo getDashBoard(Long wId, Long bId, Long cId) {
         return service.getBoard(uId(), wId, bId, cId);
     }
+
 }

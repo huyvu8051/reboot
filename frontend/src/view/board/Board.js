@@ -5,15 +5,19 @@ import AddNewList from './AddNewList'
 import {useDispatch, useSelector} from 'react-redux'
 import {useCallback} from 'react'
 import {updateCard, updateLizt} from '../workspace/dashboard-slice'
-import {getMiddleVal, listSelector} from '../../util/dnd-utils'
+import {getMiddleVal} from '../../util/dnd-utils'
 import api from "../../service/api";
 
 
 export const Board = () => {
-    const lists = useSelector(listSelector)
+    const lists = useSelector(sts => sts.dashboard.lizts
+        .filter(e => !e.isDeleted)
+        .sort((e1, e2) => e1.ordinal - e2.ordinal))
+
     const cards = useSelector(sts => sts.dashboard.cards
         .filter(e => !e.isDeleted)
         .sort((e1, e2) => e1.ordinal - e2.ordinal))
+
     const dispatch = useDispatch()
 
     const onDragEnd = useCallback((result) => {

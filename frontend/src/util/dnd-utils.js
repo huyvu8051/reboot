@@ -1,6 +1,3 @@
-export const listSelector = sts => sts.dashboard.lizts
-    .filter(e => !e.isDeleted)
-    .sort((e1, e2) => e1.ordinal - e2.ordinal)
 
 
 export const getMiddleVal = (v1, v2) => {

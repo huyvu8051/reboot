@@ -18,7 +18,10 @@ const getStyle = (prov, snap) => {
 }
 
 export default ({item, index}) => {
-    const cards = useSelector(sts => sts.dashboard.cards || [])
+    const cards = useSelector(sts => sts.dashboard.cards
+        .filter(e => !e.isDeleted && e.liztId === item.id)
+        .sort((e1, e2) => e1.ordinal - e2.ordinal))
+
 
     return (
         <Draggable key={item.id}
@@ -87,20 +90,18 @@ export default ({item, index}) => {
                                 >
 
                                     {
-                                        cards.filter(e => e.liztId === item.id)
-                                            .sort((e1, e2) => e1.ordinal - e2.ordinal)
-                                            .map((e, index2) => (
-                                                <Draggable
-                                                    key={e.id}
-                                                    draggableId={'item' + e.id}
-                                                    index={index2}
-                                                >
-                                                    {(provided3, snapshot3) => (
-                                                        <CardItem item={e} provided={provided3}
-                                                                  snapshot={snapshot3}/>
-                                                    )}
-                                                </Draggable>
-                                            ))
+                                        cards.map((e, index2) => (
+                                            <Draggable
+                                                key={e.id}
+                                                draggableId={'item' + e.id}
+                                                index={index2}
+                                            >
+                                                {(provided3, snapshot3) => (
+                                                    <CardItem item={e} provided={provided3}
+                                                              snapshot={snapshot3}/>
+                                                )}
+                                            </Draggable>
+                                        ))
                                     }
 
                                     {provided2.placeholder}

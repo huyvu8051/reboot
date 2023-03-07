@@ -22,17 +22,25 @@ export const dashboardSlice = createSlice({
 
         updateLizt: (s, a) => {
             const find = s.lizts.find(e => e.id === a.payload.id);
-
             if (find) {
                 Object.assign(find, a.payload)
-                //s.lizts.sort((e1, e2) => e1.ordinal - e2.ordinal)
+            }else {
+                s.lizts.push(a.payload)
+            }
+        },
+        updateCard: (s, a) => {
+            const find = s.cards.find(e => e.id === a.payload.id);
+            if (find) {
+                Object.assign(find, a.payload)
+            }else {
+                s.cards.push(a.payload)
             }
         }
     },
 })
 
 
-export const {save, updateLizt} = dashboardSlice.actions
+export const {save, updateLizt, updateCard} = dashboardSlice.actions
 
 
 export default dashboardSlice.reducer

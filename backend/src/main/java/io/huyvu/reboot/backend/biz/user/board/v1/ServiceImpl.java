@@ -15,15 +15,14 @@ public class ServiceImpl implements IService {
     private final Repository bdRepo;
 
     @Override
-    public List<BoardVo> getAll(long wpId, long userId) {
-        return bdRepo.findAllOwnBoard(wpId, userId);
+    public List<BoardVo> getAll(long wpId) {
+        return bdRepo.findAllOwnBoard(wpId);
     }
 
     @Override
     public long create(String name, long wpId, long uId) {
         bdRepo.findWpById(wpId, uId).orElseThrow();
         long bId = bdRepo.insertBoard(name, wpId);
-        bdRepo.insertBoardMember(bId, uId);
         return bId;
     }
 }

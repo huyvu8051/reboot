@@ -26,15 +26,24 @@ public class SecurityUtils {
     private static String SECRET_KEY = "iloveu3000";
 
     public static long uId() {
-        return currentContext().uId();
-    }
-
-    public static UserContextVo currentContext() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+        if (authentication instanceof AnonymousAuthenticationToken) {
             throw new AccessDeniedException("Not authorized.");
         }
-        return (UserContextVo) authentication.getPrincipal();
+        return ((UserContextVo) authentication.getPrincipal()).uId();
+    }
+
+    public static String username() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication instanceof AnonymousAuthenticationToken anonymous) {
+            return (String) anonymous.getPrincipal();
+        } else if (authentication.getPrincipal() instanceof UserContextVo ucVo) {
+            return ucVo.username();
+        }
+
+        return "";
+
+
     }
 
     public static String generateJwtToken(long userId, String username, Collection<? extends GrantedAuthority> roles) {
@@ -55,12 +64,11 @@ public class SecurityUtils {
         var username = claims.get(USERNAME, String.class);
         var rolesStr = claims.get(ROLES, List.class);
         var rolesAuth = toAuthorities(rolesStr);
-        var issuedAt = claims.getIssuedAt();
         var expAt = claims.getExpiration();
         var mustRefresh = tokenMustRefresh(expAt);
         Assert.isTrue(isTokenNotExpired(expAt), "Token is expired.");
 
-        return new UserContextVo(uId, username, rolesAuth, issuedAt, expAt, mustRefresh);
+        return new UserContextVo(uId, username, rolesAuth, mustRefresh);
 
     }
 

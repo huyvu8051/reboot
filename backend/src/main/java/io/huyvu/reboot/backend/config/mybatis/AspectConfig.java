@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.context.annotation.Configuration;
 
-import static io.huyvu.reboot.backend.util.SecurityUtils.currentContext;
+import static io.huyvu.reboot.backend.util.SecurityUtils.username;
 
 
 @Slf4j
@@ -26,6 +26,6 @@ public class AspectConfig {
     }
     @Before("@annotation(org.apache.ibatis.annotations.Insert) || @annotation(org.apache.ibatis.annotations.Update)")
     public void setUserCtx() {
-        ucRepo.setUserCtx(currentContext().username());
+        ucRepo.setUserCtx(username());
     }
 }

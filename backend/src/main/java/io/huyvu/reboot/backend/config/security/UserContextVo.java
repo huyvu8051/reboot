@@ -7,7 +7,6 @@ package io.huyvu.reboot.backend.config.security;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
-import java.util.Date;
 
 /**
  * Context only when user logged
@@ -18,8 +17,6 @@ import java.util.Date;
 public record UserContextVo(Long uId,
                             String username,
                             Collection<? extends GrantedAuthority> roles,
-                            Date issAt,
-                            Date expAt,
                             boolean mustRefresh) {
 
 }

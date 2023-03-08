@@ -26,6 +26,7 @@ import {
 } from "@mui/icons-material";
 import {useSelector} from "react-redux";
 import Toolbar from "@mui/material/Toolbar";
+import AddMember from "./AddMember";
 
 let LeftDrawer = (props) => {
     const navigate = useNavigate()
@@ -69,9 +70,7 @@ let LeftDrawer = (props) => {
                                 </ListItemIcon>
                                 <ListItemText primary='Members'/>
                             </ListItemButton>
-                            <IconButton size='small' sx={{color: 'black'}}>
-                                <AddIcon fontSize='small'/>
-                            </IconButton>
+                            <AddMember/>
                         </ListItem>
                         <ListItem key='settings' disablePadding>
                             <ListItemButton>

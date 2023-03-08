@@ -23,7 +23,7 @@ public class IServiceImpl implements IService {
         if (cId != null) {
 
         } else if (bId != null) {
-            board = repo.selectBoard(bId, uId).orElseThrow();
+            board = repo.selectBoard(bId).orElseThrow();
             wp = repo.selectWp(board.wpId()).orElse(null);
             boards = repo.selectBoards(board.wpId());
             wpMems = repo.selectWpMem(board.wpId());

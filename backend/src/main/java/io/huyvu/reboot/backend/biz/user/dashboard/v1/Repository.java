@@ -25,11 +25,9 @@ public interface Repository {
                   ,workspace_id
               FROM board
              WHERE id = #{bId}
-                   AND id IN (SELECT board_id
-                                FROM board_member
-                               WHERE user_id = ${uId})
+     
                    AND is_deleted = 0""")
-    Optional<BoardVo> selectBoard(long bId, long uId);
+    Optional<BoardVo> selectBoard(long bId);
 
     @Select("""
             SELECT user_id

@@ -19,7 +19,7 @@ public class Controller {
 
     @PostMapping
     List<BoardVo> getAllFromWp(@RequestParam long wpId) {
-        return service.getAll(wpId, uId());
+        return service.getAll(wpId);
     }
 
     @PutMapping

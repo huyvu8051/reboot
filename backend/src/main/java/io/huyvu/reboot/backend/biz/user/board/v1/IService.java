@@ -7,7 +7,7 @@ import java.util.List;
  * @CreatedDate 2/13/2023 4:34 PM
  */
 public interface IService {
-    List<BoardVo> getAll(long wpId, long userId);
+    List<BoardVo> getAll(long wpId);
 
     long create(String name, long wpId, long userId);
 }

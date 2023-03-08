@@ -19,13 +19,10 @@ public interface Repository {
                   ,background_image AS backgroundImage
                   ,stared
               FROM board
-             WHERE id IN (SELECT board_id
-                            FROM board_member
-                           WHERE user_id = #{userId})
-                   AND workspace_id = #{wpId}
+             WHERE workspace_id = #{wpId}
                    AND is_deleted = 0
             """)
-    List<BoardVo> findAllOwnBoard(long wpId, long userId);
+    List<BoardVo> findAllOwnBoard(long wpId);
 
     @Select("""
             SELECT w.id AS id
@@ -47,9 +44,4 @@ public interface Repository {
             """)
     long insertBoard(String nm, long wpId);
 
-    @Insert("""
-            INSERT INTO board_member
-               SET board_id = #{bId}
-            	  ,user_id = #{uId}""")
-    void insertBoardMember(long bId, long uId);
 }

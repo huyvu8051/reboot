@@ -58,7 +58,8 @@ function Workspace(props) {
             <Box sx={{
                 ml: openLeft ? '226.078px' : 4,
                 mr: openRight ? '500px' : 0,
-                height: '100%'
+                height: '100%',
+                backgroundColor: 'transparent'
             }}>
                 {props.children}
             </Box>

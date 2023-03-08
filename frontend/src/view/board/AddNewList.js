@@ -28,7 +28,7 @@ const AddNewList = () => {
     }
 
     const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && event.key === 'Enter') {
             event.preventDefault()
             handleSubmit()
         }

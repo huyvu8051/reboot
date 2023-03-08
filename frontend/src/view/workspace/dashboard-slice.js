@@ -22,6 +22,7 @@ export const dashboardSlice = createSlice({
 
         updateLizt: (s, a) => {
             const find = s.lizts.find(e => e.id === a.payload.id);
+
             if (find) {
                 Object.assign(find, a.payload)
             }else {

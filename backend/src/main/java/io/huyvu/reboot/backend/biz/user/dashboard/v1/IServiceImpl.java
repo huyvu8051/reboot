@@ -3,6 +3,7 @@ package io.huyvu.reboot.backend.biz.user.dashboard.v1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,6 +37,8 @@ public class IServiceImpl implements IService {
             wp = repo.selectWp(wpId).orElseThrow();
             boards = repo.selectBoards(wpId);
             wpMems = repo.selectWpMem(wpId);
+            lizts = new ArrayList<>(0);
+            cards = new ArrayList<>(0);
         }
 
         wps = repo.selectWps(uId);

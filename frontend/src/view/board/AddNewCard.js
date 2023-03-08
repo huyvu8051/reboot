@@ -26,7 +26,7 @@ const AddNewCard = ({lId}) => {
     }
 
     const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && event.key === 'Enter') {
             event.preventDefault()
             handleSubmit()
         }
@@ -55,9 +55,9 @@ const AddNewCard = ({lId}) => {
                         <TextField
                             inputRef={inputRef}
                             onKeyDown={handleKeyDown}
-
+                            fullWidth
                             sx={{
-                                m: 1,
+                                p: 1,
                             }}
 
                             autoFocus
@@ -77,7 +77,7 @@ const AddNewCard = ({lId}) => {
                         </CardActions>
                     </div>
                 ) : (
-                    <CardActions sx={{display: 'flex', flex: 0, px: 0}}>
+                    <CardActions sx={{display: 'flex', flex: 0, p: 1}}>
                         <Button
                             onClick={() => setAddCardOpen(true)}
                             sx={{
@@ -91,7 +91,7 @@ const AddNewCard = ({lId}) => {
                             {'Add a card'}
                         </Button>
                         <IconButton size='small'>
-                            <AddCard fontSize='small'/>
+                            <AddCard fontSize='12px'/>
                         </IconButton>
                     </CardActions>
                 )

@@ -6,16 +6,18 @@ import MuiAppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import NewWorkspace from './NewWorkspace'
-import {Outlet, useParams} from "react-router-dom";
-import api from "../../service/api";
-import {useDispatch} from "react-redux";
-import {save} from "./dashboard-slice";
-import {useMediaQuery} from "@mui/material";
-import ChangeWpBtn from "./leftDrawer/ChangeWpBtn";
+import {Outlet, useParams} from 'react-router-dom'
+import api from '../../service/api'
+import {useDispatch} from 'react-redux'
+import {save} from './dashboard-slice'
+import {useMediaQuery} from '@mui/material'
+import ChangeWpBtn from './leftDrawer/ChangeWpBtn'
+import bgImg from '../../asset/background/photo-1674413146454-41e62f015153.jpg'
+
 
 export default function PersistentDrawerLeft(props) {
-    const {bId, wId, cId} = useParams();
-    const dispatch = useDispatch();
+    const {bId, wId, cId} = useParams()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         api.get('/api/v1/user/dashboard', {
@@ -23,10 +25,10 @@ export default function PersistentDrawerLeft(props) {
         }).then(r => dispatch(save(r)))
     }, [bId, wId, cId, dispatch])
 
-    const isScreen600pxOrAbove = useMediaQuery('(min-width:600px)');
-    const marginTop = isScreen600pxOrAbove ? '64px' : '56px';
+    const isScreen600pxOrAbove = useMediaQuery('(min-width:600px)')
+    const marginTop = isScreen600pxOrAbove ? '64px' : '56px'
     return (
-        <Box>
+        <Box >
             <CssBaseline/>
             <MuiAppBar
                 elevation={0}
@@ -50,6 +52,7 @@ export default function PersistentDrawerLeft(props) {
                 marginTop: marginTop,
                 width: '100%',
                 height: `calc(100vh - ${marginTop} - 25px)`,
+                backgroundImage: `url(${bgImg})`,
 
             }}>
                 <Outlet/>

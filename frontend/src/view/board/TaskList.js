@@ -1,11 +1,10 @@
-import {Box, Card, CardHeader} from "@mui/material";
+import {Box, Card} from "@mui/material";
 import {Draggable, Droppable} from "react-beautiful-dnd";
-import IconButton from "@mui/material/IconButton";
-import {MoreHoriz} from "@mui/icons-material";
 import List from "@mui/material/List";
 import CardItem from "./CardItem";
 import {useSelector} from "react-redux";
 import AddNewCard from "./AddNewCard";
+import TaskListHeader from "./TaskListHeader";
 
 const getStyle = (prov, snap) => {
     // console.log(prov, snap)
@@ -61,29 +60,17 @@ export default ({item, index}) => {
 
                                 style={getStyle(dragProv, dragSnap)}
                                 elevation={0}>
-                                <CardHeader
-                                    sx={{
-                                        p: 1
-                                    }}
-                                    titleTypographyProps={{
-                                        fontSize: 'small',
-                                        fontWeight: 'bold'
-                                    }}
-                                    title={item.title}
-                                    action={(
-                                        <IconButton size='small' sx={{borderRadius: 1, mr: .5}}>
-                                            <MoreHoriz fontSize='small'/>
-                                        </IconButton>
-                                    )}
-                                />
+                                <TaskListHeader item={item}/>
                                 <List
+                                    className='List'
                                     ref={dropProv.innerRef}
                                     {...dropProv.droppableProps}
                                     sx={{
                                         py: 0,
                                         px: 1,
                                         // backgroundColor: 'red',
-                                        overflowY: 'auto'
+                                        overflowY: 'auto',
+                                        minHeight: 10
                                     }}
                                 >
 

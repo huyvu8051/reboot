@@ -8,17 +8,15 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface Repository {
 
-    @Select({
-            """
-                    SELECT id
-                          ,username
-                          ,full_name
-                          ,picture_url
-                      FROM user_account
-                     WHERE username = #{username}
-                           AND is_deleted = false
-                    """
-    })
+    @Select("""
+            SELECT id
+                  ,username
+                  ,full_name
+                  ,picture_url
+              FROM user_account
+             WHERE username = #{username}
+                   AND is_deleted = false
+            """)
     UserAccount findOneByUsername(String username);
 
     @Select("""

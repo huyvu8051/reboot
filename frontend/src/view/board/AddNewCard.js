@@ -59,6 +59,11 @@ const AddNewCard = ({lId}) => {
                             sx={{
                                 p: 1,
                             }}
+                            inputProps={{
+                                style: {
+                                    fontSize: 12
+                                }
+                            }}
 
                             autoFocus
                             size='small'/>

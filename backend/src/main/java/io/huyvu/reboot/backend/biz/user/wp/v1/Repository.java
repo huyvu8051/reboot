@@ -1,7 +1,5 @@
 package io.huyvu.reboot.backend.biz.user.wp.v1;
 
-import io.huyvu.reboot.backend.entity.UserAccount;
-import io.huyvu.reboot.backend.entity.Workspace;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -17,12 +15,6 @@ import java.util.Optional;
 @Mapper
 public interface Repository {
 
-    @Select("""
-            SELECT u 
-              FROM UserAccount u 
-             WHERE u.id = #{userId}
-            """)
-    UserAccount findAdminById(long userId);
 
     @Select(value = """
             SELECT id, title, picture_url AS pictureUrl
@@ -44,14 +36,6 @@ public interface Repository {
             """)
     Optional<WpDetails> selectWpDetails(long wpId, long userId);
 
-
-
-    @Insert({"""
-            INSERT INTO workspace
-               SET username = #{username}
-                  ,full_name = #{fullName}
-                  ,picture_url = #{pictureUrl}"""})
-    Workspace createWp(String wpNm, long adminId);
 
     /**
      * @param wpNm workspace name

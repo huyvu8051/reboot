@@ -2,7 +2,6 @@ package io.huyvu.reboot.backend.config;
 
 import com.github.javafaker.Faker;
 import io.huyvu.reboot.backend.config.security.google.v1.Repository;
-import io.huyvu.reboot.backend.biz.guest.register.v1.RegisterRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -20,7 +19,6 @@ import java.util.Random;
 public class DataLoader implements ApplicationRunner {
 
     private final PasswordEncoder passwordEncoder;
-    private final RegisterRepository registerRepo;
     private final Repository ggRepo;
 
 

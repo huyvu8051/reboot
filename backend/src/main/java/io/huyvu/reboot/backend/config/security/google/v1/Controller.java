@@ -1,6 +1,5 @@
 package io.huyvu.reboot.backend.config.security.google.v1;
 
-import io.huyvu.reboot.backend.entity.UserAccount;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,13 +30,13 @@ public class Controller {
         }
 
         List<String> roles = List.of("USER", "ADMIN");
-        String jwtToken = generateJwtToken(userAccount.getId(), userAccount.getUsername(),roles);
+        String jwtToken = generateJwtToken(userAccount.id(), userAccount.username(), roles);
 
         return AuthRes.builder()
                 .token(jwtToken)
-                .username(userAccount.getUsername())
-                .fullName(userAccount.getFullName())
-                .pictureUrl(userAccount.getPictureUrl())
+                .username(userAccount.username())
+                .fullName(userAccount.fullName())
+                .pictureUrl(userAccount.pictureUrl())
                 .roles(roles)
                 .build();
     }

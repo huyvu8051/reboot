@@ -15,7 +15,9 @@ public class Controller {
     private final IService service;
 
     @GetMapping
-    DashboardVo getDashBoard(Long wId, Long bId, Long cId) {
+    DashboardVo getDashBoard(Long wId,
+                             Long bId,
+                             Long cId) {
 //        var item = (name:"huy", age:18, companyNm:"posco");
 //        out.println(item);
 

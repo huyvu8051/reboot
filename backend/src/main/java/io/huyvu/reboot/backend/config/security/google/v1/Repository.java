@@ -1,6 +1,5 @@
 package io.huyvu.reboot.backend.config.security.google.v1;
 
-import io.huyvu.reboot.backend.entity.UserAccount;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -9,8 +8,7 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface Repository {
 
-    @Select({
-             """
+    @Select("""
             SELECT id
                   ,username
                   ,full_name
@@ -18,8 +16,7 @@ public interface Repository {
               FROM user_account
              WHERE username = #{username}
                    AND is_deleted = false
-            """
-    })
+            """)
     UserAccount findOneByUsername(String username);
 
     @Select("""

@@ -1,10 +1,11 @@
 import {Card, CardActions, CardHeader, CardMedia, Chip} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import {$error, $success} from "../../util/snackbar-utils";
+import {$error} from "../../util/snackbar-utils";
 import {EditOutlined, Menu, Task} from "@mui/icons-material";
 
 import image from '../../asset/image/paella.jpg'
 import Grid from "@mui/material/Grid";
+import {useNavigate} from "react-router-dom";
 
 const getStyle = (prov, snap) => {
 
@@ -18,27 +19,31 @@ const getStyle = (prov, snap) => {
 
 export default ({provided, snapshot, item}) => {
 
+    const navigate = useNavigate();
 
     return (
-        <Card sx={{
-            cursor: 'pointer!important;',
-            position: 'relative',
-            width: '100%',
-            mb: 1,
-            '--btn-edit-icon-color': 'rgba(255, 255, 255, 0)',
-            '&:hover': {
-                '--btn-edit-icon-color': 'black',
-                '--btn-edit-bg-color': 'rgba(255, 255, 255, 0.2)'
-            }
-        }}
-              ref={provided.innerRef}
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-              style={getStyle(
-                  provided,
-                  snapshot
-              )}
-              elevation={0}>
+        <Card
+            sx={{
+                cursor: 'pointer!important;',
+                position: 'relative',
+                width: '100%',
+                mb: 1,
+                '--btn-edit-icon-color': 'rgba(255, 255, 255, 0)',
+                '&:hover': {
+                    '--btn-edit-icon-color': 'black',
+                    '--btn-edit-bg-color': 'rgba(255, 255, 255, 0.2)'
+                }
+
+            }}
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            style={getStyle(
+                provided,
+                snapshot
+            )}
+            onClick={() => navigate(`/c/${item.id}`)}
+            elevation={0}>
             <IconButton size='small' sx={{
                 borderRadius: 1,
                 position: 'absolute',
@@ -54,21 +59,19 @@ export default ({provided, snapshot, item}) => {
                 <EditOutlined fontSize='small'/>
             </IconButton>
             <CardMedia
-                onClick={() => $success('success')}
                 sx={{height: 140}}
                 image={image}
                 title="green iguana"
             />
             <CardHeader
-                onClick={() => $success('success')}
                 titleTypographyProps={{
                     fontSize: 'small'
                 }}
                 sx={{p: 1}}
                 title={item.title}>
             </CardHeader>
-            <CardActions onClick={() => $success('success')}
-                         disableSpacing>
+            <CardActions
+                disableSpacing>
                 <Grid>
                     <Chip
                         avatar={<Menu/>}

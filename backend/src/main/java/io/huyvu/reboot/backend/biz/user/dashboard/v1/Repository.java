@@ -99,4 +99,27 @@ public interface Repository {
                    AND is_deleted = 0
              ORDER BY ordinal""")
     List<CardVo> selectCardsByBId(long bId);
+
+
+    @Select("""
+            SELECT id
+            	  ,lizt_id
+            	  ,b_id
+            	  ,title
+            	  ,ordinal
+            	  ,automation
+            	  ,cover_color
+            	  ,cover_size
+            	  ,cover_url
+            	  ,description
+            	  ,due_date
+            	  ,due_date_complete
+            	  ,due_date_reminder
+            	  ,is_template
+            	  ,location
+            	  ,start_date
+              FROM card
+             WHERE id = #{cId}
+                   AND is_deleted = 0""")
+    CardDetailsVo selectCard(Long cId);
 }

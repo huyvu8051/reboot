@@ -8,6 +8,7 @@ import Unauthorized from '../view/error/Unauthorized'
 import Members from '../view/members/Members'
 import {Board} from '../view/board/Board'
 import Workspace from "../view/workspace/Workspace";
+import CardDetails from "../view/card/CardDetails";
 
 const RouteConfig = createBrowserRouter([
     {
@@ -36,6 +37,10 @@ const RouteConfig = createBrowserRouter([
             {
                 path: 'b/:bId',
                 element: <Workspace><Board/></Workspace>
+            },
+            {
+                path: 'c/:cId',
+                element: <Workspace><Board/><CardDetails/></Workspace>
             },
         ]
     },

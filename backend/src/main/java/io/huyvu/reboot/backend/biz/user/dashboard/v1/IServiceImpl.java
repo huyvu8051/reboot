@@ -14,36 +14,37 @@ public class IServiceImpl implements IService {
     @Override
     public DashboardVo getBoard(long uId, Long wpId, Long bId, Long cId) {
         WpVo wp = null;
-        List<WpVo> wps = null;
+        List<WpVo> wps;
         BoardVo board = null;
-        List<BoardVo> boards = null;
-        List<WpMemberVo> wpMems = null;
-        List<LiztVo> lizts = null;
-        List<CardVo> cards = null;
+        List<BoardVo> boards = new ArrayList<>(0);
+        List<WpMemberVo> wpMems = new ArrayList<>(0);
+        List<LiztVo> lizts = new ArrayList<>(0);
+        List<CardVo> cards = new ArrayList<>(0);
+        CardDetailsVo card = null;
 
         if (cId != null) {
+            card = repo.selectCard(cId);
+            bId = card.bId();
+        }
 
-        } else if (bId != null) {
+        if (bId != null) {
             board = repo.selectBoard(bId).orElseThrow();
-            wp = repo.selectWp(board.wpId()).orElse(null);
-            boards = repo.selectBoards(board.wpId());
-            wpMems = repo.selectWpMem(board.wpId());
             lizts = repo.selectLizts(bId);
-
             cards = repo.selectCardsByBId(board
                     .id());
+            wpId = board.wpId();
 
-        } else if (wpId != null) {
+        }
+
+        if (wpId != null) {
             wp = repo.selectWp(wpId).orElseThrow();
             boards = repo.selectBoards(wpId);
             wpMems = repo.selectWpMem(wpId);
-            lizts = new ArrayList<>(0);
-            cards = new ArrayList<>(0);
         }
 
         wps = repo.selectWps(uId);
 
 
-        return new DashboardVo(wp, wps, board, boards, wpMems, lizts, cards);
+        return new DashboardVo(wp, wps, board, boards, wpMems, lizts, cards, card);
     }
 }

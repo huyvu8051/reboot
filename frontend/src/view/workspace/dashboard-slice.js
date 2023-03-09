@@ -8,7 +8,8 @@ const initialState = {
     boards: [],
     wpMems: [],
     lizts: [],
-    cards: []
+    cards: [],
+    card: null
 
 }
 

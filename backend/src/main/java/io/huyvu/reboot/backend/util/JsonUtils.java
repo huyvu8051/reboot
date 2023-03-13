@@ -16,4 +16,10 @@ public class JsonUtils {
         String s = om.writeValueAsString(obj);
         return new JSONObject(s);
     }
+
+    @SneakyThrows
+    public static <T> T  toPojoObj(String stringJson, Class<T> clazz){
+        return om.readValue(stringJson,clazz);
+    }
+
 }

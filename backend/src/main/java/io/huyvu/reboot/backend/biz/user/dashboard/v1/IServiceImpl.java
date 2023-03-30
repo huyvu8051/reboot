@@ -19,11 +19,16 @@ public class IServiceImpl implements IService {
         List<BoardVo> boards = new ArrayList<>(0);
         List<WpMemberVo> wpMems = new ArrayList<>(0);
         List<LiztVo> lizts = new ArrayList<>(0);
-        List<CardVo> cards = new ArrayList<>(0);
+        List<CardItemVo> cards = new ArrayList<>(0);
         CardDetailsVo card = null;
+        List<CardMember> cardMembers = new ArrayList<>();
+        List<CardLabel> cardLabels = new ArrayList<>();
+
 
         if (cId != null) {
-            card = repo.selectCard(cId);
+            card = repo.selectCardDetails(cId, uId);
+            cardMembers = repo.selectCardMems(cId);
+            cardLabels = repo.selectCardLabels(cId);
             bId = card.bId();
         }
 
@@ -45,6 +50,6 @@ public class IServiceImpl implements IService {
         wps = repo.selectWps(uId);
 
 
-        return new DashboardVo(wp, wps, board, boards, wpMems, lizts, cards, card);
+        return new DashboardVo(wp, wps, board, boards, wpMems, lizts, cards, card, cardMembers, cardLabels);
     }
 }

@@ -5,6 +5,9 @@ public interface IService {
 
     void updateLz(long lId, String title, Double ordinal);
 
+
+
+
     void createCard(long lId, String title, long uId);
 
     void updateCard(long cId, double ordinal, Long lId);

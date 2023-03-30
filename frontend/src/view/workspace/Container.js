@@ -48,11 +48,16 @@ export default function PersistentDrawerLeft(props) {
                     <ChangeWpBtn/>
                 </Toolbar>
             </MuiAppBar>
+            <img style={{
+                position: 'fixed',
+                width: '100vw',
+                zIndex: -99
+            }} src={bgImg}/>
             <Box component='main' sx={{
                 marginTop: marginTop,
                 width: '100%',
                 height: `calc(100vh - ${marginTop} - 25px)`,
-                backgroundImage: `url(${bgImg})`,
+
 
             }}>
                 <Outlet/>

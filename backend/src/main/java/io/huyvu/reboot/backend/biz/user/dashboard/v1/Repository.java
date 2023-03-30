@@ -98,15 +98,24 @@ public interface Repository {
              WHERE b_id = #{bId}
                    AND is_deleted = 0
              ORDER BY ordinal""")
-    List<CardVo> selectCardsByBId(long bId);
+    List<CardItemVo> selectCardsByBId(long bId);
 
 
     @Select("""
             SELECT id
             	  ,lizt_id
+            	  ,(SELECT l.title 
+            	      FROM lizt AS l
+            	     WHERE l.id = lizt_id) AS lizt_title
             	  ,b_id
             	  ,title
             	  ,ordinal
+            	  ,IFNULL((SELECT notification
+                             FROM card_member
+                            WHERE card_id = #{cId}
+                                  AND user_id = #{uId}
+                            ORDER BY id DESC
+                            LIMIT 1), 0) AS notification
             	  ,automation
             	  ,cover_color
             	  ,cover_size
@@ -121,5 +130,28 @@ public interface Repository {
               FROM card
              WHERE id = #{cId}
                    AND is_deleted = 0""")
-    CardDetailsVo selectCard(Long cId);
+    CardDetailsVo selectCardDetails(long cId, long uId);
+
+    @Select("""
+            SELECT id
+                  ,username
+                  ,full_name
+                  ,picture_url
+              FROM user_account
+             WHERE id IN (SELECT user_id
+              				     FROM card_member
+             					 WHERE card_id = #{cId}
+             					       AND is_deleted = 0)""")
+    List<CardMember> selectCardMems(long cId);
+
+    @Select("""
+            SELECT id
+                  ,color
+            	  ,title
+              FROM label
+             WHERE id IN (SELECT label_id
+              				FROM labeled
+               			   WHERE card_id = #{cId}
+                   				 AND is_deleted = 0)""")
+    List<CardLabel> selectCardLabels(long cId);
 }

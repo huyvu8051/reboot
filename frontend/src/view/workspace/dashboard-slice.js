@@ -9,7 +9,9 @@ const initialState = {
     wpMems: [],
     lizts: [],
     cards: [],
-    card: null
+    card: null,
+    cardMems: [],
+    cardLabels: []
 
 }
 

@@ -7,8 +7,8 @@ import {
     CardMembership,
     CenterFocusStrong,
     Close,
-    PanoramaFishEye,
-    TagFaces, Visibility,
+    PanoramaFishEye, PhotoCamera,
+    TagFaces, Visibility, VisibilityOff,
     Watch,
     WatchLater
 } from '@mui/icons-material'
@@ -18,6 +18,7 @@ import DialogContent from "@mui/material/DialogContent";
 import cardImg from '../../asset/image/paella.jpg'
 import Avatar from "@mui/material/Avatar";
 import ListItem from "@mui/material/ListItem";
+import api from "../../service/api";
 
 
 const CardDetails = () => {
@@ -27,21 +28,31 @@ const CardDetails = () => {
         setOpen(true)
     }
 
-    const [chipData, setChipData] = useState([
-        {key: 0, label: 'Angular'},
-        {key: 1, label: 'jQuery'},
-        {key: 2, label: 'Polymer'},
-        {key: 3, label: 'React'},
-        {key: 4, label: 'Vue.js'},
-    ]);
-
     const bId = useSelector(sts => sts.dashboard.board?.id || null)
     const card = useSelector(sts => sts.dashboard.card)
+    const cardMems = useSelector(sts => sts.dashboard.cardMems)
+    const cardLabels = useSelector(sts => sts.dashboard.cardLabels)
 
     const handleClose = useCallback(() => {
         setOpen(false)
         navigate(`/b/${bId}`)
     }, [bId])
+
+    const handleFileChange = e =>{
+
+        const file = e.target.files[0];
+        if(!file) return
+        const formData = new FormData();
+        formData.append("file", file);
+
+        api.post("/api/user/dashboard/card/attachment", formData).then(r=>{
+            console.log(r.data)
+        })
+
+
+    }
+
+
 
     return card && (
         <div>
@@ -58,8 +69,9 @@ const CardDetails = () => {
             >
                 <DialogTitle>
                     <img src={cardImg}/>
-                    <IconButton title='cover'>
-                        <CardMembership/>
+                    <IconButton color="primary" aria-label="upload picture" component="label">
+                        <input hidden accept="image/*" type="file" onChange={handleFileChange}/>
+                        <PhotoCamera />
                     </IconButton>
                     <IconButton onClick={handleClose}>
                         <Close/>
@@ -68,44 +80,29 @@ const CardDetails = () => {
                 <DialogContent dividers>
 
                     <DialogContentText>
-                        Card title
+                        {card.title}
                     </DialogContentText>
 
                     <DialogContentText>
-                        In list todo
+                      in list  {card.liztTitle}
                     </DialogContentText>
 
-                    <AvatarGroup max={4}>
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg"/>
-                        <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg"/>
-                        <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg"/>
-                        <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg"/>
-                        <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg"/>
+                    members
+                    <AvatarGroup>
+                        {
+                            cardMems.map(e=>(
+                                <Avatar alt={e.fullName} src={e.pictureUrl}/>
+                            ))
+                        }
                     </AvatarGroup>
 
 
-                    members
-                    {chipData.map((data) => {
-                        let icon;
 
-                        if (data.label === 'React') {
-                            icon = <TagFaces/>;
-                        }
 
-                        return (
-                            <ListItem key={data.key}>
-                                <Chip
-                                    icon={icon}
-                                    label={data.label}
-
-                                />
-                            </ListItem>
-                        );
-                    })}
 
                     labels
 
-                    {chipData.map((data) => {
+                    {cardLabels.map((data) => {
                         let icon;
 
                         if (data.label === 'React') {
@@ -113,10 +110,10 @@ const CardDetails = () => {
                         }
 
                         return (
-                            <ListItem key={data.key}>
+                            <ListItem key={data.id}>
                                 <Chip
                                     icon={icon}
-                                    label={data.label}
+                                    label={data.title}
 
                                 />
                             </ListItem>
@@ -126,8 +123,15 @@ const CardDetails = () => {
                     Notifications
 
                     <IconButton>
-                        watch
-                        <Visibility/>
+                        {
+                            card.notification ? <>
+                                watching
+                                <Visibility/>
+                            </> : <>
+                                watch
+                                <VisibilityOff/>
+                            </>
+                        }
                     </IconButton>
                     <IconButton>
                         Start date

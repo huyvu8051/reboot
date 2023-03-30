@@ -18,9 +18,6 @@ public class Controller {
     DashboardVo getDashBoard(Long wId,
                              Long bId,
                              Long cId) {
-//        var item = (name:"huy", age:18, companyNm:"posco");
-//        out.println(item);
-
         return service.getBoard(uId(), wId, bId, cId);
     }
 

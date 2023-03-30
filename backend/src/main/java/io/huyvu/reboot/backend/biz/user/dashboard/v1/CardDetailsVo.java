@@ -8,9 +8,11 @@ import java.util.Date;
  */
 public record CardDetailsVo(long id,
                             long liztId,
+                            String liztTitle,
                             long bId,
                             String title,
                             double ordinal,
+                            boolean notification,
                             String automation,
                             String coverColor,
                             String overSize,

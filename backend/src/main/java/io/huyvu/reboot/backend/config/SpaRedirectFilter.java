@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SpaRedirectFilter extends OncePerRequestFilter {
 
-    private final String REGEX = "(?!/actuator|/api|/socket\\.io|/h2-console|/_nuxt|/static|/assets|/index\\.html|/200\\.html|/manifest\\.json|/favicon\\.ico|/sw\\.js).*$";
+    private final String REGEX = "(?!/actuator|/api|/resources|/socket\\.io|/h2-console|/_nuxt|/static|/assets|/index\\.html|/200\\.html|/manifest\\.json|/favicon\\.ico|/sw\\.js).*$";
     private Pattern pattern = Pattern.compile(REGEX);
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {

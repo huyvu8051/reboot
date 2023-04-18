@@ -20,41 +20,35 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <version>${frontend-maven-plugin.version}</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.5.0</version>
                 <executions>
-                    <!-- Install our node and npm version to run npm/node scripts-->
                     <execution>
-                        <id>install node and npm</id>
+                        <id>run-npm-install</id>
+                        <phase>compile</phase>
                         <goals>
-                            <goal>install-node-and-npm</goal>
+                            <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <nodeVersion>v16.17.1</nodeVersion>
+                            <executable>npm.cmd</executable>
+                            <arguments>
+                                <argument>install</argument>
+                            </arguments>
                         </configuration>
                     </execution>
-                    <!-- Install all project dependencies -->
                     <execution>
-                        <id>npm install</id>
+                        <id>run-npm-run-build</id>
+                        <phase>compile</phase>
                         <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <!-- optional: default phase is "generate-resources" -->
-                        <phase>generate-resources</phase>
-                        <!-- Optional configuration which provides for running any npm command -->
-                        <configuration>
-                            <arguments>install</arguments>
-                        </configuration>
-                    </execution>
-                    <!-- Build and minify static files -->
-                    <execution>
-                        <id>npm run build</id>
-                        <goals>
-                            <goal>npm</goal>
+                            <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <arguments>run build</arguments>
+                            <executable>npm.cmd</executable>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>build</argument>
+                            </arguments>
                         </configuration>
                     </execution>
                 </executions>

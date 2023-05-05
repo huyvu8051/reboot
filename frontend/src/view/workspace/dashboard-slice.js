@@ -39,12 +39,20 @@ export const dashboardSlice = createSlice({
             }else {
                 s.cards.push(a.payload)
             }
+        },
+        updateBoard: (s, a) => {
+            const find = s.boards.find(e => e.id === a.payload.id);
+            if (find) {
+                Object.assign(find, a.payload)
+            }else {
+                s.boards.push(a.payload)
+            }
         }
     },
 })
 
 
-export const {save, updateLizt, updateCard} = dashboardSlice.actions
+export const {save, updateLizt, updateCard, updateBoard} = dashboardSlice.actions
 
 
 export default dashboardSlice.reducer

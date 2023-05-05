@@ -1,17 +1,9 @@
-import {AvatarGroup, Button, Chip, Dialog, DialogContentText, Icon, List, TextField} from '@mui/material'
+import {AvatarGroup, Button, Chip, Dialog, DialogContentText, List, TextField} from '@mui/material'
 import * as React from 'react'
 import {useCallback, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useSelector} from 'react-redux'
-import {
-    CardMembership,
-    CenterFocusStrong,
-    Close,
-    PanoramaFishEye, PhotoCamera,
-    TagFaces, Visibility, VisibilityOff,
-    Watch,
-    WatchLater
-} from '@mui/icons-material'
+import {Close, PhotoCamera, TagFaces, Visibility, VisibilityOff} from '@mui/icons-material'
 import IconButton from "@mui/material/IconButton";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -38,20 +30,19 @@ const CardDetails = () => {
         navigate(`/b/${bId}`)
     }, [bId])
 
-    const handleFileChange = e =>{
+    const handleFileChange = e => {
 
         const file = e.target.files[0];
-        if(!file) return
+        if (!file) return
         const formData = new FormData();
         formData.append("file", file);
 
-        api.post("/api/user/dashboard/card/attachment", formData).then(r=>{
-            console.log(r.data)
+        api.post("/api/user/dashboard/card/attachment/" + bId, formData).then(r => {
+            console.log(r)
         })
 
 
     }
-
 
 
     return card && (
@@ -71,7 +62,7 @@ const CardDetails = () => {
                     <img src={cardImg}/>
                     <IconButton color="primary" aria-label="upload picture" component="label">
                         <input hidden accept="image/*" type="file" onChange={handleFileChange}/>
-                        <PhotoCamera />
+                        <PhotoCamera/>
                     </IconButton>
                     <IconButton onClick={handleClose}>
                         <Close/>
@@ -84,20 +75,17 @@ const CardDetails = () => {
                     </DialogContentText>
 
                     <DialogContentText>
-                      in list  {card.liztTitle}
+                        in list {card.liztTitle}
                     </DialogContentText>
 
                     members
                     <AvatarGroup>
                         {
-                            cardMems.map(e=>(
+                            cardMems.map(e => (
                                 <Avatar alt={e.fullName} src={e.pictureUrl}/>
                             ))
                         }
                     </AvatarGroup>
-
-
-
 
 
                     labels

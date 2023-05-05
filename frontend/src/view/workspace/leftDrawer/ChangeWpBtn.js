@@ -16,7 +16,6 @@ const ChangeWpBtn = () => {
         navigate(`/w/${item.id}`)
         setAnchorEl(null)
     }
-
     const handleWpClose = () => {
         setAnchorEl(null)
     }
@@ -24,7 +23,6 @@ const ChangeWpBtn = () => {
     const wps = useSelector(sts => sts.dashboard.wps)
 
     const handleWpSelectMenu = (event) => {
-
         setAnchorEl(event.currentTarget)
     }
 

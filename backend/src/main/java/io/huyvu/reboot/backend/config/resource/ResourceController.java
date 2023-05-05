@@ -1,0 +1,16 @@
+package io.huyvu.reboot.backend.config;
+
+import io.huyvu.reboot.backend.util.SecurityUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+@Controller
+public class ResourceController {
+    @GetMapping("/api/resources/board/{bId}/{fileNm}")
+    public String getResource(@PathVariable long bId, @PathVariable String fileNm, @CookieValue String resToken) {
+        SecurityUtils.validateBoardResourcesAccess(bId, resToken);
+        return "forward:/api/secured/resources/board/" + bId + "/" + fileNm;
+    }
+}

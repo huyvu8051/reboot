@@ -1,5 +1,6 @@
 package io.huyvu.reboot.backend.util;
 
+import io.huyvu.reboot.backend.config.resource.UnauthorizedResourceException;
 import io.huyvu.reboot.backend.config.security.UserContextVo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -18,6 +19,7 @@ import java.util.*;
 public class SecurityUtils {
     private static final String USERNAME = "username";
     private static final String ROLES = "roles";
+    private static final String BIDS = "bIds";
     private static final int SIX_HOUR = 1000 * 60 * 60 * 6;
     private static final int ONE_HOUR = 1000 * 60 * 60 * 1;
 //    private final int ONE_DAY = 1000 * 60
@@ -57,7 +59,7 @@ public class SecurityUtils {
         return createToken(claims, String.valueOf(userId));
     }
 
-    public static UserContextVo validate(String token) {
+    public static UserContextVo validateJWTToken(String token) {
         Claims claims = extractAllClaims(token);
 
         var uId = Long.valueOf(claims.getSubject());
@@ -116,6 +118,24 @@ public class SecurityUtils {
             roles.add(auth.getAuthority());
         }
         return roles;
+    }
+
+    public static String generateBoardResourceToken(List<Long> bIds) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put(BIDS, bIds);
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + SIX_HOUR))
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
+    }
+
+
+    public static void validateBoardResourcesAccess(long bId, String resToken) {
+        var claims = extractAllClaims(resToken);
+        List<Integer> list = claims.get(BIDS, List.class);
+        var first = list.stream().map(e->Long.valueOf(e)).filter(e -> e.equals(bId)).findFirst();
+        first.orElseThrow(UnauthorizedResourceException::new);
     }
 
 

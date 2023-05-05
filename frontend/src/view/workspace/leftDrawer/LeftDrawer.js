@@ -15,15 +15,7 @@ import {useNavigate} from 'react-router-dom'
 import SettingWpIcon from './SettingWpBtn'
 import ListBoard from "./ListBoard";
 import CreateBoardBtn from "./CreateBoardBtn";
-import {
-    ArrowBack,
-    ArrowBackIos,
-    ArrowBackIosNew,
-    ArrowLeft,
-    CalendarMonth,
-    ChevronLeft,
-    TableRows
-} from "@mui/icons-material";
+import {CalendarMonth, ChevronLeft, TableRows} from "@mui/icons-material";
 import {useSelector} from "react-redux";
 import Toolbar from "@mui/material/Toolbar";
 import AddMemberToWp from "./AddMemberToWp";

@@ -22,7 +22,10 @@ public class SecurityConfig {
                 .and().csrf()
                 .disable()
                 .sessionManagement()
-                .sessionCreationPolicy(STATELESS);
+                .sessionCreationPolicy(STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/api/internal/**").denyAll();
 
         http.addFilterAfter(lazySecurityContextProviderFilter, SessionManagementFilter.class);
 

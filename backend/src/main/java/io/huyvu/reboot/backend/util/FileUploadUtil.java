@@ -22,7 +22,7 @@ public class FileUploadUtil {
         try (InputStream inputStream = mf.getInputStream()) {
 
             Files.copy(inputStream, uploadPath, StandardCopyOption.REPLACE_EXISTING);
-            log.error(uploadPath.toString());
+            log.info(uploadPath.toString());
         } catch (IOException ioe) {
             throw new IOException("Could not save image file: " + fileNm, ioe);
         }

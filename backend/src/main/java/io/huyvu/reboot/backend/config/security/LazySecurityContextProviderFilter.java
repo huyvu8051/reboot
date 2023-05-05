@@ -56,7 +56,7 @@ public class LazySecurityContextProviderFilter extends OncePerRequestFilter {
 
                     String jwtToken = authorizationHeader.substring(7);
 
-                    var userCtx = SecurityUtils.validate(jwtToken);
+                    var userCtx = SecurityUtils.validateJWTToken(jwtToken);
                     var authToken = new PreAuthenticatedAuthenticationToken(userCtx, jwtToken, userCtx.roles());
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
                     securityCtx.setAuthentication(authToken);

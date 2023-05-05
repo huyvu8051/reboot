@@ -22,12 +22,11 @@ public class Controller {
     }
 
     @ResponseBody
-    @PostMapping("/attachment")
-    String uploadAttachment(@RequestParam("file") MultipartFile file) throws IOException {
+    @PostMapping("/attachment/{bId}")
+    String uploadAttachment(@RequestParam("file") MultipartFile file, @PathVariable long bId) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-
         fileName = UUID.randomUUID() + fileName.substring(fileName.lastIndexOf("."));
-        FileUploadUtil.saveFile(UPLOAD_DIR, fileName, file);
+        FileUploadUtil.saveFile(UPLOAD_DIR + "/" + bId, fileName, file);
         return fileName;
     }
 }

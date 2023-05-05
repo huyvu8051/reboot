@@ -16,7 +16,7 @@ const getStyle = (prov, snap) => {
     }
 }
 
-export default ({item, index}) => {
+const TaskList = ({item, index}) => {
     const cards = useSelector(sts => sts.dashboard.cards
         .filter(e => !e.isDeleted && e.liztId === item.id)
         .sort((e1, e2) => e1.ordinal - e2.ordinal))
@@ -100,4 +100,5 @@ export default ({item, index}) => {
             )}
         </Draggable>
     )
-}
+};
+export default TaskList

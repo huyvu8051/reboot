@@ -1,5 +1,4 @@
 import {createSlice} from '@reduxjs/toolkit'
-import api from "../../service/api";
 
 const initialState = {
     wp: null,
@@ -28,7 +27,7 @@ export const dashboardSlice = createSlice({
 
             if (find) {
                 Object.assign(find, a.payload)
-            }else {
+            } else {
                 s.lizts.push(a.payload)
             }
         },
@@ -36,7 +35,7 @@ export const dashboardSlice = createSlice({
             const find = s.cards.find(e => e.id === a.payload.id);
             if (find) {
                 Object.assign(find, a.payload)
-            }else {
+            } else {
                 s.cards.push(a.payload)
             }
         },
@@ -44,7 +43,7 @@ export const dashboardSlice = createSlice({
             const find = s.boards.find(e => e.id === a.payload.id);
             if (find) {
                 Object.assign(find, a.payload)
-            }else {
+            } else {
                 s.boards.push(a.payload)
             }
         }

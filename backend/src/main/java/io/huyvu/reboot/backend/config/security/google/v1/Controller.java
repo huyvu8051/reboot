@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static io.huyvu.reboot.backend.util.SecurityUtils.generateBoardResourceToken;
 import static io.huyvu.reboot.backend.util.SecurityUtils.generateJwtToken;
 
 @AllArgsConstructor
@@ -31,7 +32,11 @@ public class Controller {
 
         var roles = List.of("USER", "ADMIN");
         String token = generateJwtToken(userAccount.id(), userAccount.username(), roles);
-        return new AuthRes(token, userAccount.username(), userAccount.fullName(), userAccount.pictureUrl(), roles);
+
+        List<Long> bIds = authRepo.searchAllBoardId(userAccount.id());
+        String resToken = generateBoardResourceToken(bIds);
+
+        return new AuthRes(token, userAccount.username(), userAccount.fullName(), userAccount.pictureUrl(), roles, resToken);
     }
 
 }

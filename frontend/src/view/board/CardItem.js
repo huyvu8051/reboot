@@ -17,7 +17,7 @@ const getStyle = (prov, snap) => {
     }
 }
 
-export default ({provided, snapshot, item}) => {
+const CardItem = ({provided, snapshot, item}) => {
 
     const navigate = useNavigate();
 
@@ -91,4 +91,5 @@ export default ({provided, snapshot, item}) => {
             </CardActions>
         </Card>
     )
-}
+};
+export default CardItem

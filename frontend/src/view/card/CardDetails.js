@@ -1,13 +1,12 @@
-import {AvatarGroup, Button, Chip, Dialog, DialogContentText, List, TextField} from '@mui/material'
 import * as React from 'react'
 import {useCallback, useState} from 'react'
+import {AvatarGroup, Button, Chip, Dialog, DialogContentText, List, TextField} from '@mui/material'
+import {Close, PhotoCamera, TagFaces, Visibility, VisibilityOff} from '@mui/icons-material'
 import {useNavigate} from 'react-router-dom'
 import {useSelector} from 'react-redux'
-import {Close, PhotoCamera, TagFaces, Visibility, VisibilityOff} from '@mui/icons-material'
 import IconButton from "@mui/material/IconButton";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
-import cardImg from '../../asset/image/paella.jpg'
 import Avatar from "@mui/material/Avatar";
 import ListItem from "@mui/material/ListItem";
 import api from "../../service/api";
@@ -20,6 +19,8 @@ const CardDetails = () => {
         setOpen(true)
     }
 
+    const [imgUrl, setImgUrl] = useState('')
+
     const bId = useSelector(sts => sts.dashboard.board?.id || null)
     const card = useSelector(sts => sts.dashboard.card)
     const cardMems = useSelector(sts => sts.dashboard.cardMems)
@@ -28,7 +29,7 @@ const CardDetails = () => {
     const handleClose = useCallback(() => {
         setOpen(false)
         navigate(`/b/${bId}`)
-    }, [bId])
+    }, [bId, navigate])
 
     const handleFileChange = e => {
 
@@ -38,7 +39,8 @@ const CardDetails = () => {
         formData.append("file", file);
 
         api.post("/api/user/dashboard/card/attachment/" + bId, formData).then(r => {
-            console.log(r)
+            // console.log(r)
+            setImgUrl(`/api/resources/board/${bId}/${r}`)
         })
 
 
@@ -59,7 +61,7 @@ const CardDetails = () => {
 
             >
                 <DialogTitle>
-                    <img src={cardImg}/>
+                    <img src={imgUrl} alt='background'/>
                     <IconButton color="primary" aria-label="upload picture" component="label">
                         <input hidden accept="image/*" type="file" onChange={handleFileChange}/>
                         <PhotoCamera/>

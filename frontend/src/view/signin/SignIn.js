@@ -18,6 +18,7 @@ import {setAuthenticateSuccess, setEmail} from '../../store/authenticationSlice'
 import {GoogleLogin} from '@react-oauth/google'
 import Api from '../../service/api'
 import {$error} from '../../util/snackbar-utils'
+import Cookies from "js-cookie";
 
 function Copyright(props) {
     return (
@@ -54,6 +55,7 @@ export default function SignIn() {
             idToken: response.credential
         }).then(resp => {
             dispatch(setAuthenticateSuccess(resp))
+            Cookies.set('resToken', resp.resToken, {expires: 7, path: '/'})
             navigate('/w/')
         }).catch(err => {
             $error('Google login false: ' + err.message)

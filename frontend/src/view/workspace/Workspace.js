@@ -7,7 +7,8 @@ import {io} from 'socket.io-client'
 import {useDispatch, useSelector} from 'react-redux'
 import {updateBoard, updateCard, updateLizt} from './dashboard-slice'
 import {useParams} from 'react-router-dom'
-import api from "../../service/api";
+import api from '../../service/api';
+import Cookies from 'js-cookie'
 
 function Workspace(props) {
 
@@ -34,8 +35,8 @@ function Workspace(props) {
 
             socket.on('update.dashboard.board', r => {
                 dispatch(updateBoard(r))
-                api("/api/resource/token").then(res => {
-
+                api('/api/resource/token').then(res => {
+                    Cookies.set('resToken', res.body, {expires: 7, path: '/'})
                 })
             })
 

@@ -16,7 +16,7 @@ import {$success} from "../../../util/snackbar-utils";
 const AddMemberToWp = () => {
     const [open, setOpen] = React.useState(false);
     const [submitable, setSubmitable] = React.useState(false);
-    const [emails, setEmails] = useState([{
+    const [emails] = useState([{
         title: 'huyvu8051@gmail.com'
     }])
 

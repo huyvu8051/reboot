@@ -52,7 +52,8 @@ export default function PersistentDrawerLeft(props) {
                 position: 'fixed',
                 width: '100vw',
                 zIndex: -99
-            }} src={bgImg}/>
+            }} src={bgImg}
+            alt='background reboot'/>
             <Box component='main' sx={{
                 marginTop: marginTop,
                 width: '100%',

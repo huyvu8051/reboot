@@ -133,7 +133,7 @@ export const Board = () => {
         }).then()
 
 
-    }, [lists])
+    }, [lists, dispatch, cards])
     return <>
         <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId='board'

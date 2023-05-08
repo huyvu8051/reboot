@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import static io.huyvu.reboot.backend.util.JsonUtils.toJsonObj;
+import static io.huyvu.reboot.backend.util.JsonUtils.toJsonObjExcludeNull;
 
 @Service
 @AllArgsConstructor
@@ -57,6 +58,14 @@ public class ServiceImpl implements IService {
         var cardVo = repo.selectCard(cId);
         SocketIoNamespace nsp = sioServer.namespace(DASHBOARD);
         nsp.broadcast(String.valueOf(wpId), "update.dashboard.card", toJsonObj(cardVo));
+    }
+
+    @Override
+    public void updateCardDetails(UpdateCardDetailsReq req) {
+        repo.updateCardDetails(req);
+        long wpId = repo.selectWpId(req.cId());
+        SocketIoNamespace nsp = sioServer.namespace(DASHBOARD);
+        nsp.broadcast(String.valueOf(wpId), "update.dashboard.card", toJsonObjExcludeNull(req));
     }
 
     double getMiddleVal(double v1, double v2) {

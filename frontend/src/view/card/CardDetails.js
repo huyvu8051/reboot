@@ -10,6 +10,7 @@ import DialogContent from "@mui/material/DialogContent";
 import Avatar from "@mui/material/Avatar";
 import ListItem from "@mui/material/ListItem";
 import api from "../../service/api";
+import CardModifiableTitle from "./CardModifiableTitle";
 
 
 const CardDetails = () => {
@@ -72,10 +73,7 @@ const CardDetails = () => {
                 </DialogTitle>
                 <DialogContent dividers>
 
-                    <DialogContentText>
-                        {card.title}
-                    </DialogContentText>
-
+                    <CardModifiableTitle/>
                     <DialogContentText>
                         in list {card.liztTitle}
                     </DialogContentText>

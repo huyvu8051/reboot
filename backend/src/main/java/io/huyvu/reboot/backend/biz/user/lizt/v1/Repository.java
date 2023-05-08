@@ -63,8 +63,6 @@ public interface Repository {
     long insertCard(long lId, long bId, String title);
 
 
-
-
     @Select("""
             SELECT id
             	  ,lizt_id
@@ -84,7 +82,6 @@ public interface Repository {
             	  ,start_date
               FROM card
              WHERE id = #{cId}""")
-
     CardVo selectCard(long cId);
 
     @Select("""
@@ -110,7 +107,6 @@ public interface Repository {
              ORDER BY ordinal 
              
                  LIMIT 1""")
-
     CardVo selectCardNext(long lId, double ordinal);
 
     @Select("""
@@ -135,7 +131,6 @@ public interface Repository {
              AND ordinal < #{ordinal}
              ORDER BY ordinal DESC
                  LIMIT 1""")
-
     CardVo selectCardPrevious(long lId, double ordinal);
 
 
@@ -145,6 +140,7 @@ public interface Repository {
                   ,lizt_id = #{lId}
              WHERE id = #{id}""")
     void updateCardOrdinal(long id, double ordinal, long lId);
+
     @Update("""
             UPDATE card
                SET ordinal = #{ordinal}
@@ -153,7 +149,7 @@ public interface Repository {
 
 
     @Select("""
-           
+                       
             SET @bId = (SELECT board_id 
                           FROM lizt
                          WHERE id = #{lId});
@@ -161,7 +157,7 @@ public interface Repository {
             SET @ordinal = (SELECT ordinal
                               FROM lizt 
                              WHERE id = #{lId});
-            
+                        
             SET @new_ordinal = (SELECT ordinal 
                                   FROM lizt
                                  WHERE board_id = @bId
@@ -186,7 +182,7 @@ public interface Repository {
             SET @ordinal = (SELECT ordinal
                               FROM lizt 
                              WHERE id = #{lId});
-            
+                        
             SET @new_ordinal = (SELECT ordinal 
                                   FROM lizt
                                  WHERE board_id = @bId
@@ -203,7 +199,6 @@ public interface Repository {
     double selectLzPrevOrdinal(long boardId);
 
 
-
     @Select("""
                  
             SET @lId = (SELECT lizt_id 
@@ -213,7 +208,7 @@ public interface Repository {
             SET @ordinal = (SELECT ordinal 
                               FROM card
                              WHERE id = #{id});
-            
+                        
             SET @new_ordinal = (SELECT ordinal 
                                   FROM card
                                  WHERE lizt_id = @lId
@@ -238,7 +233,7 @@ public interface Repository {
             SET @ordinal = (SELECT ordinal 
                               FROM card
                              WHERE id = #{id});
-            
+                        
             SET @new_ordinal = (SELECT ordinal 
                                   FROM card
                                  WHERE lizt_id = @lId
@@ -263,4 +258,30 @@ public interface Repository {
               FROM board
              WHERE id = @b_id""")
     long selectWpId(long cId);
+
+    @Update("""
+            <script>
+            update card
+               set id          = #{cId}
+                 <if test="lId != null">
+                 , lizt_id     = #{lId}
+                 </if>
+                 <if test="title != null">
+                 , title       = #{title}
+                 </if>
+                 <if test="ordinal != null">
+                 , ordinal     = #{ordinal}
+                 </if>
+                 <if test="coverUrl != null">
+                 , cover_url=#{coverUrl}
+                 </if>
+                 <if test="description != null">
+                 , description = #{description}
+                 </if>
+                 <if test="isDeleted != null">
+                 , is_deleted  = #{isDeleted}
+                 </if>
+               where id = #{cId};
+            </script>""")
+    void updateCardDetails(UpdateCardDetailsReq req);
 }

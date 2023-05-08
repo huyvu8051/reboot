@@ -11,4 +11,6 @@ public interface IService {
     void createCard(long lId, String title, long uId);
 
     void updateCard(long cId, double ordinal, Long lId);
+
+    void updateCardDetails(UpdateCardDetailsReq req);
 }

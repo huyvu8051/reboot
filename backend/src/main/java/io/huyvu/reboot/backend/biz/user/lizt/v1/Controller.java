@@ -1,10 +1,7 @@
 package io.huyvu.reboot.backend.biz.user.lizt.v1;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static io.huyvu.reboot.backend.util.SecurityUtils.uId;
 
@@ -34,6 +31,11 @@ public class Controller {
     @PutMapping("card")
     void updateCard(long cId, double ordinal, Long lId) {
         service.updateCard(cId, ordinal, lId);
+    }
+
+    @PutMapping("card/details")
+    void updateCardDetails(@RequestBody UpdateCardDetailsReq req) {
+        service.updateCardDetails(req);
     }
 
 

@@ -38,6 +38,11 @@ export const dashboardSlice = createSlice({
             } else {
                 s.cards.push(a.payload)
             }
+
+            if (s.card && s.card.id === a.payload.id) {
+                Object.assign(s.card, a.payload)
+            }
+
         },
         updateBoard: (s, a) => {
             const find = s.boards.find(e => e.id === a.payload.id);

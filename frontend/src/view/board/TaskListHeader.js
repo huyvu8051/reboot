@@ -20,7 +20,7 @@ const TaskListHeader = ({item}) => {
             }))
             setOpen(false)
             api.put('/api/v1/user/list', null, {
-                params: {
+                data: {
                     lId: item.id,
                     ordinal: item.ordinal,
                     title : inputVal

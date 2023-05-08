@@ -1,31 +1,30 @@
-import {CardHeader, IconButton, TextField} from "@mui/material";
-import {MoreHoriz} from "@mui/icons-material";
-import {useRef, useState} from "react";
-import Typography from "@mui/material/Typography";
-import {useDispatch} from "react-redux";
-import {updateLizt} from "../workspace/dashboard-slice";
-import api from "../../service/api";
+import {CardHeader, IconButton, TextField} from '@mui/material'
+import {MoreHoriz} from '@mui/icons-material'
+import {useRef} from 'react'
+import {useDispatch} from 'react-redux'
+import {updateLizt} from '../workspace/dashboard-slice'
+import api from '../../service/api'
 
 const TaskListHeader = ({item}) => {
-    const [open, setOpen] = useState(false);
-    const inputRef = useRef();
-    const dispatch = useDispatch();
+    const inputRef = useRef()
+    const dispatch = useDispatch()
 
     const handleSubmit = () => {
-        const inputVal = inputRef.current.value.trim();
-        if (inputVal) {
+        const inputVal = inputRef.current.value.trim()
+        if (inputVal && inputVal !== item.title) {
             dispatch(updateLizt({
                 ...item,
                 title: inputVal
             }))
-            setOpen(false)
             api.put('/api/v1/user/list', null, {
-                data: {
+                params: {
                     lId: item.id,
                     ordinal: item.ordinal,
-                    title : inputVal
+                    title: inputVal
                 }
             }).then()
+        }else {
+            inputRef.current.value = item.title
         }
     }
 
@@ -38,28 +37,28 @@ const TaskListHeader = ({item}) => {
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault()
-            handleSubmit()
+            inputRef.current.blur()
         }
     }
 
     return (
         <CardHeader
-            onBlur={handleBlur}
 
             sx={{
                 p: 1
             }}
-            title={open ? (
+            title={(
                 <TextField inputRef={inputRef}
-
                            fullWidth
                            multiline
-                           autoFocus
+                           onBlur={handleBlur}
 
                            sx={{
+                               '& fieldset': {
+                                   borderWidth: 0,
+                               },
                                '& .MuiInputBase-root': {
-                                   paddingY: 0,
-                                   paddingX: 1,
+                                   padding: 0.5
                                },
                            }}
 
@@ -70,20 +69,7 @@ const TaskListHeader = ({item}) => {
                                },
                                onKeyDown: handleKeyDown
                            }}
-                           defaultValue={item.title}/>
-            ) : (
-                <Typography
-                    onClick={() => setOpen(true)}
-                    sx={{
-                        fontSize: 'small',
-                        fontWeight: 'bold',
-                        paddingY: 0,
-                        paddingX: 0,
-                        border: '4px solid transparent'
-                    }}>
-                    {item.title}
-                </Typography>
-            )}
+                           defaultValue={item.title}/>)}
 
             action={(
                 <IconButton size='small' sx={{borderRadius: 1, mr: .5}}>

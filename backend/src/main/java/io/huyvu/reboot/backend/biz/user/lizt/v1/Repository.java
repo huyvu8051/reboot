@@ -262,7 +262,7 @@ public interface Repository {
     @Update("""
             <script>
             update card
-               set id          = #{cId}
+               set id          = #{id}
                  <if test="lId != null">
                  , lizt_id     = #{lId}
                  </if>
@@ -281,7 +281,7 @@ public interface Repository {
                  <if test="isDeleted != null">
                  , is_deleted  = #{isDeleted}
                  </if>
-               where id = #{cId};
+               where id = #{id};
             </script>""")
     void updateCardDetails(UpdateCardDetailsReq req);
 }

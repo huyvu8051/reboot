@@ -1,28 +1,26 @@
 import * as React from 'react'
 import {useCallback, useState} from 'react'
 import {AvatarGroup, Button, Chip, Dialog, DialogContentText, List, TextField} from '@mui/material'
-import {Close, PhotoCamera, TagFaces, Visibility, VisibilityOff} from '@mui/icons-material'
+import {TagFaces, Visibility, VisibilityOff} from '@mui/icons-material'
 import {useNavigate} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import IconButton from "@mui/material/IconButton";
-import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import Avatar from "@mui/material/Avatar";
 import ListItem from "@mui/material/ListItem";
-import api from "../../service/api";
 import CardModifiableTitle from "./CardModifiableTitle";
+import CardHeaderCover from "./CardHeaderCover";
 
 
 const CardDetails = () => {
     const [open, setOpen] = useState(true)
-    const navigate = useNavigate()
     const handleClickOpen = () => {
         setOpen(true)
     }
-
-    const [imgUrl, setImgUrl] = useState('')
-
+    const navigate = useNavigate()
     const bId = useSelector(sts => sts.dashboard.board?.id || null)
+
+
     const card = useSelector(sts => sts.dashboard.card)
     const cardMems = useSelector(sts => sts.dashboard.cardMems)
     const cardLabels = useSelector(sts => sts.dashboard.cardLabels)
@@ -31,21 +29,6 @@ const CardDetails = () => {
         setOpen(false)
         navigate(`/b/${bId}`)
     }, [bId, navigate])
-
-    const handleFileChange = e => {
-
-        const file = e.target.files[0];
-        if (!file) return
-        const formData = new FormData();
-        formData.append("file", file);
-
-        api.post("/api/user/dashboard/card/attachment/" + bId, formData).then(r => {
-            // console.log(r)
-            setImgUrl(`/api/resources/board/${bId}/${r}`)
-        })
-
-
-    }
 
 
     return card && (
@@ -61,16 +44,9 @@ const CardDetails = () => {
                 aria-describedby='alert-dialog-description'
 
             >
-                <DialogTitle>
-                    <img src={imgUrl} alt='background'/>
-                    <IconButton color="primary" aria-label="upload picture" component="label">
-                        <input hidden accept="image/*" type="file" onChange={handleFileChange}/>
-                        <PhotoCamera/>
-                    </IconButton>
-                    <IconButton onClick={handleClose}>
-                        <Close/>
-                    </IconButton>
-                </DialogTitle>
+
+                <CardHeaderCover setOpen={setOpen} handleClose={handleClose}/>
+
                 <DialogContent dividers>
 
                     <CardModifiableTitle/>

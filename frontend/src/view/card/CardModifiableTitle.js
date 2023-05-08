@@ -1,33 +1,29 @@
-import * as React from "react";
-import {useRef, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {updateCard} from "../workspace/dashboard-slice";
-import api from "../../service/api";
-import {DialogContentText, TextField} from "@mui/material";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import {MoreHoriz} from "@mui/icons-material";
+import * as React from 'react'
+import {useRef} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {updateCard} from '../workspace/dashboard-slice'
+import api from '../../service/api'
+import {DialogContentText, TextField} from '@mui/material'
 
 const CardModifiableTitle = () => {
-    const inputRef = useRef();
-    const dispatch = useDispatch();
+    const inputRef = useRef()
+    const dispatch = useDispatch()
 
     const item = useSelector(sts => sts.dashboard.card)
-    console.log(item)
-    const [open, setOpen] = useState(false);
 
     const handleSubmit = () => {
-        const inputVal = inputRef.current.value.trim();
-        if (inputVal) {
+        const inputVal = inputRef.current.value.trim()
+        if (inputVal !== item.title) {
             dispatch(updateCard({
                 ...item,
                 title: inputVal
             }))
-            setOpen(false)
             api.put('/api/v1/user/card/details', {
-                cId: item.id,
+                id: item.id,
                 title: inputVal
             }).then()
+        } else {
+            inputRef.current.value = item.title
         }
     }
     const handleBlur = ({currentTarget, relatedTarget}) => {
@@ -39,64 +35,37 @@ const CardModifiableTitle = () => {
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault()
-            handleSubmit()
+            inputRef.current.blur()
         }
     }
     return (
 
         <DialogContentText
             onBlur={handleBlur}
-
-            sx={{
-                p: 1
-            }}
-
-            action={(
-                <IconButton size='small' sx={{borderRadius: 1, mr: .5}}>
-                    <MoreHoriz fontSize='small'/>
-                </IconButton>
-            )}
         >
-            {
-                open ? (
-                    <TextField inputRef={inputRef}
+            <TextField inputRef={inputRef}
+                       fullWidth
+                       multiline
+                       onBlur={handleBlur}
 
-                               fullWidth
-                               multiline
-                               autoFocus
+                       sx={{
+                           '& fieldset': {
+                               borderWidth: 0,
+                           },
+                           '& .MuiInputBase-root': {
+                               padding: 1,
+                           },
+                       }}
+                       inputProps={{
+                           style: {
+                               fontSize: 'large',
+                               fontWeight: 'bold',
 
-                               sx={{
-                                   '& .MuiInputBase-root': {
-                                       paddingY: 0,
-                                       paddingX: 1,
-                                   },
-                               }}
-
-                               inputProps={{
-                                   style: {
-                                       fontSize: 'large',
-                                       fontWeight: 'bold'
-                                   },
-                                   onKeyDown: handleKeyDown
-                               }}
-                               defaultValue={item.title}/>
-                ) : (
-
-                    <Typography
-                        onClick={() => setOpen(true)}
-                        sx={{
-                            fontSize: 'large',
-                            fontWeight: 'bold',
-                            color: 'black',
-                            paddingY: 0,
-                            paddingX: 0,
-                            border: '4px solid transparent'
-                        }}>
-                        {item.title}
-                    </Typography>
-                )
-            }
+                           },
+                           onKeyDown: handleKeyDown
+                       }}
+                       defaultValue={item.title}/>
         </DialogContentText>
-    );
-};
+    )
+}
 export default CardModifiableTitle

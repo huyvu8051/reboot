@@ -63,7 +63,7 @@ public class ServiceImpl implements IService {
     @Override
     public void updateCardDetails(UpdateCardDetailsReq req) {
         repo.updateCardDetails(req);
-        long wpId = repo.selectWpId(req.cId());
+        long wpId = repo.selectWpId(req.id());
         SocketIoNamespace nsp = sioServer.namespace(DASHBOARD);
         nsp.broadcast(String.valueOf(wpId), "update.dashboard.card", toJsonObjExcludeNull(req));
     }

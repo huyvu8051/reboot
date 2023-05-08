@@ -33,10 +33,7 @@ public class Controller {
         service.updateCard(cId, ordinal, lId);
     }
 
-    @PutMapping("card/details")
-    void updateCardDetails(@RequestBody UpdateCardDetailsReq req) {
-        service.updateCardDetails(req);
-    }
+
 
 
 }

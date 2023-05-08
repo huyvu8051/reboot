@@ -259,29 +259,5 @@ public interface Repository {
              WHERE id = @b_id""")
     long selectWpId(long cId);
 
-    @Update("""
-            <script>
-            update card
-               set id          = #{id}
-                 <if test="lId != null">
-                 , lizt_id     = #{lId}
-                 </if>
-                 <if test="title != null">
-                 , title       = #{title}
-                 </if>
-                 <if test="ordinal != null">
-                 , ordinal     = #{ordinal}
-                 </if>
-                 <if test="coverUrl != null">
-                 , cover_url=#{coverUrl}
-                 </if>
-                 <if test="description != null">
-                 , description = #{description}
-                 </if>
-                 <if test="isDeleted != null">
-                 , is_deleted  = #{isDeleted}
-                 </if>
-               where id = #{id};
-            </script>""")
-    void updateCardDetails(UpdateCardDetailsReq req);
+
 }

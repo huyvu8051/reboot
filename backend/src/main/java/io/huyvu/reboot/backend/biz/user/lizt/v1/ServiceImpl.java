@@ -60,13 +60,6 @@ public class ServiceImpl implements IService {
         nsp.broadcast(String.valueOf(wpId), "update.dashboard.card", toJsonObj(cardVo));
     }
 
-    @Override
-    public void updateCardDetails(UpdateCardDetailsReq req) {
-        repo.updateCardDetails(req);
-        long wpId = repo.selectWpId(req.id());
-        SocketIoNamespace nsp = sioServer.namespace(DASHBOARD);
-        nsp.broadcast(String.valueOf(wpId), "update.dashboard.card", toJsonObjExcludeNull(req));
-    }
 
     double getMiddleVal(double v1, double v2) {
         double diff = Math.abs(v1 - v2);

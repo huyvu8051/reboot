@@ -12,5 +12,5 @@ public interface IService {
 
     void updateCard(long cId, double ordinal, Long lId);
 
-    void updateCardDetails(UpdateCardDetailsReq req);
+
 }

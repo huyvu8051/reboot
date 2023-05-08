@@ -1,7 +1,11 @@
 package io.huyvu.reboot.backend.biz.user.dashboard.card.v1;
 
+import io.huyvu.reboot.backend.biz.user.lizt.v1.UpdateCardDetailsReq;
+
 import java.util.List;
 
 public interface IService {
-    void update(long cId, String title, String coverUrl, List<Long> memIds, List<Long> labelIds, Boolean notification);
+
+    List<BoardsDetailsResp> getBoardsDetails(long uId);
+    void updateCardDetails(UpdateCardDetailsReq req);
 }

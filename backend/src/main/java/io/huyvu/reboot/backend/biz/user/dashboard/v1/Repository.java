@@ -1,5 +1,6 @@
 package io.huyvu.reboot.backend.biz.user.dashboard.v1;
 
+import io.huyvu.reboot.backend.config.mybatis.MyBatisSelect;
 import io.huyvu.reboot.backend.config.mybatis.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -167,5 +168,6 @@ public interface Repository {
             where card_id = #{cId}
             and is_deleted = false
             limit 0, 5""")
+    @MyBatisSelect("SELECT * FROM my_table")
     Page<AttachmentVo> selectAttachments(long cId);
 }

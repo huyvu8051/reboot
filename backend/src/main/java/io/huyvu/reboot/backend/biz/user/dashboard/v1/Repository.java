@@ -1,8 +1,7 @@
 package io.huyvu.reboot.backend.biz.user.dashboard.v1;
 
-import com.github.pagehelper.Page;
+import io.huyvu.reboot.backend.config.mybatis.Page;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public interface Repository {
                   ,workspace_id
               FROM board
              WHERE id = #{bId}
-     
+                 
                    AND is_deleted = 0""")
     Optional<BoardVo> selectBoard(long bId);
 
@@ -167,8 +166,6 @@ public interface Repository {
             from attachment
             where card_id = #{cId}
             and is_deleted = false
-            limit 0, 5
-            """)
-    @ResultType(AttachmentVo.class)
+            limit 0, 5""")
     Page<AttachmentVo> selectAttachments(long cId);
 }

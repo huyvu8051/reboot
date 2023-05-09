@@ -1,7 +1,7 @@
 package io.huyvu.reboot.backend.biz.user.dashboard.v1;
 
 
-import com.github.pagehelper.Page;
+import io.huyvu.reboot.backend.config.mybatis.Page;
 
 import java.util.List;
 
@@ -15,6 +15,7 @@ public record DashboardVo(
         List<CardItemVo> cards,
         CardDetailsVo card,
         List<CardMember> cardMems,
-        List<CardLabel> cardLabels
+        List<CardLabel> cardLabels,
+        Page<AttachmentVo> attachments
 ) {
 }

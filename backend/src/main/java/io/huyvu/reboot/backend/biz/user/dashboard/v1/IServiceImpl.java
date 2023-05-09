@@ -1,8 +1,9 @@
 package io.huyvu.reboot.backend.biz.user.dashboard.v1;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import io.huyvu.reboot.backend.config.mybatis.Page;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.session.ResultContext;
+import org.apache.ibatis.session.ResultHandler;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,9 +34,12 @@ public class IServiceImpl implements IService {
             cardMembers = repo.selectCardMems(cId);
             cardLabels = repo.selectCardLabels(cId);
 
-            PageHelper.startPage(0, 7);
-            attachments = repo.selectAttachments(cId);
-
+          /*  attachments = repo.selectAttachments(cId, new ResultHandler<AttachmentVo>() {
+                @Override
+                public void handleResult(ResultContext<? extends AttachmentVo> resultContext) {
+                }
+            });
+*/
             bId = card.bId();
 
         }
@@ -58,6 +62,6 @@ public class IServiceImpl implements IService {
         wps = repo.selectWps(uId);
 
 
-        return new DashboardVo(wp, wps, board, boards, wpMems, lizts, cards, card, cardMembers, cardLabels);
+        return new DashboardVo(wp, wps, board, boards, wpMems, lizts, cards, card, cardMembers, cardLabels, attachments);
     }
 }

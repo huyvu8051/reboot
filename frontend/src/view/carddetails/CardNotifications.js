@@ -6,8 +6,6 @@ import {Button} from "@mui/material";
 const CardNotifications = () => {
     const card = useSelector(sts => sts.dashboard.card)
 
-    console.log(card)
-
     return (
         <div>
             <h5 style={{padding: 0, margin: 0}}>

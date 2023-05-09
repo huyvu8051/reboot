@@ -1,6 +1,8 @@
 package io.huyvu.reboot.backend.biz.user.dashboard.v1;
 
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -133,25 +135,40 @@ public interface Repository {
     CardDetailsVo selectCardDetails(long cId, long uId);
 
     @Select("""
-            SELECT id
+            select id
                   ,username
                   ,full_name
                   ,picture_url
-              FROM user_account
-             WHERE id IN (SELECT user_id
-              				     FROM card_member
-             					 WHERE card_id = #{cId}
-             					       AND is_deleted = 0)""")
+              from user_account
+             where id in (select user_id
+              				     from card_member
+             					 where card_id = #{cId}
+             					       and is_deleted = 0)""")
     List<CardMember> selectCardMems(long cId);
 
     @Select("""
-            SELECT id
+            select id
                   ,color
             	  ,title
-              FROM label
-             WHERE id IN (SELECT label_id
-              				FROM labeled
-               			   WHERE card_id = #{cId}
-                   				 AND is_deleted = 0)""")
+              from label
+             where id in (select label_id
+              				from labeled
+               			   where card_id = #{cId}
+                   				 and is_deleted = 0)""")
     List<CardLabel> selectCardLabels(long cId);
+
+
+    @Select("""
+            select sql_calc_found_rows id,
+                                       card_id as cid,
+                                       name,
+                                       type,
+                                       created_date
+            from attachment
+            where card_id = #{cId}
+            and is_deleted = false
+            limit 0, 5
+            """)
+    @ResultType(AttachmentVo.class)
+    Page<AttachmentVo> selectAttachments(long cId);
 }

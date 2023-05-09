@@ -1,6 +1,8 @@
 package io.huyvu.reboot.backend.biz.user.dashboard.v1;
 
 
+import com.github.pagehelper.Page;
+
 import java.util.List;
 
 public record DashboardVo(

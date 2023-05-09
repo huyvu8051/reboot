@@ -8,7 +8,7 @@ import Unauthorized from '../view/error/Unauthorized'
 import Members from '../view/members/Members'
 import {Board} from '../view/board/Board'
 import Workspace from "../view/workspace/Workspace";
-import CardDetails from "../view/card/CardDetails";
+import CardDetails from "../view/carddetails/CardDetails";
 
 const RouteConfig = createBrowserRouter([
     {

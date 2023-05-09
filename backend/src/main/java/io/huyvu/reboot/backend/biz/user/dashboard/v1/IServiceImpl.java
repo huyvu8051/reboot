@@ -1,5 +1,7 @@
 package io.huyvu.reboot.backend.biz.user.dashboard.v1;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ public class IServiceImpl implements IService {
         List<LiztVo> lizts = new ArrayList<>(0);
         List<CardItemVo> cards = new ArrayList<>(0);
         CardDetailsVo card = null;
+        Page<AttachmentVo> attachments = null;
         List<CardMember> cardMembers = new ArrayList<>();
         List<CardLabel> cardLabels = new ArrayList<>();
 
@@ -29,7 +32,12 @@ public class IServiceImpl implements IService {
             card = repo.selectCardDetails(cId, uId);
             cardMembers = repo.selectCardMems(cId);
             cardLabels = repo.selectCardLabels(cId);
+
+            PageHelper.startPage(0, 7);
+            attachments = repo.selectAttachments(cId);
+
             bId = card.bId();
+
         }
 
         if (bId != null) {

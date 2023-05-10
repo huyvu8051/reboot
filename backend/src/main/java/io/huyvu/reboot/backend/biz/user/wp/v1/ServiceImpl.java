@@ -1,8 +1,6 @@
-/**
- * @Author HuyVu
- * @CreatedDate 2/13/2023 11:26 AM
- */
+
 package io.huyvu.reboot.backend.biz.user.wp.v1;
+
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;

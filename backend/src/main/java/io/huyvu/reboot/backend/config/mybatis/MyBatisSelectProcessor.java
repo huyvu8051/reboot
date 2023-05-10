@@ -12,7 +12,6 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.*;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,14 +19,18 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @AutoService(Processor.class)
-@SupportedAnnotationTypes("io.huyvu.reboot.backend.config.mybatis.MyBatisSelect")
+@SupportedAnnotationTypes("org.apache.ibatis.annotations.Select")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class MyBatisSelectProcessor extends AbstractProcessor {
+
+    private static final String PAGEABLE = "$Pageable";
 
     @SneakyThrows
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        for (Element element : roundEnv.getElementsAnnotatedWith(MyBatisSelect.class)) {
+        log.info("=============================start=================================");
+        log.info(roundEnv.getElementsAnnotatedWith(Select.class).toString());
+        for (Element element : roundEnv.getElementsAnnotatedWith(Select.class)) {
             if (element.getKind() != ElementKind.METHOD) {
                 continue;
             }
@@ -35,16 +38,6 @@ public class MyBatisSelectProcessor extends AbstractProcessor {
             ExecutableElement oldMethod = (ExecutableElement) element;
 
             var returnType = oldMethod.getReturnType();
-            if (returnType instanceof DeclaredType) {
-                DeclaredType declaredReturnType = (DeclaredType) returnType;
-                TypeElement typeElement = (TypeElement) declaredReturnType.asElement();
-                if (typeElement.getQualifiedName().contentEquals(List.class.getName())) {
-                    System.out.println("skip " + oldMethod);
-                    continue;
-                }
-            }
-
-
 
             String methodName = oldMethod.getSimpleName().toString();
 
@@ -65,18 +58,23 @@ public class MyBatisSelectProcessor extends AbstractProcessor {
                     annotationBuilder.addMember(attributeName, "$L", attributeValue);
                 }
 
-              //  newMethodBuilder.addAnnotation(annotationBuilder.build());
+                // newMethodBuilder.addAnnotation(annotationBuilder.build());
             }
 
 
             TypeElement classElement = (TypeElement) oldMethod.getEnclosingElement();
 
-            TypeSpec.Builder classBuilder = TypeSpec.interfaceBuilder(classElement.getSimpleName().toString() + "Pageable")
+            TypeSpec.Builder classBuilder = TypeSpec.interfaceBuilder(classElement.getSimpleName().toString() + PAGEABLE)
                     .addAnnotation(Mapper.class)
                     .addModifiers(Modifier.PUBLIC);
 
             if (returnType instanceof DeclaredType) {
                 DeclaredType declaredReturnType = (DeclaredType) returnType;
+                TypeElement typeElement = (TypeElement) declaredReturnType.asElement();
+                if (!typeElement.getQualifiedName().contentEquals(Page.class.getName())) {
+                    log.info("skip: " + typeElement.getQualifiedName() + " " + oldMethod);
+                    continue;
+                }
                 List<? extends TypeMirror> typeArguments = declaredReturnType.getTypeArguments();
                 if (typeArguments.size() == 1) {
                     TypeMirror typeArgument = typeArguments.get(0);
@@ -88,15 +86,16 @@ public class MyBatisSelectProcessor extends AbstractProcessor {
 
                     var newMethod = newMethodBuilder.build();
 
-                    log.info("================================Generated================================" +  newMethod);
                     classBuilder.addMethod(newMethod);
                     TypeSpec classSpec = classBuilder.build();
-                    JavaFile.builder(getPackageName(oldMethod), classSpec).build().writeTo(processingEnv.getFiler());
+                    log.info("================================Generated================================\n" + classSpec);
+                    try {
+                        JavaFile.builder(getPackageName(oldMethod), classSpec).build().writeTo(processingEnv.getFiler());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-                log.info("================================Generated2================================");
-
             }
-
 
 
         }

@@ -35,7 +35,7 @@ public class AspectConfig {
         return lastInsertId;
     }
 
-    @Around("@annotation(org.apache.ibatis.annotations.Select) && execution(Page *(..))")
+    @Around("@annotation(org.apache.ibatis.annotations.Select) && execution(io.huyvu.mybatix.Page *(..))")
     public Object returnPage(ProceedingJoinPoint joinPoint) throws Throwable {
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();

@@ -1,7 +1,6 @@
 package io.huyvu.reboot.backend.biz.user.dashboard.v1;
 
-
-import io.huyvu.reboot.backend.config.mybatis.Page;
+import io.huyvu.mybatix.Page;
 
 import java.util.List;
 

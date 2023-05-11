@@ -20,7 +20,8 @@ const CardHeaderCover = ({handleClose}) => {
         formData.append("file", file);
 
         api.post("/api/user/dashboard/card/attachment/" + bId, formData).then(r => {
-            api.put('/api/v1/user/card/details', {
+            console.log(r)
+            api.put('/api/user/dashboard/card/details', {
                 id: card.id,
                 coverUrl: r
             }).then()
@@ -29,7 +30,6 @@ const CardHeaderCover = ({handleClose}) => {
                 ...card,
                 coverUrl: r
             }))
-
         })
 
     }

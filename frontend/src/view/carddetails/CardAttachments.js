@@ -65,7 +65,6 @@ const CardAttachments = () => {
                                             <span style={buttonStyle}><a>Comment</a></span>
                                             <span style={buttonStyle}><a>Remove</a></span>
                                             <span style={buttonStyle}><a>Edit</a></span>
-
                                         </div>
                                     </div>
                                 </div>

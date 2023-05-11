@@ -2,7 +2,6 @@ import * as React from 'react'
 import {useCallback, useState} from 'react'
 import {Button, Dialog, List, TextField} from '@mui/material'
 import {useNavigate} from 'react-router-dom'
-import {useSelector} from 'react-redux'
 import DialogContent from '@mui/material/DialogContent'
 import ListItem from '@mui/material/ListItem'
 import CardModifiableTitle from './CardModifiableTitle'
@@ -17,10 +16,13 @@ import CardPowerUps from "./CardPowerUps";
 import CardAutomation from "./CardAutomation";
 import CardDetailsActions from "./CardDetailsActions";
 import CardAttachments from "./CardAttachments";
+import api from "../../service/api";
+import {updateCard} from "../workspace/dashboard-slice";
 
-
+import {useDispatch, useSelector} from "react-redux";
 
 const CardDetails = () => {
+    const dispatch = useDispatch();
     const [open, setOpen] = useState(true)
     const handleClickOpen = () => {
         setOpen(true)
@@ -48,6 +50,25 @@ const CardDetails = () => {
     const processFiles = (files) => {
         // Process the files here, e.g., read file contents, upload to server, etc.
         console.log(files);
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i]
+            if (!file) return
+            const formData = new FormData();
+            formData.append("file", file);
+
+            api.post("/api/user/dashboard/card/attachment/" + bId, formData).then(r => {
+                console.log(r)
+                api.put('/api/user/dashboard/card/details', {
+                    id: card.id,
+                    coverUrl: r
+                }).then()
+
+                dispatch(updateCard({
+                    ...card,
+                    coverUrl: r
+                }))
+            })
+        }
     };
 
 
@@ -67,7 +88,7 @@ const CardDetails = () => {
                 <CardHeaderCover setOpen={setOpen} handleClose={handleClose}/>
                 <DialogContent onDrop={handleDrop}
                                onDragOver={(event) => event.preventDefault()} // Ensure drop events are allowed
-                               >
+                >
                     <CardModifiableTitle/>
                     <CardListDialog/>
                 </DialogContent>

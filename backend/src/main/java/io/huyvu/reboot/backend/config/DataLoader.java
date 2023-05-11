@@ -26,6 +26,8 @@ public class DataLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         var attachmentVoPage = repo.selectAttachments(15, Paging.of(1, 5));
 
+        System.out.println(attachmentVoPage);
+
 
         Random random = new Random();
 

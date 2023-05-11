@@ -2,6 +2,7 @@ package io.huyvu.reboot.backend.config.mybatis;
 
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.*;
+import io.huyvu.reboot.backend.biz.user.dashboard.v1.Paging;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Mapper;
@@ -34,8 +35,6 @@ public class MyBatisSelectProcessor extends AbstractProcessor {
         log.info(roundEnv.getElementsAnnotatedWith(Select.class).toString());
         for (Element element : roundEnv.getElementsAnnotatedWith(Select.class)) {
             analyzeMethod(element);
-
-
         }
         return true;
     }
@@ -83,7 +82,8 @@ public class MyBatisSelectProcessor extends AbstractProcessor {
                                 .add(",")
                                 .add(values.get(1).toString());
 
-                        if (containPagingParam()) {
+
+                        if (oldMethod.getParameters().stream().anyMatch(e -> e.asType().toString().equals(Paging.class.getName()))) {
                             add.add(",\" limit #{offset}, #{limit}\"");
                         }
 
@@ -150,9 +150,6 @@ public class MyBatisSelectProcessor extends AbstractProcessor {
         }
     }
 
-    private boolean containPagingParam() {
-        return true;
-    }
 
     private static boolean notMethod(Element element) {
         return element.getKind() != ElementKind.METHOD;

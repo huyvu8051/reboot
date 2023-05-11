@@ -38,6 +38,19 @@ const CardDetails = () => {
     }, [bId, navigate])
 
 
+    const handleDrop = (event) => {
+        event.preventDefault();
+        const files = event.dataTransfer.files;
+        // Process the dropped files
+        processFiles(files);
+    };
+
+    const processFiles = (files) => {
+        // Process the files here, e.g., read file contents, upload to server, etc.
+        console.log(files);
+    };
+
+
     return card && (
         <div>
             <Button variant='outlined' onClick={handleClickOpen}>
@@ -52,7 +65,9 @@ const CardDetails = () => {
 
             >
                 <CardHeaderCover setOpen={setOpen} handleClose={handleClose}/>
-                <DialogContent>
+                <DialogContent onDrop={handleDrop}
+                               onDragOver={(event) => event.preventDefault()} // Ensure drop events are allowed
+                               >
                     <CardModifiableTitle/>
                     <CardListDialog/>
                 </DialogContent>

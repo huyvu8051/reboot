@@ -41,6 +41,7 @@
     <modules>
         <module>frontend</module>
         <module>backend</module>
+        <module>mybatix</module>
     </modules>
 
 </project>

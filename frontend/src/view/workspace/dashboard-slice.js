@@ -10,7 +10,8 @@ const initialState = {
     cards: [],
     card: null,
     cardMems: [],
-    cardLabels: []
+    cardLabels: [],
+    attachments: null // card attachments
 
 }
 

@@ -2,7 +2,7 @@
  * @Author HuyVu
  * @CreatedDate 5/9/2023 11:06 AM
  */
-package io.huyvu.reboot.backend.config.mybatis;
+package io.huyvu.mybatix;
 
 import java.util.List;
 

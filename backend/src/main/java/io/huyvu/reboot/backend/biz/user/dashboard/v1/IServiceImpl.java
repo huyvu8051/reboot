@@ -1,7 +1,10 @@
 package io.huyvu.reboot.backend.biz.user.dashboard.v1;
 
 import io.huyvu.mybatix.Page;
+import io.huyvu.mybatix.Paging;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.session.ResultContext;
+import org.apache.ibatis.session.ResultHandler;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,12 +35,7 @@ public class IServiceImpl implements IService {
             cardMembers = repo.selectCardMems(cId);
             cardLabels = repo.selectCardLabels(cId);
 
-          /*  attachments = repo.selectAttachments(cId, new ResultHandler<AttachmentVo>() {
-                @Override
-                public void handleResult(ResultContext<? extends AttachmentVo> resultContext) {
-                }
-            });
-*/
+            attachments = repo.selectAttachments(cId, Paging.of(0, 5));
             bId = card.bId();
 
         }

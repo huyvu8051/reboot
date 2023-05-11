@@ -1,6 +1,5 @@
 package io.huyvu.reboot.backend.biz.user.dashboard.v1;
 
-import io.huyvu.reboot.backend.config.mybatis.MyBatisSelect;
 import io.huyvu.reboot.backend.config.mybatis.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -158,15 +157,14 @@ public interface Repository {
     List<CardLabel> selectCardLabels(long cId);
 
 
-    @Select("""
-            select sql_calc_found_rows id,
-                                       card_id as cid,
-                                       name,
-                                       type,
-                                       created_date
+    @Select({"""
+            select id,
+                   card_id as cid,
+                   name,
+                   type,
+                   created_date""", """
             from attachment
-            where card_id = #{cId}
-            and is_deleted = false
-            limit 0, 5""")
-    Page<AttachmentVo> selectAttachments(long cId);
+            where card_id = 15
+              and is_deleted = false"""})
+    Page<AttachmentVo> selectAttachments(long cId, Paging paging);
 }

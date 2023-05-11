@@ -31,78 +31,91 @@ public class MyBatisSelectProcessor extends AbstractProcessor {
         log.info("=============================start=================================");
         log.info(roundEnv.getElementsAnnotatedWith(Select.class).toString());
         for (Element element : roundEnv.getElementsAnnotatedWith(Select.class)) {
-            if (element.getKind() != ElementKind.METHOD) {
-                continue;
-            }
-
-            ExecutableElement oldMethod = (ExecutableElement) element;
-
-            var returnType = oldMethod.getReturnType();
-
-            String methodName = oldMethod.getSimpleName().toString();
-
-            var args = ParameterSpec.builder(TypeName.get(Map.class), "args").build();
-
-            MethodSpec.Builder newMethodBuilder = MethodSpec.methodBuilder(methodName)
-                    .addModifiers(oldMethod.getModifiers())
-                   // .addParameters(getParameters(oldMethod));
-                    .addParameter(args);
-
-            // copy all annotation and it values
-            for (AnnotationMirror annotation : oldMethod.getAnnotationMirrors()) {
-
-                TypeElement annotationTypeElement = (TypeElement) annotation.getAnnotationType().asElement();
-                String annotationClassName = annotationTypeElement.getQualifiedName().toString();
-                AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(Class.forName(annotationClassName));
-
-                for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : annotation.getElementValues().entrySet()) {
-                    String attributeName = entry.getKey().getSimpleName().toString();
-                    AnnotationValue attributeValue = entry.getValue();
-                    annotationBuilder.addMember(attributeName, "$L", attributeValue);
-                }
-
-                 newMethodBuilder.addAnnotation(annotationBuilder.build());
-            }
-
-
-            TypeElement classElement = (TypeElement) oldMethod.getEnclosingElement();
-
-            TypeSpec.Builder classBuilder = TypeSpec.interfaceBuilder(classElement.getSimpleName().toString() + PAGEABLE)
-                    .addAnnotation(Mapper.class)
-                    .addModifiers(Modifier.PUBLIC);
-
-            if (returnType instanceof DeclaredType) {
-                DeclaredType declaredReturnType = (DeclaredType) returnType;
-                TypeElement typeElement = (TypeElement) declaredReturnType.asElement();
-                if (!typeElement.getQualifiedName().contentEquals(Page.class.getName())) {
-                    log.info("skip: " + typeElement.getQualifiedName() + " " + oldMethod);
-                    continue;
-                }
-                List<? extends TypeMirror> typeArguments = declaredReturnType.getTypeArguments();
-                if (typeArguments.size() == 1) {
-                    TypeMirror typeArgument = typeArguments.get(0);
-                    TypeName typeName = TypeName.get(typeArgument);
-                    // Create a ParameterizedTypeName for List<T>
-                    TypeName listType = ParameterizedTypeName.get(ClassName.get(List.class), typeName);
-
-                    newMethodBuilder.returns(listType);
-
-                    var newMethod = newMethodBuilder.build();
-
-                    classBuilder.addMethod(newMethod);
-                    TypeSpec classSpec = classBuilder.build();
-                    log.info("================================Generated================================\n" + classSpec);
-                    try {
-                        JavaFile.builder(getPackageName(oldMethod), classSpec).build().writeTo(processingEnv.getFiler());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+            analyzeMethod(element);
 
 
         }
         return true;
+    }
+
+    private void analyzeMethod(Element element) throws ClassNotFoundException {
+        ExecutableElement oldMethod = (ExecutableElement) element;
+        var returnType = oldMethod.getReturnType();
+        if (returnType instanceof DeclaredType) {
+            DeclaredType declaredReturnType = (DeclaredType) returnType;
+            TypeElement typeElement = (TypeElement) declaredReturnType.asElement();
+            if (notReturnPage(typeElement) || notMethod(element)) {
+                log.info("skip: " + typeElement.getQualifiedName() + " " + oldMethod);
+                return;
+            }
+
+            String methodName = oldMethod.getSimpleName().toString();
+            var args = ParameterSpec.builder(TypeName.get(Map.class), "args").build();
+
+            MethodSpec.Builder newMethodBuilder = MethodSpec.methodBuilder(methodName)
+                    .addModifiers(oldMethod.getModifiers())
+                    // .addParameters(getParameters(oldMethod));
+                    .addParameter(args);
+
+            // copy all annotation and it values
+            copyAnnotations(oldMethod, newMethodBuilder);
+
+
+            TypeElement oldClassElement = (TypeElement) oldMethod.getEnclosingElement();
+
+            TypeSpec.Builder newClassBuilder = TypeSpec.interfaceBuilder(oldClassElement.getSimpleName().toString() + PAGEABLE)
+                    .addAnnotation(Mapper.class)
+                    .addModifiers(Modifier.PUBLIC);
+
+
+            List<? extends TypeMirror> typeArguments = declaredReturnType.getTypeArguments();
+            if (typeArguments.size() == 1) {
+                TypeMirror typeArgument = typeArguments.get(0);
+                TypeName typeName = TypeName.get(typeArgument);
+                // Create a ParameterizedTypeName for List<T>
+                TypeName listType = ParameterizedTypeName.get(ClassName.get(List.class), typeName);
+                newMethodBuilder.returns(listType);
+
+                var newMethod = newMethodBuilder.build();
+
+                newClassBuilder.addMethod(newMethod);
+                TypeSpec classSpec = newClassBuilder.build();
+                log.info("================================Generated================================");
+                log.info(classSpec.toString());
+                try {
+                    JavaFile.builder(getPackageName(oldMethod), classSpec).build().writeTo(processingEnv.getFiler());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static boolean notMethod(Element element) {
+        return element.getKind() != ElementKind.METHOD;
+    }
+
+    private static boolean notReturnPage(TypeElement typeElement) {
+        return !typeElement.getQualifiedName().contentEquals(Page.class.getName());
+    }
+
+    private static void copyAnnotations(ExecutableElement oldMethod, MethodSpec.Builder newMethodBuilder) throws ClassNotFoundException {
+        for (AnnotationMirror annotation : oldMethod.getAnnotationMirrors()) {
+
+            TypeElement annotationTypeElement = (TypeElement) annotation.getAnnotationType().asElement();
+            String annotationClassName = annotationTypeElement.getQualifiedName().toString();
+            Class<?> annotationClass = Class.forName(annotationClassName);
+            AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(annotationClass);
+            var elementValues = annotation.getElementValues();
+
+            for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : elementValues.entrySet()) {
+                String attributeName = entry.getKey().getSimpleName().toString();
+                AnnotationValue attributeValue = entry.getValue();
+                annotationBuilder.addMember(attributeName, "$L", attributeValue);
+            }
+
+            newMethodBuilder.addAnnotation(annotationBuilder.build());
+        }
     }
 
     private List<String> getParameterNames(ExecutableElement method) {

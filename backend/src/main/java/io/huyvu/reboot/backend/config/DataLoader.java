@@ -2,6 +2,7 @@ package io.huyvu.reboot.backend.config;
 
 import com.github.javafaker.Faker;
 import io.huyvu.reboot.backend.biz.user.dashboard.v1.AttachmentVo;
+import io.huyvu.reboot.backend.biz.user.dashboard.v1.Paging;
 import io.huyvu.reboot.backend.biz.user.dashboard.v1.Repository;
 import io.huyvu.reboot.backend.config.mybatis.Page;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ public class DataLoader implements ApplicationRunner {
 
 
     public void run(ApplicationArguments args) {
-        var attachmentVoPage = repo.selectAttachments(15);
+        var attachmentVoPage = repo.selectAttachments(15, Paging.of(1, 5));
 
 
         Random random = new Random();

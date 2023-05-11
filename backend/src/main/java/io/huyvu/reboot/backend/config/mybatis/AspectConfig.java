@@ -1,6 +1,7 @@
 package io.huyvu.reboot.backend.config.mybatis;
 
-import io.huyvu.reboot.backend.biz.user.dashboard.v1.Paging;
+import io.huyvu.mybatix.Page;
+import io.huyvu.mybatix.Paging;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static io.huyvu.reboot.backend.config.mybatis.MyBatisSelectProcessor.*;
+import static io.huyvu.mybatix.MyBatisSelectProcessor.*;
 import static io.huyvu.reboot.backend.util.SecurityUtils.username;
 
 
@@ -40,8 +41,8 @@ public class AspectConfig {
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         String methodName = signature.getMethod().getName();
-        String itemsMethodName = signature.getMethod().getDeclaringClass().getName() + PAGEABLE + "." + ITEMS_METHOD_NAME_PREFIX + methodName;
-        String totalCountMethodName = signature.getMethod().getDeclaringClass().getName() + PAGEABLE + "." + TOTAL_COUNT_METHOD_NAME_PREFIX + methodName;
+        String itemsMethodName = signature.getMethod().getDeclaringClass().getName() + PAGEABLE_CLASS_PREFIX + "." + ITEMS_METHOD_NAME_PREFIX + methodName;
+        String totalCountMethodName = signature.getMethod().getDeclaringClass().getName() + PAGEABLE_CLASS_PREFIX + "." + TOTAL_COUNT_METHOD_NAME_PREFIX + methodName;
 
         var args = joinPoint.getArgs();
 

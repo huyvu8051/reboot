@@ -1,7 +1,7 @@
 package io.huyvu.reboot.backend.config;
 
 import com.github.javafaker.Faker;
-import io.huyvu.reboot.backend.biz.user.dashboard.v1.Paging;
+import io.huyvu.mybatix.Paging;
 import io.huyvu.reboot.backend.biz.user.dashboard.v1.Repository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

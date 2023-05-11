@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class MyBatisSelectProcessor extends AbstractProcessor {
 
-    private static final String PAGEABLE = "$Pageable";
+    public static final String PAGEABLE = "$Pageable";
 
     @SneakyThrows
     @Override
@@ -41,9 +41,12 @@ public class MyBatisSelectProcessor extends AbstractProcessor {
 
             String methodName = oldMethod.getSimpleName().toString();
 
+            var args = ParameterSpec.builder(TypeName.get(Map.class), "args").build();
+
             MethodSpec.Builder newMethodBuilder = MethodSpec.methodBuilder(methodName)
                     .addModifiers(oldMethod.getModifiers())
-                    .addParameters(getParameters(oldMethod));
+                   // .addParameters(getParameters(oldMethod));
+                    .addParameter(args);
 
             // copy all annotation and it values
             for (AnnotationMirror annotation : oldMethod.getAnnotationMirrors()) {
@@ -58,7 +61,7 @@ public class MyBatisSelectProcessor extends AbstractProcessor {
                     annotationBuilder.addMember(attributeName, "$L", attributeValue);
                 }
 
-                // newMethodBuilder.addAnnotation(annotationBuilder.build());
+                 newMethodBuilder.addAnnotation(annotationBuilder.build());
             }
 
 

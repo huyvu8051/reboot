@@ -168,6 +168,5 @@ public interface Repository {
             where card_id = #{cId}
             and is_deleted = false
             limit 0, 5""")
-    @MyBatisSelect("SELECT * FROM my_table")
     Page<AttachmentVo> selectAttachments(long cId);
 }

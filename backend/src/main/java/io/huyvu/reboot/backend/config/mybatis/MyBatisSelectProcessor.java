@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
 public class MyBatisSelectProcessor extends AbstractProcessor {
 
     public static final String PAGEABLE = "$Pageable";
+    public static final String ITEMS_METHOD_NAME_PREFIX = "items$";
+    public static final String TOTAL_COUNT_METHOD_NAME_PREFIX = "totalCount$";
 
     @SneakyThrows
     @Override
@@ -52,13 +54,68 @@ public class MyBatisSelectProcessor extends AbstractProcessor {
             String methodName = oldMethod.getSimpleName().toString();
             var args = ParameterSpec.builder(TypeName.get(Map.class), "args").build();
 
-            MethodSpec.Builder newMethodBuilder = MethodSpec.methodBuilder(methodName)
+            MethodSpec.Builder itemsMethodBuilder = MethodSpec.methodBuilder(ITEMS_METHOD_NAME_PREFIX + methodName)
                     .addModifiers(oldMethod.getModifiers())
-                    // .addParameters(getParameters(oldMethod));
+                    .addParameter(args);
+
+
+            MethodSpec.Builder totalCountMethodBuilder = MethodSpec.methodBuilder(TOTAL_COUNT_METHOD_NAME_PREFIX + methodName)
+                    .addModifiers(oldMethod.getModifiers())
+                    .returns(Integer.class)
                     .addParameter(args);
 
             // copy all annotation and it values
-            copyAnnotations(oldMethod, newMethodBuilder);
+            for (AnnotationMirror annotation : oldMethod.getAnnotationMirrors()) {
+
+                TypeElement annotationTypeElement = (TypeElement) annotation.getAnnotationType().asElement();
+                String annotationClassName = annotationTypeElement.getQualifiedName().toString();
+                Class<?> annotationClass = Class.forName(annotationClassName);
+                var elementValues = annotation.getElementValues();
+
+                for (var entry : elementValues.entrySet()) {
+                    if (annotationClass.equals(Select.class) && entry.getKey().getSimpleName().toString().equals("value")) {
+                        AnnotationValue annotationValue = entry.getValue();
+                        var values = (List<Object>) annotationValue.getValue();
+
+                        var add = CodeBlock.builder()
+                                .add("{")
+                                .add(values.get(0).toString())
+                                .add(",")
+                                .add(values.get(1).toString());
+
+                        if (containPagingParam()) {
+                            add.add(",\" limit #{offset}, #{limit}\"");
+                        }
+
+                        CodeBlock cb = add
+                                .add("}").build();
+
+                        AnnotationSpec.Builder itemsAnnotationBuilder = AnnotationSpec.builder(annotationClass);
+                        String itemsAttributeName = entry.getKey().getSimpleName().toString();
+                        itemsAnnotationBuilder.addMember(itemsAttributeName, cb);
+                        itemsMethodBuilder.addAnnotation(itemsAnnotationBuilder.build());
+
+                        CodeBlock cb1 = CodeBlock.builder()
+                                .add("{")
+                                .add("\"select count(*) \"")
+                                .add(",")
+                                .add(values.get(1).toString())
+                                .add("}").build();
+                        AnnotationSpec.Builder totalCountAnnotationBuilder = AnnotationSpec.builder(annotationClass);
+                        String totalCountAttributeName = entry.getKey().getSimpleName().toString();
+                        totalCountAnnotationBuilder.addMember(totalCountAttributeName, cb1);
+                        totalCountMethodBuilder.addAnnotation(totalCountAnnotationBuilder.build());
+
+                    } else {
+                        AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(annotationClass);
+                        String attributeName = entry.getKey().getSimpleName().toString();
+                        AnnotationValue attributeValue = entry.getValue();
+                        annotationBuilder.addMember(attributeName, "$L", attributeValue);
+                        itemsMethodBuilder.addAnnotation(annotationBuilder.build());
+                    }
+                }
+
+            }
 
 
             TypeElement oldClassElement = (TypeElement) oldMethod.getEnclosingElement();
@@ -74,11 +131,13 @@ public class MyBatisSelectProcessor extends AbstractProcessor {
                 TypeName typeName = TypeName.get(typeArgument);
                 // Create a ParameterizedTypeName for List<T>
                 TypeName listType = ParameterizedTypeName.get(ClassName.get(List.class), typeName);
-                newMethodBuilder.returns(listType);
+                itemsMethodBuilder.returns(listType);
 
-                var newMethod = newMethodBuilder.build();
+                var itemsMethod = itemsMethodBuilder.build();
+                var totalCountMethod = totalCountMethodBuilder.build();
 
-                newClassBuilder.addMethod(newMethod);
+                newClassBuilder.addMethod(itemsMethod);
+                newClassBuilder.addMethod(totalCountMethod);
                 TypeSpec classSpec = newClassBuilder.build();
                 log.info("================================Generated================================");
                 log.info(classSpec.toString());
@@ -91,6 +150,10 @@ public class MyBatisSelectProcessor extends AbstractProcessor {
         }
     }
 
+    private boolean containPagingParam() {
+        return true;
+    }
+
     private static boolean notMethod(Element element) {
         return element.getKind() != ElementKind.METHOD;
     }
@@ -99,24 +162,6 @@ public class MyBatisSelectProcessor extends AbstractProcessor {
         return !typeElement.getQualifiedName().contentEquals(Page.class.getName());
     }
 
-    private static void copyAnnotations(ExecutableElement oldMethod, MethodSpec.Builder newMethodBuilder) throws ClassNotFoundException {
-        for (AnnotationMirror annotation : oldMethod.getAnnotationMirrors()) {
-
-            TypeElement annotationTypeElement = (TypeElement) annotation.getAnnotationType().asElement();
-            String annotationClassName = annotationTypeElement.getQualifiedName().toString();
-            Class<?> annotationClass = Class.forName(annotationClassName);
-            AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(annotationClass);
-            var elementValues = annotation.getElementValues();
-
-            for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : elementValues.entrySet()) {
-                String attributeName = entry.getKey().getSimpleName().toString();
-                AnnotationValue attributeValue = entry.getValue();
-                annotationBuilder.addMember(attributeName, "$L", attributeValue);
-            }
-
-            newMethodBuilder.addAnnotation(annotationBuilder.build());
-        }
-    }
 
     private List<String> getParameterNames(ExecutableElement method) {
         return method.getParameters().stream().map(Element::getSimpleName).map(Name::toString)

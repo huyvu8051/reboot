@@ -1,20 +1,22 @@
 package io.huyvu.reboot.backend.biz.user.dashboard.v1;
 
 public interface Paging {
-  int getLimit();
-  int getOffset();
-  static Paging of(int page, int size){
-      return new Paging() {
+    int getLimit();
 
-          @Override
-          public int getLimit() {
-              return page * size;
-          }
+    int getOffset();
 
-          @Override
-          public int getOffset() {
-              return size;
-          }
-      };
-  }
+    static Paging of(int page, int size) {
+        return new Paging() {
+
+            @Override
+            public int getLimit() {
+                return size;
+            }
+
+            @Override
+            public int getOffset() {
+                return page * size;
+            }
+        };
+    }
 }

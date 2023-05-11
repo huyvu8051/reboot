@@ -1,5 +1,6 @@
 package io.huyvu.reboot.backend.config.mybatis;
 
+import io.huyvu.reboot.backend.biz.user.dashboard.v1.Paging;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static io.huyvu.reboot.backend.config.mybatis.MyBatisSelectProcessor.PAGEABLE;
+import static io.huyvu.reboot.backend.config.mybatis.MyBatisSelectProcessor.*;
 import static io.huyvu.reboot.backend.util.SecurityUtils.username;
 
 
@@ -39,27 +40,34 @@ public class AspectConfig {
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         String methodName = signature.getMethod().getName();
-        String fullMethodName = signature.getMethod().getDeclaringClass().getName() + PAGEABLE + "." + methodName;
+        String itemsMethodName = signature.getMethod().getDeclaringClass().getName() + PAGEABLE + "." + ITEMS_METHOD_NAME_PREFIX + methodName;
+        String totalCountMethodName = signature.getMethod().getDeclaringClass().getName() + PAGEABLE + "." + TOTAL_COUNT_METHOD_NAME_PREFIX + methodName;
 
         var args = joinPoint.getArgs();
 
         var parameterNames = signature.getParameterNames();
-        var parameterTypes = signature.getParameterTypes();
-
 
         Map<String, Object> argsMap = new HashMap<>();
         for (int i = 0; i < parameterNames.length; i++) {
-            String parameterName = parameterNames[i];
-            argsMap.put(parameterName, args[i]);
-        }
-        List result = sqlSession.selectList(fullMethodName, argsMap);
+            var arg = args[i];
+            if (arg instanceof Paging paging) {
+                argsMap.put("limit", paging.getLimit());
+                argsMap.put("offset", paging.getOffset());
+            } else {
+                String parameterName = parameterNames[i];
+                argsMap.put(parameterName, arg);
+            }
 
-        var rowsFound = ucRepo.selectRowsFound();
+        }
+        List result = sqlSession.selectList(itemsMethodName, argsMap);
+
+        var totalCount = sqlSession.selectOne(totalCountMethodName, argsMap);
         return new Page() {
             @Override
             public int getTotalCount() {
-                return rowsFound;
+                return Integer.parseInt(totalCount.toString());
             }
+
             @Override
             public List getItems() {
                 return result;

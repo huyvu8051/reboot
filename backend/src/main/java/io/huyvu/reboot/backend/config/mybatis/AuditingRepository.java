@@ -15,6 +15,4 @@ public interface AuditingRepository {
     @Select("select last_insert_id();")
     long getLastInsertId();
 
-    @Select("select found_rows();")
-    int selectRowsFound();
 }

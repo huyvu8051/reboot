@@ -16,7 +16,7 @@ public class ResourceHandleRegistry implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/api/internal/resources/board/**")
+        registry.addResourceHandler("/api/v1/internal/resources/board/**")
                 .addResourceLocations(UPLOAD_DIR);
     }
 }

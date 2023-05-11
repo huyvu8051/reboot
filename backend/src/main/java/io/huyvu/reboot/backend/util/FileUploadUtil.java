@@ -1,5 +1,6 @@
 package io.huyvu.reboot.backend.util;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,16 +14,17 @@ import java.nio.file.StandardCopyOption;
 @Slf4j
 public class FileUploadUtil {
 
-    public static void saveFile(String dir, String fileNm, MultipartFile mf) throws IOException {
+    @SneakyThrows
+    public static void saveFile(String dir, String fileNm, MultipartFile mf) {
         Path uploadPath = Paths.get(dir + "/" + fileNm);
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
 
         try (InputStream inputStream = mf.getInputStream()) {
-
             Files.copy(inputStream, uploadPath, StandardCopyOption.REPLACE_EXISTING);
             log.info(uploadPath.toString());
+
         } catch (IOException ioe) {
             throw new IOException("Could not save image file: " + fileNm, ioe);
         }

@@ -8,6 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 const CardHeaderCover = ({handleClose}) => {
     const dispatch = useDispatch()
+    const cId = useSelector(sts => sts.dashboard.card?.id || null)
 
     const bId = useSelector(sts => sts.dashboard.board?.id)
     const card = useSelector(sts => sts.dashboard.card || {})
@@ -19,9 +20,9 @@ const CardHeaderCover = ({handleClose}) => {
         const formData = new FormData();
         formData.append("file", file);
 
-        api.post("/api/user/dashboard/card/attachment/" + bId, formData).then(r => {
+        api.post("/api/v1/user/dashboard/card/attachment/" + cId, formData).then(r => {
             console.log(r)
-            api.put('/api/user/dashboard/card/details', {
+            api.put('/api/v1/user/dashboard/card/details', {
                 id: card.id,
                 coverUrl: r
             }).then()
@@ -43,7 +44,7 @@ const CardHeaderCover = ({handleClose}) => {
                         maxHeight: 200,
                         objectFit: 'contain',
                     }}
-                    src={`/api/resources/board/${bId}/${card.coverUrl}`}
+                    src={`/api/v1/resources/board/${bId}/${card.coverUrl}`}
                     alt={'background'}>
 
                 </img>

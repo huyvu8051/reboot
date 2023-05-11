@@ -10,7 +10,7 @@ const CardListDialog = () => {
     const card = useSelector(sts => sts.dashboard.card)
     const [boards, setBoards] = useState([])
     useEffect(() => {
-        api.get('/api/user/dashboard/card/boards-details').then(setBoards)
+        api.get('/api/v1/user/dashboard/card/boards-details').then(setBoards)
     }, [setBoards])
     const [anchorEl, setAnchorEl] = React.useState(null);
 

@@ -15,19 +15,14 @@ import static io.huyvu.reboot.backend.util.SecurityUtils.uId;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user/dashboard/card")
+@RequestMapping("/api/v1/user/dashboard/card")
 public class Controller {
     private final IService service;
-    private final String UPLOAD_DIR = "D://reboot/resources";
 
-    @PostMapping("/attachment/{bId}")
-    String uploadAttachment(@RequestParam("file") MultipartFile file, @PathVariable long bId) throws IOException {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        fileName = UUID.randomUUID() + fileName.substring(fileName.lastIndexOf("."));
-        FileUploadUtil.saveFile(UPLOAD_DIR + "/" + bId, fileName, file);
-        return fileName;
+    @PostMapping("/attachment/{cId}")
+    String uploadAttachment(@RequestParam("file") MultipartFile file, @PathVariable long cId) throws IOException {
+        return service.uploadAttachment(file, cId);
     }
-
     @GetMapping("/boards-details")
     List<BoardsDetailsResp> getBoardsDetails() {
         return service.getBoardsDetails(uId());

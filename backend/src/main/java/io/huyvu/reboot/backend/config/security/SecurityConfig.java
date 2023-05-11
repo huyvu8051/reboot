@@ -25,7 +25,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/internal/**").denyAll();
+                .antMatchers("/api/v1/internal/**").denyAll();
 
         http.addFilterAfter(lazySecurityContextProviderFilter, SessionManagementFilter.class);
 

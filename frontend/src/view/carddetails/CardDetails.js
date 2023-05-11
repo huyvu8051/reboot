@@ -29,6 +29,7 @@ const CardDetails = () => {
     }
     const navigate = useNavigate()
     const bId = useSelector(sts => sts.dashboard.board?.id || null)
+    const cId = useSelector(sts => sts.dashboard.card?.id || null)
 
 
     const card = useSelector(sts => sts.dashboard.card)
@@ -47,6 +48,8 @@ const CardDetails = () => {
         processFiles(files);
     };
 
+
+
     const processFiles = (files) => {
         // Process the files here, e.g., read file contents, upload to server, etc.
         console.log(files);
@@ -56,9 +59,9 @@ const CardDetails = () => {
             const formData = new FormData();
             formData.append("file", file);
 
-            api.post("/api/user/dashboard/card/attachment/" + bId, formData).then(r => {
+            api.post("/api/v1/user/dashboard/card/attachment/" + cId, formData).then(r => {
                 console.log(r)
-                api.put('/api/user/dashboard/card/details', {
+                api.put('/api/v1/user/dashboard/card/details', {
                     id: card.id,
                     coverUrl: r
                 }).then()
@@ -69,6 +72,29 @@ const CardDetails = () => {
                 }))
             })
         }
+    };
+
+    const processFilesAttachments = (files) => {
+        // Process the files here, e.g., read file contents, upload to server, etc.
+        console.log(files);
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i]
+            if (!file) return
+            const formData = new FormData();
+            formData.append("file", file);
+
+            api.post("/api/v1/user/dashboard/card/attachment/" + cId, formData).then(r => {
+                console.log(r)
+
+            })
+        }
+    };
+
+    const handleDropAttachments = (event) => {
+        event.preventDefault();
+        const files = event.dataTransfer.files;
+        // Process the dropped files
+        processFilesAttachments(files);
     };
 
 
@@ -92,7 +118,8 @@ const CardDetails = () => {
                     <CardModifiableTitle/>
                     <CardListDialog/>
                 </DialogContent>
-                <DialogContent sx={{display: 'flex'}}>
+                <DialogContent sx={{display: 'flex'}} onDrop={handleDropAttachments}
+                               onDragOver={(event) => event.preventDefault()}>
                     <div style={{flex: 3}}>
 
                         <CardMembers/>

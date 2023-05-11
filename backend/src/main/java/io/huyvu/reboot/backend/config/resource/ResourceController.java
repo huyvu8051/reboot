@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class ResourceController {
-    @GetMapping("/api/resources/board/{bId}/{fileNm}")
+    @GetMapping("/api/v1/resources/board/{bId}/{fileNm}")
     public String getResource(@PathVariable long bId, @PathVariable String fileNm, @CookieValue String resToken) {
         SecurityUtils.validateBoardResourcesAccess(bId, resToken);
-        return "forward:/api/internal/resources/board/" + bId + "/" + fileNm;
+        return "forward:/api/v1/internal/resources/board/" + bId + "/" + fileNm;
     }
 }

@@ -1,6 +1,7 @@
 package io.huyvu.reboot.backend.biz.user.dashboard.card.v1;
 
 import io.huyvu.reboot.backend.biz.user.lizt.v1.UpdateCardDetailsReq;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -18,6 +19,7 @@ public interface IRepository {
               FROM board
              WHERE id = @b_id""")
     long selectWpId(long cId);
+
     @Update("""
             <script>
             update card
@@ -57,4 +59,19 @@ public interface IRepository {
                                    where user_id = #{uId}
                                      and is_deleted = false)""")
     List<BoardsDetailsResp> selectBoardsDetails(long uId);
+
+    @Select("""
+            select b_id
+            from card
+            where id = #{cId}""")
+    long selectBoardId(long cId);
+
+
+    @Insert("""
+            insert into attachment
+            set card_id = #{cId},
+                name    = #{originalFileName},
+                file_nm = #{storeFileName},
+                type    = #{fileExtension}""")
+    void insertAttachment(long cId, String originalFileName, String storeFileName, String fileExtension);
 }

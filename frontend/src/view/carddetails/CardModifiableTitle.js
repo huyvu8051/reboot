@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {useRef} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {updateCard} from '../workspace/dashboard-slice'
 import api from '../../service/api'
@@ -10,6 +10,18 @@ const CardModifiableTitle = () => {
     const dispatch = useDispatch()
 
     const item = useSelector(sts => sts.dashboard.card)
+    const [inputValue, setInputValue] = useState(item.title);
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    useEffect(() => {
+        if (!isFocused) {
+            setInputValue(item.title);
+        }
+    }, [item.title]);
 
     const handleSubmit = () => {
         const inputVal = inputRef.current.value.trim()
@@ -18,7 +30,7 @@ const CardModifiableTitle = () => {
                 ...item,
                 title: inputVal
             }))
-            api.put('/api/user/dashboard/card/details', {
+            api.put('/api/v1/user/dashboard/card/details', {
                 id: item.id,
                 title: inputVal
             }).then()
@@ -28,6 +40,7 @@ const CardModifiableTitle = () => {
     }
     const handleBlur = ({currentTarget, relatedTarget}) => {
         if (currentTarget.contains(relatedTarget)) return
+        setIsFocused(false);
         handleSubmit()
 
     }
@@ -37,7 +50,17 @@ const CardModifiableTitle = () => {
             event.preventDefault()
             inputRef.current.blur()
         }
+
+        /* if(event.key === 'Escape'){
+            event.preventDefault();
+            setInputValue(item.title);
+            inputRef.current.blur();
+        }*/
     }
+    const handleChange = (event) => {
+        setInputValue(event.target.value);
+    };
+
     return (
 
         <TextField inputRef={inputRef}
@@ -62,7 +85,8 @@ const CardModifiableTitle = () => {
                        },
                        onKeyDown: handleKeyDown
                    }}
-                   defaultValue={item.title}/>
+                   value={inputValue}
+                   onChange={handleChange}/>
     )
 }
 export default CardModifiableTitle

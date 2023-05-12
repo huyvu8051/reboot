@@ -58,18 +58,19 @@ export const dashboardSlice = createSlice({
         },
 
         updateAttachment: (s, a) => {
-            const find = s.attachments.find(e => e.id === a.payload.id);
+            const find = s.attachments.items.find(e => e.id === a.payload.id);
             if (find) {
                 Object.assign(find, a.payload)
             } else {
-                s.boards.push(a.payload)
+                s.attachments.items.unshift(a.payload)
+                s.attachments.totalCount ++;
             }
         }
     },
 })
 
 
-export const {save, updateLizt, updateCard, updateBoard} = dashboardSlice.actions
+export const {save, updateLizt, updateCard, updateBoard, updateAttachment} = dashboardSlice.actions
 
 
 export default dashboardSlice.reducer

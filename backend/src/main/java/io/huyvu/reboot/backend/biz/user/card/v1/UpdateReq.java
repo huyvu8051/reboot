@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.biz.user.dashboard.card.v1;
+package io.huyvu.reboot.backend.biz.user.card.v1;
 
 import java.util.List;
 

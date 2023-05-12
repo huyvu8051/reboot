@@ -165,7 +165,8 @@ public interface Repository {
                    type,
                    created_date""", """
             from attachment
-            where card_id = 15
-              and is_deleted = false"""})
+            where card_id = #{cId}
+              and is_deleted = false
+              order by id desc"""})
     Page<AttachmentVo> selectAttachments(long cId, Paging paging);
 }

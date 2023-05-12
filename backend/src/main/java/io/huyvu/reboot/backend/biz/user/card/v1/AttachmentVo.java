@@ -1,6 +1,5 @@
-package io.huyvu.reboot.backend.biz.user.dashboard.v1;
+package io.huyvu.reboot.backend.biz.user.card.v1;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public record AttachmentVo(long id, long cId, String name, String type, Date createdDate) {

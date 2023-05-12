@@ -1,6 +1,5 @@
-package io.huyvu.reboot.backend.biz.user.dashboard.card.v1;
+package io.huyvu.reboot.backend.biz.user.card.v1;
 
-import io.huyvu.reboot.backend.biz.user.lizt.v1.UpdateCardDetailsReq;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -73,5 +72,15 @@ public interface IRepository {
                 name    = #{originalFileName},
                 file_nm = #{storeFileName},
                 type    = #{fileExtension}""")
-    void insertAttachment(long cId, String originalFileName, String storeFileName, String fileExtension);
+    long insertAttachment(long cId, String originalFileName, String storeFileName, String fileExtension);
+
+    @Select("""
+            select id,
+                   card_id as cid,
+                   name,
+                   type,
+                   created_date
+            from attachment
+            where id = #{id}""")
+    AttachmentVo selectAttachment(long id);
 }

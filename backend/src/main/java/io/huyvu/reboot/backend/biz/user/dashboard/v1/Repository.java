@@ -135,6 +135,21 @@ public interface Repository {
     CardDetailsVo selectCardDetails(long cId, long uId);
 
     @Select("""
+            SELECT id
+            	  ,(SELECT l.title 
+            	      FROM lizt AS l
+            	     WHERE l.id = lizt_id) AS 'list.title'
+            	  ,(SELECT l.id 
+            	      FROM lizt AS l
+            	     WHERE l.id = lizt_id) AS 'list.id'
+            	  ,b_id
+            	  ,title
+              FROM card
+             WHERE id = #{cId}
+                   AND is_deleted = 0""")
+    CardDetailsVo2 sel(long cId);
+
+    @Select("""
             select id
                   ,username
                   ,full_name

@@ -31,6 +31,7 @@ public class IServiceImpl implements IService {
 
 
         if (cId != null) {
+            var sel = repo.sel(cId);
             card = repo.selectCardDetails(cId, uId);
             cardMembers = repo.selectCardMems(cId);
             cardLabels = repo.selectCardLabels(cId);

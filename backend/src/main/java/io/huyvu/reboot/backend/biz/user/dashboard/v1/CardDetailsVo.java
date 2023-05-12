@@ -1,6 +1,9 @@
 package io.huyvu.reboot.backend.biz.user.dashboard.v1;
 
+import lombok.Data;
+
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @Author HuyVu
@@ -25,3 +28,4 @@ public record CardDetailsVo(long id,
                             String location,
                             Date startDate) {
 }
+

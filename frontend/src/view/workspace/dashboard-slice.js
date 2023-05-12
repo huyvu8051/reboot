@@ -31,6 +31,9 @@ export const dashboardSlice = createSlice({
             } else {
                 s.lizts.push(a.payload)
             }
+            if (s.card && s.card.liztId === a.payload.id) {
+                s.card.liztTitle = a.payload.title
+            }
         },
         updateCard: (s, a) => {
             const find = s.cards.find(e => e.id === a.payload.id);
@@ -47,6 +50,15 @@ export const dashboardSlice = createSlice({
         },
         updateBoard: (s, a) => {
             const find = s.boards.find(e => e.id === a.payload.id);
+            if (find) {
+                Object.assign(find, a.payload)
+            } else {
+                s.boards.push(a.payload)
+            }
+        },
+
+        updateAttachment: (s, a) => {
+            const find = s.attachments.find(e => e.id === a.payload.id);
             if (find) {
                 Object.assign(find, a.payload)
             } else {

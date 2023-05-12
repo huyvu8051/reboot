@@ -12,6 +12,7 @@ const CardHeaderCover = ({handleClose}) => {
 
     const bId = useSelector(sts => sts.dashboard.board?.id)
     const card = useSelector(sts => sts.dashboard.card || {})
+    console.log(card)
 
     const handleFileChange = e => {
 

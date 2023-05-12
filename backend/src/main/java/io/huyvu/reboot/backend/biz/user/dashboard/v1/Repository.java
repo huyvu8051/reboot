@@ -105,10 +105,10 @@ public interface Repository {
 
     @Select("""
             SELECT id
-            	  ,lizt_id
+            	  ,lizt_id as 'list.id'
             	  ,(SELECT l.title 
             	      FROM lizt AS l
-            	     WHERE l.id = lizt_id) AS lizt_title
+            	     WHERE l.id = lizt_id) AS 'list.title'
             	  ,b_id
             	  ,title
             	  ,ordinal
@@ -133,21 +133,6 @@ public interface Repository {
              WHERE id = #{cId}
                    AND is_deleted = 0""")
     CardDetailsVo selectCardDetails(long cId, long uId);
-
-    @Select("""
-            SELECT id
-            	  ,(SELECT l.title 
-            	      FROM lizt AS l
-            	     WHERE l.id = lizt_id) AS 'list.title'
-            	  ,(SELECT l.id 
-            	      FROM lizt AS l
-            	     WHERE l.id = lizt_id) AS 'list.id'
-            	  ,b_id
-            	  ,title
-              FROM card
-             WHERE id = #{cId}
-                   AND is_deleted = 0""")
-    CardDetailsVo2 sel(long cId);
 
     @Select("""
             select id

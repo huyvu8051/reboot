@@ -30,7 +30,7 @@ const CardListDialog = () => {
         <div>
             <Typography sx={{textDecoration: 'underline', cursor: 'pointer'}} aria-describedby={id}
                         onClick={handleClick}>
-                in list {card.liztTitle}
+                in list {card.list.title}
             </Typography>
             <Popover
                 id={id}

@@ -31,8 +31,8 @@ export const dashboardSlice = createSlice({
             } else {
                 s.lizts.push(a.payload)
             }
-            if (s.card && s.card.liztId === a.payload.id) {
-                s.card.liztTitle = a.payload.title
+            if (s.card && s.card.list.id === a.payload.id) {
+                Object.assign(s.card.list, a.payload)
             }
         },
         updateCard: (s, a) => {

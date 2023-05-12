@@ -49,7 +49,6 @@ const CardDetails = () => {
     };
 
 
-
     const processFiles = (files) => {
         // Process the files here, e.g., read file contents, upload to server, etc.
         console.log(files);
@@ -109,6 +108,12 @@ const CardDetails = () => {
                 onClose={handleClose}
                 aria-labelledby='alert-dialog-title'
                 aria-describedby='alert-dialog-description'
+                sx={{
+                    '& .MuiPaper-root': {
+                        backgroundColor: '#F1F2F4'
+                    }
+
+                }}
 
             >
                 <CardHeaderCover setOpen={setOpen} handleClose={handleClose}/>

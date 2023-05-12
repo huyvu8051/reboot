@@ -8,6 +8,7 @@ const actionButton = {
         backgroundColor: 'rgba(9, 30, 66, 0.04)',
         color: 'inherit',
         textTransform: 'none',
+        fontWeight: '400',
         justifyContent: 'flex-start'
     },
     size: 'small',

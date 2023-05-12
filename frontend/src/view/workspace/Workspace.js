@@ -12,7 +12,7 @@ import Cookies from 'js-cookie'
 
 function Workspace(props) {
 
-    const [openLeft, setOpenLeft] = useState(true)
+    const [openLeft, setOpenLeft] = useState(false)
     const [openRight, setOpenRight] = useState(false)
 
     const wId = useSelector(sts => sts.dashboard.wp?.id || null)

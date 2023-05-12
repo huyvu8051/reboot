@@ -2,10 +2,9 @@ import {Card, CardActions, CardHeader, CardMedia, Chip} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import {$error} from "../../util/snackbar-utils";
 import {EditOutlined, Menu, Task} from "@mui/icons-material";
-
-import image from '../../asset/image/paella.jpg'
 import Grid from "@mui/material/Grid";
 import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const getStyle = (prov, snap) => {
 
@@ -20,7 +19,7 @@ const getStyle = (prov, snap) => {
 const CardItem = ({provided, snapshot, item}) => {
 
     const navigate = useNavigate();
-
+    const bId = useSelector(sts => sts.dashboard.board?.id || null)
     return (
         <Card
             sx={{
@@ -58,11 +57,12 @@ const CardItem = ({provided, snapshot, item}) => {
                         onClick={() => $error('icon')}>
                 <EditOutlined fontSize='small'/>
             </IconButton>
-            <CardMedia
-                sx={{height: 140}}
-                image={image}
-                title="green iguana"
-            />
+            {
+                item.coverUrl && <img
+                    width='100%'
+                    src={`/api/v1/resources/board/${bId}/${item.coverUrl}`}
+                />
+            }
             <CardHeader
                 titleTypographyProps={{
                     fontSize: 'small'

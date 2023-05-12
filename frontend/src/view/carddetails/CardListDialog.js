@@ -28,7 +28,13 @@ const CardListDialog = () => {
 
     return (
         <div>
-            <Typography sx={{textDecoration: 'underline', cursor: 'pointer'}} aria-describedby={id}
+            <Typography sx={{
+                textDecoration: 'underline',
+                cursor: 'pointer',
+                fontSize: 14,
+                fontWeight: 400,
+                lineHeight: '20px'
+            }} aria-describedby={id}
                         onClick={handleClick}>
                 in list {card.list.title}
             </Typography>

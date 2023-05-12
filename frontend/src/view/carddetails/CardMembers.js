@@ -15,7 +15,13 @@ const CardMembers = () => {
     return (
 
         <div style={{display: 'inline'}}>
-            <h5 style={{padding: 0, margin: 0}}> Members</h5>
+            <h5 style={{
+                padding: 0,
+                margin: 0,
+                fontSize: 12,
+                fontWeight: 600,
+                lineHeight: '20px'
+            }}> Members</h5>
             <AvatarGroup spacing={1} sx={{flexDirection: 'row'}}>
                 <Avatar onClick={handleAddNewMember} style={avatarStyle}><Add/></Avatar>
                 {

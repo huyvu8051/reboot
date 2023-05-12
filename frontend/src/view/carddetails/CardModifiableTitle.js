@@ -74,14 +74,15 @@ const CardModifiableTitle = () => {
                        },
                        '& .MuiInputBase-root': {
                            padding: 1,
+                           left: -8
                        },
-                       paddingRight: 3
+                       paddingRight: 3,
                    }}
                    inputProps={{
                        style: {
-                           fontSize: 'large',
-                           fontWeight: 'bold',
-
+                           fontSize: 20,
+                           fontWeight: 600,
+                           lineHeight: '24px'
                        },
                        onKeyDown: handleKeyDown
                    }}

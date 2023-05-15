@@ -1,8 +1,8 @@
-import {Add} from "@mui/icons-material";
 import {Button, IconButton} from "@mui/material";
 import * as React from "react";
 import {useSelector} from "react-redux";
 import AddLabel from "./AddLabel";
+import {Add} from "@mui/icons-material";
 
 const CardLabels = () => {
     const cardLabels = useSelector(sts => sts.dashboard.cardLabels)
@@ -19,7 +19,6 @@ const CardLabels = () => {
             </h3>
             <div>
                 {cardLabels.map((data) => {
-
                     return (
                         <Button
                             disableElevation
@@ -33,14 +32,23 @@ const CardLabels = () => {
                         </Button>
                     );
                 })}
-                <IconButton
-                    size='small'
-                    variant='contained'
-                    style={{borderRadius: 3, margin: 2, backgroundColor: 'rgba(9, 30, 66, 0.04)'}}
 
-                >
-                    <Add/>
-                </IconButton>
+                <AddLabel
+                    activator={e => (
+                        <IconButton
+                            size='small'
+                            variant='contained'
+                            style={{
+                                borderRadius: 3,
+                                margin: 2,
+                                backgroundColor: 'rgba(9, 30, 66, 0.04)'
+                            }}
+                            {...e}
+                        >
+                            <Add/>
+                        </IconButton>
+                    )}
+                />
             </div>
         </div>
     );

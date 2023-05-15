@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Button, Popover} from "@mui/material";
+import {Popover, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 
 const AddLabel = ({activator}) => {
@@ -16,9 +16,7 @@ const AddLabel = ({activator}) => {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
     return <>
-        <Button aria-describedby={id} variant="contained" onClick={handleClick}>
-            Open Popover
-        </Button>
+        {activator({'aria-describedby': id, onClick: handleClick})}
         <Popover
             id={id}
             open={open}
@@ -28,8 +26,13 @@ const AddLabel = ({activator}) => {
                 vertical: 'bottom',
                 horizontal: 'left',
             }}
+            sx={{
+                '& .MuiPaper-root': {
+                    p: 1
+                }
+            }}
         >
-            <Typography sx={{p: 2}}>The content of the Popover.</Typography>
+            <TextField placeholder='Search labels...' fullWidth inputProps={{style: {padding: 5}}}/>
         </Popover>
     </>
 }

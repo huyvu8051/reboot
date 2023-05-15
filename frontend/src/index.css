@@ -1,4 +1,4 @@
-body, button, html, input, select, textarea {
+body, button, html, input, input::placeholder, select, textarea {
     color: #172B4D;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
     font-size: 14px;

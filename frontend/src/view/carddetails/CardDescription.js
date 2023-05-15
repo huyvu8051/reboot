@@ -1,4 +1,3 @@
-import {createReactEditorJS} from 'react-editor-js'
 import CheckList from '@editorjs/checklist'
 
 import Embed from '@editorjs/embed'
@@ -15,6 +14,11 @@ import Marker from '@editorjs/marker'
 import Delimiter from '@editorjs/delimiter'
 import InlineCode from '@editorjs/inline-code'
 import SimpleImage from '@editorjs/simple-image'
+import * as React from "react";
+import {useEffect, useRef} from "react";
+import EditorJS from "@editorjs/editorjs";
+
+import './CardDescription.css'
 
 export const EDITOR_JS_TOOLS = {
     embed: Embed,
@@ -35,11 +39,28 @@ export const EDITOR_JS_TOOLS = {
 }
 
 const CardDescription = () => {
+    const editorContainerRef = useRef(null);
+    let editorInstance = null;
 
-    const ReactEditorJS = createReactEditorJS()
+    useEffect(() => {
+        editorInstance = new EditorJS({
+            holder: editorContainerRef.current,
+            minHeight: '0px',
+            placeholder: 'Type here...',
+            tools: EDITOR_JS_TOOLS
+        });
+    }, []);
 
-    return (
-        <ReactEditorJS tools={EDITOR_JS_TOOLS}/>
-    );
-}
+    return <>
+        <h5 style={{padding: 0, margin: 0}}>
+            Description
+        </h5>
+        <div style={{
+            marginLeft: -5,
+            padding: 5,
+            borderRadius: 5,
+            border: '2px solid #1976d2',
+        }} ref={editorContainerRef}/>
+    </>;
+};
 export default CardDescription

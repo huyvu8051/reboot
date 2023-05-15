@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {useCallback, useState} from 'react'
-import {Button, Dialog, List, TextField} from '@mui/material'
+import {Button, Dialog, List} from '@mui/material'
 import {useNavigate} from 'react-router-dom'
 import DialogContent from '@mui/material/DialogContent'
 import ListItem from '@mui/material/ListItem'
@@ -124,7 +124,7 @@ const CardDetails = () => {
                     <CardModifiableTitle/>
                     <CardListDialog/>
                 </DialogContent>
-                <DialogContent sx={{display: 'flex'}} onDrop={handleDropAttachments}
+                <DialogContent sx={{display: 'flex', gap: 1}} onDrop={handleDropAttachments}
                                onDragOver={(event) => event.preventDefault()}>
                     <div style={{flex: 3}}>
 
@@ -132,9 +132,7 @@ const CardDetails = () => {
                         <CardLabels/>
                         <CardNotifications/>
                         <CardDate/>
-
                         <CardDescription/>
-
                         <CardAttachments/>
 
                         Activity

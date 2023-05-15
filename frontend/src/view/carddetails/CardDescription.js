@@ -2,7 +2,7 @@ import * as React from 'react'
 import {useEffect, useRef, useState} from 'react'
 import EditorJS from '@editorjs/editorjs'
 
-import './CardDescription.css'
+import './card-description.css'
 
 import config from './editor-js-tools-config'
 import api from "../../service/api";

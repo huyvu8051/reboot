@@ -2,6 +2,7 @@ import {Add} from "@mui/icons-material";
 import {Button, IconButton} from "@mui/material";
 import * as React from "react";
 import {useSelector} from "react-redux";
+import AddLabel from "./AddLabel";
 
 const CardLabels = () => {
     const cardLabels = useSelector(sts => sts.dashboard.cardLabels)
@@ -32,7 +33,6 @@ const CardLabels = () => {
                         </Button>
                     );
                 })}
-
                 <IconButton
                     size='small'
                     variant='contained'

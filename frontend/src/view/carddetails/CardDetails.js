@@ -8,7 +8,7 @@ import CardModifiableTitle from './CardModifiableTitle'
 import CardHeaderCover from './CardHeaderCover'
 import CardListDialog from './CardListDialog'
 import CardMembers from './CardMembers'
-import CardLabels from './CardLabels'
+import CardLabels from './label/CardLabels'
 import CardNotifications from './CardNotifications'
 import CardDate from './CardDate'
 import CardAddToTemplate from "./CardAddToTemplate";

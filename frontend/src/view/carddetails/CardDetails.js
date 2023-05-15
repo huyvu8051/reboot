@@ -21,6 +21,7 @@ import {updateCard} from "../workspace/dashboard-slice";
 
 import {useDispatch, useSelector} from "react-redux";
 import CardDescription from "./CardDescription";
+import CardActivity from "./CardActivity";
 
 const CardDetails = () => {
     const dispatch = useDispatch();
@@ -134,25 +135,9 @@ const CardDetails = () => {
                         <CardDate/>
                         <CardDescription/>
                         <CardAttachments/>
+                        <CardActivity/>
 
-                        Activity
-                        <List>
-                            <ListItem>
-                                act
-                            </ListItem>
-                            <ListItem>
-                                act
-                            </ListItem>
-                            <ListItem>
-                                act
-                            </ListItem>
-                            <ListItem>
-                                act
-                            </ListItem>
-                            <ListItem>
-                                act
-                            </ListItem>
-                        </List></div>
+                    </div>
                     <div style={{flex: 1}}>
                         <CardAddToTemplate/>
                         <CardPowerUps/>

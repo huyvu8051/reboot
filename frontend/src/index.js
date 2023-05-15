@@ -17,6 +17,8 @@ import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import './index.css'
+
 const theme = createTheme({
     palette: {
         text: {

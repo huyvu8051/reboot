@@ -20,6 +20,7 @@ import api from "../../service/api";
 import {updateCard} from "../workspace/dashboard-slice";
 
 import {useDispatch, useSelector} from "react-redux";
+import CardDescription from "./CardDescription";
 
 const CardDetails = () => {
     const dispatch = useDispatch();
@@ -132,8 +133,7 @@ const CardDetails = () => {
                         <CardNotifications/>
                         <CardDate/>
 
-                        <TextField label='Description' multiline rows={4} fullWidth/>
-
+                        <CardDescription/>
 
                         <CardAttachments/>
 

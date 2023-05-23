@@ -11,6 +11,7 @@ const initialState = {
     card: null,
     cardMems: [],
     cardLabels: [],
+    boardLabels: [],
     attachments: null // card attachments
 
 }
@@ -63,14 +64,22 @@ export const dashboardSlice = createSlice({
                 Object.assign(find, a.payload)
             } else {
                 s.attachments.items.unshift(a.payload)
-                s.attachments.totalCount ++;
+                s.attachments.totalCount++;
             }
-        }
+        },
+        updateCardLabel: (s, a) => {
+            const find = s.cardLabels.find(e => e.id === a.payload.id);
+            if (find) {
+                Object.assign(find, a.payload)
+            } else {
+                s.cardLabels.push(a.payload)
+            }
+        },
     },
 })
 
 
-export const {save, updateLizt, updateCard, updateBoard, updateAttachment} = dashboardSlice.actions
+export const {save, updateLizt, updateCard, updateBoard, updateAttachment, updateCardLabel} = dashboardSlice.actions
 
 
 export default dashboardSlice.reducer

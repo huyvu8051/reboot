@@ -1,10 +1,15 @@
 import {useState} from "react";
-import {Button, Checkbox, FormGroup, IconButton, Popover, TextField, Typography} from "@mui/material";
-import {AddCircleOutline, Close, Edit} from "@mui/icons-material";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import {Checkbox, IconButton, Popover, TextField, Typography} from "@mui/material";
+import {Close, Edit} from "@mui/icons-material";
+import {useDispatch, useSelector} from "react-redux";
+import {updateCardLabel} from "../../workspace/dashboard-slice";
 
 const AddLabel = ({activator}) => {
+    const dispatch = useDispatch()
     const [anchorEl, setAnchorEl] = useState()
+    const boardLabels = useSelector(sts => sts.dashboard.boardLabels)
+    const cardLabels = useSelector(sts => sts.dashboard.cardLabels)
+    // console.log(boardLabels, cardLabels)
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -19,6 +24,16 @@ const AddLabel = ({activator}) => {
     const editLabelHandler = () => {
         // Handle the icon button click event here
     };
+
+
+    function handleChecked(id, isDeleted) {
+        dispatch(updateCardLabel({
+            id,
+            isDeleted: !isDeleted
+        }))
+        // console.log(id, isDeleted)
+    }
+
     return <>
         {activator({'aria-describedby': id, onClick: handleClick})}
         <Popover
@@ -38,21 +53,28 @@ const AddLabel = ({activator}) => {
                 },
             }}
         >
-            <IconButton sx={{position: 'absolute', right: 0, top: 0}} size='small'><Close
+            <IconButton sx={{position: 'absolute', right: 0, top: 0, borderRadius: 1, padding: 0, margin: .5}}
+                        size='small'><Close
                 fontSize='small'/></IconButton>
             <p style={{fontSize: 13, fontWeight: '400', margin: 0}} align='center'>Labels</p>
             <TextField placeholder='Search labels...' fullWidth inputProps={{style: {padding: 5}}}/>
             <p>Labels</p>
-            <FormGroup>
-                <div style={{display: 'flex', alignItems: 'center', justifyItems: 'center', gap: 2}}>
-                    <Checkbox defaultChecked size='small'/>
-                    <Typography bgcolor='red' color='white' borderRadius={1} px={1} py={.5} width='100%' sx={{fontWeight: '500', fontSize: 14}}>Feature</Typography>
-                    <IconButton size='small' style={{borderRadius: 5}}>
-                        <Edit fontSize='small'/>
-                    </IconButton>
-                </div>
-
-            </FormGroup>
+            {
+                boardLabels.map(e => (
+                    <div key={e.id}
+                         style={{display: 'flex', alignItems: 'center', justifyItems: 'center', gap: 2, padding: .5}}>
+                        <Checkbox
+                            checked={!(cardLabels.find(item => item.labelId === e.id)?.isDeleted ?? true)}
+                            onClick={(event) => {
+                                handleChecked(e.id, event.target.checked)
+                            }} size='medium' sx={{padding: 0, margin: .5}}/>
+                        <Typography bgcolor='green' color='white' borderRadius={1} px={1.5} py={.5} width='100%'
+                                    sx={{fontWeight: 500, fontSize: 12, cursor: 'pointer'}}>{e.title}</Typography>
+                        <IconButton size='small' style={{borderRadius: 5, padding: 0, margin: 1}}>
+                            <Edit fontSize='small'/>
+                        </IconButton>
+                    </div>))
+            }
         </Popover>
     </>
 }

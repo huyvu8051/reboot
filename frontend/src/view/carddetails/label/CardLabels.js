@@ -6,6 +6,7 @@ import {Add} from "@mui/icons-material";
 
 const CardLabels = () => {
     const cardLabels = useSelector(sts => sts.dashboard.cardLabels)
+    const boardLabels = useSelector(sts => sts.dashboard.boardLabels)
 
     return (
         <div>
@@ -18,7 +19,7 @@ const CardLabels = () => {
                 Labels
             </h3>
             <div>
-                {cardLabels.map((data) => {
+                {boardLabels.filter(e=>!(cardLabels.find(item => item.labelId === e.id)?.isDeleted ?? true)).map((data) => {
                     return (
                         <Button
                             disableElevation

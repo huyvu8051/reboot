@@ -12,7 +12,10 @@ const initialState = {
     cardMems: [],
     cardLabels: [],
     boardLabels: [],
-    attachments: null // card attachments
+    attachments: {
+        items: [],
+        totalCount: 0
+    }
 
 }
 

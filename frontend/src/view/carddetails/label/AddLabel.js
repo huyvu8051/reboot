@@ -1,9 +1,10 @@
 import {useState} from "react";
-import {Checkbox, IconButton, Popover, TextField, Typography} from "@mui/material";
+import {Button, Checkbox, IconButton, Popover, TextField, Typography} from "@mui/material";
 import {Close, Edit} from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
 import {updateLabeled} from "../../workspace/dashboard-slice";
 import api from "../../../service/api";
+import * as React from "react";
 
 const AddLabel = ({activator}) => {
     const dispatch = useDispatch()
@@ -12,7 +13,7 @@ const AddLabel = ({activator}) => {
     const cardLabels = useSelector(sts => sts.dashboard.cardLabels)
     const cId = useSelector(sts => sts.dashboard.card?.id || null)
 
-    console.log(boardLabels, cardLabels)
+    // console.log(boardLabels, cardLabels)
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -89,6 +90,14 @@ const AddLabel = ({activator}) => {
                         </div>);
                 })
             }
+            <Button
+                disableElevation
+                size='small'
+                variant='contained'
+                style={{borderRadius: 3, margin: 2, textTransform: 'none', width: '100%'}}
+            >
+                Create a new label
+            </Button>
         </Popover>
     </>
 }

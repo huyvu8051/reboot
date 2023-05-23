@@ -23,7 +23,18 @@ public class IServiceImpl implements IService {
         List<LiztVo> lizts = new ArrayList<>(0);
         List<CardItemVo> cards = new ArrayList<>(0);
         CardDetailsVo card = null;
-        Page<AttachmentVo> attachments = null;
+        Page<AttachmentVo> attachments = new Page<>() {
+            @Override
+            public int getTotalCount() {
+                return 0;
+            }
+
+            @Override
+            public List<AttachmentVo> getItems() {
+                return new ArrayList<>();
+            }
+        };
+
         List<CardMember> cardMembers = new ArrayList<>();
         List<CardLabel> cardLabels = new ArrayList<>();
         List<BoardLabel> boardLabels = new ArrayList<>();

@@ -67,7 +67,7 @@ export const dashboardSlice = createSlice({
                 s.attachments.totalCount++;
             }
         },
-        updateCardLabel: (s, a) => {
+        updateLabeled: (s, a) => {
             const find = s.cardLabels.find(e => e.id && e.id === a.payload.id || e.labelId === a.payload.labelId)
             if (find) {
                 Object.assign(find, a.payload)
@@ -79,7 +79,7 @@ export const dashboardSlice = createSlice({
 })
 
 
-export const {save, updateLizt, updateCard, updateBoard, updateAttachment, updateCardLabel} = dashboardSlice.actions
+export const {save, updateLizt, updateCard, updateBoard, updateAttachment, updateLabeled} = dashboardSlice.actions
 
 
 export default dashboardSlice.reducer

@@ -15,6 +15,7 @@ public record DashboardVo(
         CardDetailsVo card,
         List<CardMember> cardMems,
         List<CardLabel> cardLabels,
+        List<BoardLabel> boardLabels,
         Page<AttachmentVo> attachments
 ) {
 }

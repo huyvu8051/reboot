@@ -2,14 +2,17 @@ import {useState} from "react";
 import {Checkbox, IconButton, Popover, TextField, Typography} from "@mui/material";
 import {Close, Edit} from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
-import {updateCardLabel} from "../../workspace/dashboard-slice";
+import {updateLabeled} from "../../workspace/dashboard-slice";
+import api from "../../../service/api";
 
 const AddLabel = ({activator}) => {
     const dispatch = useDispatch()
     const [anchorEl, setAnchorEl] = useState()
     const boardLabels = useSelector(sts => sts.dashboard.boardLabels)
     const cardLabels = useSelector(sts => sts.dashboard.cardLabels)
-    // console.log(boardLabels, cardLabels)
+    const cId = useSelector(sts => sts.dashboard.card?.id || null)
+
+    console.log(boardLabels, cardLabels)
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -24,9 +27,8 @@ const AddLabel = ({activator}) => {
 
 
     function handleChecked(data) {
-        dispatch(updateCardLabel(data))
-        console.log(data)
-
+        dispatch(updateLabeled(data))
+        api.put('/api/v1/user/dashboard/card/labeled', data).then()
 
     }
 
@@ -50,7 +52,7 @@ const AddLabel = ({activator}) => {
             }}
         >
             <IconButton sx={{position: 'absolute', right: 0, top: 0, borderRadius: 1, padding: 0, margin: .5}}
-                        size='small'><Close
+                        size='small' onClick={handleClose}><Close
                 fontSize='small'/></IconButton>
             <p style={{fontSize: 13, fontWeight: '400', margin: 0}} align='center'>Labels</p>
             <TextField placeholder='Search labels...' fullWidth inputProps={{style: {padding: 5}}}/>
@@ -75,7 +77,8 @@ const AddLabel = ({activator}) => {
                                     handleChecked({
                                         id: find?.id ?? null,
                                         isDeleted: !event.target.checked,
-                                        labelId: e.id
+                                        labelId: e.id,
+                                        cardId: cId
                                     })
                                 }} size='medium' sx={{padding: 0, margin: .5}}/>
                             <Typography bgcolor='green' color='white' borderRadius={1} px={1.5} py={.5} width='100%'

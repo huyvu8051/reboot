@@ -2,8 +2,6 @@ package io.huyvu.reboot.backend.biz.user.card.v1;
 
 import io.huyvu.reboot.backend.config.socketio.DashboardBroadcast;
 import io.huyvu.reboot.backend.util.FileUploadUtil;
-import io.socket.socketio.server.SocketIoNamespace;
-import io.socket.socketio.server.SocketIoServer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -55,4 +53,17 @@ public class IServiceImpl implements IService {
         dashboardBroadcast.byCardId(cId, "update.dashboard.attachment", toJsonObj(attachment));
         return storeFileName;
     }
+
+    @Override
+    public void updateCardLabeled(UpdateLabeledReq req) {
+        if(req.getId() == null){
+            long id = repository.insertLabeled(req.getLabelId(), req.getCardId());
+            req.setId(id);
+        }else {
+            repository.updateLabeled(req.getId(), req.isDeleted());
+        }
+        dashboardBroadcast.byCardId(req.getCardId(), "update.dashboard.labeled", toJsonObj(req));
+    }
+
+
 }

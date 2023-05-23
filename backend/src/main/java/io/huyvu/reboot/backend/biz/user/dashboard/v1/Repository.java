@@ -148,13 +148,11 @@ public interface Repository {
 
     @Select("""
             select id
-                  ,color
-            	  ,title
-              from label
-             where id in (select label_id
-              				from labeled
-               			   where card_id = #{cId}
-                   				 and is_deleted = 0)""")
+                  ,label_id
+                  ,card_id
+                  ,is_deleted
+              from labeled
+             where card_id = #{cId}""")
     List<CardLabel> selectCardLabels(long cId);
 
 
@@ -169,4 +167,14 @@ public interface Repository {
               and is_deleted = false
               order by id desc"""})
     Page<AttachmentVo> selectAttachments(long cId, Paging paging);
+
+
+    @Select("""
+            select id
+                  ,color
+            	  ,title
+              from label
+             where board_id = #{bId}
+               and is_deleted = 0""")
+    List<BoardLabel> selectBoardLabels(Long bId);
 }

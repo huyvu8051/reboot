@@ -1,5 +1,6 @@
 package io.huyvu.reboot.backend.biz.user.card.v1;
 
+import io.huyvu.reboot.backend.biz.user.dashboard.v1.CardLabel;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -83,4 +84,17 @@ public interface IRepository {
             from attachment
             where id = #{id}""")
     AttachmentVo selectAttachment(long id);
+
+
+    @Insert("""
+            insert into labeled
+            set label_id = #{labelId},
+                card_id = #{cardId}""")
+    long insertLabeled(long labelId, long cardId);
+
+    @Update("""
+            update labeled
+            set is_deleted = #{isDeleted}
+            where id = #{id}""")
+    void updateLabeled(long id, boolean isDeleted);
 }

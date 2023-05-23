@@ -27,4 +27,10 @@ public class Controller {
     void updateCardDetails(@RequestBody UpdateCardDetailsReq req) {
         service.updateCardDetails(req);
     }
+
+    @PutMapping("/labeled")
+    void updateCardLabeled(@RequestBody UpdateLabeledReq req) {
+        service.updateCardLabeled(req);
+    }
+
 }

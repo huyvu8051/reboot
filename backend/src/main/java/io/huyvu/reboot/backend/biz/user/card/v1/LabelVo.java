@@ -6,9 +6,8 @@ import lombok.experimental.FieldDefaults;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class LabelResp {
+public class LabelVo {
     long id;
     String color;
     String title;
-
 }

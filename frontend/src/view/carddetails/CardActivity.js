@@ -5,7 +5,7 @@ import ListItem from "@mui/material/ListItem";
 
 const CardActivity = () => {
     const card = useSelector(sts => sts.dashboard.card)
-    console.log(card)
+    // console.log(card)
     return <>
         <h5 style={{padding: 0, margin: 0}}>
             Activity

@@ -10,4 +10,6 @@ public interface IService {
     void updateCardDetails(UpdateCardDetailsReq req);
 
     String uploadAttachment(MultipartFile file, long cId);
+
+    void updateCardLabeled(UpdateLabeledReq req);
 }

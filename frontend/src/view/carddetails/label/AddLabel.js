@@ -1,6 +1,6 @@
 import {useState} from "react";
-import {Checkbox, FormGroup, IconButton, Popover, TextField} from "@mui/material";
-import {AddCircleOutline, Close} from "@mui/icons-material";
+import {Button, Checkbox, FormGroup, IconButton, Popover, TextField, Typography} from "@mui/material";
+import {AddCircleOutline, Close, Edit} from "@mui/icons-material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 const AddLabel = ({activator}) => {
@@ -44,22 +44,14 @@ const AddLabel = ({activator}) => {
             <TextField placeholder='Search labels...' fullWidth inputProps={{style: {padding: 5}}}/>
             <p>Labels</p>
             <FormGroup>
-                <FormControlLabel sx={{
-                    '& .MuiTypography-body1': {
-                        width: '100%'
-                    },
-                    margin: 0
-                }} control={<Checkbox defaultChecked/>}
-                                  label={<div style={{display: 'flex', width: '100%'}}>
-                                      <p style={{width: '100%'}}>test</p>
-                                      <IconButton
-                                          disabled
-                                          size="small"
-                                          onClick={editLabelHandler}
-                                      >
-                                          <AddCircleOutline/>
-                                      </IconButton>
-                                  </div>}/>
+                <div style={{display: 'flex', alignItems: 'center', justifyItems: 'center', gap: 2}}>
+                    <Checkbox defaultChecked size='small'/>
+                    <Typography bgcolor='red' color='white' borderRadius={1} px={1} py={.5} width='100%' sx={{fontWeight: '500', fontSize: 14}}>Feature</Typography>
+                    <IconButton size='small' style={{borderRadius: 5}}>
+                        <Edit fontSize='small'/>
+                    </IconButton>
+                </div>
+
             </FormGroup>
         </Popover>
     </>

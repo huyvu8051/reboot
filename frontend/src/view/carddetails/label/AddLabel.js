@@ -21,17 +21,13 @@ const AddLabel = ({activator}) => {
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
-    const editLabelHandler = () => {
-        // Handle the icon button click event here
-    };
 
 
-    function handleChecked(id, isDeleted) {
-        dispatch(updateCardLabel({
-            id,
-            isDeleted: !isDeleted
-        }))
-        // console.log(id, isDeleted)
+    function handleChecked(data) {
+        dispatch(updateCardLabel(data))
+        console.log(data)
+
+
     }
 
     return <>
@@ -60,20 +56,35 @@ const AddLabel = ({activator}) => {
             <TextField placeholder='Search labels...' fullWidth inputProps={{style: {padding: 5}}}/>
             <p>Labels</p>
             {
-                boardLabels.map(e => (
-                    <div key={e.id}
-                         style={{display: 'flex', alignItems: 'center', justifyItems: 'center', gap: 2, padding: .5}}>
-                        <Checkbox
-                            checked={!(cardLabels.find(item => item.labelId === e.id)?.isDeleted ?? true)}
-                            onClick={(event) => {
-                                handleChecked(e.id, event.target.checked)
-                            }} size='medium' sx={{padding: 0, margin: .5}}/>
-                        <Typography bgcolor='green' color='white' borderRadius={1} px={1.5} py={.5} width='100%'
-                                    sx={{fontWeight: 500, fontSize: 12, cursor: 'pointer'}}>{e.title}</Typography>
-                        <IconButton size='small' style={{borderRadius: 5, padding: 0, margin: 1}}>
-                            <Edit fontSize='small'/>
-                        </IconButton>
-                    </div>))
+                boardLabels.map(e => {
+                    const find = cardLabels.find(item => item.labelId === e.id);
+
+                    const checked = !(find?.isDeleted ?? true);
+                    return (
+                        <div key={e.id}
+                             style={{
+                                 display: 'flex',
+                                 alignItems: 'center',
+                                 justifyItems: 'center',
+                                 gap: 2,
+                                 padding: .5
+                             }}>
+                            <Checkbox
+                                checked={checked}
+                                onClick={(event) => {
+                                    handleChecked({
+                                        id: find?.id ?? null,
+                                        isDeleted: !event.target.checked,
+                                        labelId: e.id
+                                    })
+                                }} size='medium' sx={{padding: 0, margin: .5}}/>
+                            <Typography bgcolor='green' color='white' borderRadius={1} px={1.5} py={.5} width='100%'
+                                        sx={{fontWeight: 500, fontSize: 12, cursor: 'pointer'}}>{e.title}</Typography>
+                            <IconButton size='small' style={{borderRadius: 5, padding: 0, margin: 1}}>
+                                <Edit fontSize='small'/>
+                            </IconButton>
+                        </div>);
+                })
             }
         </Popover>
     </>

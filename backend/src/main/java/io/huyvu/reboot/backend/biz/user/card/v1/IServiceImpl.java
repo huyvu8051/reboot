@@ -65,5 +65,17 @@ public class IServiceImpl implements IService {
         dashboardBroadcast.byCardId(req.getCardId(), "update.dashboard.labeled", toJsonObj(req));
     }
 
+    @Override
+    public void updateCardLabel(UpdateLabelReq req) {
+        if(req.getId() == null){
+            long id = repository.insertLabel(req.getBId(),req.getTitle(), req.getColor());
+            req.setId(id);
+        }else {
+            repository.updateLabel(req);
+        }
+        dashboardBroadcast.byBoardId(req.getBId(), "update.dashboard.label", toJsonObj(req));
+
+    }
+
 
 }

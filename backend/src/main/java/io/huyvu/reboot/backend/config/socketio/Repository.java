@@ -15,4 +15,10 @@ public interface Repository {
               FROM board
              WHERE id = @b_id""")
     long selectWpIdFromCId(long cId);
+
+    @Select("""
+            SELECT workspace_id
+              FROM board
+             WHERE id = #{bId}""")
+    long selectWpIdFromBId(long bId);
 }

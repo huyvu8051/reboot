@@ -12,4 +12,6 @@ public interface IService {
     String uploadAttachment(MultipartFile file, long cId);
 
     void updateCardLabeled(UpdateLabeledReq req);
+
+    void updateCardLabel(UpdateLabelReq req);
 }

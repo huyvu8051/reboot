@@ -97,4 +97,33 @@ public interface IRepository {
             set is_deleted = #{isDeleted}
             where id = #{id}""")
     void updateLabeled(long id, boolean isDeleted);
+
+    @Insert("""
+            insert into label
+            set board_id = #{bId},
+                title = #{title},
+                color = #{color}""")
+
+    long insertLabel(long bId, String title, String color);
+
+
+    @Update("""
+            <script>
+            update label
+            set id = id,
+                <if test="bId != null">
+                board_id = #{bId},
+                </if>
+                <if test="title != null">
+                title = #{title},
+                </if>
+                <if test="color != null">
+                color = #{color},
+                </if>
+                <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
+                </if>
+            where id = #{id}
+            </script>""")
+    void updateLabel(UpdateLabelReq req);
 }

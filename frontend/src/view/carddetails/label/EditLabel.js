@@ -1,7 +1,7 @@
 import {Button, IconButton, TextField} from "@mui/material";
 import {ArrowBack, Close} from "@mui/icons-material";
 import * as React from "react";
-import {forwardRef, useCallback, useImperativeHandle, useState} from "react";
+import {useCallback, useState} from "react";
 import {useSelector} from "react-redux";
 import api from "../../../service/api";
 
@@ -58,21 +58,34 @@ pushColor('#94c748', '#1d2125')
 pushColor('#e774bb', '#1d2125')
 pushColor('#8c9bab', '#1d2125')
 
-const EditLabel = forwardRef(({handleClosePopup, handleCloseEdit}, ref) => {
-    const [labelId, setLabelId] = useState()
-    useImperativeHandle(ref, () => ({
-        setLabelId
-    }));
+const EditLabel = ({handleClosePopup, handleCloseEdit, editLabel}) => {
+
+    const [currLabel, setCurrLabel] = useState(editLabel || {
+        id: null,
+        color: null,
+        title: null,
+        bId: null
+    })
 
     const bId = useSelector(sts => sts.dashboard.board?.id)
+    console.log(bId)
 
-    const [index, setIndex] = useState(0)
+    const [color, setColor] = useState(JSON.parse(currLabel.color) || colors[0])
 
-    const [title, setTitle] = useState('')
+    const [title, setTitle] = useState(currLabel.title || '')
 
-    const save = useCallback(()=>{
-        api.put('/api/v1/user/dashboard/card/label', {id: labelId, bId, title, color: JSON.stringify(colors[index])}).then()
-    }, [labelId, bId, title, index])
+    const handleSave = useCallback((isDeleted) => {
+
+        api.put('/api/v1/user/dashboard/card/label', {
+            id: currLabel.id,
+            bId: bId,
+            title,
+            color: JSON.stringify(color),
+            isDeleted
+        }).then()
+    }, [currLabel.id, bId, title, color])
+
+
     return <>
         <IconButton sx={{position: 'absolute', right: 0, top: 0, borderRadius: 1, padding: 0, margin: .5}}
                     size='small' onClick={handleClosePopup}>
@@ -95,7 +108,7 @@ const EditLabel = forwardRef(({handleClosePopup, handleCloseEdit}, ref) => {
                     textTransform: 'none',
                     fontWeight: '400',
                     justifyContent: 'center',
-                    ...colors[index]
+                    ...color
                 }}
                 size='small'
                 disableElevation
@@ -115,7 +128,7 @@ const EditLabel = forwardRef(({handleClosePopup, handleCloseEdit}, ref) => {
             {
                 colors.map((e, i) => {
                     return (
-                        <Button key={i} sx={{...e, height: 30}} onClick={() => setIndex(i)}/>
+                        <Button key={i} sx={{...e, height: 30}} onClick={() => setColor(colors[i])}/>
                     );
                 })
             }
@@ -127,8 +140,15 @@ const EditLabel = forwardRef(({handleClosePopup, handleCloseEdit}, ref) => {
             Remove color
         </Button>
 
-        <Button onClick={save}>Save</Button>
-        <Button>Delete</Button>
+        <Button onClick={() => {
+            handleSave()
+            handleCloseEdit()
+        }}>Save</Button>
+        <Button onClick={() => {
+            handleSave(true)
+            handleCloseEdit()
+        }
+        }>Delete</Button>
     </>
-})
+}
 export default EditLabel

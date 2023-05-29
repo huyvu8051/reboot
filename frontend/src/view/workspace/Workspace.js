@@ -5,7 +5,7 @@ import {ArrowLeft, ArrowRight} from '@mui/icons-material'
 import RightDrawer from './leftDrawer/RightDrawer'
 import {io} from 'socket.io-client'
 import {useDispatch, useSelector} from 'react-redux'
-import {updateAttachment, updateBoard, updateCard, updateLabeled, updateLizt} from './dashboard-slice'
+import {updateAttachment, updateBoard, updateCard, updateLabel, updateLabeled, updateLizt} from './dashboard-slice'
 import {useParams} from 'react-router-dom'
 import api from '../../service/api';
 import Cookies from 'js-cookie'
@@ -37,6 +37,9 @@ function Workspace(props) {
             })
             socket.on('update.dashboard.labeled', r => {
                 dispatch(updateLabeled(r))
+            })
+            socket.on('update.dashboard.label', r => {
+                dispatch(updateLabel(r))
             })
 
             socket.on('update.dashboard.board', r => {

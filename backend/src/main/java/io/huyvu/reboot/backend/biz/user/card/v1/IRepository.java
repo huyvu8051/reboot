@@ -110,18 +110,18 @@ public interface IRepository {
     @Update("""
             <script>
             update label
-            set id = id,
+            set id = id
                 <if test="bId != null">
-                board_id = #{bId},
+                ,board_id = #{bId}
                 </if>
                 <if test="title != null">
-                title = #{title},
+                ,title = #{title}
                 </if>
                 <if test="color != null">
-                color = #{color},
+                ,color = #{color}
                 </if>
                 <if test="isDeleted != null">
-                is_deleted = #{isDeleted},
+                ,is_deleted = #{isDeleted}
                 </if>
             where id = #{id}
             </script>""")

@@ -39,6 +39,7 @@ const AddLabel = ({activator}) => {
 
     }
 
+    const [editLabel, setEditLabel] = useState()
 
     return <>
         {activator({'aria-describedby': id, onClick: handleClick})}
@@ -60,7 +61,8 @@ const AddLabel = ({activator}) => {
             }}
         >
             {
-                edit ? <EditLabel handleCloseEdit={handleCloseEdit} handleClosePopup={handleClose}/> : <>
+                edit ? <EditLabel editLabel={editLabel} handleCloseEdit={handleCloseEdit}
+                                  handleClosePopup={handleClose}/> : <>
                     <IconButton sx={{position: 'absolute', right: 0, top: 0, borderRadius: 1, padding: 0, margin: .5}}
                                 size='small' onClick={handleClose}>
                         <Close fontSize='small'/>
@@ -70,6 +72,7 @@ const AddLabel = ({activator}) => {
                     <p>Labels</p>
                     {
                         boardLabels.map(e => {
+                            if (e.isDeleted) return null
                             const find = cardLabels.find(item => item.labelId === e.id);
 
                             const checked = !(find?.isDeleted ?? true);
@@ -97,10 +100,14 @@ const AddLabel = ({activator}) => {
                                                 sx={{
                                                     fontWeight: 500,
                                                     fontSize: 12,
-                                                    cursor: 'pointer'
+                                                    cursor: 'pointer',
+                                                    ...JSON.parse(e.color)
                                                 }}>{e.title}</Typography>
                                     <IconButton size='small' style={{borderRadius: 5, padding: 0, margin: 1}}
-                                                onClick={() => setEdit(true)}>
+                                                onClick={() => {
+                                                    setEditLabel(e)
+                                                    setEdit(true)
+                                                }}>
                                         <Edit fontSize='small'/>
                                     </IconButton>
                                 </div>);
@@ -111,7 +118,10 @@ const AddLabel = ({activator}) => {
                         size='small'
                         variant='contained'
                         style={{borderRadius: 3, margin: 2, textTransform: 'none', width: '100%'}}
-                        onClick={() => setEdit(true)}
+                        onClick={() => {
+                            setEditLabel(null)
+                            setEdit(true)
+                        }}
                     >
                         Create a new label
                     </Button>

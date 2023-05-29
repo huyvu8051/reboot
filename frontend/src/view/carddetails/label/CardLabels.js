@@ -1,13 +1,11 @@
 import {Button, IconButton} from "@mui/material";
 import * as React from "react";
 import {useSelector} from "react-redux";
-import AddLabel from "./AddLabel";
 import {Add} from "@mui/icons-material";
 
 const CardLabels = () => {
     const cardLabels = useSelector(sts => sts.dashboard.cardLabels)
     const boardLabels = useSelector(sts => sts.dashboard.boardLabels)
-
     return (
         <div>
             <h3 style={{
@@ -19,14 +17,14 @@ const CardLabels = () => {
                 Labels
             </h3>
             <div>
-                {boardLabels.filter(e=>!(cardLabels.find(item => item.labelId === e.id)?.isDeleted ?? true)).map((data) => {
+                {boardLabels.filter(e => !(cardLabels.find(item => item.labelId === e.id)?.isDeleted ?? true)).map((data) => {
+                    console.log(data)
                     return (
                         <Button
                             disableElevation
                             size='small'
                             variant='contained'
-                            color={data.color}
-                            style={{borderRadius: 3, margin: 2, textTransform: 'none'}}
+                            style={{borderRadius: 3, margin: 2, textTransform: 'none', ...JSON.parse(data.color)}}
                             key={data.id}
                         >
                             {data.title}
@@ -34,22 +32,21 @@ const CardLabels = () => {
                     );
                 })}
 
-                <AddLabel
-                    activator={e => (
-                        <IconButton
-                            size='small'
-                            variant='contained'
-                            style={{
-                                borderRadius: 3,
-                                margin: 2,
-                                backgroundColor: 'rgba(9, 30, 66, 0.04)'
-                            }}
-                            {...e}
-                        >
-                            <Add/>
-                        </IconButton>
-                    )}
-                />
+                {/*<AddLabel
+                    activator={e => (*/}
+                <IconButton
+                    size='small'
+                    variant='contained'
+                    style={{
+                        borderRadius: 3,
+                        margin: 2,
+                        backgroundColor: 'rgba(9, 30, 66, 0.04)'
+                    }}
+                >
+                    <Add/>
+                </IconButton>
+                {/*    )}
+                />*/}
             </div>
         </div>
     );

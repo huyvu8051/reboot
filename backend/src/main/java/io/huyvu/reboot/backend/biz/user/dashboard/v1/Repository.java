@@ -160,6 +160,7 @@ public interface Repository {
             select id,
                    card_id as cid,
                    name,
+                   file_nm,
                    type,
                    created_date""", """
             from attachment

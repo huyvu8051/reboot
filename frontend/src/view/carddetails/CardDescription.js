@@ -7,22 +7,28 @@ import './card-description.css'
 import config from './editor-js-tools-config'
 import api from "../../service/api";
 import {useSelector} from "react-redux";
+import {Button} from "@mui/material";
 
 const CardDescription = () => {
     const editorContainerRef = useRef()
-    const item = useSelector(sts => sts.dashboard.card)
+    const description = useSelector(sts => sts.dashboard.card.description)
+    const cId = useSelector(sts => sts.dashboard.card.id)
 
     const [focused, setFocused] = useState(false)
 
+    const [editor, setEditor] = useState()
+
+
     useEffect(() => {
-        const editor = new EditorJS({
+        const editorInstance = new EditorJS({
             logLevel: 'ERROR',
             holder: editorContainerRef.current,
             minHeight: '0px',
             placeholder: 'Type here...',
             tools: config,
-            data: JSON.parse(item.description)
         })
+        setEditor(editorInstance)
+
         const editorElement = editorContainerRef.current
         const onFocusIn = ({currentTarget, relatedTarget}) => {
             if (currentTarget.contains(relatedTarget)) return
@@ -31,28 +37,49 @@ const CardDescription = () => {
         }
         const onFocusOut = ({currentTarget, relatedTarget}) => {
             if (currentTarget.contains(relatedTarget)) return
-            setFocused(false);
-
-            editor.save().then(out => {
-                const data = JSON.stringify(out);
-                console.log(JSON.parse(data))
-                /*api.put('/api/v1/user/dashboard/card/details', {
-                    id: item.id,
-                    description: data
-                }).then()*/
-            })
-
+            // setFocused(false);
         }
+
         editorElement.addEventListener("focusin", onFocusIn)
         editorElement.addEventListener("focusout", onFocusOut)
         return () => {
             editorElement.removeEventListener("focusin", onFocusIn)
             editorElement.removeEventListener("focusout", onFocusOut)
-            editor.destroy()
+            editorInstance.destroy()
         }
 
 
-    }, [item])
+    }, [])
+
+    // handle on socket update
+    useEffect(() => {
+        if(editor && editor.isReady && !focused){
+            editor.isReady.then(() => {
+                editor.render(JSON.parse(description))
+            })
+        }
+    }, [description, editor])
+
+    function handleSave() {
+        editor.save().then(out => {
+            console.log(out)
+            api.put('/api/v1/user/dashboard/card/details', {
+                id: cId,
+                description: JSON.stringify(out)
+            }).then()
+        })
+
+        setFocused(false);
+    }
+
+    function handleCancel() {
+        if(editor && editor.isReady){
+            editor.isReady.then(() => {
+                editor.render(JSON.parse(description))
+            })
+        }
+        setFocused(false);
+    }
 
     return <>
         <h5 style={{padding: 0, margin: 0}}>
@@ -64,6 +91,13 @@ const CardDescription = () => {
             borderRadius: 5,
             border: focused ? '2px solid #1976d2' : 0,
         }} ref={editorContainerRef}/>
+
+        {
+            focused && <>
+                <Button onClick={handleSave}>Save</Button>
+                <Button onClick={handleCancel}>Cancel</Button>
+            </>
+        }
     </>
 }
 export default CardDescription

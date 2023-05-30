@@ -30,8 +30,15 @@ const actionButton = {
     disableElevation: true,
     variant: 'contained'
 }
+
+function previewable(type) {
+    if (['png', 'jpg', 'jpeg'].includes(type)) return true
+    return false;
+}
+
 const CardAttachments = () => {
     const attachments = useSelector(sts => sts.dashboard.attachments)
+    const bId = useSelector(sts => sts.dashboard.board?.id || null)
 
     return (
         <div>
@@ -47,9 +54,25 @@ const CardAttachments = () => {
                             };
                             return (
                                 <div key={i} style={{display: 'flex', flexDirection: 'row', gap: 5}}>
-                                    <div style={{flex: 1}}>
-                                        <img src={img} alt='dick'
-                                             style={{height: 80, width: 112, borderRadius: 3}}/>
+                                    <div style={{flex: 1, marginBottom: 2}}>
+                                        {
+                                            previewable(e.type) ? <>
+                                                <img src={`/api/v1/resources/board/${bId}/${e.fileNm}`} alt='dick'
+                                                     style={{height: 80, width: 112, borderRadius: 3}}/>
+                                            </> : <div
+                                                style={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    height: 80,
+                                                    width: 112,
+                                                    borderRadius: 3,
+                                                    textAlign: 'center',
+                                                    backgroundColor: 'rgba(168,201,215,0.62)'
+                                                }}>
+                                                <p style={{fontWeight: 'bold'}}>{e.type}</p>
+                                            </div>
+                                        }
                                     </div>
                                     <div style={{flex: 5, display: 'block', margin: 0}}>
                                         <div style={{

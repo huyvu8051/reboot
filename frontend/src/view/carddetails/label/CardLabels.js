@@ -18,7 +18,7 @@ const CardLabels = () => {
             </h3>
             <div>
                 {boardLabels.filter(e => !(cardLabels.find(item => item.labelId === e.id)?.isDeleted ?? true)).map((data) => {
-                    console.log(data)
+                    // console.log(data)
                     return (
                         <Button
                             disableElevation

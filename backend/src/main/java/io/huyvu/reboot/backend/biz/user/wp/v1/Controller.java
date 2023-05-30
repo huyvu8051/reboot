@@ -45,4 +45,9 @@ public class Controller {
         return mngWpService.getDetails(wpId, uId());
     }
 
+    @GetMapping("/members")
+    List<UserAccount> searchFulltextMember(String keyword) {
+        return mngWpService.searchMembers(keyword);
+    }
+
 }

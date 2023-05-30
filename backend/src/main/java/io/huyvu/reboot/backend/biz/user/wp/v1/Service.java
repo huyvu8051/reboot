@@ -12,4 +12,6 @@ public interface Service {
     List<ListWpItem> getList(long userId);
 
     WpDetails getDetails(long wpId, long id);
+
+    List<UserAccount> searchMembers(String keyword);
 }

@@ -1,5 +1,6 @@
 package io.huyvu.reboot.backend.biz.user.wp.v1;
 
+import io.huyvu.mybatix.Page;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -56,4 +57,14 @@ public interface Repository {
                   ,user_id = #{adId}
                   ,is_admin = #{isAd}"""})
     void insertWpMem(long wpId, long adId, boolean isAd);
+
+
+    @Select("""
+            select id
+                  ,username
+                  ,full_name
+                  ,picture_url
+            from user_account
+            where match(username,full_name) against (#{keyword} in boolean mode)""")
+    List<UserAccount> searchMembers(String keyword);
 }

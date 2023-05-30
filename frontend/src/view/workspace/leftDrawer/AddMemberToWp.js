@@ -1,24 +1,23 @@
 import * as React from 'react';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import AddIcon from "@mui/icons-material/Add";
-import {Autocomplete, Chip, IconButton, Typography} from "@mui/material";
+import {Autocomplete, Avatar, Box, Chip, IconButton, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import LinkIcon from "@mui/icons-material/Link";
 import Link from "@mui/material/Link";
 import {Close} from "@mui/icons-material";
 import {$success} from "../../../util/snackbar-utils";
+import api from "../../../service/api";
 
 const AddMemberToWp = () => {
     const [open, setOpen] = React.useState(false);
     const [submitable, setSubmitable] = React.useState(false);
-    const [emails] = useState([{
-        title: 'huyvu8051@gmail.com'
-    }])
+    const [emails, setEmails] = useState([])
 
     const [link, setLink] = useState('');
 
@@ -29,6 +28,32 @@ const AddMemberToWp = () => {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const [searchQuery, setSearchQuery] = useState('');
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (searchQuery.trim() !== '') {
+                api.get('/api/v1/user/workspace/members', {
+                    params:{
+                        keyword: searchQuery
+                    }
+                }).then(r=> {
+                    console.log(r)
+                    setEmails(r)
+                })
+            }
+        }, 500);
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [searchQuery]);
+
+
+    function handleSearchChange(event) {
+        setSearchQuery(event.target.value);
+    }
 
     return (
         <div>
@@ -64,15 +89,24 @@ const AddMemberToWp = () => {
                                 onChange={(event, value) => setSubmitable(value.length > 0)}
                                 multiple
                                 size='small'
-                                options={emails.map((option) => option.title)}
+                                options={emails}
                                 freeSolo
-                                renderTags={(value, getTagProps) => value.map((option, index) => (
-                                    <Chip variant="outlined" label={option} {...getTagProps({index})} />
-                                ))
-
+                                renderTags={(value, getTagProps) =>
+                                    value.map((option, index) => (
+                                        <Chip variant="outlined" label={option.username} {...getTagProps({index})} />
+                                    ))
                                 }
+                                getOptionLabel={(option) => (option ? option.username : "")}
 
-
+                                renderOption={(props, option) => (
+                                    <Box display="flex" alignItems="center" paddingX={1} {...props}>
+                                        <Avatar src={option.pictureUrl}/>
+                                        <Box ml={2}>
+                                            <Typography variant="subtitle1">{option.fullName}</Typography>
+                                            <Typography variant="body2" color="textSecondary">{option.username}</Typography>
+                                        </Box>
+                                    </Box>
+                                )}
                                 renderInput={(params) => (
                                     <TextField
                                         margin='dense'
@@ -81,6 +115,7 @@ const AddMemberToWp = () => {
                                         variant="outlined"
                                         placeholder="Email Address"
                                         type='email'
+                                        onChange={handleSearchChange}
                                     />
                                 )}
                             />

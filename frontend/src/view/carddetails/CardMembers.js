@@ -7,7 +7,7 @@ import * as React from "react";
 const avatarStyle = {width: '26px', height: '26px'}
 const CardMembers = () => {
     const cardMems = useSelector(sts => sts.dashboard.cardMems)
-
+    console.log(cardMems)
     function handleAddNewMember() {
 
     }

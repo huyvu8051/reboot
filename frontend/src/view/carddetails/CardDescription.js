@@ -53,7 +53,7 @@ const CardDescription = () => {
 
     // handle on socket update
     useEffect(() => {
-        if(editor && editor.isReady && !focused){
+        if(editor && editor.isReady && !focused && description){
             editor.isReady.then(() => {
                 editor.render(JSON.parse(description))
             })
@@ -73,7 +73,7 @@ const CardDescription = () => {
     }
 
     function handleCancel() {
-        if(editor && editor.isReady){
+        if(editor && editor.isReady && description){
             editor.isReady.then(() => {
                 editor.render(JSON.parse(description))
             })

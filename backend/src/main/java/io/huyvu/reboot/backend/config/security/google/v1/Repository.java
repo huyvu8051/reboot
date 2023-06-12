@@ -37,8 +37,9 @@ public interface Repository {
                set username = #{username}
                   ,full_name = #{fullName}
                   ,picture_url = #{pictureUrl}   
+                  ,full_nm_fts = #{fullNmFts}   
             """})
-    void save(String username, String fullName, String pictureUrl);
+    void save(String username, String fullName, String pictureUrl, String fullNmFts);
 
     @Select("""
             select id

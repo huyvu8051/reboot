@@ -65,6 +65,6 @@ public interface Repository {
                   ,full_name
                   ,picture_url
             from user_account
-            where match(username,full_name) against (#{keyword} in boolean mode)""")
+            where match(full_nm_fts) against (#{keyword} in boolean mode)""")
     List<UserAccount> searchMembers(String keyword);
 }

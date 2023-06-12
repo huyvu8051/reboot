@@ -1,5 +1,6 @@
 package io.huyvu.reboot.backend.config.security.google.v1;
 
+import io.huyvu.reboot.backend.util.FulltextSearchUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,7 @@ public class Controller {
 
         if (userAccount == null) {
             // Create new Account
-            authRepo.save(ggAccToken.email(), ggAccToken.name(), ggAccToken.pictureUrl());
+            authRepo.save(ggAccToken.email(), ggAccToken.name(), ggAccToken.pictureUrl(), FulltextSearchUtils.getFulltextIndex(ggAccToken.name()));
             userAccount = authRepo.findOneByUsername(ggAccToken.email());
         }
 

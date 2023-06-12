@@ -2,6 +2,7 @@
 package io.huyvu.reboot.backend.biz.user.wp.v1;
 
 
+import io.huyvu.reboot.backend.util.FulltextSearchUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +19,6 @@ public class ServiceImpl implements Service {
     @Transactional
     @Override
     public WpDetails create(String wpNm, long adminId) {
-        long l = wpRepo.insertWp(wpNm);
         long wpId = wpRepo.selectLastInsertId();
         wpRepo.insertWpMem(wpId, adminId, true);
         return wpRepo.selectWpDetails(wpId, adminId).orElseThrow();
@@ -37,23 +37,7 @@ public class ServiceImpl implements Service {
     @Override
     public List<UserAccount> searchMembers(String keyword) {
         if (keyword.isBlank() || keyword.isEmpty()) return new ArrayList<>();
-
-        String[] words = keyword.split("\\s+");
-        StringBuilder outputBuilder = new StringBuilder("*");
-        for (String word : words) {
-            var ra = removeAccents(word);
-            outputBuilder.append(word).append("*");
-
-            var variations = generateAccentVariations(ra);
-            for (String variation : variations) {
-                outputBuilder.append(variation).append("*");
-            }
-
-        }
-        var trim = outputBuilder.toString().trim();
-
-
-        return wpRepo.searchMembers(trim);
+        return wpRepo.searchMembers(FulltextSearchUtils.getSearchCommand(keyword));
     }
 
     public static String removeAccents(String input) {

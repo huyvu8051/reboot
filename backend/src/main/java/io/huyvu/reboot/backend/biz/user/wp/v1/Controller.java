@@ -50,4 +50,9 @@ public class Controller {
         return mngWpService.searchMembers(keyword);
     }
 
+    @PostMapping("/members")
+    void inviteMembers(@RequestBody InviteMemberReq req) {
+        System.out.println(req.getMems());
+    }
+
 }

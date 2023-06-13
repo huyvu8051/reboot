@@ -27,7 +27,7 @@ public class Controller {
 
         if (userAccount == null) {
             // Create new Account
-            authRepo.save(ggAccToken.email(), ggAccToken.name(), ggAccToken.pictureUrl(), FulltextSearchUtils.getFulltextIndex(ggAccToken.name()));
+            authRepo.save(ggAccToken.email(), ggAccToken.name(), ggAccToken.pictureUrl(), FulltextSearchUtils.getFulltextIndex(ggAccToken.email(),ggAccToken.name()));
             userAccount = authRepo.findOneByUsername(ggAccToken.email());
         }
 

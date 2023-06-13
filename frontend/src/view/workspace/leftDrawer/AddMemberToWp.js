@@ -19,6 +19,8 @@ const AddMemberToWp = () => {
     const [submitable, setSubmitable] = React.useState(false);
     const [emails, setEmails] = useState([])
 
+    console.log("emails", emails)
+
     const [link, setLink] = useState('');
 
     const handleClickOpen = () => {
@@ -54,6 +56,26 @@ const AddMemberToWp = () => {
     function handleSearchChange(event) {
         setSearchQuery(event.target.value);
     }
+    const handleOptionSelected = () => {
+        return true; // Always return true to force the option popup to show
+    };
+
+
+    function sendInvite() {
+        api.post('/api/v1/user/workspace/members', {
+            mems: [{
+                email: 'chungta@gmail.com'
+            }]
+        }).then(r=> {
+            $success("Invite send ✅")
+            setOpen(false)
+        })
+    }
+    const filterOptions = (options, { inputValue }) => {
+        // Return all options without any filtering
+        return options;
+    };
+
 
     return (
         <div>
@@ -80,11 +102,14 @@ const AddMemberToWp = () => {
                     <Grid container columnSpacing={2} alignItems='start'>
                         <Grid item flex={1}>
                             <Autocomplete
+                                open={true}
                                 sx={{
                                     '& .MuiTextField-root': {
                                         margin: 0
                                     }
                                 }}
+                                filterOptions={filterOptions}
+                                isOptionEqualToValue={()=>true}
                                 clearOnEscape
                                 onChange={(event, value) => setSubmitable(value.length > 0)}
                                 multiple
@@ -123,7 +148,7 @@ const AddMemberToWp = () => {
                         {
                             submitable && (
                                 <Grid item>
-                                    <Button sx={{textTransform: 'none', fontSize: 12}} variant='contained' size='small'>
+                                    <Button sx={{textTransform: 'none', fontSize: 12}} variant='contained' size='small' onClick={sendInvite}>
                                         Send invites
                                     </Button>
                                 </Grid>

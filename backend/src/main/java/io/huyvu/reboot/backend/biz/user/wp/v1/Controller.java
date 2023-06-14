@@ -20,7 +20,7 @@ import static io.huyvu.reboot.backend.util.SecurityUtils.uId;
 @RequestMapping("api/v1/user/workspace")
 @RequiredArgsConstructor
 public class Controller {
-    private final Service mngWpService;
+    private final IService mngWpService;
 
     @PutMapping
     CreateWpResp createWp(@NotNull
@@ -53,6 +53,7 @@ public class Controller {
     @PostMapping("/members")
     void inviteMembers(@RequestBody InviteMemberReq req) {
         System.out.println(req.getMems());
+        mngWpService.inviteToWp(req);
     }
 
 }

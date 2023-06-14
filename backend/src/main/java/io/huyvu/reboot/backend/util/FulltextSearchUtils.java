@@ -17,9 +17,12 @@ public class FulltextSearchUtils {
     public static String getSearchCommand(String input, String... inputVar) {
         String combineInput = mergeInput(input, inputVar);
         String[] sArr = splitFulltext(combineInput);
-        StringBuilder rs = new StringBuilder("*");
+        StringBuilder rs = new StringBuilder();
         for (String s : sArr) {
-            rs.append(s.trim()).append("*");
+            if(s.trim() != ""){
+                rs.append("*").append(s.trim()).append("* ");
+            }
+
         }
         return rs.toString().toLowerCase();
     }

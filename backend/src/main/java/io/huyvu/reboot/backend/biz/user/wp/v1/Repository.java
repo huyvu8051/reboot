@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.lang.reflect.Member;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +17,24 @@ import java.util.Optional;
 @Mapper
 public interface Repository {
 
+    @Select("""
+            SELECT wp_id
+             FROM workspace_member AS wm
+            WHERE wm.user_id = #{uId}
+                  AND wm.wp_id = #{wId}
+                  AND is_deleted = false""")
+    Optional<Long> selectMember(long wId, long uId);
 
+    @Select("""
+            select id
+                  ,username
+                  ,full_name
+                  ,picture_url
+              from user_account
+             where username = #{username}
+                   and is_deleted = false
+            """)
+    Optional<UserAccount> findOneByUsername(String username);
     @Select(value = """
             SELECT id, title, picture_url AS pictureUrl
               FROM `workspace`
@@ -53,10 +71,10 @@ public interface Repository {
 
     @Insert({"""
             INSERT INTO workspace_member
-               SET wp_id = #{wpId}
-                  ,user_id = #{adId}
+               SET wp_id = #{wId}
+                  ,user_id = #{uId}
                   ,is_admin = #{isAd}"""})
-    void insertWpMem(long wpId, long adId, boolean isAd);
+    void insertWpMem(long wId, long uId, boolean isAd);
 
 
     @Select("""

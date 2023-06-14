@@ -10,4 +10,6 @@ import java.util.List;
 @Data
 public class InviteMemberReq {
     List<InviteMemberRequestDetail> mems;
+    String msg;
+    long wId;
 }

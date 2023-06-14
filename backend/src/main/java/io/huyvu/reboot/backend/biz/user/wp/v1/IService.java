@@ -6,7 +6,7 @@ import java.util.List;
  * @Author HuyVu
  * @CreatedDate 2/13/2023 11:22 AM
  */
-public interface Service {
+public interface IService {
     WpDetails create(String wpNm, long adminId);
 
     List<ListWpItem> getList(long userId);
@@ -14,4 +14,6 @@ public interface Service {
     WpDetails getDetails(long wpId, long id);
 
     List<UserAccount> searchMembers(String keyword);
+
+    void inviteToWp(InviteMemberReq req);
 }

@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import AddIcon from "@mui/icons-material/Add";
-import {Autocomplete, Avatar, Box, Chip, IconButton, Typography} from "@mui/material";
+import {Avatar, Box, Chip, IconButton, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import LinkIcon from "@mui/icons-material/Link";
 import Link from "@mui/material/Link";
@@ -16,10 +16,8 @@ import api from "../../../service/api";
 
 const AddMemberToWp = () => {
     const [open, setOpen] = React.useState(false);
-    const [submitable, setSubmitable] = React.useState(false);
     const [emails, setEmails] = useState([])
-
-    console.log("emails", emails)
+    const [selecteds, setSelecteds] = useState([])
 
     const [link, setLink] = useState('');
 
@@ -37,13 +35,15 @@ const AddMemberToWp = () => {
         const timer = setTimeout(() => {
             if (searchQuery.trim() !== '') {
                 api.get('/api/v1/user/workspace/members', {
-                    params:{
+                    params: {
                         keyword: searchQuery
                     }
-                }).then(r=> {
+                }).then(r => {
                     console.log(r)
                     setEmails(r)
                 })
+            } else {
+                setEmails([])
             }
         }, 500);
 
@@ -56,6 +56,7 @@ const AddMemberToWp = () => {
     function handleSearchChange(event) {
         setSearchQuery(event.target.value);
     }
+
     const handleOptionSelected = () => {
         return true; // Always return true to force the option popup to show
     };
@@ -65,17 +66,44 @@ const AddMemberToWp = () => {
         api.post('/api/v1/user/workspace/members', {
             mems: [{
                 email: 'chungta@gmail.com'
-            }]
-        }).then(r=> {
+            }],
+            msg: msgRef.current.value
+        }).then(r => {
             $success("Invite send ✅")
-            setOpen(false)
         })
+        setSelecteds([])
+        setEmails([])
+        setOpen(false)
+        setLink('')
+
     }
-    const filterOptions = (options, { inputValue }) => {
-        // Return all options without any filtering
-        return options;
+
+    function handleChipDelete(option) {
+        setSelecteds((prevArray) =>
+            prevArray.filter((element) => element.username !== option.username)
+        );
+    }
+
+    const validateEmail = (email) => {
+        // Regular expression pattern for email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Check if the email matches the regex pattern
+        return emailRegex.test(email);
     };
 
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            const value = event.target.value.trim();
+            if (validateEmail(value)) {
+                setSelecteds([{username: value, id: new Date()}, ...selecteds])
+                event.target.value = ""
+                setSearchQuery("")
+            }
+        }
+    };
+
+    const msgRef = useRef();
 
     return (
         <div>
@@ -101,54 +129,50 @@ const AddMemberToWp = () => {
                 <DialogContent>
                     <Grid container columnSpacing={2} alignItems='start'>
                         <Grid item flex={1}>
-                            <Autocomplete
-                                open={true}
-                                sx={{
-                                    '& .MuiTextField-root': {
-                                        margin: 0
-                                    }
-                                }}
-                                filterOptions={filterOptions}
-                                isOptionEqualToValue={()=>true}
-                                clearOnEscape
-                                onChange={(event, value) => setSubmitable(value.length > 0)}
-                                multiple
-                                size='small'
-                                options={emails}
-                                freeSolo
-                                renderTags={(value, getTagProps) =>
-                                    value.map((option, index) => (
-                                        <Chip variant="outlined" label={option.username} {...getTagProps({index})} />
-                                    ))
-                                }
-                                getOptionLabel={(option) => (option ? option.username : "")}
+                            {
+                                selecteds.map((option) => (
+                                    <Chip
+                                        key={option.id}
+                                        label={option.username}
+                                        onDelete={() => handleChipDelete(option)}
+                                        style={{marginRight: 5}}
+                                    />
+                                ))}
+                            <TextField
+                                margin='dense'
+                                autoFocus
+                                variant="outlined"
+                                placeholder="Email Address"
+                                type='email'
+                                onChange={handleSearchChange}
+                                onKeyPress={handleKeyPress}
+                            />
 
-                                renderOption={(props, option) => (
-                                    <Box display="flex" alignItems="center" paddingX={1} {...props}>
+                            {
+                                emails.filter((element) => !selecteds.includes(element)).map(option => (
+                                    <Box key={option.id} sx={{
+                                        margin: 1,
+                                        cursor: 'pointer'
+                                    }} display="flex" alignItems="center" paddingX={1}
+                                         onClick={() => {
+
+                                             setSelecteds([option, ...selecteds])
+                                         }}>
                                         <Avatar src={option.pictureUrl}/>
                                         <Box ml={2}>
                                             <Typography variant="subtitle1">{option.fullName}</Typography>
-                                            <Typography variant="body2" color="textSecondary">{option.username}</Typography>
+                                            <Typography variant="body2"
+                                                        color="textSecondary">{option.username}</Typography>
                                         </Box>
                                     </Box>
-                                )}
-                                renderInput={(params) => (
-                                    <TextField
-                                        margin='dense'
-                                        autoFocus
-                                        {...params}
-                                        variant="outlined"
-                                        placeholder="Email Address"
-                                        type='email'
-                                        onChange={handleSearchChange}
-                                    />
-                                )}
-                            />
+                                ))
+                            }
                         </Grid>
                         {
-                            submitable && (
+                            selecteds.length > 0 && (
                                 <Grid item>
-                                    <Button sx={{textTransform: 'none', fontSize: 12}} variant='contained' size='small' onClick={sendInvite}>
+                                    <Button sx={{textTransform: 'none', fontSize: 12}} variant='contained' size='small'
+                                            onClick={sendInvite}>
                                         Send invites
                                     </Button>
                                 </Grid>
@@ -156,16 +180,17 @@ const AddMemberToWp = () => {
                         }
                     </Grid>
                     {
-                        submitable && (
+                        selecteds.length > 0 && (
                             <Grid container>
                                 <TextField
+                                    inputRef={msgRef}
                                     margin='dense'
                                     size='small'
                                     fullWidth
                                     minRows={5}
                                     multiline
                                     variant="outlined"
-                                    placeholder="Join this Trello Workspace to start collaborating with me!"
+                                    placeholder="Join this Workspace to start collaborating with me!"
                                 />
                             </Grid>
                         )

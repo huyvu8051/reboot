@@ -153,34 +153,6 @@
                     <mainClass>io.huyvu.reboot.backend.RebootApplication</mainClass>
                 </configuration>
             </plugin>
-
-            <!--<plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy frontend content</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>src/main/resources/public</outputDirectory>
-                            <overwrite>true</overwrite>
-                            <resources>
-                                <resource>
-                                    <directory>../frontend/build</directory>
-                                    &lt;!&ndash;<includes>
-                                             <include>static/</include>
-                                             <include>assets/</include>
-                                             <include>index.html</include>
-                                             <include>favicon.ico</include>
-                                         </includes>&ndash;&gt;
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>-->
         </plugins>
 
     </build>

@@ -20,7 +20,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
-//@AutoService(Processor.class)
 @SupportedAnnotationTypes("org.apache.ibatis.annotations.Select")
 @SupportedSourceVersion(SourceVersion.RELEASE_17)
 public class MyBatisSelectProcessor extends AbstractProcessor {

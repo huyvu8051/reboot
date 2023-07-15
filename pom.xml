@@ -36,7 +36,6 @@
         <module>frontend</module>
         <module>backend</module>
         <module>mybatix</module>
-        <module>reboot-boot</module>
         <module>reboot-security</module>
     </modules>
 

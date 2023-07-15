@@ -1,9 +1,12 @@
 package io.huyvu.reboot.backend.biz.user.lizt.v1;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import static io.huyvu.reboot.backend.util.SecurityUtils.uId;
+import static io.huyvu.reboot.security.util.SecurityUtils.uId;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,8 +35,6 @@ public class Controller {
     void updateCard(long cId, double ordinal, Long lId) {
         service.updateCard(cId, ordinal, lId);
     }
-
-
 
 
 }

@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.config.security.google.v1;
+package io.huyvu.reboot.security.google.v1;
 
 public record AccountTokenVo(String email,
                              boolean emailVerified,

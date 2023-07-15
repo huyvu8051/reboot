@@ -13,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-import static io.huyvu.reboot.backend.util.SecurityUtils.uId;
+import static io.huyvu.reboot.security.util.SecurityUtils.uId;
 
 @Validated
 @RestController

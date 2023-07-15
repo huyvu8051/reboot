@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.config.security.google.v1;
+package io.huyvu.reboot.security.google.v1;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -11,7 +11,7 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 
 @org.springframework.stereotype.Service
-public class ServiceImpl implements Service {
+public class IServiceImpl implements IService {
 
     @Value("${google.oauth.client_id}")
     private String CLIENT_ID;

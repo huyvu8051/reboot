@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-import static io.huyvu.reboot.backend.util.SecurityUtils.uId;
+import static io.huyvu.reboot.security.util.SecurityUtils.uId;
 
 @RestController
 @RequiredArgsConstructor

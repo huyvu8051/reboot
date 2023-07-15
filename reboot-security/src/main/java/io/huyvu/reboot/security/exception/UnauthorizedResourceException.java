@@ -1,4 +1,4 @@
-package io.huyvu.reboot.backend.config.resource;
+package io.huyvu.reboot.security.exception;
 
 public class UnauthorizedResourceException extends RuntimeException {
 }

@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.context.annotation.Configuration;
 
-import static io.huyvu.reboot.backend.util.SecurityUtils.username;
+import static io.huyvu.reboot.security.util.SecurityUtils.username;
 
 
 @Slf4j

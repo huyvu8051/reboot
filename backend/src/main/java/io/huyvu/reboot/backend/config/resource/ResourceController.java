@@ -1,6 +1,6 @@
 package io.huyvu.reboot.backend.config.resource;
 
-import io.huyvu.reboot.backend.util.SecurityUtils;
+import io.huyvu.reboot.security.util.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,6 +1,6 @@
-package io.huyvu.reboot.backend.config.security;
+package io.huyvu.reboot.security;
 
-import io.huyvu.reboot.backend.util.SecurityUtils;
+import io.huyvu.reboot.security.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;

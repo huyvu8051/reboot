@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static io.huyvu.reboot.backend.util.SecurityUtils.uId;
+import static io.huyvu.reboot.security.util.SecurityUtils.uId;
+
 
 @RestController
 @RequestMapping("api/v1/user/board")

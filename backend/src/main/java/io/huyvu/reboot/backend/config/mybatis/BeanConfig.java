@@ -1,6 +1,6 @@
 package io.huyvu.reboot.backend.config.mybatis;
 
-import io.huyvu.reboot.backend.RebootApplication;
+import io.huyvu.reboot.RebootApplication;
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.support.BeanNameGenerator;

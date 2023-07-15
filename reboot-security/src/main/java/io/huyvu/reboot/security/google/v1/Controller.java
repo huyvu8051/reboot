@@ -1,6 +1,5 @@
-package io.huyvu.reboot.backend.config.security.google.v1;
+package io.huyvu.reboot.security.google.v1;
 
-import io.huyvu.reboot.backend.util.FulltextSearchUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,25 +8,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static io.huyvu.reboot.backend.util.SecurityUtils.generateBoardResourceToken;
-import static io.huyvu.reboot.backend.util.SecurityUtils.generateJwtToken;
+import static io.huyvu.reboot.security.util.SecurityUtils.generateBoardResourceToken;
+import static io.huyvu.reboot.security.util.SecurityUtils.generateJwtToken;
+
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 public class Controller {
     private final Repository authRepo;
-    private final Service googleOauthService;
+    private final IService googleOauthIService;
 
     @PostMapping("/google-auth")
     AuthRes authenticate(@RequestBody AuthReq req) throws AuthException {
 
-        var ggAccToken = googleOauthService.extractToken(req.getIdToken());
+        var ggAccToken = googleOauthIService.extractToken(req.getIdToken());
         var userAccount = authRepo.findOneByUsername(ggAccToken.email());
 
         if (userAccount == null) {
             // Create new Account
-            authRepo.save(ggAccToken.email(), ggAccToken.name(), ggAccToken.pictureUrl(), FulltextSearchUtils.getFulltextIndex(ggAccToken.email(),ggAccToken.name()));
+//            authRepo.save(ggAccToken.email(), ggAccToken.name(), ggAccToken.pictureUrl(), FulltextSearchUtils.getFulltextIndex(ggAccToken.email(),ggAccToken.name()));
+            authRepo.save(ggAccToken.email(), ggAccToken.name(), ggAccToken.pictureUrl(), "");
             userAccount = authRepo.findOneByUsername(ggAccToken.email());
         }
 

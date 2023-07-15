@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static io.huyvu.reboot.backend.util.SecurityUtils.uId;
+import static io.huyvu.reboot.security.util.SecurityUtils.uId;
 
 @RestController
 @RequestMapping("api/v1/user/dashboard")

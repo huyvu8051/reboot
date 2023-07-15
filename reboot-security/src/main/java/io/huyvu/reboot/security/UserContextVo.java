@@ -2,7 +2,7 @@
  * @Author HuyVu
  * @CreatedDate 2/13/2023 1:00 PM
  */
-package io.huyvu.reboot.backend.config.security;
+package io.huyvu.reboot.security;
 
 import org.springframework.security.core.GrantedAuthority;
 

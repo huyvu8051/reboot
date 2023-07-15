@@ -1,7 +1,7 @@
-package io.huyvu.reboot.backend.util;
+package io.huyvu.reboot.security.util;
 
-import io.huyvu.reboot.backend.config.resource.UnauthorizedResourceException;
-import io.huyvu.reboot.backend.config.security.UserContextVo;
+import io.huyvu.reboot.security.UserContextVo;
+import io.huyvu.reboot.security.exception.UnauthorizedResourceException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -134,7 +134,7 @@ public class SecurityUtils {
     public static void validateBoardResourcesAccess(long bId, String resToken) {
         var claims = extractAllClaims(resToken);
         List<Integer> list = claims.get(BIDS, List.class);
-        var first = list.stream().map(e->Long.valueOf(e)).filter(e -> e.equals(bId)).findFirst();
+        var first = list.stream().map(e -> Long.valueOf(e)).filter(e -> e.equals(bId)).findFirst();
         first.orElseThrow(UnauthorizedResourceException::new);
     }
 

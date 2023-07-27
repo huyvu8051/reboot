@@ -4,6 +4,7 @@ import {persistReducer, persistStore} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 import dashboardReducer from "../view/workspace/dashboard-slice";
+import messageReducer from "../view/message/message-slice";
 
 const persistConfig = {
     key: 'root',
@@ -14,7 +15,8 @@ const persistedReducer = persistReducer(persistConfig, authenticationReducer)
 const store = configureStore({
     reducer: {
         authentication: persistedReducer,
-        dashboard: dashboardReducer
+        dashboard: dashboardReducer,
+        message: messageReducer,
     },
     middleware: [thunk]
 })

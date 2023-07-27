@@ -44,8 +44,6 @@ export default function PersistentDrawerLeft(props) {
                         color='black'>
                         Reboot
                     </Typography>
-                    <NewWorkspace/>
-                    <ChangeWpBtn/>
                 </Toolbar>
             </MuiAppBar>
             <img style={{

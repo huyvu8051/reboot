@@ -44,6 +44,7 @@
         <module>reboot-dashboard-biz</module>
         <module>reboot-lizt-biz</module>
         <module>reboot-static-resource</module>
+        <module>reboot-message-biz</module>
     </modules>
 
 </project>

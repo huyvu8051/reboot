@@ -9,6 +9,7 @@ import Members from '../view/members/Members'
 import {Board} from '../view/board/Board'
 import Workspace from "../view/workspace/Workspace";
 import CardDetails from "../view/carddetails/CardDetails";
+import Message from "../view/message/Message";
 
 const RouteConfig = createBrowserRouter([
     {
@@ -41,6 +42,10 @@ const RouteConfig = createBrowserRouter([
             {
                 path: 'c/:cId',
                 element: <Workspace><Board/><CardDetails/></Workspace>
+            },
+            {
+                path: 'message/:convId',
+                element: <Message></Message>
             },
         ]
     },

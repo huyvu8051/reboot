@@ -315,8 +315,7 @@ sketch
 
 
 # custom
-reboot-frontend/build/
-reboot-frontend/node/
+reboot-frontend/build
 reboot-frontend/node_modules/
 reboot-frontend/target/
 reboot-frontend/package-lock.json

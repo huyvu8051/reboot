@@ -1,6 +1,6 @@
 package io.huyvu.reboot.security.util;
 
-import io.huyvu.reboot.security.UserContextVo;
+import io.huyvu.reboot.security.model.UserContextVo;
 import io.huyvu.reboot.security.exception.UnauthorizedResourceException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

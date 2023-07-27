@@ -1,5 +1,6 @@
 package io.huyvu.reboot.security;
 
+import io.huyvu.reboot.security.filter.LazySecurityContextProviderFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

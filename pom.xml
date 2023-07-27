@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.huyvu</groupId>
+    <groupId>io.huyvu.reboot</groupId>
     <artifactId>reboot</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -33,10 +33,17 @@
     </developers>
 
     <modules>
-        <module>frontend</module>
-        <module>backend</module>
+        <module>reboot-frontend</module>
+        <module>reboot-backend</module>
         <module>mybatix</module>
         <module>reboot-security</module>
+        <module>reboot-workspace-biz</module>
+        <module>reboot-board-biz</module>
+        <module>reboot-socket</module>
+        <module>reboot-card-biz</module>
+        <module>reboot-dashboard-biz</module>
+        <module>reboot-lizt-biz</module>
+        <module>reboot-static-resource</module>
     </modules>
 
 </project>

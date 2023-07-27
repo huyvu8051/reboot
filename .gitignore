@@ -315,13 +315,20 @@ sketch
 
 
 # custom
-frontend/build/
-frontend/node/
-frontend/node_modules/
-frontend/target/
-frontend/package-lock.json
+reboot-frontend/build/
+reboot-frontend/node/
+reboot-frontend/node_modules/
+reboot-frontend/target/
+reboot-frontend/package-lock.json
 logs/
-backend/target
-backend/src/main/resources/public/
+reboot-backend/target
+reboot-board-biz/target
+reboot-lizt-biz/target
+reboot-card-biz/target
+reboot-dashboard-biz/target
+reboot-security/target
+reboot-socket/target
+reboot-static-resource/target
+reboot-workspace-biz/target
 .idea
 

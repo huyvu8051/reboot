@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 public class SocketCfg {
 
     @Bean
-    ApplicationRunner config(SocketIoServer sioServer) {
+    ApplicationRunner configSocketConnection(SocketIoServer sioServer) {
         return args -> {
             SocketIoNamespace nsp = sioServer.namespace("/message");
 

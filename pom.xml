@@ -35,7 +35,6 @@
     <modules>
         <module>reboot-frontend</module>
         <module>reboot-backend</module>
-        <module>mybatix</module>
         <module>reboot-security</module>
         <module>reboot-workspace-biz</module>
         <module>reboot-board-biz</module>

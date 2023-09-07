@@ -24,7 +24,10 @@ public class SecurityConfig {
             .cors(AbstractHttpConfigurer::disable)
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(se -> se.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(a -> a.requestMatchers("/api/v1/internal/**").denyAll())
+            .authorizeHttpRequests(a -> {
+                a.requestMatchers("/api/v1/internal/**").denyAll();
+                a.anyRequest().permitAll();
+            })
             .addFilterAfter(lazySecurityContextProviderFilter, SessionManagementFilter.class);
 
 

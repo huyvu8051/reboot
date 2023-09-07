@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import static io.huyvu.reboot.security.util.SecurityUtils.generateJwtToken;
 
 
 @AllArgsConstructor
-@org.springframework.web.bind.annotation.RestController
+@RestController
 @RequestMapping("/api/v1")
 public class SecurityRestController {
     private final Repository authRepo;

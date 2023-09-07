@@ -1,10 +1,12 @@
 package io.huyvu.reboot.security.util;
 
-import io.huyvu.reboot.security.model.UserContextVo;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTCreator;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import io.huyvu.reboot.security.exception.UnauthorizedResourceException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.huyvu.reboot.security.model.UserContextVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
@@ -26,6 +28,9 @@ public class SecurityUtils {
 
     @Value("${reboot.jwt-key}")
     private static String SECRET_KEY = "iloveu3000";
+
+    private static final Algorithm ALGORITHM = Algorithm.HMAC256(SECRET_KEY);
+
 
     public static long uId() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -60,13 +65,13 @@ public class SecurityUtils {
     }
 
     public static UserContextVo validateJWTToken(String token) {
-        Claims claims = extractAllClaims(token);
+        var claims = extractAllClaims(token);
 
         var uId = Long.valueOf(claims.getSubject());
-        var username = claims.get(USERNAME, String.class);
-        var rolesStr = claims.get(ROLES, List.class);
+        var username = claims.getClaim(USERNAME).asString();
+        var rolesStr = claims.getClaim(ROLES).asList(String.class);
         var rolesAuth = toAuthorities(rolesStr);
-        var expAt = claims.getExpiration();
+        var expAt = claims.getExpiresAt();
         var mustRefresh = tokenMustRefresh(expAt);
         Assert.isTrue(isTokenNotExpired(expAt), "Token is expired.");
 
@@ -87,8 +92,14 @@ public class SecurityUtils {
     }
 
 
-    private static Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+    private static DecodedJWT extractAllClaims(String token) {
+        JWTVerifier verifier = JWT.require(ALGORITHM)
+                // specify an specific claim validations
+                .withIssuer("auth0")
+                // reusable verifier instance
+                .build();
+
+        return verifier.verify(token);
     }
 
     private static boolean isTokenNotExpired(Date expAt) {
@@ -96,12 +107,13 @@ public class SecurityUtils {
     }
 
     private static String createToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + SIX_HOUR))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
+        JWTCreator.Builder builder = JWT.create();
+        claims.forEach((s, o) -> builder.withClaim(s, o.toString()));
+
+        return builder.withSubject(subject)
+                .withIssuedAt(new Date())
+                .withExpiresAt(new Date(System.currentTimeMillis() + SIX_HOUR))
+                .sign(ALGORITHM);
     }
 
     private static List<GrantedAuthority> toAuthorities(List<String> roles) {
@@ -121,19 +133,19 @@ public class SecurityUtils {
     }
 
     public static String generateBoardResourceToken(List<Long> bIds) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put(BIDS, bIds);
-        return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + SIX_HOUR))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
+
+
+        return JWT.create()
+                .withClaim(BIDS, bIds)
+                .withIssuedAt(new Date())
+                .withExpiresAt(new Date(System.currentTimeMillis() + SIX_HOUR))
+                .sign(ALGORITHM);
     }
 
 
     public static void validateBoardResourcesAccess(long bId, String resToken) {
         var claims = extractAllClaims(resToken);
-        List<Integer> list = claims.get(BIDS, List.class);
+        List<Integer> list = claims.getClaim(BIDS).asList(Integer.class);
         var first = list.stream().map(e -> Long.valueOf(e)).filter(e -> e.equals(bId)).findFirst();
         first.orElseThrow(UnauthorizedResourceException::new);
     }

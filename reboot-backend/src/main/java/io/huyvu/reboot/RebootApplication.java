@@ -8,7 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FullyQualifiedAnnotationBeanNameGenerator;
 
-@SpringBootApplication(exclude = {UserDetailsServiceAutoConfiguration.class}, scanBasePackages = {"io.huyvu.mybatix", "io.huyvu.reboot", "io.huyvu.reboot"})
+@SpringBootApplication(exclude = {UserDetailsServiceAutoConfiguration.class})
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class RebootApplication {
 

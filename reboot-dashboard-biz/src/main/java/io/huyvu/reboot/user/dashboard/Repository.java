@@ -1,7 +1,5 @@
 package io.huyvu.reboot.user.dashboard;
 
-import io.huyvu.mybatix.Page;
-import io.huyvu.mybatix.Paging;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -162,12 +160,12 @@ public interface Repository {
                    name,
                    file_nm,
                    type,
-                   created_date""", """
+                   created_date
             from attachment
             where card_id = #{cId}
               and is_deleted = false
               order by id desc"""})
-    Page<AttachmentVo> selectAttachments(long cId, Paging paging);
+    List<AttachmentVo> selectAttachments(long cId);
 
 
     @Select("""

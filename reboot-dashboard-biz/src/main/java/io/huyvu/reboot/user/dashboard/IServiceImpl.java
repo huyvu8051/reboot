@@ -1,7 +1,6 @@
 package io.huyvu.reboot.user.dashboard;
 
-import io.huyvu.mybatix.Page;
-import io.huyvu.mybatix.Paging;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,17 +22,7 @@ public class IServiceImpl implements IService {
         List<LiztVo> lizts = new ArrayList<>(0);
         List<CardItemVo> cards = new ArrayList<>(0);
         CardDetailsVo card = null;
-        Page<AttachmentVo> attachments = new Page<>() {
-            @Override
-            public int getTotalCount() {
-                return 0;
-            }
-
-            @Override
-            public List<AttachmentVo> getItems() {
-                return new ArrayList<>();
-            }
-        };
+        List<AttachmentVo> attachments = new ArrayList<>();
 
         List<CardMember> cardMembers = new ArrayList<>();
         List<CardLabel> cardLabels = new ArrayList<>();
@@ -45,7 +34,7 @@ public class IServiceImpl implements IService {
             cardMembers = repo.selectCardMems(cId);
             cardLabels = repo.selectCardLabels(cId);
 
-            attachments = repo.selectAttachments(cId, Paging.of(0, 5));
+            attachments = repo.selectAttachments(cId);
             bId = card.getBId();
 
         }

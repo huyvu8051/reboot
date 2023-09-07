@@ -1,6 +1,5 @@
 package io.huyvu.reboot.user.dashboard;
 
-import io.huyvu.mybatix.Page;
 
 import java.util.List;
 
@@ -16,6 +15,6 @@ public record DashboardVo(
         List<CardMember> cardMems,
         List<CardLabel> cardLabels,
         List<BoardLabel> boardLabels,
-        Page<AttachmentVo> attachments
+        List<AttachmentVo> attachments
 ) {
 }

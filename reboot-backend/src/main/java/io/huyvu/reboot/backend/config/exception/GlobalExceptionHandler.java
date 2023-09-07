@@ -20,11 +20,4 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>("Auth ex", BAD_REQUEST);
     }
 
-
-    @ExceptionHandler({Exception.class})
-    ResponseEntity handleUnhandledException(Exception e) {
-        log.error("Unhandled: " + e.getMessage());
-        return new ResponseEntity<>("Fatal ex", BAD_REQUEST);
-    }
-
 }

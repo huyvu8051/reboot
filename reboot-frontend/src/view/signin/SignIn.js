@@ -56,7 +56,7 @@ export default function SignIn() {
         }).then(resp => {
             dispatch(setAuthenticateSuccess(resp))
             Cookies.set('resToken', resp.resToken, {expires: 7, path: '/'})
-            navigate('/w/')
+            navigate('/message/69')
         }).catch(err => {
             $error('Google login false: ' + err.message)
         })

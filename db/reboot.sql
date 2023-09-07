@@ -1,32 +1,57 @@
+create table conv
+(
+    id bigint not null
+        primary key,
+    nm int    null
+);
+
 create table user_account
 (
     id            bigint auto_increment
         primary key,
-    username      varchar(255)     null,
-    password      varchar(255)     null,
-    full_name     varchar(255)     null,
-    picture_url   varchar(255)     null,
-    is_deleted    bit default b'0' not null,
-    created_date  char(19)         null,
-    created_by    varchar(30)      null,
-    modified_date char(19)         null,
-    modified_by   varchar(30)      null,
+    username      varchar(255)                 null,
+    password      varchar(255)                 null,
+    full_name     varchar(255)                 null,
+    picture_url   varchar(255)                 null,
+    is_deleted    bit default b'0'             not null,
+    created_date  char(19)                     null,
+    created_by    varchar(30)                  null,
+    modified_date char(19)                     null,
+    modified_by   varchar(30)                  null,
+    full_nm_fts   varchar(255) charset utf8mb3 null comment 'full name fulltext search',
     constraint UK_castjbvpeeus0r8lbpehiu0e4
         unique (username)
 );
 
+create table message
+(
+    id          bigint    not null
+        primary key,
+    content     text      null,
+    c_id        bigint    not null,
+    create_time timestamp not null,
+    u_id        bigint    null,
+    constraint message_conversation_id_fk
+        foreign key (c_id) references conv (id),
+    constraint message_user_account_id_fk
+        foreign key (u_id) references user_account (id)
+);
+
 create index id
     on user_account (id);
+
+create fulltext index user_account_full_nm_fts_index
+    on user_account (full_nm_fts);
 
 create index username
     on user_account (username);
 
 create definer = root@localhost trigger user_account_before_insert
     before insert
-    on user_account
-    for each row
+           on user_account
+               for each row
 BEGIN
-	SET NEW.created_date = SYSDATE(),
+SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
 		 NEW.modified_by = @USER_CTX;
@@ -34,10 +59,10 @@ END;
 
 create definer = root@localhost trigger user_account_before_update
     before update
-    on user_account
-    for each row
+                      on user_account
+                      for each row
 BEGIN
-	SET NEW.modified_date = SYSDATE(),
+SET NEW.modified_date = SYSDATE(),
 		 NEW.modified_by = @USER_CTX;
 END;
 
@@ -77,10 +102,10 @@ create index id
 
 create definer = root@localhost trigger board_before_insert
     before insert
-    on board
-    for each row
+           on board
+               for each row
 BEGIN
-	SET NEW.created_date = SYSDATE(),
+SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
 		 NEW.modified_by = @USER_CTX;
@@ -88,10 +113,10 @@ END;
 
 create definer = root@localhost trigger board_before_update
     before update
-    on board
-    for each row
+                      on board
+                      for each row
 BEGIN
-	SET NEW.modified_date = SYSDATE(),
+SET NEW.modified_date = SYSDATE(),
 		 NEW.modified_by = @USER_CTX;
 END;
 
@@ -116,10 +141,10 @@ create index id
 
 create definer = root@localhost trigger label_before_insert
     before insert
-    on label
-    for each row
+           on label
+               for each row
 BEGIN
-	SET NEW.created_date = SYSDATE(),
+SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
 		 NEW.modified_by = @USER_CTX;
@@ -127,10 +152,10 @@ END;
 
 create definer = root@localhost trigger label_before_update
     before update
-    on label
-    for each row
+                      on label
+                      for each row
 BEGIN
-	SET NEW.modified_date = SYSDATE(),
+SET NEW.modified_date = SYSDATE(),
 		 NEW.modified_by = @USER_CTX;
 END;
 
@@ -165,7 +190,8 @@ create table card
     cover_color       varchar(255)                    null,
     cover_size        varchar(255)                    null,
     cover_url         varchar(255)                    null,
-    description       varchar(255)                    null,
+    description       longtext collate utf8mb4_bin    null
+        check (json_valid(`description`)),
     due_date          datetime                        null,
     due_date_complete bit            default b'0'     not null,
     due_date_reminder varchar(255)                    null,
@@ -206,10 +232,10 @@ create index id
 
 create definer = root@localhost trigger activity_before_insert
     before insert
-    on activity
-    for each row
+           on activity
+               for each row
 BEGIN
-	SET NEW.created_date = SYSDATE(),
+SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
 		 NEW.modified_by = @USER_CTX;
@@ -217,10 +243,10 @@ END;
 
 create definer = root@localhost trigger activity_before_update
     before update
-    on activity
-    for each row
+                      on activity
+                      for each row
 BEGIN
-	SET NEW.modified_date = SYSDATE(),
+SET NEW.modified_date = SYSDATE(),
 		 NEW.modified_by = @USER_CTX;
 END;
 
@@ -246,10 +272,10 @@ create index id
 
 create definer = root@localhost trigger attachment_before_insert
     before insert
-    on attachment
-    for each row
+           on attachment
+               for each row
 BEGIN
-	SET NEW.created_date = SYSDATE(),
+SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
 		 NEW.modified_by = @USER_CTX;
@@ -257,25 +283,28 @@ END;
 
 create definer = root@localhost trigger attachment_before_update
     before update
-    on attachment
-    for each row
+                      on attachment
+                      for each row
 BEGIN
-	SET NEW.modified_date = SYSDATE(),
+SET NEW.modified_date = SYSDATE(),
 		 NEW.modified_by = @USER_CTX;
 END;
 
 create index b_id
     on card (b_id);
 
+create fulltext index card_title_index
+    on card (title);
+
 create index id
     on card (id);
 
 create definer = root@localhost trigger card_before_insert
     before insert
-    on card
-    for each row
+           on card
+               for each row
 BEGIN
-	SET NEW.created_date = SYSDATE(),
+SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
 		 NEW.modified_by = @USER_CTX;
@@ -283,10 +312,10 @@ END;
 
 create definer = root@localhost trigger card_before_update
     before update
-    on card
-    for each row
+                      on card
+                      for each row
 BEGIN
-	SET NEW.modified_date = SYSDATE(),
+SET NEW.modified_date = SYSDATE(),
 		 NEW.modified_by = @USER_CTX;
 END;
 
@@ -316,10 +345,10 @@ create index id
 
 create definer = root@localhost trigger card_member_before_insert
     before insert
-    on card_member
-    for each row
+           on card_member
+               for each row
 BEGIN
-	SET NEW.created_date = SYSDATE(),
+SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
 		 NEW.modified_by = @USER_CTX;
@@ -327,10 +356,10 @@ END;
 
 create definer = root@localhost trigger card_member_before_update
     before update
-    on card_member
-    for each row
+                      on card_member
+                      for each row
 BEGIN
-	SET NEW.modified_date = SYSDATE(),
+SET NEW.modified_date = SYSDATE(),
 		 NEW.modified_by = @USER_CTX;
 END;
 
@@ -355,10 +384,10 @@ create index id
 
 create definer = root@localhost trigger checklist_before_insert
     before insert
-    on checklist
-    for each row
+           on checklist
+               for each row
 BEGIN
-	SET NEW.created_date = SYSDATE(),
+SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
 		 NEW.modified_by = @USER_CTX;
@@ -366,10 +395,10 @@ END;
 
 create definer = root@localhost trigger checklist_before_update
     before update
-    on checklist
-    for each row
+                      on checklist
+                      for each row
 BEGIN
-	SET NEW.modified_date = SYSDATE(),
+SET NEW.modified_date = SYSDATE(),
 		 NEW.modified_by = @USER_CTX;
 END;
 
@@ -399,10 +428,10 @@ create index id
 
 create definer = root@localhost trigger checklist_item_before_insert
     before insert
-    on checklist_item
-    for each row
+           on checklist_item
+               for each row
 BEGIN
-	SET NEW.created_date = SYSDATE(),
+SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
 		 NEW.modified_by = @USER_CTX;
@@ -410,10 +439,10 @@ END;
 
 create definer = root@localhost trigger checklist_item_before_update
     before update
-    on checklist_item
-    for each row
+                      on checklist_item
+                      for each row
 BEGIN
-	SET NEW.modified_date = SYSDATE(),
+SET NEW.modified_date = SYSDATE(),
 		 NEW.modified_by = @USER_CTX;
 END;
 
@@ -442,10 +471,10 @@ create index id
 
 create definer = root@localhost trigger labeled_before_insert
     before insert
-    on labeled
-    for each row
+           on labeled
+               for each row
 BEGIN
-	SET NEW.created_date = SYSDATE(),
+SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
 		 NEW.modified_by = @USER_CTX;
@@ -453,10 +482,10 @@ END;
 
 create definer = root@localhost trigger labeled_before_update
     before update
-    on labeled
-    for each row
+                      on labeled
+                      for each row
 BEGIN
-	SET NEW.modified_date = SYSDATE(),
+SET NEW.modified_date = SYSDATE(),
 		 NEW.modified_by = @USER_CTX;
 END;
 
@@ -468,10 +497,10 @@ create index w_id
 
 create definer = root@localhost trigger lizt_before_insert
     before insert
-    on lizt
-    for each row
+           on lizt
+               for each row
 BEGIN
-	SET NEW.created_date = SYSDATE(),
+SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
 		 NEW.modified_by = @USER_CTX;
@@ -479,10 +508,10 @@ END;
 
 create definer = root@localhost trigger lizt_before_update
     before update
-    on lizt
-    for each row
+                      on lizt
+                      for each row
 BEGIN
-	SET NEW.modified_date = SYSDATE(),
+SET NEW.modified_date = SYSDATE(),
 		 NEW.modified_by = @USER_CTX;
 END;
 
@@ -491,10 +520,10 @@ create index id
 
 create definer = root@localhost trigger workspace_before_insert
     before insert
-    on workspace
-    for each row
+           on workspace
+               for each row
 BEGIN
-	SET NEW.created_date = SYSDATE(),
+SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
 		 NEW.modified_by = @USER_CTX;
@@ -502,10 +531,10 @@ END;
 
 create definer = root@localhost trigger workspace_before_update
     before update
-    on workspace
-    for each row
+                      on workspace
+                      for each row
 BEGIN
-	SET NEW.modified_date = SYSDATE(),
+SET NEW.modified_date = SYSDATE(),
 		 NEW.modified_by = @USER_CTX;
 END;
 
@@ -538,10 +567,10 @@ create index wp_id
 
 create definer = root@localhost trigger workspace_member_before_insert
     before insert
-    on workspace_member
-    for each row
+           on workspace_member
+               for each row
 BEGIN
-	SET NEW.created_date = SYSDATE(),
+SET NEW.created_date = SYSDATE(),
 	    NEW.modified_date = SYSDATE(),
 		 NEW.created_by = @USER_CTX,
 		 NEW.modified_by = @USER_CTX;
@@ -549,10 +578,10 @@ END;
 
 create definer = root@localhost trigger workspace_member_before_update
     before update
-    on workspace_member
-    for each row
+                      on workspace_member
+                      for each row
 BEGIN
-	SET NEW.modified_date = SYSDATE(),
+SET NEW.modified_date = SYSDATE(),
 		 NEW.modified_by = @USER_CTX;
 END;
 

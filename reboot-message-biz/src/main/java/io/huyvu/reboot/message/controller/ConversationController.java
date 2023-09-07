@@ -20,8 +20,8 @@ public class ConversationController {
     }
 
     @PostMapping("list")
-    ConvListDTO list(){
-       return ConvListDTO.builder()
+    io.huyvu.reboot.message.controller.ConvListDTO list(){
+       return io.huyvu.reboot.message.controller.ConvListDTO.builder()
                .convs(service.getList())
                .build();
     }

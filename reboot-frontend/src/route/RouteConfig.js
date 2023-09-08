@@ -10,6 +10,7 @@ import {Board} from '../view/board/Board'
 import Workspace from "../view/workspace/Workspace";
 import CardDetails from "../view/carddetails/CardDetails";
 import Message from "../view/message/Message";
+import Content from "../view/message/Content";
 
 const RouteConfig = createBrowserRouter([
     {
@@ -44,8 +45,12 @@ const RouteConfig = createBrowserRouter([
                 element: <Workspace><Board/><CardDetails/></Workspace>
             },
             {
-                path: 'message/:convId',
+                path: 'message',
                 element: <Message></Message>
+            },
+            {
+                path: 'message/:convId',
+                element: <Message><Content></Content></Message>
             },
         ]
     },

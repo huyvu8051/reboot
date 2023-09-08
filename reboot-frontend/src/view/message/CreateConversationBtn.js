@@ -37,10 +37,10 @@ const CreateBoardBtn = () => {
             .then(resp => {
                 $success(`Create conversation \`${title}\` success`)
 
-                api.post('/api/v1/message/conv/list', {nm: title})
+                /*api.post('/api/v1/message/conv/list', {nm: title})
                     .then(resp => {
                         console.log(resp)
-                    })
+                    })*/
                 handlePopoverClose()
             })
     }

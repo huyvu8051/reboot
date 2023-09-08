@@ -5,30 +5,32 @@ import CssBaseline from '@mui/material/CssBaseline'
 import MuiAppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import NewWorkspace from './NewWorkspace'
 import {Outlet, useParams} from 'react-router-dom'
 import api from '../../service/api'
 import {useDispatch} from 'react-redux'
-import {save} from './dashboard-slice'
+import {save, saveConvs} from './dashboard-slice'
 import {useMediaQuery} from '@mui/material'
-import ChangeWpBtn from './leftDrawer/ChangeWpBtn'
 import bgImg from '../../asset/background/photo-1674413146454-41e62f015153.jpg'
 
 
 export default function PersistentDrawerLeft(props) {
-    const {bId, wId, cId} = useParams()
+    const {bId, wId, cId, convId} = useParams()
     const dispatch = useDispatch()
 
     useEffect(() => {
-        api.get('/api/v1/user/dashboard', {
+        /*api.get('/api/v1/user/dashboard', {
             params: {bId, wId, cId}
+        }).then(r => dispatch(save(r)))*/
+
+        api.post('/api/v1/message/init', {
+            params: {bId, wId, cId, convId}
         }).then(r => dispatch(save(r)))
-    }, [bId, wId, cId, dispatch])
+    }, [bId, wId, cId, convId, dispatch])
 
     const isScreen600pxOrAbove = useMediaQuery('(min-width:600px)')
     const marginTop = isScreen600pxOrAbove ? '64px' : '56px'
     return (
-        <Box >
+        <Box>
             <CssBaseline/>
             <MuiAppBar
                 elevation={0}
@@ -51,7 +53,7 @@ export default function PersistentDrawerLeft(props) {
                 width: '100vw',
                 zIndex: -99
             }} src={bgImg}
-            alt='background reboot'/>
+                 alt='background reboot'/>
             <Box component='main' sx={{
                 marginTop: marginTop,
                 width: '100%',

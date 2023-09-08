@@ -2,6 +2,8 @@ package io.huyvu.reboot.message.service;
 
 import io.huyvu.reboot.message.mapper.ConversationMapper;
 import io.huyvu.reboot.message.model.ConvListItemDTO;
+import io.huyvu.reboot.message.model.MessageInitCondDTO;
+import io.huyvu.reboot.message.model.MessageItemDTO;
 import io.huyvu.reboot.message.model.SaveConvDTO;
 import io.huyvu.reboot.security.util.SecurityUtils;
 import io.huyvu.reboot.socket.service.DashboardBroadcast;
@@ -25,5 +27,11 @@ public class ConversationServiceImpl implements ConversationService {
     public List<ConvListItemDTO> getList() {
         long uId = SecurityUtils.uId();
         return mapper.selectAllConv(uId);
+    }
+
+    @Override
+    public List<MessageItemDTO> getMessages(MessageInitCondDTO cond) {
+
+        return mapper.selectMessage(cond);
     }
 }

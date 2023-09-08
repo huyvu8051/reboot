@@ -15,7 +15,10 @@ const initialState = {
     attachments: {
         items: [],
         totalCount: 0
-    }
+    },
+    convs:[],
+    msgs: []
+
 
 }
 
@@ -23,7 +26,9 @@ export const dashboardSlice = createSlice({
     name: 'dashboardSlice',
     initialState,
     reducers: {
-        save: (s, a) => {
+        saveConvs: (s, a)=>{
+            s.convs = a.payload.convs
+        },     save: (s, a) => {
             Object.assign(s, a.payload)
         },
 
@@ -90,7 +95,7 @@ export const dashboardSlice = createSlice({
 })
 
 
-export const {save, updateLizt, updateCard, updateBoard, updateAttachment, updateLabeled, updateLabel} = dashboardSlice.actions
+export const {saveConvs, save, updateLizt, updateCard, updateBoard, updateAttachment, updateLabeled, updateLabel} = dashboardSlice.actions
 
 
 export default dashboardSlice.reducer

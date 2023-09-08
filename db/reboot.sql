@@ -1,8 +1,8 @@
 create table conv
 (
-    id bigint not null
+    id bigint auto_increment
         primary key,
-    nm int    null
+    nm varchar(255) charset utf8mb3 null
 );
 
 create table user_account
@@ -23,15 +23,15 @@ create table user_account
         unique (username)
 );
 
-create table message
+create table msg
 (
-    id          bigint    not null
+    id          bigint auto_increment
         primary key,
     content     text      null,
     c_id        bigint    not null,
     create_time timestamp not null,
     u_id        bigint    null,
-    constraint message_conversation_id_fk
+    constraint message_conv_id_fk
         foreign key (c_id) references conv (id),
     constraint message_user_account_id_fk
         foreign key (u_id) references user_account (id)

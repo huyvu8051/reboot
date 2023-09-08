@@ -10,19 +10,19 @@ import {useSelector} from "react-redux";
 const ListBoard = () => {
 
     const navigate = useNavigate()
-    const boards = useSelector(sts => sts.dashboard.boards);
+    const boards = useSelector(sts => sts.dashboard.convs);
     return (
         <>
             {
                 boards.map(item => (
-                    <ListItem key={item.id} disablePadding onClick={() => navigate(`/b/${item.id}`)}>
+                    <ListItem key={item.id} disablePadding onClick={() => navigate(`/message/${item.id}`)}>
                         <ListItemButton>
                             <ListItemAvatar>
                                 <Avatar variant='rounded' alt='Remy Sharp'
                                         src='https://mui.com/static/images/avatar/1.jpg'
                                         sx={{height: '30px', width: '30px'}}/>
                             </ListItemAvatar>
-                            <ListItemText primary={item.name}/>
+                            <ListItemText primary={item.nm}/>
                         </ListItemButton>
                     </ListItem>
                 ))

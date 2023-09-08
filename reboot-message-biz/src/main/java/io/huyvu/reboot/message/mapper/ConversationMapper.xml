@@ -9,8 +9,13 @@
         SELECT id
              , nm
         FROM conv
-        WHERE id IN (SELECT conv_id
-                     FROM grp_mem
-                     WHERE cntc_id = #{uId})
+    </select>
+    <select id="selectMessage" resultType="io.huyvu.reboot.message.model.MessageItemDTO">
+        select id
+             , content
+             , c_id
+             , create_time
+             , u_id
+        from msg
     </select>
 </mapper>

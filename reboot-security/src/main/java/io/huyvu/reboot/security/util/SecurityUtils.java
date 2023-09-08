@@ -112,11 +112,15 @@ public class SecurityUtils {
 
         return builder.withSubject(subject)
                 .withIssuedAt(new Date())
+                .withIssuer("auth0")
                 .withExpiresAt(new Date(System.currentTimeMillis() + SIX_HOUR))
                 .sign(ALGORITHM);
     }
 
     private static List<GrantedAuthority> toAuthorities(List<String> roles) {
+        if(roles == null){
+            return new ArrayList<>();
+        }
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (String role : roles) {
             authorities.add((GrantedAuthority) () -> role);

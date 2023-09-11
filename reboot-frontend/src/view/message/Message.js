@@ -1,9 +1,9 @@
 import {Box, IconButton} from '@mui/material'
 import {useEffect} from 'react'
-import {io} from 'socket.io-client'
 import {useDispatch} from 'react-redux'
-import Conversations from "./Conversations";
-import {sendMsg, updateConvs} from "./message-slice";
+import {io} from 'socket.io-client'
+import Conversations from './Conversations'
+import {sendMsg} from './message-slice'
 
 function Message(props) {
 
@@ -29,8 +29,8 @@ function Message(props) {
     }, [dispatch])
 
     return <>
-        <Box height='100%'>
-            <IconButton size='small' sx={{
+        <Box height="100%">
+            <IconButton size="small" sx={{
                 position: 'fixed',
                 left: 0,
                 mt: 2,

@@ -1,11 +1,11 @@
-import {useSelector} from 'react-redux'
-import ChatMsg from './ChatMsg'
+import {Send} from '@mui/icons-material'
+import {FormControl, IconButton, InputAdornment, TextField} from '@mui/material'
 import Grid from '@mui/material/Grid'
 import {useEffect, useRef} from 'react'
-import {FormControl, IconButton, InputAdornment, TextField} from '@mui/material'
-import {Send} from '@mui/icons-material'
-import api from '../../service/api'
+import {useSelector} from 'react-redux'
 import {useParams} from 'react-router-dom'
+import api from '../../service/api'
+import ChatMsg from './ChatMsg'
 
 
 const Content = () => {
@@ -104,7 +104,7 @@ const Content = () => {
                         endAdornment: (
                             <InputAdornment position="end">
                                 <IconButton
-                                    size='small'
+                                    size="small"
                                     onClick={handleSendMsg}
                                 >
                                     <Send/>

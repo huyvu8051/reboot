@@ -1,16 +1,15 @@
-import * as React from 'react'
-import {useEffect} from 'react'
+import {useMediaQuery} from '@mui/material'
+import MuiAppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import CssBaseline from '@mui/material/CssBaseline'
-import MuiAppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
+import * as React from 'react'
+import {useEffect} from 'react'
+import {useDispatch} from 'react-redux'
 import {Outlet, useParams} from 'react-router-dom'
 import api from '../../service/api'
-import {useDispatch} from 'react-redux'
-import {useMediaQuery} from '@mui/material'
-import bgImg from '../../asset/background/photo-1674413146454-41e62f015153.jpg'
-import {save} from "../message/message-slice";
+import {save} from '../message/message-slice'
 
 
 export default function PersistentDrawerLeft(props) {

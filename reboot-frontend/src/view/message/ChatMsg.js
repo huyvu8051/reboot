@@ -1,10 +1,10 @@
-import React from 'react'
-import {withStyles} from '@mui/styles'
-import defaultChatMsgStyles from './defaultChatMsgStyles'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
-import PropTypes from 'prop-types'
+import {withStyles} from '@mui/styles'
 import cx from 'clsx'
+import PropTypes from 'prop-types'
+import React from 'react'
+import defaultChatMsgStyles from './defaultChatMsgStyles'
 
 const ChatMsg = withStyles(defaultChatMsgStyles, {name: 'ChatMsg'})(props => {
     const {

@@ -1,7 +1,7 @@
 import {useSelector} from "react-redux";
 import ChatMsg from "./ChatMsg";
 import Grid from "@mui/material/Grid";
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
 import {FormControl, IconButton, InputAdornment, TextField} from "@mui/material";
 import {Send} from "@mui/icons-material";
 import api from "../../service/api";
@@ -35,10 +35,19 @@ const Content = () => {
                 cId: convId
             })
         }
-    };
+    }
+
+    const chatMsgViewRef = useRef();
+    useEffect(() => {
+        console.log(chatMsgViewRef.current.scrollTop, chatMsgViewRef.current.scrollHeight)
+        if(chatMsgViewRef.current.scrollTop <= chatMsgViewRef.current.scrollHeight - 20){
+            chatMsgViewRef.current.scrollTop = chatMsgViewRef.current.scrollHeight
+        }
+
+    }, [msgs]);
 
     return <Grid container height='100%' direction='column'>
-        <Grid item sx={{flex: 1, overflowY: 'auto', backgroundColor: 'red'}}>
+        <Grid item sx={{flex: 1, overflowY: 'auto'}} ref={chatMsgViewRef}>
             {
                 msgs.map((value, index) => {
 
@@ -47,7 +56,7 @@ const Content = () => {
                             key={index}
 
                             side={ uId === value.uId ? 'right' : null}
-                            avatar={''}
+                            avatar={'https://mui.com/static/images/avatar/1.jpg'}
                             messages={[
                                 value.content
                             ]}

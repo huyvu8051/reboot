@@ -48,12 +48,12 @@ export default function PersistentDrawerLeft(props) {
                     </Typography>
                 </Toolbar>
             </MuiAppBar>
-            <img style={{
+            {/*<img style={{
                 position: 'fixed',
                 width: '100vw',
                 zIndex: -99
             }} src={bgImg}
-                 alt='background reboot'/>
+                 alt='background reboot'/>*/}
             <Box component='main' sx={{
                 marginTop: marginTop,
                 width: '100%',

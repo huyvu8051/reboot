@@ -1,7 +1,6 @@
 import React from 'react'
 import {withStyles} from '@mui/styles'
 import defaultChatMsgStyles from './defaultChatMsgStyles'
-import Grid from '@mui/material/Grid'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import PropTypes from 'prop-types'
@@ -28,12 +27,13 @@ const ChatMsg = withStyles(defaultChatMsgStyles, {name: 'ChatMsg'})(props => {
         return ''
     }
     return (
-        <Grid
-            container
-            spacing={2}
-            justify={side === 'right' ? 'flex-end' : 'flex-start'}
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: side === 'right' ? 'flex-end' : 'flex-start'
+            }}
         >
-            <Grid item xs={1} container alignItems='flex-end' >
+            <div style={{flexShrink: 0, display: 'flex', alignItems: 'flex-end', padding: 4}}>
                 {side === 'left' && (
                     <Avatar
                         src={avatar}
@@ -41,10 +41,13 @@ const ChatMsg = withStyles(defaultChatMsgStyles, {name: 'ChatMsg'})(props => {
                         style={{
                             transition: 'bottom 0.3s ease'
                         }}
+
                     />
                 )}
-            </Grid>
-            <Grid item xs={11}>
+            </div>
+            <div style={{
+                flexGrow: 1
+            }}>
                 {messages.map((msg, i) => {
                     const TypographyProps = getTypographyProps(msg, i, props)
                     return (
@@ -64,9 +67,9 @@ const ChatMsg = withStyles(defaultChatMsgStyles, {name: 'ChatMsg'})(props => {
                         </div>
                     )
                 })}
-            </Grid>
+            </div>
 
-        </Grid>
+        </div>
     )
 })
 

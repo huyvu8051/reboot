@@ -1,11 +1,11 @@
-import {useSelector} from "react-redux";
-import ChatMsg from "./ChatMsg";
-import Grid from "@mui/material/Grid";
-import {useEffect, useRef} from "react";
-import {FormControl, IconButton, InputAdornment, TextField} from "@mui/material";
-import {Send} from "@mui/icons-material";
-import api from "../../service/api";
-import {useParams} from "react-router-dom";
+import {useSelector} from 'react-redux'
+import ChatMsg from './ChatMsg'
+import Grid from '@mui/material/Grid'
+import {useEffect, useRef} from 'react'
+import {FormControl, IconButton, InputAdornment, TextField} from '@mui/material'
+import {Send} from '@mui/icons-material'
+import api from '../../service/api'
+import {useParams} from 'react-router-dom'
 
 
 const Content = () => {
@@ -15,12 +15,12 @@ const Content = () => {
 
 
     // console.log(msgs)
-    const chatMsgRef = useRef();
+    const chatMsgRef = useRef()
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            event.preventDefault(); // Prevents a newline from being added
-            handleSendMsg(); // Call your submit function here
+            event.preventDefault() // Prevents a newline from being added
+            handleSendMsg() // Call your submit function here
         }
     }
     const handleSendMsg = () => {
@@ -37,29 +37,53 @@ const Content = () => {
         }
     }
 
-    const chatMsgViewRef = useRef();
+    const chatMsgViewRef = useRef()
     useEffect(() => {
         console.log(chatMsgViewRef.current.scrollTop, chatMsgViewRef.current.scrollHeight)
-        if(chatMsgViewRef.current.scrollTop <= chatMsgViewRef.current.scrollHeight - 20){
+        if (chatMsgViewRef.current.scrollTop <= chatMsgViewRef.current.scrollHeight - 20) {
             chatMsgViewRef.current.scrollTop = chatMsgViewRef.current.scrollHeight
         }
 
-    }, [msgs]);
+    }, [msgs])
 
-    return <Grid container height='100%' direction='column'>
+
+    const formattedMsgs = []
+
+    const getLastMsg = (index) => {
+        if (index - 1 < 0) return null
+        return msgs[index - 1]
+    }
+
+    const getLastFormattedMsg = () => formattedMsgs.slice(-1)[0]
+
+    msgs.forEach((value, index) => {
+        const lastMsg = getLastMsg(index)
+        if (lastMsg && lastMsg.uId === value.uId) {
+            const lastFormattedMsg = getLastFormattedMsg()
+            lastFormattedMsg.messages.push(value.content)
+        } else {
+            formattedMsgs.push({
+                avatar: 'https://mui.com/static/images/avatar/1.jpg',
+                side: uId === value.uId ? 'right' : 'left',
+                messages: [value.content]
+            })
+        }
+
+    })
+
+    console.log(formattedMsgs)
+
+    return <Grid container height="100%" direction="column">
         <Grid item sx={{flex: 1, overflowY: 'auto'}} ref={chatMsgViewRef}>
             {
-                msgs.map((value, index) => {
+                formattedMsgs.map((value, index) => {
 
                     return (
                         <ChatMsg
                             key={index}
-
-                            side={ uId === value.uId ? 'right' : null}
-                            avatar={'https://mui.com/static/images/avatar/1.jpg'}
-                            messages={[
-                                value.content
-                            ]}
+                            side={value.side}
+                            avatar={value.avatar}
+                            messages={value.messages}
                         />
                     )
                 })
@@ -70,10 +94,10 @@ const Content = () => {
         <Grid item>
             <FormControl sx={{width: '100%'}}>
                 <TextField
-                    variant='outlined'
-                    placeholder='Put some text...'
+                    variant="outlined"
+                    placeholder="Put some text..."
                     fullWidth
-                    size='small'
+                    size="small"
                     inputRef={chatMsgRef}
                     onKeyDown={handleKeyDown}
                     InputProps={{

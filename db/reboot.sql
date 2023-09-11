@@ -4,6 +4,8 @@ grant alter, alter routine, binlog admin, binlog monitor, binlog replay, connect
 
 grant alter, alter routine, binlog admin, binlog monitor, binlog replay, connection admin, create, create routine, create tablespace, create temporary tables, create user, create view, delete, delete history, drop, event, execute, federated admin, file, index, insert, lock tables, process, read_only admin, references, reload, replication master admin, replication slave, replication slave admin, select, set user, show databases, show view, shutdown, slave monitor, super, trigger, update, grant option on *.* to root@localhost;
 
+create database reboot;
+
 create table conv
 (
     id bigint auto_increment

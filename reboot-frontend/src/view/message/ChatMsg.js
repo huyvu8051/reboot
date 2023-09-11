@@ -1,13 +1,13 @@
-import React from 'react';
-import {withStyles} from "@mui/styles";
-import defaultChatMsgStyles from "./defaultChatMsgStyles";
-import Grid from "@mui/material/Grid";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import PropTypes from "prop-types";
-import cx from 'clsx';
+import React from 'react'
+import {withStyles} from '@mui/styles'
+import defaultChatMsgStyles from './defaultChatMsgStyles'
+import Grid from '@mui/material/Grid'
+import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
+import PropTypes from 'prop-types'
+import cx from 'clsx'
 
-const ChatMsg = withStyles(defaultChatMsgStyles, { name: 'ChatMsg' })(props => {
+const ChatMsg = withStyles(defaultChatMsgStyles, {name: 'ChatMsg'})(props => {
     const {
         classes,
         avatar,
@@ -16,38 +16,38 @@ const ChatMsg = withStyles(defaultChatMsgStyles, { name: 'ChatMsg' })(props => {
         GridContainerProps,
         GridItemProps,
         AvatarProps,
-        getTypographyProps,
-    } = props;
+        getTypographyProps
+    } = props
     const attachClass = index => {
         if (index === 0) {
-            return classes[`${side}First`];
+            return classes[`${side}First`]
         }
         if (index === messages.length - 1) {
-            return classes[`${side}Last`];
+            return classes[`${side}Last`]
         }
-        return '';
-    };
+        return ''
+    }
     return (
         <Grid
             container
             spacing={2}
             justify={side === 'right' ? 'flex-end' : 'flex-start'}
-            {...GridContainerProps}
         >
-            {side === 'left' && (
-                <Grid item {...GridItemProps}>
+            <Grid item xs={1} container alignItems='flex-end' >
+                {side === 'left' && (
                     <Avatar
                         src={avatar}
-                        {...AvatarProps}
                         className={cx(classes.avatar, AvatarProps.className)}
+                        style={{
+                            transition: 'bottom 0.3s ease'
+                        }}
                     />
-                </Grid>
-            )}
-            <Grid item xs={8}>
+                )}
+            </Grid>
+            <Grid item xs={11}>
                 {messages.map((msg, i) => {
-                    const TypographyProps = getTypographyProps(msg, i, props);
+                    const TypographyProps = getTypographyProps(msg, i, props)
                     return (
-                        // eslint-disable-next-line react/no-array-index-key
                         <div key={msg.id || i} className={classes[`${side}Row`]}>
                             <Typography
                                 align={'left'}
@@ -62,12 +62,13 @@ const ChatMsg = withStyles(defaultChatMsgStyles, { name: 'ChatMsg' })(props => {
                                 {msg}
                             </Typography>
                         </div>
-                    );
+                    )
                 })}
             </Grid>
+
         </Grid>
-    );
-});
+    )
+})
 
 ChatMsg.propTypes = {
     avatar: PropTypes.string,
@@ -76,8 +77,8 @@ ChatMsg.propTypes = {
     GridContainerProps: PropTypes.shape({}),
     GridItemProps: PropTypes.shape({}),
     AvatarProps: PropTypes.shape({}),
-    getTypographyProps: PropTypes.func,
-};
+    getTypographyProps: PropTypes.func
+}
 ChatMsg.defaultProps = {
     avatar: '',
     messages: [],
@@ -85,7 +86,7 @@ ChatMsg.defaultProps = {
     GridContainerProps: {},
     GridItemProps: {},
     AvatarProps: {},
-    getTypographyProps: () => ({}),
-};
+    getTypographyProps: () => ({})
+}
 
-export default ChatMsg;
+export default ChatMsg

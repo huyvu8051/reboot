@@ -1,18 +1,18 @@
-export default ({ palette, spacing }) => {
-    const radius = spacing(2.5);
-    const size = spacing(4);
-    const rightBgColor = palette.primary.main;
+export default ({palette, spacing}) => {
+    const radius = spacing(2.5)
+    const size = spacing(4)
+    const rightBgColor = palette.primary.main
     // if you want the same as facebook messenger, use this color '#09f'
     return {
         avatar: {
             width: size,
-            height: size,
+            height: size
         },
         leftRow: {
-            textAlign: 'left',
+            textAlign: 'left'
         },
         rightRow: {
-            textAlign: 'right',
+            textAlign: 'right'
         },
         msg: {
             padding: spacing(1, 2),
@@ -23,30 +23,30 @@ export default ({ palette, spacing }) => {
             fontFamily:
             // eslint-disable-next-line max-len
                 '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-            fontSize: '14px',
+            fontSize: '14px'
         },
         left: {
             borderTopRightRadius: radius,
             borderBottomRightRadius: radius,
-            backgroundColor: palette.grey[100],
+            backgroundColor: palette.grey[100]
         },
         right: {
             borderTopLeftRadius: radius,
             borderBottomLeftRadius: radius,
             backgroundColor: rightBgColor,
-            color: palette.common.white,
+            color: palette.common.white
         },
         leftFirst: {
-            borderTopLeftRadius: radius,
+            borderTopLeftRadius: radius
         },
         leftLast: {
-            borderBottomLeftRadius: radius,
+            borderBottomLeftRadius: radius
         },
         rightFirst: {
-            borderTopRightRadius: radius,
+            borderTopRightRadius: radius
         },
         rightLast: {
-            borderBottomRightRadius: radius,
-        },
-    };
-};
+            borderBottomRightRadius: radius
+        }
+    }
+}

@@ -39,7 +39,7 @@ const Content = () => {
 
     const chatMsgViewRef = useRef()
     useEffect(() => {
-        console.log(chatMsgViewRef.current.scrollTop, chatMsgViewRef.current.scrollHeight)
+        // console.log(chatMsgViewRef.current.scrollTop, chatMsgViewRef.current.scrollHeight)
         if (chatMsgViewRef.current.scrollTop <= chatMsgViewRef.current.scrollHeight - 20) {
             chatMsgViewRef.current.scrollTop = chatMsgViewRef.current.scrollHeight
         }
@@ -71,7 +71,7 @@ const Content = () => {
 
     })
 
-    console.log(formattedMsgs)
+    // console.log(formattedMsgs)
 
     return <Grid container height="100%" direction="column">
         <Grid item sx={{flex: 1, overflowY: 'auto'}} ref={chatMsgViewRef}>
@@ -104,7 +104,7 @@ const Content = () => {
                         endAdornment: (
                             <InputAdornment position="end">
                                 <IconButton
-                                    aria-label="toggle password visibility"
+                                    size='small'
                                     onClick={handleSendMsg}
                                 >
                                     <Send/>

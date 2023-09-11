@@ -17,7 +17,8 @@ const initialState = {
         totalCount: 0
     },
     convs: [],
-    conv: null
+    conv: null,
+    msgs: []
 
 }
 
@@ -29,6 +30,15 @@ export const messageSlice = createSlice({
             Object.assign(s, a.payload)
         },
 
+        sendMsg: (s, a) => {
+            const find = s.msgs.find(e => e.id === a.payload.id);
+
+            if (find) {
+                Object.assign(find, a.payload)
+            } else {
+                s.msgs.push(a.payload)
+            }
+        },
         updateLizt: (s, a) => {
             const find = s.lizts.find(e => e.id === a.payload.id);
 
@@ -104,7 +114,7 @@ export const messageSlice = createSlice({
 })
 
 
-export const {updateConvs} = messageSlice.actions
+export const {save,sendMsg, updateConvs} = messageSlice.actions
 
 
 export default messageSlice.reducer

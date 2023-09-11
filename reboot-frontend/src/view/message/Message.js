@@ -3,20 +3,21 @@ import {useEffect} from 'react'
 import {io} from 'socket.io-client'
 import {useDispatch} from 'react-redux'
 import Conversations from "./Conversations";
-import {updateConvs} from "./message-slice";
+import {sendMsg, updateConvs} from "./message-slice";
 
 function Message(props) {
 
     const dispatch = useDispatch()
     useEffect(() => {
-        const socket = io('/message', {
+        const socket = io('/chat', {
             // query: {
             //     wId: wId
             // },
             // transports: ['websocket']
         })
-        socket.on('update.message.convs', r => {
-            dispatch(updateConvs(r))
+        socket.on('sendMsg', r => {
+            console.log('sendMsg')
+            dispatch(sendMsg(r))
         })
 
 

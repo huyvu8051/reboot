@@ -10,7 +10,7 @@ import {useSelector} from "react-redux";
 const ListBoard = () => {
 
     const navigate = useNavigate()
-    const boards = useSelector(sts => sts.dashboard.convs);
+    const boards = useSelector(sts => sts.message.convs);
     return (
         <>
             {

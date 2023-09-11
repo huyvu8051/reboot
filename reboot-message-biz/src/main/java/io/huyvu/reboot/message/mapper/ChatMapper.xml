@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="io.huyvu.reboot.message.mapper.ChatMapper">
+    <insert id="insertMsg">
+        insert into reboot.msg
+        set reboot.msg.content     = #{msg.content}
+          , reboot.msg.create_time = #{msg.sendAt}
+          , reboot.msg.c_id        = #{msg.cId}
+          , reboot.msg.u_id        = #{uId}
+    </insert>
+</mapper>

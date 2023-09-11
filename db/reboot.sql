@@ -1,3 +1,9 @@
+-- we don't know how to generate root <with-no-name> (class Root) :(
+
+grant alter, alter routine, binlog admin, binlog monitor, binlog replay, connection admin, create, create routine, create tablespace, create temporary tables, create user, create view, delete, delete history, drop, event, execute, federated admin, file, index, insert, lock tables, process, read_only admin, references, reload, replication master admin, replication slave, replication slave admin, select, set user, show databases, show view, shutdown, slave monitor, super, trigger, update, grant option on *.* to root;
+
+grant alter, alter routine, binlog admin, binlog monitor, binlog replay, connection admin, create, create routine, create tablespace, create temporary tables, create user, create view, delete, delete history, drop, event, execute, federated admin, file, index, insert, lock tables, process, read_only admin, references, reload, replication master admin, replication slave, replication slave admin, select, set user, show databases, show view, shutdown, slave monitor, super, trigger, update, grant option on *.* to root@localhost;
+
 create table conv
 (
     id bigint auto_increment
@@ -27,10 +33,10 @@ create table msg
 (
     id          bigint auto_increment
         primary key,
-    content     text      null,
-    c_id        bigint    not null,
-    create_time timestamp not null,
-    u_id        bigint    null,
+    content     text   null,
+    c_id        bigint not null,
+    create_time bigint not null,
+    u_id        bigint null,
     constraint message_conv_id_fk
         foreign key (c_id) references conv (id),
     constraint message_user_account_id_fk

@@ -7,6 +7,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import io.huyvu.reboot.security.exception.UnauthorizedResourceException;
 import io.huyvu.reboot.security.model.UserContextVo;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
@@ -19,6 +21,7 @@ import java.util.*;
 
 @Slf4j
 public class SecurityUtils {
+    public static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String USERNAME = "username";
     private static final String ROLES = "roles";
     private static final String BIDS = "bIds";
@@ -155,4 +158,10 @@ public class SecurityUtils {
     }
 
 
+    public static void setResponseToken(HttpServletResponse res, String token) {
+        Cookie cookie = new Cookie(AUTHORIZATION_HEADER, "Bearer_" + token);
+        cookie.setMaxAge(3600 * 6);
+        cookie.setPath("/");
+        res.addCookie(cookie);
+    }
 }

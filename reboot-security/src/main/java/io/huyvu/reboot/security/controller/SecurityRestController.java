@@ -5,6 +5,8 @@ import io.huyvu.reboot.security.model.AuthReq;
 import io.huyvu.reboot.security.model.AuthRes;
 import io.huyvu.reboot.security.service.GoogleAuthenticationService;
 import io.huyvu.reboot.security.repository.Repository;
+import io.huyvu.reboot.security.util.SecurityUtils;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +27,7 @@ public class SecurityRestController {
     private final GoogleAuthenticationService googleOauthGoogleAuthenticationService;
 
     @PostMapping("/google-auth")
-    AuthRes authenticate(@RequestBody AuthReq req) throws AuthException {
+    AuthRes authenticate(@RequestBody AuthReq req, HttpServletResponse res) throws AuthException {
 
         var ggAccToken = googleOauthGoogleAuthenticationService.extractToken(req.getIdToken());
         var userAccount = authRepo.findOneByUsername(ggAccToken.email());
@@ -39,11 +41,12 @@ public class SecurityRestController {
 
         var roles = List.of("USER", "ADMIN");
         String token = generateJwtToken(userAccount.id(), userAccount.username(), roles);
+        SecurityUtils.setResponseToken(res, token);
 
         List<Long> bIds = authRepo.searchAllBoardId(userAccount.id());
         String resToken = generateBoardResourceToken(bIds);
 
-        return new AuthRes(token, userAccount.username(), userAccount.fullName(), userAccount.pictureUrl(), roles, resToken);
+        return new AuthRes(userAccount.id(), token, userAccount.username(), userAccount.fullName(), userAccount.pictureUrl(), roles, resToken);
     }
 
 }

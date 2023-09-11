@@ -6,6 +6,7 @@ const initialState = {
     pictureUrl: '',
     roles: [],
     jwtToken: '',
+    uId: ''
 
 }
 
@@ -23,6 +24,7 @@ export const authenticationSlice = createSlice({
             state.fullName = action.payload.fullName
             state.pictureUrl = action.payload.pictureUrl
             state.jwtToken = action.payload.token
+            state.uId = action.payload.uId
 
         },
         refreshToken: (state, action) => {

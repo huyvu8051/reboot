@@ -3,6 +3,7 @@ package io.huyvu.reboot.security.filter;
 import io.huyvu.reboot.security.util.SecurityUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,10 @@ import org.springframework.util.Assert;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.stream.Stream;
+
+import static io.huyvu.reboot.security.util.SecurityUtils.AUTHORIZATION_HEADER;
 
 @Slf4j
 @Component
@@ -26,7 +31,6 @@ public class LazySecurityContextProviderFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain)
             throws ServletException, IOException {
-
         var context = SecurityContextHolder.getContext();
         SecurityContextHolder.setContext(new LazyJwtSecurityContextProvider(req, res, context));
         filterChain.doFilter(req, res);
@@ -51,8 +55,11 @@ public class LazySecurityContextProviderFilter extends OncePerRequestFilter {
 
             if (securityCtx.getAuthentication() == null || securityCtx.getAuthentication() instanceof AnonymousAuthenticationToken) {
                 try {
-                    String authorizationHeader = req.getHeader("Authorization");
-                    Assert.isTrue(authorizationHeader.startsWith("Bearer "), "Authorization header must start with 'Bearer '.");
+
+                    var cookies = req.getCookies();
+                    var authCookie = Arrays.stream(cookies).filter(e -> e.getName().equals(AUTHORIZATION_HEADER)).findFirst().orElseThrow();
+                    String authorizationHeader = authCookie.getValue();
+                    Assert.isTrue(authorizationHeader.startsWith("Bearer_"), "Authorization header must start with 'Bearer '.");
 
                     String jwtToken = authorizationHeader.substring(7);
 

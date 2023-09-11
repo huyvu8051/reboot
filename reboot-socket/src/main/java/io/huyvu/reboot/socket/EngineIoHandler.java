@@ -140,7 +140,7 @@ public class EngineIoHandler implements HandshakeInterceptor, WebSocketHandler {
 
         void handleMessage(WebSocketMessage<?> message) {
             if (message.getPayload() instanceof String || message.getPayload() instanceof byte[]) {
-                emit("message", (Object) message.getPayload());
+                emit("message", message.getPayload());
             } else {
                 throw new RuntimeException(String.format(
                         "Invalid message type received: %s. Expected String or byte[].",

@@ -8,9 +8,9 @@ import Typography from '@mui/material/Typography'
 import {Outlet, useParams} from 'react-router-dom'
 import api from '../../service/api'
 import {useDispatch} from 'react-redux'
-import {save, saveConvs} from './dashboard-slice'
 import {useMediaQuery} from '@mui/material'
 import bgImg from '../../asset/background/photo-1674413146454-41e62f015153.jpg'
+import {save} from "../message/message-slice";
 
 
 export default function PersistentDrawerLeft(props) {

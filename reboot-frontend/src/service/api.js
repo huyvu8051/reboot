@@ -39,7 +39,7 @@ class MyPromise extends Promise {
 
 const instance = axios.create()
 instance.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${store.getState().authentication.jwtToken}`
+    // config.headers.Authorization = `Bearer ${store.getState().authentication.jwtToken}`
     return config
 }, (error) => {
     return Promise.reject(error)
@@ -47,11 +47,11 @@ instance.interceptors.request.use((config) => {
 
 instance.interceptors.response.use(response => {
     // refresh token
-    const token = response.headers.get('REFRESH_TOKEN')
+    /*const token = response.headers.get('REFRESH_TOKEN')
     if (token) {
         store.dispatch(refreshToken(token))
         $success('Jwt token refreshed')
-    }
+    }*/
     return response
 }, err => {
     return Promise.reject(err)

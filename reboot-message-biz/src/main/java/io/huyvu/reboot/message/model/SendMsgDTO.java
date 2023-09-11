@@ -7,12 +7,12 @@ import lombok.experimental.FieldDefaults;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class MessageItemDTO {
+public class SendMsgDTO {
     long id;
-    String content;
-    @JsonProperty("cId")
-    long cId;
-    String createTime;
     @JsonProperty("uId")
     long uId;
+    @JsonProperty("cId")
+    String cId;
+    String content;
+    long sendAt;
 }

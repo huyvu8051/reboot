@@ -3,6 +3,8 @@ package io.huyvu.reboot.message.controller;
 import io.huyvu.reboot.message.model.MessageInitCondDTO;
 import io.huyvu.reboot.message.model.MessageInitDTO;
 import io.huyvu.reboot.message.model.SaveConvDTO;
+import io.huyvu.reboot.message.model.SendMsgDTO;
+import io.huyvu.reboot.message.service.ChatService;
 import io.huyvu.reboot.message.service.ConversationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,26 +16,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/v1/message")
 public class ConversationController {
-    private final ConversationService service;
+    private final ConversationService conversationService;
+    private final ChatService chatService;
 
     @PostMapping("conv/save")
     void save(@RequestBody SaveConvDTO conv){
-        service.save(conv);
+        conversationService.save(conv);
     }
 
     @PostMapping("conv/list")
     io.huyvu.reboot.message.controller.ConvListDTO list(){
         var resp = io.huyvu.reboot.message.controller.ConvListDTO.builder()
-                .convs(service.getList())
+                .convs(conversationService.getList())
                 .build();
         return resp;
     }
     @PostMapping("init")
     MessageInitDTO init(MessageInitCondDTO cond){
         var resp = MessageInitDTO.builder()
-                .convs(service.getList())
-                .msgs(service.getMessages(cond))
+                .convs(conversationService.getList())
+                .msgs(conversationService.getMessages(cond))
                 .build();
         return resp;
+    }
+
+    @PostMapping("chat/send")
+    void init(@RequestBody SendMsgDTO req){
+        chatService.sendMsg(req);
     }
 }

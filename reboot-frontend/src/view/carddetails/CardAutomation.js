@@ -1,6 +1,6 @@
-import {Button} from "@mui/material";
-import {AccountBox, Attachment, Checklist, Label, TextFields} from "@mui/icons-material";
-import * as React from "react";
+import {TextFields} from '@mui/icons-material'
+import {Button} from '@mui/material'
+import * as React from 'react'
 
 
 const actionButton = {
@@ -17,7 +17,7 @@ const actionButton = {
 }
 
 
-const CardAddToTemplate = ()=>{
+const CardAddToTemplate = () => {
 
 
     return (

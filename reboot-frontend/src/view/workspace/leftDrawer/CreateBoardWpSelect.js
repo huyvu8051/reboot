@@ -1,7 +1,7 @@
 import {FormControl, InputLabel, MenuItem, Select} from '@mui/material'
 import * as React from 'react'
 import {useState} from 'react'
-import {useSelector} from "react-redux";
+import {useSelector} from 'react-redux'
 
 const CreateBoardWpSelect = (props) => {
     const [value, setValue] = useState('')
@@ -14,13 +14,13 @@ const CreateBoardWpSelect = (props) => {
     return (
         <>
             <FormControl fullWidth>
-                <InputLabel id='demo-simple-select-label' size='small' shrink>Workspace</InputLabel>
+                <InputLabel id="demo-simple-select-label" size="small" shrink>Workspace</InputLabel>
                 <Select
-                    labelId='demo-simple-select-label'
-                    id='demo-simple-select'
-                    label='Workspace'
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Workspace"
                     sx={{mb: 1}}
-                    size='small'
+                    size="small"
                     fullWidth
                     notched
                     value={value}

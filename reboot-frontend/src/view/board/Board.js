@@ -1,12 +1,12 @@
 import Box from '@mui/material/Box'
-import {DragDropContext, Droppable} from 'react-beautiful-dnd'
-import TaskList from './TaskList'
-import AddNewList from './AddNewList'
-import {useDispatch, useSelector} from 'react-redux'
 import {useCallback} from 'react'
-import {updateCard, updateLizt} from '../workspace/dashboard-slice'
+import {DragDropContext, Droppable} from 'react-beautiful-dnd'
+import {useDispatch, useSelector} from 'react-redux'
+import api from '../../service/api'
 import {getMiddleVal} from '../../util/dnd-utils'
-import api from "../../service/api";
+import {updateCard, updateLizt} from '../workspace/dashboard-slice'
+import AddNewList from './AddNewList'
+import TaskList from './TaskList'
 
 
 export const Board = () => {
@@ -136,9 +136,9 @@ export const Board = () => {
     }, [lists, dispatch, cards])
     return <>
         <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId='board'
-                       type='COLUMN'
-                       direction='horizontal'
+            <Droppable droppableId="board"
+                       type="COLUMN"
+                       direction="horizontal"
             >
                 {(provided, snapshot) => (
                     <Box

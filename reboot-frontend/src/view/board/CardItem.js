@@ -1,10 +1,10 @@
-import {Card, CardActions, CardHeader, CardMedia, Chip} from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import {$error} from "../../util/snackbar-utils";
-import {EditOutlined, Menu, Task} from "@mui/icons-material";
-import Grid from "@mui/material/Grid";
-import {useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {EditOutlined, Menu, Task} from '@mui/icons-material'
+import {Card, CardActions, CardHeader, Chip} from '@mui/material'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import {useSelector} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import {$error} from '../../util/snackbar-utils'
 
 const getStyle = (prov, snap) => {
 
@@ -18,7 +18,7 @@ const getStyle = (prov, snap) => {
 
 const CardItem = ({provided, snapshot, item}) => {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const bId = useSelector(sts => sts.dashboard.board?.id || null)
     return (
         <Card
@@ -43,7 +43,7 @@ const CardItem = ({provided, snapshot, item}) => {
             )}
             onClick={() => navigate(`/c/${item.id}`)}
             elevation={0}>
-            <IconButton size='small' sx={{
+            <IconButton size="small" sx={{
                 borderRadius: 1,
                 position: 'absolute',
                 top: 6,
@@ -51,15 +51,15 @@ const CardItem = ({provided, snapshot, item}) => {
                 color: 'var(--btn-edit-icon-color)',
                 backgroundColor: 'var(--btn-edit-bg-color)',
                 '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-                },
+                    backgroundColor: 'rgba(255, 255, 255, 0.5)'
+                }
             }}
                         onClick={() => $error('icon')}>
-                <EditOutlined fontSize='small'/>
+                <EditOutlined fontSize="small"/>
             </IconButton>
             {
                 item.coverUrl && <img
-                    width='100%'
+                    width="100%"
                     src={`/api/v1/resources/board/${bId}/${item.coverUrl}`}
                 />
             }
@@ -75,13 +75,13 @@ const CardItem = ({provided, snapshot, item}) => {
                 <Grid>
                     <Chip
                         avatar={<Menu/>}
-                        size='small'
+                        size="small"
                         label={'rtest'}
                     >
                     </Chip>
                     <Chip
                         avatar={<Task/>}
-                        size='small'
+                        size="small"
                         label={'rtest'}
                     >
                     </Chip>
@@ -91,5 +91,5 @@ const CardItem = ({provided, snapshot, item}) => {
             </CardActions>
         </Card>
     )
-};
+}
 export default CardItem

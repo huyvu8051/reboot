@@ -33,16 +33,16 @@ export default function PersistentDrawerLeft(props) {
             <CssBaseline/>
             <MuiAppBar
                 elevation={0}
-                position='fixed'
+                position="fixed"
                 sx={{
                     backgroundColor: 'white',
                     zIndex: (theme) => theme.zIndex.drawer + 1
                 }}>
                 <Toolbar>
                     <Typography
-                        variant='h6'
-                        component='div'
-                        color='black'>
+                        variant="h6"
+                        component="div"
+                        color="black">
                         Reboot
                     </Typography>
                 </Toolbar>
@@ -53,10 +53,10 @@ export default function PersistentDrawerLeft(props) {
                 zIndex: -99
             }} src={bgImg}
                  alt='background reboot'/>*/}
-            <Box component='main' sx={{
+            <Box component="main" sx={{
                 marginTop: marginTop,
                 width: '100%',
-                height: `calc(100vh - ${marginTop} - 25px)`,
+                height: `calc(100vh - ${marginTop} - 25px)`
 
 
             }}>

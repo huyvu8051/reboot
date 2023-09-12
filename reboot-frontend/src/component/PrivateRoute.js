@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom'
 const PrivateRoute = () => {
     const username = useSelector(state => state.authentication.username)
     const navigate = useNavigate()
-    if(username === ''){
+    if (username === '') {
         navigate('/error/401')
     }
     return null

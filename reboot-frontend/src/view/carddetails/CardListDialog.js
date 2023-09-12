@@ -1,10 +1,10 @@
-import {useSelector} from "react-redux";
-import {Autocomplete, Card, CardContent, CardHeader, IconButton, Popover, TextField} from "@mui/material";
-import * as React from "react";
-import {useEffect, useState} from "react";
-import Typography from "@mui/material/Typography";
-import {CloseRounded} from "@mui/icons-material";
-import api from "../../service/api";
+import {CloseRounded} from '@mui/icons-material'
+import {Autocomplete, Card, CardContent, CardHeader, IconButton, Popover, TextField} from '@mui/material'
+import Typography from '@mui/material/Typography'
+import * as React from 'react'
+import {useEffect, useState} from 'react'
+import {useSelector} from 'react-redux'
+import api from '../../service/api'
 
 const CardListDialog = () => {
     const card = useSelector(sts => sts.dashboard.card)
@@ -12,18 +12,18 @@ const CardListDialog = () => {
     useEffect(() => {
         api.get('/api/v1/user/dashboard/card/boards-details').then(setBoards)
     }, [setBoards])
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = React.useState(null)
 
     const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+        setAnchorEl(event.currentTarget)
+    }
 
     const handleClose = () => {
-        setAnchorEl(null);
-    };
+        setAnchorEl(null)
+    }
 
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
+    const open = Boolean(anchorEl)
+    const id = open ? 'simple-popover' : undefined
 
 
     return (
@@ -45,12 +45,12 @@ const CardListDialog = () => {
                 onClose={handleClose}
                 anchorOrigin={{
                     vertical: 'bottom',
-                    horizontal: 'left',
+                    horizontal: 'left'
                 }}
             >
                 <Card>
-                    <CardHeader title='Move card'
-                                action={(<IconButton size='small'><CloseRounded fontSize='small'/></IconButton>)}/>
+                    <CardHeader title="Move card"
+                                action={(<IconButton size="small"><CloseRounded fontSize="small"/></IconButton>)}/>
 
 
                     <CardContent>
@@ -67,7 +67,7 @@ const CardListDialog = () => {
             </Popover>
 
         </div>
-    );
-};
+    )
+}
 
 export default CardListDialog

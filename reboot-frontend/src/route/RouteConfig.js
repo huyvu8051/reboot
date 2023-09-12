@@ -1,16 +1,16 @@
 import {createBrowserRouter} from 'react-router-dom'
-import SignIn from '../view/signin/SignIn'
-import {Home} from '../view/Home'
 import PrivateRoute from '../component/PrivateRoute'
-import Container from '../view/workspace/Container'
+import {Board} from '../view/board/Board'
+import CardDetails from '../view/carddetails/CardDetails'
 import PageNotFound from '../view/error/PageNotFound'
 import Unauthorized from '../view/error/Unauthorized'
+import {Home} from '../view/Home'
 import Members from '../view/members/Members'
-import {Board} from '../view/board/Board'
-import Workspace from "../view/workspace/Workspace";
-import CardDetails from "../view/carddetails/CardDetails";
-import Message from "../view/message/Message";
-import Content from "../view/message/Content";
+import Content from '../view/message/Content'
+import Message from '../view/message/Message'
+import SignIn from '../view/signin/SignIn'
+import Container from '../view/workspace/Container'
+import Workspace from '../view/workspace/Workspace'
 
 const RouteConfig = createBrowserRouter([
     {
@@ -51,7 +51,7 @@ const RouteConfig = createBrowserRouter([
             {
                 path: 'message/:convId',
                 element: <Message><Content></Content></Message>
-            },
+            }
         ]
     },
     {

@@ -31,7 +31,7 @@ export const messageSlice = createSlice({
         },
 
         sendMsg: (s, a) => {
-            const find = s.msgs.find(e => e.id === a.payload.id);
+            const find = s.msgs.find(e => e.id === a.payload.id)
 
             if (find) {
                 Object.assign(find, a.payload)
@@ -40,7 +40,7 @@ export const messageSlice = createSlice({
             }
         },
         updateLizt: (s, a) => {
-            const find = s.lizts.find(e => e.id === a.payload.id);
+            const find = s.lizts.find(e => e.id === a.payload.id)
 
             if (find) {
                 Object.assign(find, a.payload)
@@ -52,7 +52,7 @@ export const messageSlice = createSlice({
             }
         },
         updateConvs: (s, a) => {
-            const find = s.lizts.find(e => e.id === a.payload.id);
+            const find = s.lizts.find(e => e.id === a.payload.id)
 
             if (find) {
                 Object.assign(find, a.payload)
@@ -64,7 +64,7 @@ export const messageSlice = createSlice({
             }
         },
         updateCard: (s, a) => {
-            const find = s.cards.find(e => e.id === a.payload.id);
+            const find = s.cards.find(e => e.id === a.payload.id)
             if (find) {
                 Object.assign(find, a.payload)
             } else {
@@ -77,7 +77,7 @@ export const messageSlice = createSlice({
 
         },
         updateBoard: (s, a) => {
-            const find = s.boards.find(e => e.id === a.payload.id);
+            const find = s.boards.find(e => e.id === a.payload.id)
             if (find) {
                 Object.assign(find, a.payload)
             } else {
@@ -86,12 +86,12 @@ export const messageSlice = createSlice({
         },
 
         updateAttachment: (s, a) => {
-            const find = s.attachments.items.find(e => e.id === a.payload.id);
+            const find = s.attachments.items.find(e => e.id === a.payload.id)
             if (find) {
                 Object.assign(find, a.payload)
             } else {
                 s.attachments.items.unshift(a.payload)
-                s.attachments.totalCount++;
+                s.attachments.totalCount++
             }
         },
         updateLabeled: (s, a) => {
@@ -109,12 +109,12 @@ export const messageSlice = createSlice({
             } else {
                 s.boardLabels.push(a.payload)
             }
-        },
-    },
+        }
+    }
 })
 
 
-export const {save,sendMsg, updateConvs} = messageSlice.actions
+export const {save, sendMsg, updateConvs} = messageSlice.actions
 
 
 export default messageSlice.reducer

@@ -1,13 +1,13 @@
-import {Button, CardActions, IconButton, TextField} from '@mui/material'
 import {Add, AddCard, Clear} from '@mui/icons-material'
+import {Button, CardActions, IconButton, TextField} from '@mui/material'
 import {useRef, useState} from 'react'
-import api from "../../service/api";
-import {$success} from "../../util/snackbar-utils";
-import {useSelector} from "react-redux";
+import {useSelector} from 'react-redux'
+import api from '../../service/api'
+import {$success} from '../../util/snackbar-utils'
 
 const AddNewCard = ({lId}) => {
 
-    const [addCardOpen, setAddCardOpen] = useState(false);
+    const [addCardOpen, setAddCardOpen] = useState(false)
     const inputRef = useRef()
 
     const bId = useSelector(sts => sts.dashboard.board?.id || null)
@@ -57,7 +57,7 @@ const AddNewCard = ({lId}) => {
                             onKeyDown={handleKeyDown}
                             fullWidth
                             sx={{
-                                p: 1,
+                                p: 1
                             }}
                             inputProps={{
                                 style: {
@@ -66,17 +66,17 @@ const AddNewCard = ({lId}) => {
                             }}
 
                             autoFocus
-                            size='small'/>
+                            size="small"/>
                         <CardActions>
-                            <Button size='small'
+                            <Button size="small"
                                     onClick={handleSubmit}
                                     sx={{textTransform: 'none'}}>
                                 Add
                             </Button>
-                            <IconButton size='small'
+                            <IconButton size="small"
                                         onClick={() => setAddCardOpen(false)}
                             >
-                                <Clear fontSize='small'/>
+                                <Clear fontSize="small"/>
                             </IconButton>
 
                         </CardActions>
@@ -91,12 +91,12 @@ const AddNewCard = ({lId}) => {
                                 color: 'rgba(0, 0, 0, 0.54)',
                                 textTransform: 'none'
                             }}
-                            size='small'
+                            size="small"
                             startIcon={<Add/>}>
                             {'Add a card'}
                         </Button>
-                        <IconButton size='small'>
-                            <AddCard fontSize='12px'/>
+                        <IconButton size="small">
+                            <AddCard fontSize="12px"/>
                         </IconButton>
                     </CardActions>
                 )

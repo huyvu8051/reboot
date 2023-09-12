@@ -15,7 +15,7 @@ const initialState = {
     attachments: {
         items: [],
         totalCount: 0
-    },
+    }
 
 
 }
@@ -29,7 +29,7 @@ export const dashboardSlice = createSlice({
         },
 
         updateLizt: (s, a) => {
-            const find = s.lizts.find(e => e.id === a.payload.id);
+            const find = s.lizts.find(e => e.id === a.payload.id)
 
             if (find) {
                 Object.assign(find, a.payload)
@@ -41,7 +41,7 @@ export const dashboardSlice = createSlice({
             }
         },
         updateCard: (s, a) => {
-            const find = s.cards.find(e => e.id === a.payload.id);
+            const find = s.cards.find(e => e.id === a.payload.id)
             if (find) {
                 Object.assign(find, a.payload)
             } else {
@@ -54,7 +54,7 @@ export const dashboardSlice = createSlice({
 
         },
         updateBoard: (s, a) => {
-            const find = s.boards.find(e => e.id === a.payload.id);
+            const find = s.boards.find(e => e.id === a.payload.id)
             if (find) {
                 Object.assign(find, a.payload)
             } else {
@@ -63,12 +63,12 @@ export const dashboardSlice = createSlice({
         },
 
         updateAttachment: (s, a) => {
-            const find = s.attachments.items.find(e => e.id === a.payload.id);
+            const find = s.attachments.items.find(e => e.id === a.payload.id)
             if (find) {
                 Object.assign(find, a.payload)
             } else {
                 s.attachments.items.unshift(a.payload)
-                s.attachments.totalCount++;
+                s.attachments.totalCount++
             }
         },
         updateLabeled: (s, a) => {
@@ -86,8 +86,8 @@ export const dashboardSlice = createSlice({
             } else {
                 s.boardLabels.push(a.payload)
             }
-        },
-    },
+        }
+    }
 })
 
 

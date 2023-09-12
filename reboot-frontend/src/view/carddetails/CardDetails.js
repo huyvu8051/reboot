@@ -1,30 +1,29 @@
+import {Button, Dialog} from '@mui/material'
+import DialogContent from '@mui/material/DialogContent'
 import * as React from 'react'
 import {useCallback, useState} from 'react'
-import {Button, Dialog, List} from '@mui/material'
+
+import {useDispatch, useSelector} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
-import DialogContent from '@mui/material/DialogContent'
-import ListItem from '@mui/material/ListItem'
-import CardModifiableTitle from './CardModifiableTitle'
+import api from '../../service/api'
+import {updateCard} from '../workspace/dashboard-slice'
+import CardActivity from './CardActivity'
+import CardAddToTemplate from './CardAddToTemplate'
+import CardAttachments from './CardAttachments'
+import CardAutomation from './CardAutomation'
+import CardDate from './CardDate'
+import CardDescription from './CardDescription'
+import CardDetailsActions from './CardDetailsActions'
 import CardHeaderCover from './CardHeaderCover'
 import CardListDialog from './CardListDialog'
 import CardMembers from './CardMembers'
-import CardLabels from './label/CardLabels'
+import CardModifiableTitle from './CardModifiableTitle'
 import CardNotifications from './CardNotifications'
-import CardDate from './CardDate'
-import CardAddToTemplate from "./CardAddToTemplate";
-import CardPowerUps from "./CardPowerUps";
-import CardAutomation from "./CardAutomation";
-import CardDetailsActions from "./CardDetailsActions";
-import CardAttachments from "./CardAttachments";
-import api from "../../service/api";
-import {updateCard} from "../workspace/dashboard-slice";
-
-import {useDispatch, useSelector} from "react-redux";
-import CardDescription from "./CardDescription";
-import CardActivity from "./CardActivity";
+import CardPowerUps from './CardPowerUps'
+import CardLabels from './label/CardLabels'
 
 const CardDetails = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const [open, setOpen] = useState(true)
     const handleClickOpen = () => {
         setOpen(true)
@@ -44,23 +43,23 @@ const CardDetails = () => {
 
 
     const handleDrop = (event) => {
-        event.preventDefault();
-        const files = event.dataTransfer.files;
+        event.preventDefault()
+        const files = event.dataTransfer.files
         // Process the dropped files
-        processFiles(files);
-    };
+        processFiles(files)
+    }
 
 
     const processFiles = (files) => {
         // Process the files here, e.g., read file contents, upload to server, etc.
-        console.log(files);
+        console.log(files)
         for (let i = 0; i < files.length; i++) {
             const file = files[i]
             if (!file) return
-            const formData = new FormData();
-            formData.append("file", file);
+            const formData = new FormData()
+            formData.append('file', file)
 
-            api.post("/api/v1/user/dashboard/card/attachment/" + cId, formData).then(r => {
+            api.post('/api/v1/user/dashboard/card/attachment/' + cId, formData).then(r => {
                 console.log(r)
                 api.put('/api/v1/user/dashboard/card/details', {
                     id: card.id,
@@ -73,43 +72,43 @@ const CardDetails = () => {
                 }))
             })
         }
-    };
+    }
 
     const processFilesAttachments = (files) => {
         // Process the files here, e.g., read file contents, upload to server, etc.
-        console.log(files);
+        console.log(files)
         for (let i = 0; i < files.length; i++) {
             const file = files[i]
             if (!file) return
-            const formData = new FormData();
-            formData.append("file", file);
+            const formData = new FormData()
+            formData.append('file', file)
 
-            api.post("/api/v1/user/dashboard/card/attachment/" + cId, formData).then(r => {
+            api.post('/api/v1/user/dashboard/card/attachment/' + cId, formData).then(r => {
                 console.log(r)
 
             })
         }
-    };
+    }
 
     const handleDropAttachments = (event) => {
-        event.preventDefault();
-        const files = event.dataTransfer.files;
+        event.preventDefault()
+        const files = event.dataTransfer.files
         // Process the dropped files
-        processFilesAttachments(files);
-    };
+        processFilesAttachments(files)
+    }
 
 
     return card && (
         <div>
-            <Button variant='outlined' onClick={handleClickOpen}>
+            <Button variant="outlined" onClick={handleClickOpen}>
                 Open alert dialog
             </Button>
             <Dialog
                 open={open}
-                scroll='body'
+                scroll="body"
                 onClose={handleClose}
-                aria-labelledby='alert-dialog-title'
-                aria-describedby='alert-dialog-description'
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
                 sx={{
                     '& .MuiPaper-root': {
                         backgroundColor: '#F1F2F4'

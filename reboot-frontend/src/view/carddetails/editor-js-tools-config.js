@@ -1,18 +1,18 @@
-import Embed from '@editorjs/embed'
-import Table from '@editorjs/table'
-import Marker from '@editorjs/marker'
-import List from '@editorjs/list'
-import Warning from '@editorjs/warning'
-import Code from '@editorjs/code'
-import LinkTool from '@editorjs/link'
-import Image from '@editorjs/image'
-import Raw from '@editorjs/raw'
-import Header from '@editorjs/header'
-import Quote from '@editorjs/quote'
 import CheckList from '@editorjs/checklist'
+import Code from '@editorjs/code'
 import Delimiter from '@editorjs/delimiter'
+import Embed from '@editorjs/embed'
+import Header from '@editorjs/header'
+import Image from '@editorjs/image'
 import InlineCode from '@editorjs/inline-code'
+import LinkTool from '@editorjs/link'
+import List from '@editorjs/list'
+import Marker from '@editorjs/marker'
+import Quote from '@editorjs/quote'
+import Raw from '@editorjs/raw'
 import SimpleImage from '@editorjs/simple-image'
+import Table from '@editorjs/table'
+import Warning from '@editorjs/warning'
 
 const EDITOR_JS_TOOLS = {
     embed: Embed,
@@ -29,7 +29,7 @@ const EDITOR_JS_TOOLS = {
     checklist: CheckList,
     delimiter: Delimiter,
     inlineCode: InlineCode,
-    simpleImage: SimpleImage,
+    simpleImage: SimpleImage
 }
 
 export default EDITOR_JS_TOOLS

@@ -1,76 +1,76 @@
-import {CardHeader, IconButton, TextField} from '@mui/material';
-import {MoreHoriz} from '@mui/icons-material';
-import {useEffect, useRef, useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {updateLizt} from '../workspace/dashboard-slice';
-import api from '../../service/api';
+import {MoreHoriz} from '@mui/icons-material'
+import {CardHeader, IconButton, TextField} from '@mui/material'
+import {useEffect, useRef, useState} from 'react'
+import {useDispatch} from 'react-redux'
+import api from '../../service/api'
+import {updateLizt} from '../workspace/dashboard-slice'
 
 const TaskListHeader = ({item}) => {
-    const inputRef = useRef();
-    const dispatch = useDispatch();
-    const [inputValue, setInputValue] = useState(item.title);
-    const [isFocused, setIsFocused] = useState(false);
+    const inputRef = useRef()
+    const dispatch = useDispatch()
+    const [inputValue, setInputValue] = useState(item.title)
+    const [isFocused, setIsFocused] = useState(false)
     const handleFocus = () => {
-        setIsFocused(true);
-    };
+        setIsFocused(true)
+    }
 
 
     useEffect(() => {
         if (!isFocused) {
-            setInputValue(item.title);
+            setInputValue(item.title)
         }
-    }, [item.title]);
+    }, [item.title])
 
     const handleSubmit = () => {
-        const inputVal = inputValue.trim();
+        const inputVal = inputValue.trim()
         if (inputVal && inputVal !== item.title) {
             dispatch(
                 updateLizt({
                     ...item,
-                    title: inputVal,
+                    title: inputVal
                 })
-            );
+            )
             api
                 .put('/api/v1/user/list', null, {
                     params: {
                         lId: item.id,
                         ordinal: item.ordinal,
-                        title: inputVal,
-                    },
+                        title: inputVal
+                    }
                 })
-                .then();
+                .then()
         } else {
-            setInputValue(item.title);
+            setInputValue(item.title)
         }
-    };
+    }
 
     const handleBlur = ({currentTarget, relatedTarget}) => {
-        if (currentTarget.contains(relatedTarget)) return;
-        setIsFocused(false);
-        handleSubmit();
-    };
+        if (currentTarget.contains(relatedTarget)) return
+        setIsFocused(false)
+        handleSubmit()
+    }
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && !event.shiftKey) {
-            event.preventDefault();
-            inputRef.current.blur();
+            event.preventDefault()
+            inputRef.current.blur()
         }
 
-       /* if(event.key === 'Escape'){
-            event.preventDefault();
-            setInputValue(item.title);
-            inputRef.current.blur();
-        }*/
-    };
+        /* if(event.key === 'Escape'){
+             event.preventDefault();
+             setInputValue(item.title);
+             inputRef.current.blur();
+         }*/
+    }
 
     const handleChange = (event) => {
-        setInputValue(event.target.value);
-    };
+        setInputValue(event.target.value)
+    }
 
     return (
         <CardHeader
             sx={{
-                p: 1,
+                p: 1
             }}
             title={(
                 <TextField
@@ -79,22 +79,22 @@ const TaskListHeader = ({item}) => {
                     multiline
                     onFocus={handleFocus
 
-                }
+                    }
                     onBlur={handleBlur}
                     sx={{
                         '& fieldset': {
-                            borderWidth: 0,
+                            borderWidth: 0
                         },
                         '& .MuiInputBase-root': {
-                            padding: 0.5,
-                        },
+                            padding: 0.5
+                        }
                     }}
                     inputProps={{
                         style: {
                             fontSize: 'small',
-                            fontWeight: 'bold',
+                            fontWeight: 'bold'
                         },
-                        onKeyDown: handleKeyDown,
+                        onKeyDown: handleKeyDown
                     }}
                     value={inputValue}
                     onChange={handleChange}
@@ -106,7 +106,7 @@ const TaskListHeader = ({item}) => {
                 </IconButton>
             )}
         />
-    );
-};
+    )
+}
 
-export default TaskListHeader;
+export default TaskListHeader

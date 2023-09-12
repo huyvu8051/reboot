@@ -1,14 +1,14 @@
-import LeftDrawer from './leftDrawer/LeftDrawer'
-import {Box, IconButton} from '@mui/material'
-import {useEffect, useState} from 'react'
 import {ArrowLeft, ArrowRight} from '@mui/icons-material'
-import RightDrawer from './leftDrawer/RightDrawer'
-import {io} from 'socket.io-client'
-import {useDispatch, useSelector} from 'react-redux'
-import {updateAttachment, updateBoard, updateCard, updateLabel, updateLabeled, updateLizt} from './dashboard-slice'
-import {useParams} from 'react-router-dom'
-import api from '../../service/api';
+import {Box, IconButton} from '@mui/material'
 import Cookies from 'js-cookie'
+import {useEffect, useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {useParams} from 'react-router-dom'
+import {io} from 'socket.io-client'
+import api from '../../service/api'
+import {updateAttachment, updateBoard, updateCard, updateLabel, updateLabeled, updateLizt} from './dashboard-slice'
+import LeftDrawer from './leftDrawer/LeftDrawer'
+import RightDrawer from './leftDrawer/RightDrawer'
 
 function Workspace(props) {
 
@@ -58,17 +58,17 @@ function Workspace(props) {
     }, [wId, bId, cId, dispatch])
 
     return <>
-        <Box height='100%'>
+        <Box height="100%">
             {
                 !openLeft && <>
-                    <IconButton size='small' sx={{
+                    <IconButton size="small" sx={{
                         position: 'fixed',
                         left: 0,
                         mt: 2,
                         zIndex: (theme) => theme.zIndex.drawer + 1
                     }}
                                 onClick={() => setOpenLeft(true)}>
-                        <ArrowRight fontSize='small'/>
+                        <ArrowRight fontSize="small"/>
                     </IconButton>
                 </>
             }
@@ -85,7 +85,7 @@ function Workspace(props) {
             <RightDrawer open={openRight} setOpen={setOpenRight}/>
             {
                 !openRight && <>
-                    <IconButton size='small' sx={{
+                    <IconButton size="small" sx={{
                         position: 'fixed',
                         right: 0,
                         top: 50,
@@ -93,7 +93,7 @@ function Workspace(props) {
                         zIndex: (theme) => theme.zIndex.drawer + 1
                     }}
                                 onClick={() => setOpenRight(true)}>
-                        <ArrowLeft fontSize='small'/>
+                        <ArrowLeft fontSize="small"/>
                     </IconButton>
                 </>
             }

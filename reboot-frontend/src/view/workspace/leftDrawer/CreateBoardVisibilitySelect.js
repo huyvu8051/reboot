@@ -12,13 +12,13 @@ let CreateBoardVisibilitySelect = (props) => {
     return (
         <>
             <FormControl fullWidth>
-                <InputLabel id='demo-simple-select-label' size='small' shrink>Visibility</InputLabel>
+                <InputLabel id="demo-simple-select-label" size="small" shrink>Visibility</InputLabel>
                 <Select
-                    labelId='demo-simple-select-label'
-                    id='demo-simple-select'
-                    label='Visibility'
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Visibility"
                     sx={{mb: 1}}
-                    size='small'
+                    size="small"
                     fullWidth
                     notched
                     value={value}
@@ -26,13 +26,13 @@ let CreateBoardVisibilitySelect = (props) => {
                     inputRef={props.childRef}
                 >
 
-                    <MenuItem value='private'>
+                    <MenuItem value="private">
                         Private
                     </MenuItem>
-                    <MenuItem value='workspace'>
+                    <MenuItem value="workspace">
                         Workspace
                     </MenuItem>
-                    <MenuItem value='public'>
+                    <MenuItem value="public">
                         Public
                     </MenuItem>
 

@@ -1,6 +1,6 @@
-import IconButton from '@mui/material/IconButton'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {Menu, MenuItem} from '@mui/material'
+import IconButton from '@mui/material/IconButton'
 import * as React from 'react'
 
 let SettingWpBtn = () => {
@@ -16,23 +16,23 @@ let SettingWpBtn = () => {
     }
     return (
         <>
-            <IconButton size='small' sx={{color: 'black'}}
-                        aria-controls='menu-setting'
-                        aria-haspopup='true'
+            <IconButton size="small" sx={{color: 'black'}}
+                        aria-controls="menu-setting"
+                        aria-haspopup="true"
                         onClick={handleSettingMenu}>
-                <ExpandMoreIcon fontSize='small'/>
+                <ExpandMoreIcon fontSize="small"/>
             </IconButton>
             <Menu
-                id='menu-setting'
+                id="menu-setting"
                 anchorEl={settingAnchorEl}
                 anchorOrigin={{
                     vertical: 'bottom',
-                    horizontal: 'right',
+                    horizontal: 'right'
                 }}
                 keepMounted
                 transformOrigin={{
                     vertical: 'top',
-                    horizontal: 'left',
+                    horizontal: 'left'
                 }}
                 open={Boolean(settingAnchorEl)}
                 onClose={handleSettingClose}

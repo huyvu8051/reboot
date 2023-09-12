@@ -1,7 +1,7 @@
-import {Button} from "@mui/material";
-import {AccountBox, Attachment, Checklist, Label, TextFields} from "@mui/icons-material";
-import * as React from "react";
-import AddLabel from "./label/AddLabel";
+import {AccountBox, Attachment, Checklist, Label, TextFields} from '@mui/icons-material'
+import {Button} from '@mui/material'
+import * as React from 'react'
+import AddLabel from './label/AddLabel'
 
 
 const actionButton = {
@@ -18,7 +18,7 @@ const actionButton = {
 }
 
 
-const CardAddToTemplate = ()=>{
+const CardAddToTemplate = () => {
 
 
     return (
@@ -28,7 +28,7 @@ const CardAddToTemplate = ()=>{
                 <Button {...actionButton} startIcon={<AccountBox/>}>Members</Button>
                 <AddLabel
                     activator={e => (
-                        <Button {...actionButton} {...e} variant='contained' startIcon={<Label/>}>Labels</Button>
+                        <Button {...actionButton} {...e} variant="contained" startIcon={<Label/>}>Labels</Button>
                     )}
                 />
 

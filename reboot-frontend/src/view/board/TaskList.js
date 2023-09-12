@@ -1,10 +1,10 @@
-import {Box, Card} from "@mui/material";
-import {Draggable, Droppable} from "react-beautiful-dnd";
-import List from "@mui/material/List";
-import CardItem from "./CardItem";
-import {useSelector} from "react-redux";
-import AddNewCard from "./AddNewCard";
-import TaskListHeader from "./TaskListHeader";
+import {Box, Card} from '@mui/material'
+import List from '@mui/material/List'
+import {Draggable, Droppable} from 'react-beautiful-dnd'
+import {useSelector} from 'react-redux'
+import AddNewCard from './AddNewCard'
+import CardItem from './CardItem'
+import TaskListHeader from './TaskListHeader'
 
 const getStyle = (prov, snap) => {
     // console.log(prov, snap)
@@ -29,14 +29,14 @@ const TaskList = ({item, index}) => {
         >
             {(dragProv, dragSnap) => (
                 <Droppable droppableId={item.id + ''}
-                           type='QUOTE'>
+                           type="QUOTE">
                     {(dropProv, dropSnap) => (
                         <Box
-                            classes='box'
+                            classes="box"
                             sx={{
                                 // bgcolor: 'blue',
                                 boxSizing: 'border-box',
-                                margin: 0,
+                                margin: 0
                             }}
                             elevation={0}>
 
@@ -45,7 +45,7 @@ const TaskList = ({item, index}) => {
                                 ref={dragProv.innerRef}
                                 {...dragProv.draggableProps}
                                 {...dragProv.dragHandleProps}
-                                className='list-content'
+                                className="list-content"
                                 sx={{
                                     backgroundColor: 'rgb(235 236 240)',
                                     borderRadius: '3px',
@@ -54,7 +54,7 @@ const TaskList = ({item, index}) => {
                                     flexDirection: 'column',
                                     maxHeight: '100%',
                                     minWidth: '270px',
-                                    mx: '4px',
+                                    mx: '4px'
 
                                 }}
 
@@ -62,7 +62,7 @@ const TaskList = ({item, index}) => {
                                 elevation={0}>
                                 <TaskListHeader item={item}/>
                                 <List
-                                    className='List'
+                                    className="List"
                                     ref={dropProv.innerRef}
                                     {...dropProv.droppableProps}
                                     sx={{
@@ -100,5 +100,5 @@ const TaskList = ({item, index}) => {
             )}
         </Draggable>
     )
-};
+}
 export default TaskList

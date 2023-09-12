@@ -1,5 +1,3 @@
-
-
 export const getMiddleVal = (v1, v2) => {
     if (v1 === v2) return v1 * 1.0 / 2
     const diff = Math.abs(v1 * 1.0 - v2)

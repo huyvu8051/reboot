@@ -1,7 +1,7 @@
-import {Button, Checkbox} from "@mui/material";
-import {KeyboardArrowDown} from "@mui/icons-material";
-import * as React from "react";
-import {useSelector} from "react-redux";
+import {KeyboardArrowDown} from '@mui/icons-material'
+import {Button, Checkbox} from '@mui/material'
+import * as React from 'react'
+import {useSelector} from 'react-redux'
 
 const CardDate = () => {
     const card = useSelector(sts => sts.dashboard.card)
@@ -12,12 +12,12 @@ const CardDate = () => {
                 Dates
             </h5>
             <div>
-                <Checkbox size='small' sx={{p: 0}}/>
+                <Checkbox size="small" sx={{p: 0}}/>
                 <Button
-                    size='small'
+                    size="small"
                     disableElevation
-                    variant='contained'
-                    color='inherit'
+                    variant="contained"
+                    color="inherit"
                     style={{
                         borderRadius: 3,
                         margin: 2,

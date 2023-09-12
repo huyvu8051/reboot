@@ -29,10 +29,10 @@ export const authenticationSlice = createSlice({
         },
         refreshToken: (state, action) => {
             state.jwtToken = action.payload
-        },
+        }
 
 
-    },
+    }
 })
 
 

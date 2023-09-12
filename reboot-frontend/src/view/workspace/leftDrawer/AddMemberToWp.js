@@ -1,35 +1,35 @@
-import * as React from 'react';
-import {useEffect, useRef, useState} from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import AddIcon from "@mui/icons-material/Add";
-import {Avatar, Box, Chip, IconButton, Typography} from "@mui/material";
-import Grid from "@mui/material/Grid";
-import LinkIcon from "@mui/icons-material/Link";
-import Link from "@mui/material/Link";
-import {Close} from "@mui/icons-material";
-import {$success} from "../../../util/snackbar-utils";
-import api from "../../../service/api";
+import {Close} from '@mui/icons-material'
+import AddIcon from '@mui/icons-material/Add'
+import LinkIcon from '@mui/icons-material/Link'
+import {Avatar, Box, Chip, IconButton, Typography} from '@mui/material'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import Grid from '@mui/material/Grid'
+import Link from '@mui/material/Link'
+import TextField from '@mui/material/TextField'
+import * as React from 'react'
+import {useEffect, useRef, useState} from 'react'
+import api from '../../../service/api'
+import {$success} from '../../../util/snackbar-utils'
 
 const AddMemberToWp = () => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(false)
     const [emails, setEmails] = useState([])
     const [selecteds, setSelecteds] = useState([])
 
-    const [link, setLink] = useState('');
+    const [link, setLink] = useState('')
 
     const handleClickOpen = () => {
-        setOpen(true);
-    };
+        setOpen(true)
+    }
 
     const handleClose = () => {
-        setOpen(false);
-    };
+        setOpen(false)
+    }
 
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState('')
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -45,21 +45,21 @@ const AddMemberToWp = () => {
             } else {
                 setEmails([])
             }
-        }, 500);
+        }, 500)
 
         return () => {
-            clearTimeout(timer);
-        };
-    }, [searchQuery]);
+            clearTimeout(timer)
+        }
+    }, [searchQuery])
 
 
     function handleSearchChange(event) {
-        setSearchQuery(event.target.value);
+        setSearchQuery(event.target.value)
     }
 
     const handleOptionSelected = () => {
-        return true; // Always return true to force the option popup to show
-    };
+        return true // Always return true to force the option popup to show
+    }
 
 
     function sendInvite() {
@@ -69,7 +69,7 @@ const AddMemberToWp = () => {
             }],
             msg: msgRef.current.value
         }).then(r => {
-            $success("Invite send ✅")
+            $success('Invite send ✅')
         })
         setSelecteds([])
         setEmails([])
@@ -81,37 +81,37 @@ const AddMemberToWp = () => {
     function handleChipDelete(option) {
         setSelecteds((prevArray) =>
             prevArray.filter((element) => element.username !== option.username)
-        );
+        )
     }
 
     const validateEmail = (email) => {
         // Regular expression pattern for email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
         // Check if the email matches the regex pattern
-        return emailRegex.test(email);
-    };
+        return emailRegex.test(email)
+    }
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
-            const value = event.target.value.trim();
+            const value = event.target.value.trim()
             if (validateEmail(value)) {
                 setSelecteds([{username: value, id: new Date()}, ...selecteds])
-                event.target.value = ""
-                setSearchQuery("")
+                event.target.value = ''
+                setSearchQuery('')
             }
         }
-    };
+    }
 
-    const msgRef = useRef();
+    const msgRef = useRef()
 
     return (
         <div>
-            <IconButton size='small' sx={{color: 'black'}} onClick={handleClickOpen}>
-                <AddIcon fontSize='small'/>
+            <IconButton size="small" sx={{color: 'black'}} onClick={handleClickOpen}>
+                <AddIcon fontSize="small"/>
             </IconButton>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle sx={{pb: 0}} fontWeight='lighter'>
+                <DialogTitle sx={{pb: 0}} fontWeight="lighter">
                     Invite to Workspace
                     <IconButton
                         aria-label="close"
@@ -119,7 +119,7 @@ const AddMemberToWp = () => {
                             position: 'absolute',
                             right: 8,
                             top: 8,
-                            color: (theme) => theme.palette.grey[500],
+                            color: (theme) => theme.palette.grey[500]
                         }}
                         onClick={handleClose}
                     >
@@ -127,7 +127,7 @@ const AddMemberToWp = () => {
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    <Grid container columnSpacing={2} alignItems='start'>
+                    <Grid container columnSpacing={2} alignItems="start">
                         <Grid item flex={1}>
                             {
                                 selecteds.map((option) => (
@@ -139,11 +139,11 @@ const AddMemberToWp = () => {
                                     />
                                 ))}
                             <TextField
-                                margin='dense'
+                                margin="dense"
                                 autoFocus
                                 variant="outlined"
                                 placeholder="Email Address"
-                                type='email'
+                                type="email"
                                 onChange={handleSearchChange}
                                 onKeyPress={handleKeyPress}
                             />
@@ -171,7 +171,7 @@ const AddMemberToWp = () => {
                         {
                             selecteds.length > 0 && (
                                 <Grid item>
-                                    <Button sx={{textTransform: 'none', fontSize: 12}} variant='contained' size='small'
+                                    <Button sx={{textTransform: 'none', fontSize: 12}} variant="contained" size="small"
                                             onClick={sendInvite}>
                                         Send invites
                                     </Button>
@@ -184,8 +184,8 @@ const AddMemberToWp = () => {
                             <Grid container>
                                 <TextField
                                     inputRef={msgRef}
-                                    margin='dense'
-                                    size='small'
+                                    margin="dense"
+                                    size="small"
                                     fullWidth
                                     minRows={5}
                                     multiline
@@ -200,7 +200,7 @@ const AddMemberToWp = () => {
 
 
                         <Grid item>
-                            <IconButton sx={{borderRadius: 1}} size='small'>
+                            <IconButton sx={{borderRadius: 1}} size="small">
                                 <LinkIcon/>
                             </IconButton>
                         </Grid>
@@ -216,7 +216,7 @@ const AddMemberToWp = () => {
                                         onClick={e => {
                                             e.preventDefault()
                                             navigator.clipboard.writeText(link)
-                                            $success("Link copied.")
+                                            $success('Link copied.')
                                         }}>
                                         Copy link
                                     </Link>
@@ -236,9 +236,9 @@ const AddMemberToWp = () => {
                         {
                             link && (
                                 <Grid item>
-                                    <Button size='small'
+                                    <Button size="small"
                                             onClick={() => setLink('')}
-                                            variant='contained'
+                                            variant="contained"
                                             sx={{textTransform: 'none', fontSize: 12}}
                                     >Disable link</Button>
                                 </Grid>
@@ -251,7 +251,7 @@ const AddMemberToWp = () => {
             </Dialog>
         </div>
     )
-        ;
+
 }
 
 export default AddMemberToWp

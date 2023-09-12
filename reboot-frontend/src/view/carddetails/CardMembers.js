@@ -1,13 +1,14 @@
-import {useSelector} from "react-redux";
-import {AvatarGroup} from "@mui/material";
-import Avatar from "@mui/material/Avatar";
-import {Add} from "@mui/icons-material";
-import * as React from "react";
+import {Add} from '@mui/icons-material'
+import {AvatarGroup} from '@mui/material'
+import Avatar from '@mui/material/Avatar'
+import * as React from 'react'
+import {useSelector} from 'react-redux'
 
 const avatarStyle = {width: '26px', height: '26px'}
 const CardMembers = () => {
     const cardMems = useSelector(sts => sts.dashboard.cardMems)
     console.log(cardMems)
+
     function handleAddNewMember() {
 
     }
@@ -32,6 +33,6 @@ const CardMembers = () => {
             </AvatarGroup>
         </div>
     )
-};
+}
 
 export default CardMembers

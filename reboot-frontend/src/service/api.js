@@ -1,7 +1,5 @@
 import axios from 'axios'
-import {$error, $success} from '../util/snackbar-utils'
-import {store} from '../store'
-import {refreshToken} from '../store/authenticationSlice'
+import {$error} from '../util/snackbar-utils'
 
 class MyPromise extends Promise {
     constructor(executor) {
@@ -11,7 +9,7 @@ class MyPromise extends Promise {
     }
 
     catch(onRejected) {
-        const promise = super.catch(onRejected);
+        const promise = super.catch(onRejected)
 
         if (this.greatGrandparent) {
             promise.greatGrandparent = this.greatGrandparent
@@ -24,7 +22,7 @@ class MyPromise extends Promise {
     }
 
     then(onfulfilled, onrejected) {
-        const promise = super.then(onfulfilled, onrejected);
+        const promise = super.then(onfulfilled, onrejected)
         promise.greatGrandparent = this.greatGrandparent ? this.greatGrandparent : this
         return promise
     }

@@ -1,6 +1,6 @@
-import {Button} from "@mui/material";
-import {ArrowForward, Category, Check, CheckBox, ContentCopy, Delete, HideSource, Share} from "@mui/icons-material";
-import * as React from "react";
+import {ArrowForward, Category, CheckBox, ContentCopy, Delete, HideSource, Share} from '@mui/icons-material'
+import {Button} from '@mui/material'
+import * as React from 'react'
 
 
 const actionButton = {
@@ -26,17 +26,18 @@ const CardAddToTemplate = () => {
             <div style={{display: 'flex', flexDirection: 'column', gap: 5}}>
                 <Button {...actionButton} startIcon={<ArrowForward/>}>Move</Button>
                 <Button {...actionButton} startIcon={<ContentCopy/>}>Copy</Button>
-                <Button {...actionButton} startIcon={<Category/>} endIcon={<CheckBox color='success'/>}>Template</Button>
+                <Button {...actionButton} startIcon={<Category/>}
+                        endIcon={<CheckBox color="success"/>}>Template</Button>
                 <Button {...actionButton} startIcon={<HideSource/>}>Hide from list</Button>
                 <Button
                     style={{
                         textTransform: 'none',
                         justifyContent: 'flex-start'
                     }}
-                    color='error'
-                    size='small'
+                    color="error"
+                    size="small"
                     disableElevation
-                    variant='contained' startIcon={<Delete/>}>Delete</Button>
+                    variant="contained" startIcon={<Delete/>}>Delete</Button>
                 <Button {...actionButton} startIcon={<Share/>}>Share</Button>
             </div>
         </div>

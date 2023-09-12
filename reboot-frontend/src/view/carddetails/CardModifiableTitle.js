@@ -1,27 +1,27 @@
+import {TextField} from '@mui/material'
 import * as React from 'react'
 import {useEffect, useRef, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {updateCard} from '../workspace/dashboard-slice'
 import api from '../../service/api'
-import {TextField} from '@mui/material'
+import {updateCard} from '../workspace/dashboard-slice'
 
 const CardModifiableTitle = () => {
     const inputRef = useRef()
     const dispatch = useDispatch()
 
     const item = useSelector(sts => sts.dashboard.card)
-    const [inputValue, setInputValue] = useState(item.title);
-    const [isFocused, setIsFocused] = useState(false);
+    const [inputValue, setInputValue] = useState(item.title)
+    const [isFocused, setIsFocused] = useState(false)
 
     const handleFocus = () => {
-        setIsFocused(true);
-    };
+        setIsFocused(true)
+    }
 
     useEffect(() => {
         if (!isFocused) {
-            setInputValue(item.title);
+            setInputValue(item.title)
         }
-    }, [item.title]);
+    }, [item.title])
 
     const handleSubmit = () => {
         const inputVal = inputRef.current.value.trim()
@@ -40,7 +40,7 @@ const CardModifiableTitle = () => {
     }
     const handleBlur = ({currentTarget, relatedTarget}) => {
         if (currentTarget.contains(relatedTarget)) return
-        setIsFocused(false);
+        setIsFocused(false)
         handleSubmit()
 
     }
@@ -58,8 +58,8 @@ const CardModifiableTitle = () => {
         }*/
     }
     const handleChange = (event) => {
-        setInputValue(event.target.value);
-    };
+        setInputValue(event.target.value)
+    }
 
     return (
 
@@ -70,13 +70,13 @@ const CardModifiableTitle = () => {
 
                    sx={{
                        '& fieldset': {
-                           borderWidth: 0,
+                           borderWidth: 0
                        },
                        '& .MuiInputBase-root': {
                            padding: 1,
                            left: -8
                        },
-                       paddingRight: 3,
+                       paddingRight: 3
                    }}
                    inputProps={{
                        style: {

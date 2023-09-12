@@ -1,11 +1,11 @@
-import * as React from "react";
-import {useState} from "react";
-import {Button, Checkbox, IconButton, Popover, TextField, Typography} from "@mui/material";
-import {Close, Edit} from "@mui/icons-material";
-import {useDispatch, useSelector} from "react-redux";
-import {updateLabeled} from "../../workspace/dashboard-slice";
-import api from "../../../service/api";
-import EditLabel from "./EditLabel";
+import {Close, Edit} from '@mui/icons-material'
+import {Button, Checkbox, IconButton, Popover, TextField, Typography} from '@mui/material'
+import * as React from 'react'
+import {useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import api from '../../../service/api'
+import {updateLabeled} from '../../workspace/dashboard-slice'
+import EditLabel from './EditLabel'
 
 
 const AddLabel = ({activator}) => {
@@ -19,18 +19,18 @@ const AddLabel = ({activator}) => {
     // console.log(boardLabels, cardLabels)
 
     const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+        setAnchorEl(event.currentTarget)
+    }
 
     const handleClose = () => {
-        setAnchorEl(null);
-    };
+        setAnchorEl(null)
+    }
     const handleCloseEdit = () => {
         setEdit(false)
-    };
+    }
 
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
+    const open = Boolean(anchorEl)
+    const id = open ? 'simple-popover' : undefined
 
 
     function handleChecked(data) {
@@ -50,32 +50,32 @@ const AddLabel = ({activator}) => {
             onClose={handleClose}
             anchorOrigin={{
                 vertical: 'bottom',
-                horizontal: 'left',
+                horizontal: 'left'
             }}
             sx={{
                 '& .MuiPaper-root': {
                     pt: .5,
                     pb: 1,
                     px: 1
-                },
+                }
             }}
         >
             {
                 edit ? <EditLabel editLabel={editLabel} handleCloseEdit={handleCloseEdit}
                                   handleClosePopup={handleClose}/> : <>
                     <IconButton sx={{position: 'absolute', right: 0, top: 0, borderRadius: 1, padding: 0, margin: .5}}
-                                size='small' onClick={handleClose}>
-                        <Close fontSize='small'/>
+                                size="small" onClick={handleClose}>
+                        <Close fontSize="small"/>
                     </IconButton>
-                    <p style={{fontSize: 13, fontWeight: '400', margin: 0}} align='center'>Labels</p>
-                    <TextField placeholder='Search labels...' fullWidth inputProps={{style: {padding: 5}}}/>
+                    <p style={{fontSize: 13, fontWeight: '400', margin: 0}} align="center">Labels</p>
+                    <TextField placeholder="Search labels..." fullWidth inputProps={{style: {padding: 5}}}/>
                     <p>Labels</p>
                     {
                         boardLabels.map(e => {
                             if (e.isDeleted) return null
-                            const find = cardLabels.find(item => item.labelId === e.id);
+                            const find = cardLabels.find(item => item.labelId === e.id)
 
-                            const checked = !(find?.isDeleted ?? true);
+                            const checked = !(find?.isDeleted ?? true)
                             return (
                                 <div key={e.id}
                                      style={{
@@ -94,29 +94,29 @@ const AddLabel = ({activator}) => {
                                                 labelId: e.id,
                                                 cardId: cId
                                             })
-                                        }} size='medium' sx={{padding: 0, margin: .5}}/>
-                                    <Typography bgcolor='green' color='white' borderRadius={1} px={1.5} py={.5}
-                                                width='100%'
+                                        }} size="medium" sx={{padding: 0, margin: .5}}/>
+                                    <Typography bgcolor="green" color="white" borderRadius={1} px={1.5} py={.5}
+                                                width="100%"
                                                 sx={{
                                                     fontWeight: 500,
                                                     fontSize: 12,
                                                     cursor: 'pointer',
                                                     ...JSON.parse(e.color)
                                                 }}>{e.title}</Typography>
-                                    <IconButton size='small' style={{borderRadius: 5, padding: 0, margin: 1}}
+                                    <IconButton size="small" style={{borderRadius: 5, padding: 0, margin: 1}}
                                                 onClick={() => {
                                                     setEditLabel(e)
                                                     setEdit(true)
                                                 }}>
-                                        <Edit fontSize='small'/>
+                                        <Edit fontSize="small"/>
                                     </IconButton>
-                                </div>);
+                                </div>)
                         })
                     }
                     <Button
                         disableElevation
-                        size='small'
-                        variant='contained'
+                        size="small"
+                        variant="contained"
                         style={{borderRadius: 3, margin: 2, textTransform: 'none', width: '100%'}}
                         onClick={() => {
                             setEditLabel(null)

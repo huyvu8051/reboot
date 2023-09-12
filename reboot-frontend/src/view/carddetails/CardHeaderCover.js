@@ -1,10 +1,10 @@
-import IconButton from "@mui/material/IconButton";
-import {Close, PhotoCamera} from "@mui/icons-material";
-import * as React from "react";
-import api from "../../service/api";
-import {useDispatch, useSelector} from "react-redux";
-import {updateCard} from "../workspace/dashboard-slice";
-import DialogTitle from "@mui/material/DialogTitle";
+import {Close, PhotoCamera} from '@mui/icons-material'
+import DialogTitle from '@mui/material/DialogTitle'
+import IconButton from '@mui/material/IconButton'
+import * as React from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import api from '../../service/api'
+import {updateCard} from '../workspace/dashboard-slice'
 
 const CardHeaderCover = ({handleClose}) => {
     const dispatch = useDispatch()
@@ -15,12 +15,12 @@ const CardHeaderCover = ({handleClose}) => {
 
     const handleFileChange = e => {
 
-        const file = e.target.files[0];
+        const file = e.target.files[0]
         if (!file) return
-        const formData = new FormData();
-        formData.append("file", file);
+        const formData = new FormData()
+        formData.append('file', file)
 
-        api.post("/api/v1/user/dashboard/card/attachment/" + cId, formData).then(r => {
+        api.post('/api/v1/user/dashboard/card/attachment/' + cId, formData).then(r => {
             console.log(r)
             api.put('/api/v1/user/dashboard/card/details', {
                 id: card.id,
@@ -42,7 +42,7 @@ const CardHeaderCover = ({handleClose}) => {
                     style={{
                         width: '100%',
                         maxHeight: 200,
-                        objectFit: 'contain',
+                        objectFit: 'contain'
                     }}
                     src={`/api/v1/resources/board/${bId}/${card.coverUrl}`}
                     alt={'background'}>
@@ -58,7 +58,7 @@ const CardHeaderCover = ({handleClose}) => {
         <IconButton onClick={handleClose} sx={{position: 'absolute', top: 5, right: 5}}>
             <Close/>
         </IconButton>
-    </>;
-};
+    </>
+}
 
 export default CardHeaderCover

@@ -3,7 +3,7 @@ import {createSlice} from '@reduxjs/toolkit'
 const initialState = {
     totalCount: 0,
     data: [],
-    loading: false,
+    loading: false
 }
 
 export const testSlice = createSlice({
@@ -12,9 +12,9 @@ export const testSlice = createSlice({
     reducers: {
         fetchWpInitSte: (state, action) => {
             state.loading = true
-        },
+        }
 
-    },
+    }
 })
 
 export const {setLoadingState} = testSlice.actions

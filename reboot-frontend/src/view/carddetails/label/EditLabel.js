@@ -1,9 +1,9 @@
-import {Button, IconButton, TextField} from "@mui/material";
-import {ArrowBack, Close} from "@mui/icons-material";
-import * as React from "react";
-import {useCallback, useState} from "react";
-import {useSelector} from "react-redux";
-import api from "../../../service/api";
+import {ArrowBack, Close} from '@mui/icons-material'
+import {Button, IconButton, TextField} from '@mui/material'
+import * as React from 'react'
+import {useCallback, useState} from 'react'
+import {useSelector} from 'react-redux'
+import api from '../../../service/api'
 
 const actionButton = {
     style: {
@@ -88,14 +88,14 @@ const EditLabel = ({handleClosePopup, handleCloseEdit, editLabel}) => {
 
     return <>
         <IconButton sx={{position: 'absolute', right: 0, top: 0, borderRadius: 1, padding: 0, margin: .5}}
-                    size='small' onClick={handleClosePopup}>
-            <Close fontSize='small'/>
+                    size="small" onClick={handleClosePopup}>
+            <Close fontSize="small"/>
         </IconButton>
         <IconButton sx={{position: 'absolute', left: 0, top: 0, borderRadius: 1, padding: 0, margin: .5}}
-                    size='small' onClick={handleCloseEdit}>
-            <ArrowBack fontSize='small'/>
+                    size="small" onClick={handleCloseEdit}>
+            <ArrowBack fontSize="small"/>
         </IconButton>
-        <p style={{fontSize: 13, fontWeight: '400', margin: 0}} align='center'>Edit labels</p>
+        <p style={{fontSize: 13, fontWeight: '400', margin: 0}} align="center">Edit labels</p>
         <div style={{
             width: '100%',
             display: 'flex',
@@ -110,9 +110,9 @@ const EditLabel = ({handleClosePopup, handleCloseEdit, editLabel}) => {
                     justifyContent: 'center',
                     ...color
                 }}
-                size='small'
+                size="small"
                 disableElevation
-                variant='contained'
+                variant="contained"
             >
                 {title}
             </Button>
@@ -129,13 +129,13 @@ const EditLabel = ({handleClosePopup, handleCloseEdit, editLabel}) => {
                 colors.map((e, i) => {
                     return (
                         <Button key={i} sx={{...e, height: 30}} onClick={() => setColor(colors[i])}/>
-                    );
+                    )
                 })
             }
         </div>
         <Button
             {...actionButton}
-            startIcon={<Close fontSize='small'/>}
+            startIcon={<Close fontSize="small"/>}
         >
             Remove color
         </Button>

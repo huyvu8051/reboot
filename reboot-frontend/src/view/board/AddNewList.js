@@ -1,10 +1,10 @@
-import {Button, Card, CardActions, IconButton, TextField} from '@mui/material'
 import {Add, Clear} from '@mui/icons-material'
+import {Button, Card, CardActions, IconButton, TextField} from '@mui/material'
 import Box from '@mui/material/Box'
 import {useRef, useState} from 'react'
+import {useSelector} from 'react-redux'
 import api from '../../service/api'
 import {$success} from '../../util/snackbar-utils'
-import {useSelector} from 'react-redux'
 
 const AddNewList = () => {
     const [open, setOpen] = useState(false)
@@ -44,7 +44,7 @@ const AddNewList = () => {
         <Box
             sx={{
                 boxSizing: 'border-box',
-                margin: '0 4px',
+                margin: '0 4px'
             }}
             elevation={0}
             onBlur={handleBlur}
@@ -58,7 +58,7 @@ const AddNewList = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     maxHeight: '100%',
-                    minWidth: '270px',
+                    minWidth: '270px'
                 }}
 
                 elevation={0}>
@@ -70,12 +70,12 @@ const AddNewList = () => {
                             onKeyDown={handleKeyDown}
                             // onBlur={()=>setOpen(false)}
                             sx={{
-                                m: 1,
+                                m: 1
                             }}
 
                             autoFocus
-                            label='Enter list title...'
-                            size='small'/>
+                            label="Enter list title..."
+                            size="small"/>
                     )
                 }
 
@@ -83,11 +83,11 @@ const AddNewList = () => {
                 <CardActions>
                     {
                         open && <>
-                            <Button size='small' onClick={handleSubmit} sx={{textTransform: 'none'}}>
+                            <Button size="small" onClick={handleSubmit} sx={{textTransform: 'none'}}>
                                 Add
                             </Button>
-                            <IconButton size='small' onClick={() => setOpen(false)}>
-                                <Clear fontSize='small'/>
+                            <IconButton size="small" onClick={() => setOpen(false)}>
+                                <Clear fontSize="small"/>
                             </IconButton>
                         </>
                     }
@@ -100,7 +100,7 @@ const AddNewList = () => {
                                     color: 'rgba(0, 0, 0, 0.54)',
                                     textTransform: 'none'
                                 }}
-                                size='small'
+                                size="small"
                                 onClick={() => setOpen(true)}
 
                                 startIcon={<Add/>}>

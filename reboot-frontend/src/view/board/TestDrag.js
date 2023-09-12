@@ -1,72 +1,72 @@
-import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
-import {useState} from "react";
+import {useState} from 'react'
+import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
 
 // fake data generator
 const getItems = count =>
     Array.from({length: count}, (v, k) => k).map(k => ({
         id: `item-${k}`,
         content: `item ${k}`
-    }));
+    }))
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
+    const result = Array.from(list)
+    const [removed] = result.splice(startIndex, 1)
+    result.splice(endIndex, 0, removed)
 
-    return result;
-};
+    return result
+}
 
-const grid = 8;
+const grid = 8
 
 const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
-    userSelect: "none",
+    userSelect: 'none',
     padding: grid * 2,
     margin: `0 0 ${grid}px 0`,
 
     // change background colour if dragging
-    background: isDragging ? "lightgreen" : "grey",
+    background: isDragging ? 'lightgreen' : 'grey',
 
     // styles we need to apply on draggables
     ...draggableStyle
-});
+})
 
 const getListStyle = isDraggingOver => ({
-    background: isDraggingOver ? "lightblue" : "lightgrey",
+    background: isDraggingOver ? 'lightblue' : 'lightgrey',
     padding: grid,
     width: 250
-});
+})
 const cards = Array.from(Array(20).keys()).map(e => ({
     id: e,
     title: 'Card title ' + e,
-    cover_url: '',
+    cover_url: ''
 }))
 const list = Array.from(Array(10).keys()).map(e => ({
     id: e,
     title: 'List title ' + e,
-    cover_url: '',
+    cover_url: ''
 }))
 
 export default () => {
     const onDragEnd = (result) => {
         // dropped outside the list
         if (!result.destination) {
-            return;
+            return
         }
 
         const items = reorder(
             items,
             result.source.index,
             result.destination.index
-        );
+        )
 
         this.setState({
             items
-        });
+        })
     }
 
-    const [items, setItems] = useState(getItems(10));
+    const [items, setItems] = useState(getItems(10))
 
     return <>
 

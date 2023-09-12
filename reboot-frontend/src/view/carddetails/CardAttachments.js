@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux'
 import img from '../../asset/image/paella.jpg'
 
 const formatDatetime = (dateTimeString) => {
-    const dateTime = new Date(dateTimeString);
+    const dateTime = new Date(dateTimeString)
 
     const options = {
         month: 'long',
@@ -13,9 +13,9 @@ const formatDatetime = (dateTimeString) => {
         hour: 'numeric',
         minute: 'numeric',
         hour12: true
-    };
+    }
 
-    const formattedDateTime = dateTime.toLocaleString('en-US', options);
+    const formattedDateTime = dateTime.toLocaleString('en-US', options)
     return formattedDateTime
 
 }
@@ -33,7 +33,7 @@ const actionButton = {
 
 function previewable(type) {
     if (['png', 'jpg', 'jpeg'].includes(type)) return true
-    return false;
+    return false
 }
 
 const CardAttachments = () => {
@@ -50,14 +50,14 @@ const CardAttachments = () => {
                     attachments.items.map((e, i) => {
                             let buttonStyle = {
                                 textDecoration: 'underline',
-                                margin: 3,
-                            };
+                                margin: 3
+                            }
                             return (
                                 <div key={i} style={{display: 'flex', flexDirection: 'row', gap: 5}}>
                                     <div style={{flex: 1, marginBottom: 2}}>
                                         {
                                             previewable(e.type) ? <>
-                                                <img src={`/api/v1/resources/board/${bId}/${e.fileNm}`} alt='dick'
+                                                <img src={`/api/v1/resources/board/${bId}/${e.fileNm}`} alt="dick"
                                                      style={{height: 80, width: 112, borderRadius: 3}}/>
                                             </> : <div
                                                 style={{
@@ -82,7 +82,7 @@ const CardAttachments = () => {
                                             {e.name}
                                         </div>
                                         <div style={{
-                                            fontSize: 14,
+                                            fontSize: 14
                                         }}>
                                             <span>Added {formatDatetime(e.createdDate)}</span>
                                             <span style={buttonStyle}><a>Comment</a></span>
@@ -91,7 +91,7 @@ const CardAttachments = () => {
                                         </div>
                                     </div>
                                 </div>
-                            );
+                            )
                         }
                     )
                 }

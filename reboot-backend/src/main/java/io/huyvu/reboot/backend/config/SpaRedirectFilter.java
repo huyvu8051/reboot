@@ -24,7 +24,7 @@ public class SpaRedirectFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {
         log.info("URL {} entered directly into the Browser, redirecting...", req.getRequestURI());
-        RequestDispatcher rd = req.getRequestDispatcher("/");
+        var rd = req.getRequestDispatcher("/");
         rd.forward(req, res);
     }
 

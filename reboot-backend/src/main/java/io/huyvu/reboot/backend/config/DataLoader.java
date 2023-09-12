@@ -26,17 +26,17 @@ public class DataLoader implements ApplicationRunner {
         System.out.println(attachmentVoPage);
 */
 
-        Random random = new Random();
+        var random = new Random();
 
-        Faker faker = new Faker(new Locale("vi-VN"));
+        var faker = new Faker(new Locale("vi-VN"));
 
 //        IntStream.range(6457885, 9999999).parallel().forEach(i->ggRepo.save("userNm" + i,"chung ta", "chung ta"))
 
         // start time
-        long t0 = System.nanoTime();
+        var t0 = System.nanoTime();
 
         // end time
-        long t1 = System.nanoTime();
+        var t1 = System.nanoTime();
 
 
     }

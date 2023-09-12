@@ -61,7 +61,7 @@ public class EngineIoHandler implements HandshakeInterceptor, WebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession webSocketSession) {
-        final EngineIoSpringWebSocket webSocket = new EngineIoSpringWebSocket(webSocketSession);
+        final var webSocket = new EngineIoSpringWebSocket(webSocketSession);
         webSocketSession.getAttributes().put(ATTRIBUTE_ENGINE_IO_BRIDGE, webSocket);
         mEngineIoServer.handleWebSocket(webSocket);
     }
@@ -93,7 +93,7 @@ public class EngineIoHandler implements HandshakeInterceptor, WebSocketHandler {
         EngineIoSpringWebSocket(WebSocketSession session) {
             mSession = session;
 
-            final String queryString = (String)mSession.getAttributes().get(ATTRIBUTE_ENGINE_IO_QUERY);
+            final var queryString = (String)mSession.getAttributes().get(ATTRIBUTE_ENGINE_IO_QUERY);
             if (queryString != null) {
                 mQuery = ParseQS.decode(queryString);
             } else {

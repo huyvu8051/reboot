@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfig {
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer(BeanNameGenerator bng) {
-        MapperScannerConfigurer config = new MapperScannerConfigurer();
+        var config = new MapperScannerConfigurer();
         config.setBasePackage(RebootApplication.class.getPackageName());
         config.setNameGenerator(bng);
         config.setAnnotationClass(Mapper.class);

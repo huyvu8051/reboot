@@ -36,12 +36,7 @@
         <module>reboot-frontend</module>
         <module>reboot-backend</module>
         <module>reboot-security</module>
-        <module>reboot-workspace-biz</module>
-        <module>reboot-board-biz</module>
         <module>reboot-socket</module>
-        <module>reboot-card-biz</module>
-        <module>reboot-dashboard-biz</module>
-        <module>reboot-lizt-biz</module>
         <module>reboot-static-resource</module>
         <module>reboot-message-biz</module>
     </modules>

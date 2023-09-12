@@ -3,8 +3,8 @@ package io.huyvu.reboot.security.controller;
 import io.huyvu.reboot.security.exception.AuthException;
 import io.huyvu.reboot.security.model.AuthReq;
 import io.huyvu.reboot.security.model.AuthRes;
-import io.huyvu.reboot.security.service.GoogleAuthenticationService;
 import io.huyvu.reboot.security.repository.Repository;
+import io.huyvu.reboot.security.service.GoogleAuthenticationService;
 import io.huyvu.reboot.security.util.SecurityUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -40,11 +40,11 @@ public class SecurityRestController {
         }
 
         var roles = List.of("USER", "ADMIN");
-        String token = generateJwtToken(userAccount.id(), userAccount.username(), roles);
+        var token = generateJwtToken(userAccount.id(), userAccount.username(), roles);
         SecurityUtils.setResponseToken(res, token);
 
-        List<Long> bIds = authRepo.searchAllBoardId(userAccount.id());
-        String resToken = generateBoardResourceToken(bIds);
+        var bIds = authRepo.searchAllBoardId(userAccount.id());
+        var resToken = generateBoardResourceToken(bIds);
 
         return new AuthRes(userAccount.id(), token, userAccount.username(), userAccount.fullName(), userAccount.pictureUrl(), roles, resToken);
     }

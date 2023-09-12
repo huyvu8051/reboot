@@ -18,6 +18,7 @@ const ChatMsg = withStyles(defaultChatMsgStyles, {name: 'ChatMsg'})(props => {
         getTypographyProps
     } = props
     const attachClass = index => {
+
         if (index === 0) {
             return classes[`${side}First`]
         }

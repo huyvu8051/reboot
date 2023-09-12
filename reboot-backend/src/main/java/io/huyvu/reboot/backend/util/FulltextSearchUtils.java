@@ -5,20 +5,20 @@ import java.util.regex.Pattern;
 
 public class FulltextSearchUtils {
     public static String getFulltextIndex(String input, String... inputVar) {
-        String combineInput = mergeInput(input, inputVar);
-        String[] sArr = splitFulltext(combineInput);
-        StringBuilder rs = new StringBuilder();
-        for (String s : sArr) {
+        var combineInput = mergeInput(input, inputVar);
+        var sArr = splitFulltext(combineInput);
+        var rs = new StringBuilder();
+        for (var s : sArr) {
             rs.append(s.trim()).append(" ");
         }
         return rs.toString().toLowerCase();
     }
 
     public static String getSearchCommand(String input, String... inputVar) {
-        String combineInput = mergeInput(input, inputVar);
-        String[] sArr = splitFulltext(combineInput);
-        StringBuilder rs = new StringBuilder();
-        for (String s : sArr) {
+        var combineInput = mergeInput(input, inputVar);
+        var sArr = splitFulltext(combineInput);
+        var rs = new StringBuilder();
+        for (var s : sArr) {
             if(s.trim() != ""){
                 rs.append("*").append(s.trim()).append("* ");
             }
@@ -28,9 +28,9 @@ public class FulltextSearchUtils {
     }
 
     private static String mergeInput(String input, String[] inputVar) {
-        StringBuilder sb = new StringBuilder(input);
+        var sb = new StringBuilder(input);
         sb.append(" ");
-        for (String s : inputVar) {
+        for (var s : inputVar) {
             sb.append(s);
         }
         var combindInput = sb.toString();
@@ -60,8 +60,8 @@ public class FulltextSearchUtils {
      * @return
      */
     private static String removeAccents(String input) {
-        String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
-        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        var normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
+        var pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(normalized).replaceAll("").toLowerCase();
     }
 }

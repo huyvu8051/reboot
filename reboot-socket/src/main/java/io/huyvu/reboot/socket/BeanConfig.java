@@ -17,15 +17,15 @@ public class BeanConfig {
 
     @Bean
     EngineIoServer engineIoServer() {
-        EngineIoServerOptions opt = EngineIoServerOptions.newFromDefault();
+        var opt = EngineIoServerOptions.newFromDefault();
         opt.setCorsHandlingDisabled(true);
-        EngineIoServer eioServer = new EngineIoServer(opt);
+        var eioServer = new EngineIoServer(opt);
         return eioServer;
     }
 
     @Bean
     SocketIoServer socketIoServer(EngineIoServer eioServer) {
-        SocketIoServer sioServer = new SocketIoServer(eioServer);
+        var sioServer = new SocketIoServer(eioServer);
         return sioServer;
     }
 

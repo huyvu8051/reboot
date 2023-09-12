@@ -90,13 +90,13 @@ public class SecurityUtils {
      * @return
      */
     private static boolean tokenMustRefresh(Date expAt) {
-        Date now = new Date(System.currentTimeMillis() + ONE_HOUR);
+        var now = new Date(System.currentTimeMillis() + ONE_HOUR);
         return expAt.before(now);
     }
 
 
     private static DecodedJWT extractAllClaims(String token) {
-        JWTVerifier verifier = JWT.require(ALGORITHM)
+        var verifier = JWT.require(ALGORITHM)
                 // specify an specific claim validations
                 .withIssuer("auth0")
                 // reusable verifier instance
@@ -110,7 +110,7 @@ public class SecurityUtils {
     }
 
     private static String createToken(Map<String, Object> claims, String subject) {
-        JWTCreator.Builder builder = JWT.create();
+        var builder = JWT.create();
         claims.forEach((s, o) -> builder.withClaim(s, o.toString()));
 
         return builder.withSubject(subject)
@@ -125,7 +125,7 @@ public class SecurityUtils {
             return new ArrayList<>();
         }
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (String role : roles) {
+        for (var role : roles) {
             authorities.add((GrantedAuthority) () -> role);
         }
         return authorities;
@@ -152,14 +152,14 @@ public class SecurityUtils {
 
     public static void validateBoardResourcesAccess(long bId, String resToken) {
         var claims = extractAllClaims(resToken);
-        List<Integer> list = claims.getClaim(BIDS).asList(Integer.class);
+        var list = claims.getClaim(BIDS).asList(Integer.class);
         var first = list.stream().map(e -> Long.valueOf(e)).filter(e -> e.equals(bId)).findFirst();
         first.orElseThrow(UnauthorizedResourceException::new);
     }
 
 
     public static void setResponseToken(HttpServletResponse res, String token) {
-        Cookie cookie = new Cookie(AUTHORIZATION_HEADER, "Bearer_" + token);
+        var cookie = new Cookie(AUTHORIZATION_HEADER, "Bearer_" + token);
         cookie.setMaxAge(3600 * 6);
         cookie.setPath("/");
         res.addCookie(cookie);

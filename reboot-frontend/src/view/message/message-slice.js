@@ -95,7 +95,7 @@ export const messageSlice = createSlice({
             }
         },
         updateLabeled: (s, a) => {
-            const find = s.cardLabels.find(e => e.id && e.id === a.payload.id || e.labelId === a.payload.labelId)
+            const find = s.cardLabels.find(e => e.id && (e.id === a.payload.id || e.labelId === a.payload.labelId))
             if (find) {
                 Object.assign(find, a.payload)
             } else {

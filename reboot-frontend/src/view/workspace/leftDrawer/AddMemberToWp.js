@@ -57,9 +57,9 @@ const AddMemberToWp = () => {
         setSearchQuery(event.target.value)
     }
 
-    const handleOptionSelected = () => {
-        return true // Always return true to force the option popup to show
-    }
+    // const handleOptionSelected = () => {
+    //     return true // Always return true to force the option popup to show
+    // }
 
 
     function sendInvite() {

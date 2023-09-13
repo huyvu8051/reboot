@@ -13,15 +13,15 @@ const CardModifiableTitle = () => {
     const [inputValue, setInputValue] = useState(item.title)
     const [isFocused, setIsFocused] = useState(false)
 
-    const handleFocus = () => {
-        setIsFocused(true)
-    }
+    // const handleFocus = () => {
+    //     setIsFocused(true)
+    // }
 
     useEffect(() => {
         if (!isFocused) {
             setInputValue(item.title)
         }
-    }, [item.title])
+    }, [item.title, isFocused])
 
     const handleSubmit = () => {
         const inputVal = inputRef.current.value.trim()

@@ -12,8 +12,6 @@ const ChatMsg = withStyles(defaultChatMsgStyles, {name: 'ChatMsg'})(props => {
         avatar,
         messages,
         side,
-        GridContainerProps,
-        GridItemProps,
         AvatarProps,
         getTypographyProps
     } = props

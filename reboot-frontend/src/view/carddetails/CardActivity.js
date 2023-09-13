@@ -33,7 +33,7 @@ const CardActivity = () => {
 
         }
         const onFocusOut = ({currentTarget, relatedTarget}) => {
-            if (currentTarget.contains(relatedTarget))
+            if (currentTarget.contains(relatedTarget)){}
             // setFocused(false);
         }
 
@@ -55,7 +55,7 @@ const CardActivity = () => {
                 editor.render(JSON.parse(description))
             })
         }
-    }, [description, editor])
+    }, [description, editor, focused])
 
     function handleSave() {
         editor.save().then(out => {

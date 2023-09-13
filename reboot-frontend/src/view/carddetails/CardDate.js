@@ -1,10 +1,9 @@
 import {KeyboardArrowDown} from '@mui/icons-material'
 import {Button, Checkbox} from '@mui/material'
 import * as React from 'react'
-import {useSelector} from 'react-redux'
 
 const CardDate = () => {
-    const card = useSelector(sts => sts.dashboard.card)
+    // const card = useSelector(sts => sts.dashboard.card)
 
     return (
         <div>

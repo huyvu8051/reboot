@@ -19,7 +19,7 @@ const TaskListHeader = ({item}) => {
         if (!isFocused) {
             setInputValue(item.title)
         }
-    }, [item.title])
+    }, [item.title, isFocused])
 
     const handleSubmit = () => {
         const inputVal = inputValue.trim()

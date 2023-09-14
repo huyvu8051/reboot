@@ -21,9 +21,7 @@ export default function PersistentDrawerLeft(props) {
             params: {bId, wId, cId}
         }).then(r => dispatch(save(r)))*/
 
-        api.post('/api/v1/message/init', {
-            params: {bId, wId, cId, convId}
-        }).then(r => dispatch(save(r)))
+        api.post('/api/v1/message/init', {bId, wId, cId, convId}).then(r => dispatch(save(r)))
     }, [bId, wId, cId, convId, dispatch])
 
     const isScreen600pxOrAbove = useMediaQuery('(min-width:600px)')

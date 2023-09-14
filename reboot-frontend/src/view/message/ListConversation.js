@@ -11,11 +11,12 @@ const ListBoard = () => {
 
     const navigate = useNavigate()
     const convs = useSelector(sts => sts.message.convs)
+    console.log('render')
     return (
         <>
             {
                 convs.map(item => (
-                    <ListItem key={item.id} disablePadding onClick={() => navigate(`/b/${item.id}`)}>
+                    <ListItem key={item.lastMsgTime} disablePadding onClick={() => navigate(`/b/${item.id}`)}>
                         <ListItemButton>
                             <ListItemAvatar>
                                 <Avatar variant="rounded" alt="Remy Sharp"

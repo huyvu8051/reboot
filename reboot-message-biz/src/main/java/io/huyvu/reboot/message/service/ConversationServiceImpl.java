@@ -9,6 +9,7 @@ import io.huyvu.reboot.security.util.SecurityUtils;
 import io.huyvu.reboot.socket.service.DashboardBroadcast;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     @Override
-    public List<MessageItemDTO> getMessages(MessageInitCondDTO cond) {
+    public List<MessageItemDTO> getMessages(@RequestBody MessageInitCondDTO cond) {
 
         return mapper.selectMessage(cond);
     }

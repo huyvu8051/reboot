@@ -3,21 +3,20 @@ import {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
 import {io} from 'socket.io-client'
 import Conversations from './Conversations'
-import {sendMsg} from './message-slice'
+import {saveMsg} from './message-slice'
 
 function Message(props) {
 
     const dispatch = useDispatch()
     useEffect(() => {
         const socket = io('/chat', {
-            // query: {
-            //     wId: wId
-            // },
-            // transports: ['websocket']
+         /*   query: {
+                wId: wId
+            },
+            transports: ['websocket']*/
         })
         socket.on('sendMsg', r => {
-            console.log('sendMsg')
-            dispatch(sendMsg(r))
+            dispatch(saveMsg(r))
         })
 
 

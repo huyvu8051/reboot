@@ -32,7 +32,7 @@ public class ConversationController {
         return resp;
     }
     @PostMapping("init")
-    MessageInitDTO init(MessageInitCondDTO cond){
+    MessageInitDTO init(@RequestBody MessageInitCondDTO cond){
         var resp = MessageInitDTO.builder()
                 .convs(conversationService.getList())
                 .msgs(conversationService.getMessages(cond))
@@ -41,7 +41,7 @@ public class ConversationController {
     }
 
     @PostMapping("chat/send")
-    void init(@RequestBody SendMsgDTO req){
+    void sendMsg(@RequestBody SendMsgDTO req){
         chatService.sendMsg(req);
     }
 }

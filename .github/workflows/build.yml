@@ -25,9 +25,7 @@ jobs:
         with:
           node-version: '18'  # Specify the version you need
 
-      - name: Install Dependencies
-        run: npm install
-        working-directory: path/to/your/reboot-frontend
+
 
       - name: Cache SonarQube packages
         uses: actions/cache@v1

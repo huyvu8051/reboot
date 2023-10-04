@@ -33,7 +33,7 @@ const CardActivity = () => {
 
         }
         const onFocusOut = ({currentTarget, relatedTarget}) => {
-            if (currentTarget.contains(relatedTarget))
+            if (currentTarget.contains(relatedTarget)){}
             // setFocused(false);
         }
 

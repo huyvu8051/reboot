@@ -39,7 +39,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>npm.cmd</executable>
+                            <executable>npm</executable>
                             <arguments>
                                 <argument>install</argument>
                             </arguments>
@@ -52,7 +52,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>npm.cmd</executable>
+                            <executable>npm</executable>
                             <arguments>
                                 <argument>run</argument>
                                 <argument>build</argument>

@@ -58,7 +58,7 @@ const CardDescription = () => {
                 editor.render(JSON.parse(description))
             })
         }
-    }, [description, editor])
+    }, [description, editor, focused])
 
     function handleSave() {
         editor.save().then(out => {

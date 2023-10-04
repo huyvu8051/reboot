@@ -7,7 +7,6 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
 import {useRef} from 'react'
-import {useNavigate} from 'react-router-dom'
 import api from '../../service/api'
 import {$success} from '../../util/snackbar-utils'
 
@@ -26,7 +25,7 @@ const CreateBoardBtn = () => {
         setAnchorEl(event.currentTarget)
     }
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
 
     function handleCreateClick() {

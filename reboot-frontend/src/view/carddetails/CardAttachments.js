@@ -2,7 +2,7 @@ import {Button, List} from '@mui/material'
 import * as React from 'react'
 import {useSelector} from 'react-redux'
 
-import img from '../../asset/image/paella.jpg'
+// import img from '../../asset/image/paella.jpg'
 
 const formatDatetime = (dateTimeString) => {
     const dateTime = new Date(dateTimeString)
@@ -85,9 +85,9 @@ const CardAttachments = () => {
                                             fontSize: 14
                                         }}>
                                             <span>Added {formatDatetime(e.createdDate)}</span>
-                                            <span style={buttonStyle}><a>Comment</a></span>
-                                            <span style={buttonStyle}><a>Remove</a></span>
-                                            <span style={buttonStyle}><a>Edit</a></span>
+                                            <span style={buttonStyle}><a href='/#'>Comment</a></span>
+                                            <span style={buttonStyle}><a href='/#'>Remove</a></span>
+                                            <span style={buttonStyle}><a href='/#'>Edit</a></span>
                                         </div>
                                     </div>
                                 </div>

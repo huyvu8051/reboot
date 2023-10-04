@@ -60,7 +60,7 @@ pushColor('#8c9bab', '#1d2125')
 
 const EditLabel = ({handleClosePopup, handleCloseEdit, editLabel}) => {
 
-    const [currLabel, setCurrLabel] = useState(editLabel || {
+    const [currLabel] = useState(editLabel || {
         id: null,
         color: null,
         title: null,

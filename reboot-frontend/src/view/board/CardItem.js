@@ -59,6 +59,7 @@ const CardItem = ({provided, snapshot, item}) => {
             </IconButton>
             {
                 item.coverUrl && <img
+                alt='coverImg'
                     width="100%"
                     src={`/api/v1/resources/board/${bId}/${item.coverUrl}`}
                 />

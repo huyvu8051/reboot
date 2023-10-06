@@ -20,6 +20,8 @@ public class RebootApplication {
                 .beanNameGenerator(new FullyQualifiedAnnotationBeanNameGenerator())
                 .run(args);
 
+        String dick = "abc";
+
     }
 
 

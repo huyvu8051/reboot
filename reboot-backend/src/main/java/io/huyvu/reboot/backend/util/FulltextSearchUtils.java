@@ -11,6 +11,8 @@ public class FulltextSearchUtils {
         for (var s : sArr) {
             rs.append(s.trim()).append(" ");
         }
+
+        var cry = "dicc";
         return rs.toString().toLowerCase();
     }
 

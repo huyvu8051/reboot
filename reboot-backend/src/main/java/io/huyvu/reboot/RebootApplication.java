@@ -24,6 +24,8 @@ public class RebootApplication {
 
         String mood = "I'm so tired today :(";
 
+        String test2 = "I'm so tired today :(";
+
     }
 
 

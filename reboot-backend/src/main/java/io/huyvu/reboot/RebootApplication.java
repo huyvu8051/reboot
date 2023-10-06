@@ -7,6 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FullyQualifiedAnnotationBeanNameGenerator;
+import java.util.Map; // add unuse Map for sonargate check
 
 @SpringBootApplication(exclude = {UserDetailsServiceAutoConfiguration.class})
 @EnableAspectJAutoProxy(proxyTargetClass = true)

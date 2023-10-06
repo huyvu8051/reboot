@@ -2,4 +2,4 @@
 React X Spring Boot
 
 
-{% include <security.md> %}
+{% include <SECURITY.md> %}

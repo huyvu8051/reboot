@@ -7,7 +7,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FullyQualifiedAnnotationBeanNameGenerator;
-import java.util.Map; // add unuse Map for sonargate check
 
 @SpringBootApplication(exclude = {UserDetailsServiceAutoConfiguration.class})
 @EnableAspectJAutoProxy(proxyTargetClass = true)
@@ -16,15 +15,9 @@ public class RebootApplication {
 
     public static void main(String[] args) {
 
-        ConfigurableApplicationContext run = new SpringApplicationBuilder(RebootApplication.class)
+        new SpringApplicationBuilder(RebootApplication.class)
                 .beanNameGenerator(new FullyQualifiedAnnotationBeanNameGenerator())
                 .run(args);
-
-        String happy = "abc";
-
-        String mood = "I'm so tired today :(";
-
-        String test2 = "I'm so tired today :(";
 
     }
 

@@ -23,20 +23,20 @@ public class DataLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         /*var attachmentVoPage = repo.selectAttachments(15, Paging.of(1, 5));
 
-        System.out.println(attachmentVoPage);
+        // System.out.println(attachmentVoPage);
 */
 
-        var random = new Random();
+        // var random = new Random();
 
-        var faker = new Faker(new Locale("vi-VN"));
+        // var faker = new Faker(new Locale("vi-VN"));
 
 //        IntStream.range(6457885, 9999999).parallel().forEach(i->ggRepo.save("userNm" + i,"chung ta", "chung ta"))
 
         // start time
-        var t0 = System.nanoTime();
+        // var t0 = System.nanoTime();
 
         // end time
-        var t1 = System.nanoTime();
+        // var t1 = System.nanoTime();
 
 
     }

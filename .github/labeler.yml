@@ -1,0 +1,18 @@
+rules:
+  - name: "bug"
+    condition: |
+      startsWith(title, 'Bug:')
+    color: "ff0000"
+    description: "This issue is a bug report"
+  
+  - name: "enhancement"
+    condition: |
+      startsWith(title, 'Enhancement:')
+    color: "00ff00"
+    description: "This issue is an enhancement request"
+  
+  - name: "question"
+    condition: |
+      startsWith(title, 'Question:')
+    color: "0000ff"
+    description: "This issue is a question"

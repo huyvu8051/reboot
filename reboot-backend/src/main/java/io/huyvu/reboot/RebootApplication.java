@@ -18,6 +18,8 @@ public class RebootApplication {
                 .beanNameGenerator(new FullyQualifiedAnnotationBeanNameGenerator())
                 .run(args);
 
+        var mood = "sad";
+
     }
 
 

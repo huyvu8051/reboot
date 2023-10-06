@@ -20,7 +20,9 @@ public class RebootApplication {
                 .beanNameGenerator(new FullyQualifiedAnnotationBeanNameGenerator())
                 .run(args);
 
-        String dick = "abc";
+        String happy = "abc";
+
+        String mood = "I'm so tired today :(";
 
     }
 

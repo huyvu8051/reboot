@@ -33,7 +33,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.5.0</version>
                 <executions>
-                    <!--<execution>
+                    <execution>
                         <id>run-npm-install</id>
                         <phase>compile</phase>
                         <goals>
@@ -45,8 +45,8 @@
                                 <argument>install</argument>
                             </arguments>
                         </configuration>
-                    </execution> -->
-                    <execution>
+                    </execution>
+                    <!--<execution>
                         <id>run-npm-run-build</id>
                         <phase>compile</phase>
                         <goals>
@@ -59,7 +59,7 @@
                                 <argument>build</argument>
                             </arguments>
                         </configuration>
-                    </execution>
+                    </execution> -->
                 </executions>
             </plugin>
         </plugins>

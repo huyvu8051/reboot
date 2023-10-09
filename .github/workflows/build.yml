@@ -36,6 +36,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: cd reboot-frontend
+      - run: npm install
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test

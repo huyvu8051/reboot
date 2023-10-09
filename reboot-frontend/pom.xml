@@ -46,7 +46,7 @@
                             </arguments>
                         </configuration>
                     </execution>
-                    <!--<execution>
+                    <execution>
                         <id>run-npm-run-build</id>
                         <phase>compile</phase>
                         <goals>
@@ -58,8 +58,11 @@
                                 <argument>run</argument>
                                 <argument>build</argument>
                             </arguments>
+                            <environmentVariables>
+                                <CI></CI>
+                            </environmentVariables>
                         </configuration>
-                    </execution> -->
+                    </execution>
                 </executions>
             </plugin>
         </plugins>

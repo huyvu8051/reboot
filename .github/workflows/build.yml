@@ -36,8 +36,8 @@ jobs:
           path: reboot-frontend/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('reboot-frontend/package-lock.json') }}
           restore-keys: ${{ runner.os }}-node
-      - name: Build frontend
-        run: cd reboot-frontend && CI="" npm run build
+#      - name: Build frontend
+#        run: cd reboot-frontend && CI="" npm run build
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Needed to get PR information, if any

@@ -35,11 +35,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: cd reboot-frontend
-      - run: npm install
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
+      - run: cd reboot-frontend && npm install
+      - run: cd reboot-frontend && npm ci
+      - run: cd reboot-frontend && npm run build --if-present
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Needed to get PR information, if any

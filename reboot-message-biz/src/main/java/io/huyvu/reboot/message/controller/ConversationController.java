@@ -25,8 +25,8 @@ public class ConversationController {
     }
 
     @PostMapping("conv/list")
-    io.huyvu.reboot.message.controller.ConvListDTO list(){
-        var resp = io.huyvu.reboot.message.controller.ConvListDTO.builder()
+    io.huyvu.reboot.message.model.ConvListDTO list(){
+        var resp = io.huyvu.reboot.message.model.ConvListDTO.builder()
                 .convs(conversationService.getList())
                 .build();
         return resp;

@@ -1,6 +1,5 @@
-package io.huyvu.reboot.message.controller;
+package io.huyvu.reboot.message.model;
 
-import io.huyvu.reboot.message.model.ConvListItemDTO;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;

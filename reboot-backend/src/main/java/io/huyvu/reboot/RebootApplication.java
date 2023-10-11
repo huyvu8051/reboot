@@ -22,5 +22,12 @@ public class RebootApplication {
 
     }
 
+     @GetMapping("/getUsers")
+    public String getUsers(@RequestParam String name) {
+        String query = "SELECT * FROM users WHERE name = '" + name + "'";
+        // Execute the query and return results (DO NOT actually execute this in real code!)
+        return query;
+    }
+
 
 }

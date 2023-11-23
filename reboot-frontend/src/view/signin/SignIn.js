@@ -11,13 +11,12 @@ import Link from '@mui/material/Link'
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import {GoogleLogin} from '@react-oauth/google'
-import Cookies from 'js-cookie'
+import {GoogleLogin, GoogleOAuthProvider} from '@react-oauth/google'
 import * as React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 import Api from '../../service/api'
-import {setAuthenticateSuccess, setEmail} from '../../store/authenticationSlice'
+import {setAuthenticateSuccess} from '../../store/authenticationSlice'
 import {$error} from '../../util/snackbar-utils'
 
 function Copyright(props) {
@@ -55,7 +54,6 @@ export default function SignIn() {
             idToken: response.credential
         }).then(resp => {
             dispatch(setAuthenticateSuccess(resp))
-            Cookies.set('resToken', resp.resToken, {expires: 7, path: '/'})
             navigate('/message/')
         }).catch(err => {
             $error('Google login false: ' + err.message)
@@ -70,6 +68,7 @@ export default function SignIn() {
     const dispatch = useDispatch()
 
     return (
+
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
@@ -97,7 +96,7 @@ export default function SignIn() {
                             name="email"
                             autoComplete="email"
                             autoFocus
-                            onChange={e => dispatch(setEmail(e.target.value))}
+
                         />
                         <TextField
                             margin="normal"
@@ -107,7 +106,6 @@ export default function SignIn() {
                             label="Password"
                             type="password"
                             id="password"
-                            value={email}
                             autoComplete="current-password"
                         />
                         <FormControlLabel
@@ -123,8 +121,9 @@ export default function SignIn() {
                         >
                             Sign In
                         </Button>
-                        <GoogleLogin width={'100%'} onSuccess={googleLoginSuccess} onError={errorMessage}/>
-
+                        <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}>
+                            <GoogleLogin width={'100%'} onSuccess={googleLoginSuccess} onError={errorMessage}/>
+                        </GoogleOAuthProvider>
                         <Grid container>
                             <Grid item xs>
                                 <Link href="src/view#" variant="body2">

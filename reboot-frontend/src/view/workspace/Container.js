@@ -17,9 +17,6 @@ export default function PersistentDrawerLeft(props) {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        /*api.get('/api/v1/user/dashboard', {
-            params: {bId, wId, cId}
-        }).then(r => dispatch(save(r)))*/
 
         api.post('/api/v1/message/init', {
             params: {bId, wId, cId, convId}

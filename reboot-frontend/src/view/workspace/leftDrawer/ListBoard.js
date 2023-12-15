@@ -4,11 +4,11 @@ import ListItemText from '@mui/material/ListItemText'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
 import {useSelector} from 'react-redux'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 
 
 const ListBoard = () => {
-
+    const {convId} = useParams()
     const navigate = useNavigate()
     const convs = useSelector(sts => sts.message.convs)
     console.log('render', convs)
@@ -18,7 +18,9 @@ const ListBoard = () => {
             convs.map(item => (
                     <ListItem key={item.id} alignItems="flex-start" disablePadding
                               onClick={() => navigate(`/message/${item.id}`)} sx={{
-                        cursor: 'pointer', ':hover': {
+                        cursor: 'pointer',
+                        backgroundColor: convId == item.id ? '#c9c9c9' : '',
+                        ':hover': {
                             backgroundColor: '#efefef'
                         }
                     }}>
@@ -37,7 +39,7 @@ const ListBoard = () => {
                                         variant="body2"
                                         color="text.primary"
                                     >
-                                        {`${item.uId}: `}
+                                        {`${item.uId} - `}
                                     </Typography>
                                     {item.lastMsgContent}
                                 </>

@@ -7,20 +7,33 @@ import Typography from '@mui/material/Typography'
 import * as React from 'react'
 import {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
-import {Outlet, useParams} from 'react-router-dom'
-import api from '../../service/api'
-import {save} from '../message/message-slice'
+import {Outlet} from 'react-router-dom'
+import {io} from 'socket.io-client'
+import LeftDrawer from '../message/LeftDrawer'
+import {saveMsg} from '../message/message-slice'
 
 
 export default function PersistentDrawerLeft(props) {
-    const {bId, wId, cId, convId} = useParams()
     const dispatch = useDispatch()
 
     useEffect(() => {
+        const socket = io('/chat', {
+            /*   query: {
+                   wId: wId
+               },
+               transports: ['websocket']*/
+        })
+        socket.on('sendMsg', r => {
+            dispatch(saveMsg(r))
+        })
 
-        api.post('/api/v1/message/init', {bId, wId, cId, convId}).then(r => dispatch(save(r)))
-    }, [bId, wId, cId, convId, dispatch])
 
+        return () => {
+            socket.off()
+            socket.disconnect()
+        }
+
+    }, [dispatch])
     const isScreen600pxOrAbove = useMediaQuery('(min-width:600px)')
     const marginTop = isScreen600pxOrAbove ? '64px' : '56px'
     return (
@@ -42,12 +55,8 @@ export default function PersistentDrawerLeft(props) {
                     </Typography>
                 </Toolbar>
             </MuiAppBar>
-            {/*<img style={{
-                position: 'fixed',
-                width: '100vw',
-                zIndex: -99
-            }} src={bgImg}
-                 alt='background reboot'/>*/}
+            <LeftDrawer/>
+
             <Box component="main" sx={{
                 marginTop: marginTop,
                 width: '100%',

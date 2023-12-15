@@ -7,15 +7,10 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import Toolbar from '@mui/material/Toolbar'
 import * as React from 'react'
-import {useSelector} from 'react-redux'
-import {useNavigate} from 'react-router-dom'
 import ListBoard from '../workspace/leftDrawer/ListBoard'
 import CreateConversationBtn from './CreateConversationBtn'
 
-const Conversations = (props) => {
-    const navigate = useNavigate()
-
-    const conv = useSelector(sts => sts.message.conv)
+const LeftDrawer = () => {
 
     return (
         <Drawer
@@ -29,7 +24,7 @@ const Conversations = (props) => {
                 <Link sx={{ml: 2, textDecoration: 'none', color: 'black'}}>{'User name'}</Link>
             </Box>
             <Divider/>
-            <List dense>
+            <List sx={{width: '100%', maxWidth: 360}}>
                 <ListItem key="your-boards" disablePadding>
                     <ListItemButton>
                         <ListItemText primary="Conversations"/>
@@ -40,4 +35,4 @@ const Conversations = (props) => {
             </List>
         </Drawer>)
 }
-export default Conversations
+export default LeftDrawer

@@ -1,5 +1,6 @@
 package io.huyvu.reboot.message.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -9,4 +10,8 @@ import lombok.experimental.FieldDefaults;
 public class ConvListItemDTO {
     double id;
     String nm;
+    Long lastMsgTime;
+    String lastMsgContent;
+    @JsonProperty("uId")
+    Long uId;
 }

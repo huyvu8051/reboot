@@ -2,13 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="io.huyvu.reboot.message.mapper.ConversationMapper">
     <insert id="insertConv">
-        INSERT INTO conv
-        SET nm = #{nm}
+        insert into conv
+        set nm = #{nm}
     </insert>
     <select id="selectAllConv" resultType="io.huyvu.reboot.message.model.ConvListItemDTO">
-        SELECT id
-             , nm
-        FROM conv
+        select c.id,
+               c.nm,
+               m.create_time as last_msg_time,
+               m.content     as last_msg_content,
+               m.u_id
+        from conv c
+                 left join (select c_id,
+                                   create_time,
+                                   content,
+                                   u_id,
+                                   row_number() over (partition by c_id order by create_time desc) as rn
+                            from msg) m on c.id = m.c_id and m.rn = 1
+        order by last_msg_time desc;
+
+
     </select>
     <select id="selectMessage" resultType="io.huyvu.reboot.message.model.MessageItemDTO">
         select id
@@ -17,5 +29,8 @@
              , create_time
              , u_id
         from msg
+        where c_id = #{convId}
     </select>
 </mapper>
+
+

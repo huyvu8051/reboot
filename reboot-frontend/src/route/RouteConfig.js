@@ -25,26 +25,6 @@ const RouteConfig = createBrowserRouter([
         element: <><PrivateRoute/><Container/></>,
         children: [
             {
-                path: 'w',
-                element: null
-            },
-            {
-                path: 'w/:wId',
-                element: <Workspace/>
-            },
-            {
-                path: 'w/:wId/members',
-                element: <Members/>
-            },
-            {
-                path: 'b/:bId',
-                element: <Workspace><Board/></Workspace>
-            },
-            {
-                path: 'c/:cId',
-                element: <Workspace><Board/><CardDetails/></Workspace>
-            },
-            {
                 path: 'message',
                 element: <Message></Message>
             },

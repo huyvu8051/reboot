@@ -30,4 +30,9 @@ public class FileUploadUtil {
         }
     }
 
+
+    public static void saveFileCloud(String dir, String fileNm, MultipartFile mf) {
+
+    }
+
 }

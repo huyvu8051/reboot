@@ -1,5 +1,7 @@
 package io.huyvu.reboot;
 
+import io.minio.GetObjectArgs;
+import io.minio.GetObjectResponse;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import lombok.RequiredArgsConstructor;
@@ -9,11 +11,19 @@ import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServic
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FullyQualifiedAnnotationBeanNameGenerator;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+
+import static org.springframework.util.ObjectUtils.isEmpty;
 
 @SpringBootApplication(exclude = {UserDetailsServiceAutoConfiguration.class})
 @EnableAspectJAutoProxy(proxyTargetClass = true)
@@ -34,25 +44,65 @@ public class RebootApplication {
 
     @SneakyThrows
     @PostMapping("/upload")
-    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {
-        if (file.isEmpty()) {
+    public ResponseEntity<String> upload(@RequestParam("files") MultipartFile[] files) {
+        if (files.length == 0) {
             return ResponseEntity.badRequest().body("Please upload a file");
         }
 
-        // Get the original filename
-        String originalFilename = file.getOriginalFilename();
 
-        PutObjectArgs poa = PutObjectArgs.builder()
+        var filenames = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            // Get the original filename
+            String originalFilename = file.getOriginalFilename();
+            filenames.add(originalFilename);
+            PutObjectArgs poa = PutObjectArgs.builder()
+                    .bucket("reboot-bucket")
+                    .object(originalFilename)
+                    .stream(file.getInputStream(), file.getSize(), -1)
+                    .contentType(file.getContentType())
+                    .build();
+
+            // Upload the file to MinIO server
+            minioClient.putObject(poa);
+        }
+
+        return ResponseEntity.ok("File uploaded successfully: " + filenames);
+    }
+
+
+    @GetMapping("/download/{filename}")
+    public ResponseEntity<Resource> download(@PathVariable String filename) {
+        if (isEmpty(filename)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        GetObjectArgs goa = GetObjectArgs.builder()
                 .bucket("reboot-bucket")
-                .object(originalFilename)
-                .stream(file.getInputStream(), file.getSize(), -1)
-                .contentType(file.getContentType())
+                .object(filename)
                 .build();
 
-        // Upload the file to MinIO server
-        minioClient.putObject(poa);
+        try (GetObjectResponse response = minioClient.getObject(goa);
+             InputStream inputStream = response) {
 
-        return ResponseEntity.ok("File uploaded successfully: " + originalFilename);
+            // Create InputStreamResource from the InputStream
+            InputStreamResource resource = new InputStreamResource(inputStream);
+
+            // Build HttpHeaders with Content-Disposition attachment
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename);
+
+            // Set the Content-Type based on the filename extension
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+            // Return ResponseEntity with the resource, headers, and OK status
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(resource);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 

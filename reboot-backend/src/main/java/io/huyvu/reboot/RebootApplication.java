@@ -20,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
@@ -40,6 +39,13 @@ public class RebootApplication {
                 .beanNameGenerator(new FullyQualifiedAnnotationBeanNameGenerator())
                 .run(args);
     }
+
+
+    @GetMapping("thread")
+    String thread(){
+        return Thread.currentThread().toString();
+    }
+
 
 
     @SneakyThrows
@@ -82,11 +88,10 @@ public class RebootApplication {
                 .object(filename)
                 .build();
 
-        try (GetObjectResponse response = minioClient.getObject(goa);
-             InputStream inputStream = response) {
+        try (GetObjectResponse response = minioClient.getObject(goa)) {
 
             // Create InputStreamResource from the InputStream
-            InputStreamResource resource = new InputStreamResource(inputStream);
+            InputStreamResource resource = new InputStreamResource(response);
 
             // Build HttpHeaders with Content-Disposition attachment
             HttpHeaders headers = new HttpHeaders();

@@ -1,6 +1,5 @@
 package io.huyvu.reboot.message.service;
 
-import com.google.api.client.json.Json;
 import io.huyvu.reboot.message.mapper.ChatMapper;
 import io.huyvu.reboot.message.model.SendMsgDTO;
 import io.huyvu.reboot.security.util.SecurityUtils;
@@ -10,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import static io.huyvu.reboot.socket.service.ChatBoardcastProvider.CHAT_NAMESPACE;
+import static io.huyvu.reboot.socket.service.ChatBroadcastProvider.CHAT_NAMESPACE;
 
 @Service
 @RequiredArgsConstructor

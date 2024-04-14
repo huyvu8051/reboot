@@ -15,8 +15,8 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({LockedException.class, BadCredentialsException.class})
-    ResponseEntity handleAuthenticationException(Exception e) {
-        log.debug("handleAuthenticationException" + e.getMessage());
+    ResponseEntity<?> handleAuthenticationException(Exception e) {
+        log.debug("handleAuthenticationException{}", e.getMessage());
         return new ResponseEntity<>("Auth ex", BAD_REQUEST);
     }
 

@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration
 @AllArgsConstructor
-public class ChatBoardcastProvider {
+public class ChatBroadcastProvider {
     private final SocketIoServer sio;
     private final SocketManagementMapper smMapper;
     public static final String CHAT_NAMESPACE = "chat";
@@ -26,7 +26,7 @@ public class ChatBoardcastProvider {
             var uId = SecurityUtils.uId();
             var roomIds = smMapper.selectAllJoinedRooms(uId);
             socket.joinRoom(roomIds.toArray(new String[0]));
-            log.info("Client " + socket.getId() + " (" + uId + ") has connected.");
+            log.info("Client {} ({}) has connected.", socket.getId(), uId);
         });
         return namespace;
     }

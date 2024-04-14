@@ -45,6 +45,7 @@
         <module>reboot-socket</module>
         <module>reboot-static-resource</module>
         <module>reboot-message-biz</module>
+        <module>reboot-frontend-next</module>
     </modules>
 
 
